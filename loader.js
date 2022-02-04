@@ -35,8 +35,8 @@ function userDetails(userName) {
         if (DB.users[i].username == userName) {
             userID = DB.users[i].user_id;
             userIndex = i;
-        };
-    };
+        }
+    }
 
     // We get the current account status from another table in the database, account. We store this in
     // a variable here for convenience.
@@ -45,7 +45,7 @@ function userDetails(userName) {
         if (DB.account[i].user_id == userID) {
             account = DB.account[i].creditSEK;
         }
-    };
+    }
 
     // This is the way to add the details you want from the db into your own data structure.
     // If you want to change the details, then just add or remove items accordingly below.
@@ -67,7 +67,6 @@ function userDetails(userName) {
 // balance and not the changed amount (± balance).
 //
 function changeBalance(userName, newAmount) {
-
     // We use this variable to store the userID, since that is the link between the two data bases.
     var userID;
 
@@ -76,17 +75,17 @@ function changeBalance(userName, newAmount) {
     for (i = 0; i < DB.users.length; i++) {
         if (DB.users[i].username == userName) {
             userID = DB.users[i].user_id;
-        };
-    };
+        }
+    }
 
     // Then we match the userID with the account list.
     // and change the account balance.
     //
     for (i = 0; i < DB.account.length; i++) {
         if (DB.account[i].user_id == userID) {
-            DB.account[i].creditSEK = newAmount;   // This changes the value in the JSON object.
-        };
-    };
+            DB.account[i].creditSEK = newAmount; // This changes the value in the JSON object.
+        }
+    }
 }
 
 // =====================================================================================================
@@ -94,7 +93,6 @@ function changeBalance(userName, newAmount) {
 // recipe for similar functions.
 //
 function allBeverages() {
-
     // Using a local variable to collect the items.
     var collector = [];
 
@@ -103,7 +101,7 @@ function allBeverages() {
     //
     for (i = 0; i < DB2.spirits.length; i++) {
         collector.push([DB2.spirits[i].namn, DB2.spirits[i].varugrupp]);
-    };
+    }
     //
     return collector;
 }
@@ -113,7 +111,6 @@ function allBeverages() {
 // higher than the strength given in percent.
 //
 function allStrongBeverages(strength) {
-
     // Using a local variable to collect the items.
     //
     var collector = [];
@@ -122,17 +119,15 @@ function allStrongBeverages(strength) {
     // items, you may introduce filter functions in the loop... see the template within comments.
     //
     for (i = 0; i < DB2.spirits.length; i++) {
-
         // We check if the percentage alcohol strength stored in the data base is lower than the
         // given limit strength. If the limit is set to 14, also liqueuers are listed.
         //
         if (percentToNumber(DB2.spirits[i].alkoholhalt) > strength) {
-
             // The key for the beverage name is "namn", and beverage type is "varugrupp".
             //
             collector.push([DB2.spirits[i].namn, DB2.spirits[i].varugrupp]);
-        };
-    };
+        }
+    }
 
     // Don't forget to return the result.
     //
@@ -147,7 +142,7 @@ function beverageTypes() {
     var types = [];
     for (i = 0; i < DB2.spirits.length; i++) {
         addToSet(types, DB2.spirits[i].varugrupp);
-    };
+    }
     return types;
 }
 
@@ -166,7 +161,7 @@ function addToSet(set, item) {
 // Convenience function to change "xx%" into the percentage in whole numbers (non-strings).
 //
 function percentToNumber(percentStr) {
-    return Number(percentStr.slice(0,-1));
+    return Number(percentStr.slice(0, -1));
 }
 
 // =====================================================================================================
@@ -174,5 +169,3 @@ function percentToNumber(percentStr) {
 // END OF FILE
 // =====================================================================================================
 // =====================================================================================================
-
-
