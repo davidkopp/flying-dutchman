@@ -1,5 +1,5 @@
 // =====================================================================================================
-// SOme sample API functions for the Flying Dutchman data base.
+// Some sample API functions for the Flying Dutchman data base.
 // =====================================================================================================
 // Author: Lars Oestreicher, 2018
 //
@@ -11,7 +11,7 @@
 //
 function allUserNames() {
     var nameCollect = [];
-    for (i = 0; i < DB.users.length; i++) {
+    for (let i = 0; i < DB.users.length; i++) {
         nameCollect.push(DB.users[i].username);
     }
     return nameCollect;
@@ -31,7 +31,7 @@ function userDetails(userName) {
     // First we find the user ID of the selected user. We also save the index number for the record in the JSON
     // structure.
     //
-    for (i = 0; i < DB.users.length; i++) {
+    for (let i = 0; i < DB.users.length; i++) {
         if (DB.users[i].username == userName) {
             userID = DB.users[i].user_id;
             userIndex = i;
@@ -41,7 +41,7 @@ function userDetails(userName) {
     // We get the current account status from another table in the database, account. We store this in
     // a variable here for convenience.
     //
-    for (i = 0; i < DB.account.length; i++) {
+    for (let i = 0; i < DB.account.length; i++) {
         if (DB.account[i].user_id == userID) {
             account = DB.account[i].creditSEK;
         }
@@ -72,7 +72,7 @@ function changeBalance(userName, newAmount) {
 
     // First we find the userID in the user data base.
     //
-    for (i = 0; i < DB.users.length; i++) {
+    for (let i = 0; i < DB.users.length; i++) {
         if (DB.users[i].username == userName) {
             userID = DB.users[i].user_id;
         }
@@ -81,7 +81,7 @@ function changeBalance(userName, newAmount) {
     // Then we match the userID with the account list.
     // and change the account balance.
     //
-    for (i = 0; i < DB.account.length; i++) {
+    for (let i = 0; i < DB.account.length; i++) {
         if (DB.account[i].user_id == userID) {
             DB.account[i].creditSEK = newAmount; // This changes the value in the JSON object.
         }
@@ -99,7 +99,7 @@ function allBeverages() {
     // The DB is stored in the variable DB2, with "spirits" as key element. If you need to select only certain
     // items, you may introduce filter functions in the loop... see the template within comments.
     //
-    for (i = 0; i < DB2.spirits.length; i++) {
+    for (let i = 0; i < DB2.spirits.length; i++) {
         collector.push([DB2.spirits[i].namn, DB2.spirits[i].varugrupp]);
     }
     //
@@ -118,7 +118,7 @@ function allStrongBeverages(strength) {
     // The DB is stored in the variable DB2, with "spirits" as key element. If you need to select only certain
     // items, you may introduce filter functions in the loop... see the template within comments.
     //
-    for (i = 0; i < DB2.spirits.length; i++) {
+    for (let i = 0; i < DB2.spirits.length; i++) {
         // We check if the percentage alcohol strength stored in the data base is lower than the
         // given limit strength. If the limit is set to 14, also liqueuers are listed.
         //
@@ -140,7 +140,7 @@ function allStrongBeverages(strength) {
 //
 function beverageTypes() {
     var types = [];
-    for (i = 0; i < DB2.spirits.length; i++) {
+    for (let i = 0; i < DB2.spirits.length; i++) {
         addToSet(types, DB2.spirits[i].varugrupp);
     }
     return types;
