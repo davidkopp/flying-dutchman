@@ -13,14 +13,24 @@
         <script type="text/javascript" src="models/Beverages.js"></script>
         <script type="text/javascript" src="models/DBLoaded.js"></script>
         <script type="text/javascript" src="models/loader.js"></script>
+        <script type="text/javascript" src="models/Dictionary.js"></script>
+        <script type="text/javascript" src="controllers/LanguageController.js"></script>
     </head>
 
     <body>
-        <!---
+        <h1 id="welcome-text"></h1>
 
-The html-file is just for loading the javascript files. If you go to the console under the "Inspect" of the popup menu,
-then you can enter javascript calls, to test the functions.
-
--->
+        <button id="english-button" onclick="change_lang('en')">
+            <img id="english-flag" src="" alt="">
+            <span>English</span>
+        </button>
+        <button id="german-button" onclick="change_lang('de')">
+            <img id="german-flag" src="" alt="">
+            <span>German</span>
+        </button>
+        <button id="portugese-button" onclick="change_lang('pt')">
+            <img id="portugese-flag" src="" alt="">
+            <span>Portugese</span>
+        </button>
     </body>
 </html>
