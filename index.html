@@ -7,7 +7,7 @@
 
         <!-- Prevent browser from requesting a favicon -->
         <link rel="icon" href="data:;base64,=">
-
+        <link rel="stylesheet" href="style.css">
         <script type="text/javascript" src="libs/jquery-3.3.1.min.js"></script>
 
         <script type="text/javascript" src="models/Beverages.js"></script>
@@ -20,16 +20,16 @@
     <body>
         <h1 id="welcome-text"></h1>
 
-        <button id="english-button" onclick="change_lang('en')">
-            <img id="english-flag" src="" alt="">
+        <button onclick="change_lang('en')">
+            <img  class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="">
             <span>English</span>
         </button>
-        <button id="german-button" onclick="change_lang('de')">
-            <img id="german-flag" src="" alt="">
+        <button onclick="change_lang('de')">
+            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="">
             <span>German</span>
         </button>
-        <button id="portugese-button" onclick="change_lang('pt')">
-            <img id="portugese-flag" src="" alt="">
+        <button onclick="change_lang('pt')">
+            <img class="language-button" id="portugese-flag" src="" alt="">
             <span>Portugese</span>
         </button>
     </body>
