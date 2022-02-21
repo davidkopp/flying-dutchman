@@ -210,5 +210,62 @@ var DB = {
             "user_id": "27",
             "creditSEK" : "450"
         }
+    ],
+    "orders": [
+        {
+            "id": "1",
+            "table": "6",
+            "items": [
+                {
+                    "nr": "101", // TODO: Change to existing beverage
+                    "productOnTheHouse": false,
+                }
+            ],
+            "notes": "",
+            "done": false,
+            "billId": "1"
+        },
+        {
+            "id": "2",
+            "table": "3",
+            "items": [
+                {
+                    "nr": "101", // TODO: Change to existing beverage
+                    "productOnTheHouse": false,
+                },
+                {
+                    "nr": "101", // TODO: Change to existing beverage
+                    "productOnTheHouse": false,
+                },
+                {
+                    "nr": "101", // TODO: Change to existing beverage
+                    "productOnTheHouse": false,
+                },
+                {
+                    "nr": "101", // TODO: Change to existing beverage
+                    "productOnTheHouse": false,
+                }
+            ],
+            "notes": "",
+            "done": false,
+            "billId": "2"
+        }
+    ],
+    "bills": [
+        {
+            "id": "1",
+            "type": "single",
+            "vipAccount": false,
+            "timestamp": "2022-02-18T12:46:13Z",
+            "amountSEK": "40"
+        },
+        {
+            "id": "2",
+            "type": "split",
+            "split": "4",
+            "vipAccount": false,
+            "timestamp": "2022-02-18T12:46:13Z",
+            "amountSEK": "160"
+        }
     ]
 };
