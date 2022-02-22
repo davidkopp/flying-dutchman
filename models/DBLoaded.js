@@ -217,7 +217,7 @@ var DB = {
             "table": "6",
             "items": [
                 {
-                    "nr": "101", // TODO: Change to existing beverage
+                    "nr": "1174603",
                     "productOnTheHouse": false,
                 }
             ],
@@ -230,19 +230,19 @@ var DB = {
             "table": "3",
             "items": [
                 {
-                    "nr": "101", // TODO: Change to existing beverage
+                    "nr": "1174603",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "101", // TODO: Change to existing beverage
+                    "nr": "1174603",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "101", // TODO: Change to existing beverage
+                    "nr": "1202501",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "101", // TODO: Change to existing beverage
+                    "nr": "8507802",
                     "productOnTheHouse": false,
                 }
             ],
