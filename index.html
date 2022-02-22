@@ -10,26 +10,33 @@
         <link rel="stylesheet" href="style.css">
         <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
 
-        <script type="text/javascript" src="models/Beverages.js"></script>
-        <script type="text/javascript" src="models/DBLoaded.js"></script>
-        <script type="text/javascript" src="models/loader.js"></script>
-        <script type="text/javascript" src="models/Dictionary.js"></script>
-        <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="database/Beverages.js"></script>
+        <script type="text/javascript" src="database/DBLoaded.js"></script>
+        <script type="text/javascript" src="database/loader.js"></script>
+
+        <script type="text/javascript" src="localization/Dictionary.js"></script>
+
+        <script type="text/javascript" src="models/HomeModel.js"></script>
+        <script type="text/javascript" src="views/HomeView.js"></script>
+        <script type="text/javascript" src="controllers/HomeController.js"></script>
+
+        <script type="text/javascript" src="app.js"></script>
+
     </head>
 
     <body>
-        <h1 id="welcome-text"></h1>
+        <h1 id="welcome-text" data-text-key='hello_text'></h1>
 
-        <button onclick="change_lang('en')">
-            <img  class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="">
+        <button class="language-button" data-lang='en'>
+            <img class="language-flag" id="english-flag" src="assets/images/flag_en.jpg" alt="">
             <span>English</span>
         </button>
-        <button onclick="change_lang('de')">
-            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="">
+        <button class="language-button" data-lang='de'>
+            <img class="language-flag" id="german-flag" src="assets/images/flag_de.jpg" alt="">
             <span>German</span>
         </button>
-        <button onclick="change_lang('pt')">
-            <img class="language-button" id="portugese-flag" src="" alt="">
+        <button class="language-button" data-lang='pt'>
+            <img class="language-flag" id="portugese-flag" src="" alt="">
             <span>Portugese</span>
         </button>
     </body>

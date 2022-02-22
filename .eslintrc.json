@@ -1,12 +1,14 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": false,
+        "jquery": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended"],
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "script"
     },
-    "rules": {},
-    "globals": { "jQuery": "readonly", "DB": "writable", "DB2": "writable" }
+    "globals": { "DB": "writable", "DB2": "writable", "app": "readonly" },
+    "rules": {}
 }
