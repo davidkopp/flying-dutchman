@@ -1,41 +1,34 @@
 (function ($, exports) {
-    // This function is the simplest possible. However, in order
-    // to handle many different languages it will not be sufficient.
-    // The necessary change should not be difficult to implement.
-    //
-    // After each language change, we will need to update the view, to propagate
-    // the change to the whole view.
-    //
-    function change_lang(new_lang) {
+    function changeLang(new_lang) {
         switch (new_lang) {
             case "en":
-                language = "en";
+                Dictionary.setLanguage("en");
                 break;
             case "de":
-                language = "de";
+                Dictionary.setLanguage("de");
                 break;
             case "pt":
-                language = "pt";
+                Dictionary.setLanguage("pt");
                 break;
             default:
                 console.error(`Language ${new_lang} not known.`);
                 break;
         }
-        update_view();
+        updateView();
     }
 
-    function update_view() {
-        $("#welcome-text").text(get_string("hello_text"));
-        $("#username").text(get_string("username"));
-        $("#password").text(get_string("password"));
-        $("#order").text(get_string("order"));
-        $("#pay").text(get_string("pay"));
-        $("#login").text(get_string("login"));
+    function updateView() {
+        $("#welcome-text").text(Dictionary.getString("hello_text"));
+        $("#username").text(Dictionary.getString("username"));
+        $("#password").text(Dictionary.getString("password"));
+        $("#order").text(Dictionary.getString("order"));
+        $("#pay").text(Dictionary.getString("pay"));
+        $("#login").text(Dictionary.getString("login"));
     }
 
     $(document).ready(function () {
-        update_view();
+        updateView();
     });
 
-    exports.change_lang = change_lang;
+    exports.changeLang = changeLang;
 })(jQuery, window);

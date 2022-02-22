@@ -8,5 +8,10 @@
         "ecmaVersion": "latest"
     },
     "rules": {},
-    "globals": { "DB": "writable", "DB2": "readonly", "BeveragesDB": "readonly" }
+    "globals": {
+        "DB": "writable",
+        "BeveragesDB": "writable",
+        "DatabaseAPI": "writable",
+        "Dictionary": "writable"
+    }
 }
