@@ -19,3 +19,9 @@ We use [EditorConfig](https://editorconfig.org/) to apply some configuration acr
 - Editor: [VS Code](https://code.visualstudio.com/)
 - Linting Tool: [ESLint](https://eslint.org/)
 - Server: [VS Code Live Server](https://ritwickdey.github.io/vscode-live-server/)
+
+**Enable ESLint:**
+
+```bash
+npm install --save-dev eslint
+```
