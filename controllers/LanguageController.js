@@ -26,6 +26,11 @@
 
     function update_view() {
         $("#welcome-text").text(get_string("hello_text"));
+        $("#username").text(get_string("username"));
+        $("#password").text(get_string("password"));
+        $("#order").text(get_string("order"));
+        $("#pay").text(get_string("pay"));
+        $("#login").text(get_string("login"));
     }
 
     $(document).ready(function () {

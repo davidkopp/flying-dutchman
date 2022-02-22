@@ -9,12 +9,27 @@ var dict = {
     // TODO: Store the set of strings in a JSON file for each language to be loaded on request.
     'en': {
         'hello_text': "Welcome to Flying Dutchman",
+        'username': 'Username',
+        'password': 'Password',
+        'order': 'Order',
+        'pay': 'Pay',
+        'login': 'Login'
     },
     'de' : {
         'hello_text' : "Willkommen zum Flying Dutchman",
+        'username': '',
+        'password': '',
+        'order': '',
+        'pay': '',
+        'login': ''
     },
     'pt' : {
-        'hello_text' : "Bemvindo ao Flying Dutchman"
+        'hello_text' : "Bemvindo ao Flying Dutchman",
+        'username': '',
+        'password': '',
+        'order': '',
+        'pay': '',
+        'login': ''
     }
 };
 
