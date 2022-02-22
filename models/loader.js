@@ -96,11 +96,11 @@ function allBeverages() {
     // Using a local variable to collect the items.
     var collector = [];
 
-    // The DB is stored in the variable DB2, with "spirits" as key element. If you need to select only certain
+    // The DB is stored in the variable BeveragesDB, with "beverages" as key element. If you need to select only certain
     // items, you may introduce filter functions in the loop... see the template within comments.
     //
-    for (let i = 0; i < DB2.spirits.length; i++) {
-        collector.push([DB2.spirits[i].name, DB2.spirits[i].category]);
+    for (let i = 0; i < BeveragesDB.beverages.length; i++) {
+        collector.push([BeveragesDB.beverages[i].name, BeveragesDB.beverages[i].category]);
     }
     //
     return collector;
@@ -115,17 +115,17 @@ function allStrongBeverages(strength) {
     //
     var collector = [];
 
-    // The DB is stored in the variable DB2, with "spirits" as key element. If you need to select only certain
+    // The DB is stored in the variable BeveragesDB, with "beverages" as key element. If you need to select only certain
     // items, you may introduce filter functions in the loop... see the template within comments.
     //
-    for (let i = 0; i < DB2.spirits.length; i++) {
+    for (let i = 0; i < BeveragesDB.beverages.length; i++) {
         // We check if the percentage alcohol strength stored in the data base is lower than the
         // given limit strength. If the limit is set to 14, also liqueuers are listed.
         //
-        if (percentToNumber(DB2.spirits[i].alcoholstrength) > strength) {
+        if (percentToNumber(BeveragesDB.beverages[i].alcoholstrength) > strength) {
             // The key for the beverage name is "name", and beverage type is "category".
             //
-            collector.push([DB2.spirits[i].name, DB2.spirits[i].category]);
+            collector.push([BeveragesDB.beverages[i].name, BeveragesDB.beverages[i].category]);
         }
     }
 
@@ -140,8 +140,8 @@ function allStrongBeverages(strength) {
 //
 function beverageTypes() {
     var types = [];
-    for (let i = 0; i < DB2.spirits.length; i++) {
-        addToSet(types, DB2.spirits[i].category);
+    for (let i = 0; i < BeveragesDB.beverages.length; i++) {
+        addToSet(types, BeveragesDB.beverages[i].category);
     }
     return types;
 }

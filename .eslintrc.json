@@ -8,5 +8,5 @@
         "ecmaVersion": "latest"
     },
     "rules": {},
-    "globals": { "jQuery": "readonly", "DB": "writable", "DB2": "writable" }
+    "globals": { "jQuery": "readonly", "DB": "writable", "DB2": "readonly", "BeveragesDB": "readonly" }
 }

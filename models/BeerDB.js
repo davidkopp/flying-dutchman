@@ -17,7 +17,7 @@ some cocktails / drinks
 
 var BeveragesDB =
 {
-    alcohols:
+    beverages:
     [
         {
             nr: "190201",
