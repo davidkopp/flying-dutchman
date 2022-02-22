@@ -273,5 +273,314 @@ var DB = {
         "2231601",
         "1217401",
         "1202501"
+    ],
+    "inventory":
+    [
+        {
+            "id": "190201",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "190715",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "191801",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "192003",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "192201",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "192401",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "192502",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "192601",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "192701",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "196303",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "291702",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "157612",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1101402",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1101502",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "196202",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "196303",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "181214",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "184914",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1104803",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1105603",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1105703",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1108501",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1160401",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "71002",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "68301",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "76501",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "75902",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "76901",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8642507",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1012601",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1041301",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1104903",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "10401",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "74901",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "76002",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1174603",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1202501",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "76201",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "2022701",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8513101",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8505701",
+            "quantity": "42",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8507802",
+            "quantity": "5",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8568201",
+            "quantity": "5",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "4040602",
+            "quantity": "5",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8623801",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8776802",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8691202",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "8773101",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "7112102",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "2231601",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        },
+        {
+            "id": "1217401",
+            "quantity": "6",
+            "hideFromMenu": false,
+            "active": true
+        }
     ]
 };
