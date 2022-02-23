@@ -135,6 +135,84 @@ DatabaseAPI = (function () {
         return collector;
     }
 
+    /**
+     * Finds a beverage by number in the database and returns it.
+     *
+     * @param {string} beverageNr Number of the beverage
+     * @returns Beverage object or undefined
+     */
+    function findBeverageByNr(beverageNr) {
+        return BeveragesDB.beverages.find(
+            (beverage) => beverage.nr === beverageNr
+        );
+    }
+
+    /**
+     * Returns beverage numbers sorted by popularity in descending order.
+     * It uses the past orders to check how many times they have been bought.
+     *
+     * @returns Array with objects that consists of the beverage number and a count
+     */
+    function beverageNumbersSortedByPopularity() {
+        // Collect all beverages from the orders and count them.
+        var collectorWithCount = {};
+        for (let i = 0; i < DB.orders.length; i++) {
+            const order = DB.orders[i];
+            var beveragesInOrder = order.items.map((item) => item.nr);
+            for (let j = 0; j < beveragesInOrder.length; j++) {
+                const beverageNr = beveragesInOrder[j];
+                if (
+                    Object.prototype.hasOwnProperty.call(
+                        collectorWithCount,
+                        beverageNr
+                    )
+                ) {
+                    collectorWithCount[beverageNr]++;
+                } else {
+                    collectorWithCount[beverageNr] = 1;
+                }
+            }
+        }
+
+        // Sort the beverages by count (create an array first)
+        let collectorSortable = [];
+        for (let beverageNr in collectorWithCount) {
+            collectorSortable.push({
+                beverageNr: beverageNr,
+                count: collectorWithCount[beverageNr],
+            });
+        }
+        collectorSortable.sort(function (a, b) {
+            return b.count - a.count;
+        });
+
+        return collectorSortable;
+    }
+
+    /**
+     * Returns beverage names sorted by popularity in descending order.
+     * It uses the past orders to check how many times they have been bought.
+     *
+     * @returns Array with beverages names
+     */
+    function beverageNamesSortedByPopularity() {
+        var beveragesSortedByPopularity = beverageNumbersSortedByPopularity();
+
+        // Create a new collection out of it that only consists of the beverages name
+        let collectorWithBeverageName = [];
+        for (let i = 0; i < beveragesSortedByPopularity.length; i++) {
+            const beverageNr = beveragesSortedByPopularity[i].beverageNr;
+            let beverage = findBeverageByNr(beverageNr);
+            if (beverage) {
+                collectorWithBeverageName.push(beverage.name);
+            } else {
+                console.log(`Beverage with nr '${beverageNr}' is unknown!`);
+            }
+        }
+
+        return collectorWithBeverageName;
+    }
+
     // =====================================================================================================
     // Lists all beverage types in the database. As you will see, there are quite a few, and you might want
     // select only a few of them for your data.
@@ -145,6 +223,67 @@ DatabaseAPI = (function () {
             addToSet(types, BeveragesDB.beverages[i].category);
         }
         return types;
+    }
+
+    function beverageTypesSortedByAlphabet() {
+        var types = beverageTypes();
+        return types.sort();
+    }
+
+    /**
+     * Returns all beverage types sorted by popularity in descending order.
+     * It uses the past orders to check how many times beverages of a particular type have been bought.
+     *
+     * @returns Array with objects that consists of the beverage type and a count
+     */
+    function beverageTypesSortedByPopularity() {
+        let allBeveragesTypes = beverageTypes();
+
+        // Create data structure with all existing beverage types
+        let collectorWithTypeAndCount = {};
+        for (let i = 0; i < allBeveragesTypes.length; i++) {
+            const beverageType = allBeveragesTypes[i];
+            collectorWithTypeAndCount[beverageType] = 0;
+        }
+
+        // Collect all beverages from the orders and count them.
+        for (let i = 0; i < DB.orders.length; i++) {
+            const order = DB.orders[i];
+            var beveragesInOrder = order.items.map((item) => item.nr);
+            for (let j = 0; j < beveragesInOrder.length; j++) {
+                const beverageNr = beveragesInOrder[j];
+                let beverage = findBeverageByNr(beverageNr);
+                if (beverage) {
+                    var beverageType = beverage.category;
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            collectorWithTypeAndCount,
+                            beverageType
+                        )
+                    ) {
+                        collectorWithTypeAndCount[beverageType]++;
+                    } else {
+                        collectorWithTypeAndCount[beverageType] = 1;
+                    }
+                } else {
+                    console.log(`Beverage with nr '${beverageNr}' is unknown!`);
+                }
+            }
+        }
+
+        // Sort the beverage types by count (create an array first)
+        let collectorSortable = [];
+        for (let beverageType in collectorWithTypeAndCount) {
+            collectorSortable.push({
+                beverageType: beverageType,
+                count: collectorWithTypeAndCount[beverageType],
+            });
+        }
+        collectorSortable.sort(function (a, b) {
+            return b.count - a.count;
+        });
+
+        return collectorSortable;
     }
 
     // =====================================================================================================
@@ -166,12 +305,22 @@ DatabaseAPI = (function () {
     }
 
     // Make functions available to others (especially controllers)
+    // Usage: e.g. `DatabaseAPI.Users.getAllUserUserNames();`
     return {
-        allUserNames: allUserNames,
-        userDetails: userDetails,
-        changeBalance: changeBalance,
-        allBeverages: allBeverages,
-        allStrongBeverages: allStrongBeverages,
-        beverageTypes: beverageTypes,
+        Users: {
+            getAllUserNames: allUserNames,
+            getUserDetailsByUserName: userDetails,
+            changeBalance: changeBalance,
+        },
+        Beverages: {
+            getAllBeverages: allBeverages,
+            getAllStrongBeverages: allStrongBeverages,
+            getBeverageNumbersSortedByPopularity:
+                beverageNumbersSortedByPopularity,
+            getBeverageNamesSortedByPopularity: beverageNamesSortedByPopularity,
+            getBeverageTypes: beverageTypes,
+            getBeverageTypesSortedByAlphabet: beverageTypesSortedByAlphabet,
+            getBeverageTypesSortedByPopularity: beverageTypesSortedByPopularity,
+        },
     };
 })();
