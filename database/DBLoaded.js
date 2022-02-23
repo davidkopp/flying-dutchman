@@ -42,7 +42,7 @@ var DB = {
         },
         {
             "user_id": "25",
-            "credentials": "0",
+            "credentials": "1",
             "password": "971299fa95fe467db26e8bf01864d48d",
             "username": "saskru",
             "first_name": "Sa\u0161a",
@@ -52,7 +52,7 @@ var DB = {
         },
         {
             "user_id": "24",
-            "credentials": "0",
+            "credentials": "1",
             "password": "2a3db2cc165057da53ef13a348e9787f",
             "username": "ervtod",
             "first_name": "Ervin",
@@ -92,7 +92,7 @@ var DB = {
         },
         {
             "user_id": "20",
-            "credentials": "0",
+            "credentials": "2",
             "password": "739d0d428ff99dc043e8955b5a4885bc",
             "username": "hirchr",
             "first_name": "Hiram",
@@ -122,7 +122,7 @@ var DB = {
         },
         {
             "user_id": "17",
-            "credentials": "0",
+            "credentials": "2",
             "password": "f3e3fbabe1b745defda645e5d85a6ac7",
             "username": "svetor",
             "first_name": "Svetlana",

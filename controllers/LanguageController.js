@@ -24,6 +24,7 @@
         $("#order").text(Dictionary.getString("order"));
         $("#pay").text(Dictionary.getString("pay"));
         $("#login").text(Dictionary.getString("login"));
+        $("#login").text(Dictionary.get_string("login-form-submit"));
     }
 
     $(document).ready(function () {
