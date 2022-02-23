@@ -1,5 +1,5 @@
-const login_form = document.getElementById("login-form");
-const login_button = document.getElementById("login-form-submit");
+const login_form = $("#login-form");
+const login_button = $("#login-form-submit");
 
 login_button.addEventListener("click", (e) =>
 {

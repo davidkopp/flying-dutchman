@@ -16,11 +16,11 @@ Dictionary = (function () {
         },
         de: {
             hello_text: "Willkommen zum Flying Dutchman",
-            username: "",
-            password: "",
-            order: "",
-            pay: "",
-            login: "",
+            username: "Benutzername",
+            password: "Passwort",
+            order: "Bestellung",
+            pay: "Zahlung",
+            login: "Anmelden",
         },
         pt: {
             hello_text: "Bemvindo ao Flying Dutchman",

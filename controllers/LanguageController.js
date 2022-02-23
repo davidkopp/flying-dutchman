@@ -19,12 +19,11 @@
 
     function updateView() {
         $("#welcome-text").text(Dictionary.getString("hello_text"));
-        $("#username").text(Dictionary.getString("username"));
-        $("#password").text(Dictionary.getString("password"));
+        $("#username-label").text(Dictionary.getString("username"));
+        $("#password-label").text(Dictionary.getString("password"));
         $("#order").text(Dictionary.getString("order"));
         $("#pay").text(Dictionary.getString("pay"));
-        $("#login").text(Dictionary.getString("login"));
-        $("#login").text(Dictionary.get_string("login-form-submit"));
+        $("#login-form-submit").val(Dictionary.getString("login"));
     }
 
     $(document).ready(function () {
