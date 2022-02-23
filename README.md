@@ -24,4 +24,5 @@ We use [EditorConfig](https://editorconfig.org/) to apply some configuration acr
 
 ```bash
 npm install --save-dev eslint
+npm install --save-dev eslint-plugin-jsdoc
 ```
