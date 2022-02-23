@@ -60,16 +60,16 @@
             );
             return false;
         }
-        if (!item.nr) {
+        if (!item.beverageNr) {
             console.log(
-                "OrderController.validateItem | Order is not valid! Item number is missing or invalid. Item:\n" +
+                "OrderController.validateItem | Order is not valid! Beverage number is missing or invalid. Item:\n" +
                     JSON.stringify(item)
             );
             valid = false;
-        } else if (!DatabaseAPI.Beverages.findBeverageByNr(item.nr)) {
+        } else if (!DatabaseAPI.Beverages.findBeverageByNr(item.beverageNr)) {
             console.log(
                 "OrderController.validateItem | Order is not valid! Beverage with the item number '" +
-                    item.nr +
+                    item.beverageNr +
                     "' does not exist. Item:\n" +
                     JSON.stringify(item)
             );
@@ -93,6 +93,11 @@
             console.log(
                 "OrderController.createOrder | To create a new order it must not have a ID! To change the order use `editOrder` instead"
             );
+        }
+
+        // Set an id to every item (→ removing an item with an id is easy)
+        for (let i = 0; i < order.items.length; i++) {
+            order.items[i].id = i + 1;
         }
 
         const newOrder = {
@@ -160,28 +165,59 @@
     }
 
     /**
-     * Adds a item to an existing order.
+     * Adds an item to an existing order.
      *
      * @param {number} orderId The order ID
-     * @param {object} item The order item object
-     * @returns The new order object containing the item
+     * @param {object} item The order item object to add
+     * @returns The stored order object containing the item
      */
     function addItemToOrder(orderId, item) {
-        let valid = validateItem(item);
-        if (typeof orderId != "number") {
-            console.log(
-                "OrderController.addItemToOrder | OrderId is not valid!"
-            );
-            valid = false;
-        }
-        if (!valid) {
+        if (!validateItem(item)) {
             // TODO: Error Handling
             return null;
         }
 
         let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.addItemToOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        // Generate id for the item
+        let newItemId = 1;
+        if (order.items.length >= 1) {
+            newItemId = order.items[order.items.length - 1].id + 1;
+        }
+        item.id = newItemId;
 
         order.items.push(item);
+        return DatabaseAPI.Orders.saveOrder(order);
+    }
+
+    /**
+     * Removes an item from an existing order.
+     *
+     * @param {number} orderId The order ID
+     * @param {object} item The order item object to remove
+     * @returns The stored order object without the item
+     */
+    function removeItemFromOrder(orderId, item) {
+        if (!validateItem(item)) {
+            // TODO: Error Handling
+            return null;
+        }
+
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.addItemToOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        order.items = order.items.filter((i) => i.id != item.id);
         return DatabaseAPI.Orders.saveOrder(order);
     }
 
@@ -191,4 +227,5 @@
     exports.OrderController.editOrder = editOrder;
     exports.OrderController.removeOrder = removeOrder;
     exports.OrderController.addItemToOrder = addItemToOrder;
+    exports.OrderController.removeItemFromOrder = removeItemFromOrder;
 })(jQuery, window);

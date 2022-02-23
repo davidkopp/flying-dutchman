@@ -217,7 +217,8 @@ var DB = {
             "table": 6,
             "items": [
                 {
-                    "nr": "120003",
+                    "id": 1,
+                    "beverageNr": "120003",
                     "productOnTheHouse": false,
                 }
             ],
@@ -230,19 +231,23 @@ var DB = {
             "table": 3,
             "items": [
                 {
-                    "nr": "120003",
+                    "id": 1,
+                    "beverageNr": "120003",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "120003",
+                    "id": 2,
+                    "beverageNr": "120003",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "1202501",
+                    "id": 3,
+                    "beverageNr": "1202501",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "8507802",
+                    "id": 4,
+                    "beverageNr": "8507802",
                     "productOnTheHouse": false,
                 }
             ],
