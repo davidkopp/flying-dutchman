@@ -1,3 +1,14 @@
+/*
+ * File: DatabaseAPI.js
+ *
+ * API functions to the databases `DBLoaded` and `BeveragesAPI`.
+ *
+ * Author: David Kopp
+ * -----
+ * Last Modified: Wednesday, 23rd February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 DatabaseAPI = (function () {
     /**
      * Get an array with the user names of all users in our database.
