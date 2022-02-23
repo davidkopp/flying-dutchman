@@ -1,28 +1,32 @@
 DatabaseAPI = (function () {
-    // This function will return an array with the user names
-    // of all users in our database.
-    //
+    /**
+     * Get an array with the user names of all users in our database.
+     *
+     * @returns {Array} The array with user names as strings.
+     */
     function allUserNames() {
-        var nameCollect = [];
+        let nameCollect = [];
         for (let i = 0; i < DB.users.length; i++) {
             nameCollect.push(DB.users[i].username);
         }
         return nameCollect;
     }
 
-    // This function will return an array with some specific details about a
-    // selected user name (not the first name/last name). It will also add details from another "database"
-    // which contains the current account status for the person.
-    //
+    /**
+     * Get an array with some specific details about a selected user name. It
+     * also includes the account status for the person.
+     *
+     * @param {string} userName The user name.
+     * @returns {Array} Object with details about the user.
+     */
     function userDetails(userName) {
-        var userCollect = [];
-        var userID;
-        var userIndex;
-        var account;
+        let userCollect = [];
+        let userID;
+        let userIndex;
+        let account;
 
-        // First we find the user ID of the selected user. We also save the index number for the record in the JSON
-        // structure.
-        //
+        // First we find the user ID of the selected user. We also save the
+        // index number for the record in the JSON structure.
         for (let i = 0; i < DB.users.length; i++) {
             if (DB.users[i].username == userName) {
                 userID = DB.users[i].user_id;
@@ -30,17 +34,15 @@ DatabaseAPI = (function () {
             }
         }
 
-        // We get the current account status from another table in the database, account. We store this in
-        // a variable here for convenience.
-        //
+        // We get the current account status from another table in the database,
+        // account. We store this in a variable here for convenience.
         for (let i = 0; i < DB.account.length; i++) {
             if (DB.account[i].user_id == userID) {
                 account = DB.account[i].creditSEK;
             }
         }
 
-        // This is the way to add the details you want from the db into your own data structure.
-        // If you want to change the details, then just add or remove items accordingly below.
+        // Add the details to an own data structure.
         userCollect.push(
             DB.users[userIndex].user_id,
             DB.users[userIndex].username,
@@ -54,75 +56,68 @@ DatabaseAPI = (function () {
         return userCollect;
     }
 
-    // =====================================================================================================
-    // This function will change the credit amount in the user's account. Note that the amount given as argument is the new
-    // balance and not the changed amount (± balance).
-    //
+    /**
+     * Change the credit amount in the user's account. Note that the amount
+     * given as argument is the new balance and not the changed amount (± balance).
+     *
+     * @param {string} userName The user name.
+     * @param {string} newAmount The new amount.
+     */
     function changeBalance(userName, newAmount) {
-        // We use this variable to store the userID, since that is the link between the two data bases.
-        var userID;
+        let userID;
 
         // First we find the userID in the user data base.
-        //
         for (let i = 0; i < DB.users.length; i++) {
             if (DB.users[i].username == userName) {
                 userID = DB.users[i].user_id;
             }
         }
 
-        // Then we match the userID with the account list.
-        // and change the account balance.
-        //
+        // Then we match the userID with the account list. and change the
+        // account balance.
         for (let i = 0; i < DB.account.length; i++) {
             if (DB.account[i].user_id == userID) {
-                DB.account[i].creditSEK = newAmount; // This changes the value in the JSON object.
+                DB.account[i].creditSEK = newAmount;
             }
         }
     }
 
-    // =====================================================================================================
-    // Returns a list of all the names of the beverages in the database. This function can be used as a
-    // recipe for similar functions.
-    //
+    /**
+     * Get a list of all the names (and categories) of the beverages in the database.
+     *
+     * @returns {Array} Array with all beverages (name + category).
+     */
     function allBeverages() {
-        // Using a local variable to collect the items.
-        var collector = [];
+        let collector = [];
 
-        // The DB is stored in the variable BeveragesDB, with "beverages" as key element. If you need to select only certain
-        // items, you may introduce filter functions in the loop... see the template within comments.
-        //
         for (let i = 0; i < BeveragesDB.beverages.length; i++) {
             collector.push([
                 BeveragesDB.beverages[i].name,
                 BeveragesDB.beverages[i].category,
             ]);
         }
-        //
+
         return collector;
     }
 
-    // =====================================================================================================
-    // This function returns the names of all strong beverages (i.e. all that contain a percentage of alcohol
-    // higher than the strength given in percent.
-    //
+    /**
+     * Get the names of all strong beverages (i.e. all that contain a percentage
+     * of alcohol higher than the strength given in percent.
+     *
+     * @param {number} strength The alcohol strength.
+     * @returns {Array} Array with the beverages.
+     */
     function allStrongBeverages(strength) {
-        // Using a local variable to collect the items.
-        //
-        var collector = [];
+        let collector = [];
 
-        // The DB is stored in the variable BeveragesDB, with "beverages" as key element. If you need to select only certain
-        // items, you may introduce filter functions in the loop... see the template within comments.
-        //
         for (let i = 0; i < BeveragesDB.beverages.length; i++) {
-            // We check if the percentage alcohol strength stored in the data base is lower than the
-            // given limit strength. If the limit is set to 14, also liqueuers are listed.
-            //
+            // We check if the percentage alcohol strength stored in the
+            // database is lower than the given limit strength. If the limit is
+            // set to 14, also liqueuers are listed.
             if (
                 percentToNumber(BeveragesDB.beverages[i].alcoholstrength) >
                 strength
             ) {
-                // The key for the beverage name is "name", and beverage type is "category".
-                //
                 collector.push([
                     BeveragesDB.beverages[i].name,
                     BeveragesDB.beverages[i].category,
@@ -130,8 +125,6 @@ DatabaseAPI = (function () {
             }
         }
 
-        // Don't forget to return the result.
-        //
         return collector;
     }
 
@@ -139,7 +132,7 @@ DatabaseAPI = (function () {
      * Finds a beverage by number in the database and returns it.
      *
      * @param {string} beverageNr Number of the beverage
-     * @returns Beverage object or undefined
+     * @returns {object} Beverage object or undefined
      */
     function findBeverageByNr(beverageNr) {
         return BeveragesDB.beverages.find(
@@ -148,17 +141,19 @@ DatabaseAPI = (function () {
     }
 
     /**
-     * Returns beverage numbers sorted by popularity in descending order.
-     * It uses the past orders to check how many times they have been bought.
+     * Get the beverages sorted by popularity in descending order. It uses the
+     * past orders to check how many times they have been bought.
      *
-     * @returns Array with objects that consists of the beverage number and a count
+     * @returns {Array} Array with objects that consists of the beverage number
+     *   and a count.
      */
     function beverageNumbersSortedByPopularity() {
-        // Collect all beverages from the orders and count them.
-        var collectorWithCount = {};
+        let collectorWithCount = {};
+
+        // Get the beverages from the order database and count them.
         for (let i = 0; i < DB.orders.length; i++) {
             const order = DB.orders[i];
-            var beveragesInOrder = order.items.map((item) => item.nr);
+            const beveragesInOrder = order.items.map((item) => item.nr);
             for (let j = 0; j < beveragesInOrder.length; j++) {
                 const beverageNr = beveragesInOrder[j];
                 if (
@@ -174,7 +169,7 @@ DatabaseAPI = (function () {
             }
         }
 
-        // Sort the beverages by count (create an array first)
+        // Sort the beverages by count (create an array first, then sort it)
         let collectorSortable = [];
         for (let beverageNr in collectorWithCount) {
             collectorSortable.push({
@@ -190,13 +185,13 @@ DatabaseAPI = (function () {
     }
 
     /**
-     * Returns beverage names sorted by popularity in descending order.
-     * It uses the past orders to check how many times they have been bought.
+     * Get beverage names sorted by popularity in descending order. It uses the
+     * past orders to check how many times they have been bought.
      *
-     * @returns Array with beverages names
+     * @returns {Array} Array with beverages names
      */
     function beverageNamesSortedByPopularity() {
-        var beveragesSortedByPopularity = beverageNumbersSortedByPopularity();
+        const beveragesSortedByPopularity = beverageNumbersSortedByPopularity();
 
         // Create a new collection out of it that only consists of the beverages name
         let collectorWithBeverageName = [];
@@ -213,28 +208,35 @@ DatabaseAPI = (function () {
         return collectorWithBeverageName;
     }
 
-    // =====================================================================================================
-    // Lists all beverage types in the database. As you will see, there are quite a few, and you might want
-    // select only a few of them for your data.
-    //
+    /**
+     * Get all beverage types we have in our database.
+     *
+     * @returns {Array} Array with all beverages types as strings.
+     */
     function beverageTypes() {
-        var types = [];
+        let types = [];
         for (let i = 0; i < BeveragesDB.beverages.length; i++) {
             addToSet(types, BeveragesDB.beverages[i].category);
         }
         return types;
     }
 
+    /**
+     * Get all beverage types we have in our database in an alphabetical order.
+     *
+     * @returns {Array} Array with all beverages types sorted alphabetically.
+     */
     function beverageTypesSortedByAlphabet() {
-        var types = beverageTypes();
+        let types = beverageTypes();
         return types.sort();
     }
 
     /**
-     * Returns all beverage types sorted by popularity in descending order.
-     * It uses the past orders to check how many times beverages of a particular type have been bought.
+     * Get all beverage types sorted by popularity in descending order. It uses
+     * the past orders to check how many times beverages of a particular type
+     * have been bought.
      *
-     * @returns Array with objects that consists of the beverage type and a count
+     * @returns {Array} Array with objects that consists of the beverage type and a count
      */
     function beverageTypesSortedByPopularity() {
         let allBeveragesTypes = beverageTypes();
@@ -249,12 +251,12 @@ DatabaseAPI = (function () {
         // Collect all beverages from the orders and count them.
         for (let i = 0; i < DB.orders.length; i++) {
             const order = DB.orders[i];
-            var beveragesInOrder = order.items.map((item) => item.nr);
+            const beveragesInOrder = order.items.map((item) => item.nr);
             for (let j = 0; j < beveragesInOrder.length; j++) {
                 const beverageNr = beveragesInOrder[j];
-                let beverage = findBeverageByNr(beverageNr);
+                const beverage = findBeverageByNr(beverageNr);
                 if (beverage) {
-                    var beverageType = beverage.category;
+                    const beverageType = beverage.category;
                     if (
                         Object.prototype.hasOwnProperty.call(
                             collectorWithTypeAndCount,
@@ -286,10 +288,14 @@ DatabaseAPI = (function () {
         return collectorSortable;
     }
 
-    // =====================================================================================================
-    // Adds an item to a set, only if the item is not already there.
-    // The set is modelled using an array.
-    //
+    /**
+     * Adds an item to a set, only if the item is not already there. The set is
+     * modelled using an array.
+     *
+     * @param {Array} set The set.
+     * @param {object} item The item.
+     * @returns {Array} Set that contains the item.
+     */
     function addToSet(set, item) {
         if (!set.includes(item)) {
             set.push(item);
@@ -297,15 +303,21 @@ DatabaseAPI = (function () {
         return set;
     }
 
-    // =====================================================================================================
-    // Convenience function to change "xx%" into the percentage in whole numbers (non-strings).
-    //
+    /**
+     * Convenience function to change "xx%" into the percentage in whole numbers
+     * (non-strings).
+     *
+     * @param {string} percentStr The percentage as a string.
+     * @returns {number} The percentage as a number.
+     */
     function percentToNumber(percentStr) {
         return Number(percentStr.slice(0, -1));
     }
 
-    // Make functions available to others (especially controllers)
-    // Usage: e.g. `DatabaseAPI.Users.getAllUserUserNames();`
+    /**
+     * Make functions available to others (especially controllers) Usage: e.g.
+     * `DatabaseAPI.Users.getAllUserUserNames();`
+     */
     return {
         Users: {
             getAllUserNames: allUserNames,

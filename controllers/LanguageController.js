@@ -1,4 +1,9 @@
 (function ($, exports) {
+    /**
+     * Changes the language for the whole system and updates the view automatically.
+     *
+     * @param {string} new_lang The new language in country codes
+     */
     function changeLang(new_lang) {
         switch (new_lang) {
             case "en":
@@ -17,6 +22,7 @@
         updateView();
     }
 
+    /** Updates the view by replacing all text strings. */
     function updateView() {
         $("#welcome-text").text(Dictionary.getString("hello_text"));
         $("#username-label").text(Dictionary.getString("username"));

@@ -4,11 +4,11 @@
         "jquery": true,
         "jasmine": true
     },
-    "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    "plugins": ["jasmine"],
+    "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
+    "plugins": ["jsdoc", "jasmine"],
     "rules": {},
     "globals": {
         "DB": "writable",
