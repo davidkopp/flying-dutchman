@@ -1,20 +1,3 @@
-/*
-The provided beverages database is too huge. We should create a new beverages database that only contains 40-60 different items.
-
-Hints from Lars:
-
-Note that the JSON-structure is loaded into a variable in the beginning.
-The beverage number is unique, and can serve as an identifying key.
-We want to have at least the following characteristics in the beverages database:
-
-alcoholfree beverages
-at least one beer with much alcohol
-wines with tannin and without tannin
-different beer types: IPA, lager, ...
-beverages that are relevant for allergies (e.g. gluten, lactose)
-some cocktails / drinks
-*/
-
 var BeveragesDB = {
     beverages: [
         {

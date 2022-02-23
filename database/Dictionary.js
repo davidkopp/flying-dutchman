@@ -1,11 +1,7 @@
 Dictionary = (function () {
-    var language = "en";
+    let language = "en";
 
-    // ==========================================================================
-    // The dictionary consists of a simple JSON structure. It also keeps
-    // track of the different keys that are available for IDs.
-    //
-    var dict = {
+    const dict = {
         en: {
             hello_text: "Welcome to Flying Dutchman",
             username: "Username",
@@ -16,11 +12,11 @@ Dictionary = (function () {
         },
         de: {
             hello_text: "Willkommen zum Flying Dutchman",
-            username: "",
-            password: "",
-            order: "",
-            pay: "",
-            login: "",
+            username: "Benutzername",
+            password: "Passwort",
+            order: "Bestellung",
+            pay: "Zahlung",
+            login: "Anmelden",
         },
         pt: {
             hello_text: "Bemvindo ao Flying Dutchman",
@@ -32,15 +28,30 @@ Dictionary = (function () {
         },
     };
 
-    // This function will return the appropriate string for each key.
+    /**
+     * Get the appropriate string for a given key.
+     *
+     * @param {string} key The key.
+     * @returns {string} The text string.
+     */
     function getString(key) {
         return dict[language][key];
     }
 
+    /**
+     * Get the current language.
+     *
+     * @returns {string} The current language as country code.
+     */
     function getCurrentLanguage() {
         return language;
     }
 
+    /**
+     * Set a new language.
+     *
+     * @param {string} newLang The new language as country code.
+     */
     function setLanguage(newLang) {
         language = newLang;
     }
