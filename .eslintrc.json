@@ -9,8 +9,6 @@
     },
     "rules": {},
     "globals": {
-        "DB": "writable",
-        "BeveragesDB": "writable",
         "DatabaseAPI": "writable",
         "Dictionary": "writable"
     }
