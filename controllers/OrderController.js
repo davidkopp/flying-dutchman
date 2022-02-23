@@ -2,17 +2,18 @@
     /**
      * Get all undone orders.
      *
-     * @returns Array with all undone orders
+     * @returns {Array} Array with all undone orders
      */
     function getUndoneOrders() {
         return DatabaseAPI.Orders.getUndoneOrders();
     }
 
     /**
-     * Checks if the given order data structure is valid and contains all required information.
+     * Checks if the given order data structure is valid and contains all
+     * required information.
      *
      * @param {object} order The order data structure
-     * @returns `true` if valid, `false` if invalid
+     * @returns {boolean} `true` if valid, `false` if invalid
      */
     function validateOrder(order) {
         let valid = true;
@@ -47,10 +48,11 @@
     }
 
     /**
-     * Checks if the given item data structure is valid and contains all required information.
+     * Checks if the given item data structure is valid and contains all
+     * required information.
      *
      * @param {object} item The item object
-     * @returns `true` if valid, `false` if invalid
+     * @returns {boolean} `true` if valid, `false` if invalid
      */
     function validateItem(item) {
         let valid = true;
@@ -82,7 +84,7 @@
      * Creates a new order.
      *
      * @param {object} order The new order
-     * @returns The created order object, or null if there was an error.
+     * @returns {object} The created order object, or null if there was an error.
      */
     function createOrder(order) {
         if (!validateOrder(order)) {
@@ -115,7 +117,7 @@
      * Edits an order.
      *
      * @param {object} order The order object
-     * @returns The edited order object, or null if there was an error.
+     * @returns {object} The edited order object, or null if there was an error.
      */
     function editOrder(order) {
         if (!validateOrder(order)) {
@@ -159,7 +161,7 @@
             console.log(
                 `OrderController.removeOrderById | Order with id '${orderId}' does not exist!`
             );
-            return null;
+            return;
         }
         DatabaseAPI.Orders.removeOrderById(order.id);
     }
@@ -169,7 +171,7 @@
      *
      * @param {number} orderId The order ID
      * @param {object} item The order item object to add
-     * @returns The stored order object containing the item
+     * @returns {object} The stored order object containing the item
      */
     function addItemToOrder(orderId, item) {
         if (!validateItem(item)) {
@@ -201,7 +203,7 @@
      *
      * @param {number} orderId The order ID
      * @param {object} item The order item object to remove
-     * @returns The stored order object without the item
+     * @returns {object} The stored order object without the item
      */
     function removeItemFromOrder(orderId, item) {
         if (!validateItem(item)) {

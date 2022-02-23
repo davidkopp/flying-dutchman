@@ -5,7 +5,7 @@ DatabaseAPI = (function ($) {
      * Creates a deep copy of an given object.
      *
      * @param {object} obj The object to copy
-     * @returns The copied object
+     * @returns {object} The copied object
      */
     function copy(obj) {
         return $.extend(true, {}, obj);
@@ -333,7 +333,7 @@ DatabaseAPI = (function ($) {
     /**
      * Returns the last order in the database.
      *
-     * @returns Order object
+     * @returns {object} Order object
      */
     function getLastOrder() {
         return DB.orders[DB.orders.length - 1];
@@ -343,7 +343,8 @@ DatabaseAPI = (function ($) {
      * Function to get an order of the database with an ID.
      *
      * @param {number} id ID of an order
-     * @returns The order object, or `undefined` if there is no order with this id.
+     * @returns {object} The order object, or `undefined` if there is no order
+     *   with this id.
      */
     function getOrderById(id) {
         if (!id) {
@@ -355,7 +356,7 @@ DatabaseAPI = (function ($) {
     /**
      * Function to get all orders of the database.
      *
-     * @returns The array with all order objects
+     * @returns {Array} The array with all order objects.
      */
     function getOrders() {
         return copy(DB.orders);
@@ -364,7 +365,7 @@ DatabaseAPI = (function ($) {
     /**
      * Function to get all undone orders of the database.
      *
-     * @returns The array with all undone order objects
+     * @returns {Array} The array with all undone order objects
      */
     function getUndoneOrders() {
         return copy(DB.orders.filter((order) => order.done === false));
@@ -373,7 +374,8 @@ DatabaseAPI = (function ($) {
     /**
      * Function to save a order in the database.
      *
-     * @param {object} order The order object
+     * @param {object} order The order object.
+     * @returns {object} The stored order object.
      */
     function saveOrder(order) {
         let existingOrder = getOrderById(order.id);
