@@ -1,12 +1,14 @@
 {
     "env": {
         "browser": true,
-        "jquery": true
+        "jquery": true,
+        "jasmine": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": ["jasmine"],
     "rules": {},
     "globals": {
         "DB": "writable",

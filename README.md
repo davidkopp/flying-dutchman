@@ -19,9 +19,15 @@ We use [EditorConfig](https://editorconfig.org/) to apply some configuration acr
 - Editor: [VS Code](https://code.visualstudio.com/)
 - Linting Tool: [ESLint](https://eslint.org/)
 - Server: [VS Code Live Server](https://ritwickdey.github.io/vscode-live-server/)
+- Unit Tests: [Jasmine](https://jasmine.github.io/)
 
 **Enable ESLint:**
 
 ```bash
 npm install --save-dev eslint
+npm install --save-dev eslint-plugin-jasmine
 ```
+
+**Run Unit Tests:**
+
+Open `SpecRunner.html` in your browser.
