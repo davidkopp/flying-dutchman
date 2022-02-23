@@ -122,7 +122,7 @@
             // TODO: Error Handling
             return null;
         }
-        if (!order.id) {
+        if (typeof order.id != "number") {
             // TODO: Error Handling
             console.log(
                 "OrderController.editOrder | Order is not valid! ID is missing or invalid. Order:\n" +
@@ -149,19 +149,19 @@
     }
 
     /**
-     * Remove an order
+     * Remove an order by ID.
      *
-     * @param {object} order The order object
+     * @param {number} orderId The ID of the order to remove
      */
-    function removeOrder(order) {
-        if (!order.id) {
-            // TODO: Error Handling
+    function removeOrderById(orderId) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
             console.log(
-                "OrderController.removeOrder | Order is not valid! ID is missing or invalid. Order:\n" +
-                    JSON.stringify(order)
+                `OrderController.removeOrderById | Order with id '${orderId}' does not exist!`
             );
+            return null;
         }
-        DatabaseAPI.Orders.removeOrderById(order);
+        DatabaseAPI.Orders.removeOrderById(order.id);
     }
 
     /**
@@ -225,7 +225,7 @@
     exports.OrderController.getUndoneOrders = getUndoneOrders;
     exports.OrderController.createOrder = createOrder;
     exports.OrderController.editOrder = editOrder;
-    exports.OrderController.removeOrder = removeOrder;
+    exports.OrderController.removeOrderById = removeOrderById;
     exports.OrderController.addItemToOrder = addItemToOrder;
     exports.OrderController.removeItemFromOrder = removeItemFromOrder;
 })(jQuery, window);

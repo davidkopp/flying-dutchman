@@ -332,7 +332,7 @@ DatabaseAPI = (function ($) {
     /**
      * Function to get an order of the database with an ID.
      *
-     * @param {string} id ID of an order
+     * @param {number} id ID of an order
      * @returns The order object, or `undefined` if there is no order with this id.
      */
     function getOrderById(id) {
@@ -384,7 +384,7 @@ DatabaseAPI = (function ($) {
     /**
      * Function to remove an order in the database by ID.
      *
-     * @param {string} id The order ID
+     * @param {number} id The order ID
      */
     function removeOrderById(id) {
         DB.orders = DB.orders.filter((o) => o.id != id);
