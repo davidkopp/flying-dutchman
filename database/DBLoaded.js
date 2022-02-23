@@ -1,8 +1,8 @@
 var DB = {
     "users": [
         {
-            "user_id": "2",
-            "credentials": "0",
+            "user_id": 2,
+            "credentials": 0,
             "password": "b690bc2447d40ea8a6f78345eb979a28",
             "username": "jorass",
             "first_name": "Jory",
@@ -11,8 +11,8 @@ var DB = {
             "phone": "0704811411"
         },
         {
-            "user_id": "28",
-            "credentials": "3",
+            "user_id": 28,
+            "credentials": 3,
             "password": "b612f428e4a53386fdb98f6c2164c16c",
             "username": "sulstr",
             "first_name": "Sulayman",
@@ -21,8 +21,8 @@ var DB = {
             "phone": "0701517627"
         },
         {
-            "user_id": "27",
-            "credentials": "3",
+            "user_id": 27,
+            "credentials": 3,
             "password": "c0d9251f9af5e7410c6a3932f696c449",
             "username": "orapan",
             "first_name": "Orabela",
@@ -31,8 +31,8 @@ var DB = {
             "phone": "0701503294"
         },
         {
-            "user_id": "26",
-            "credentials": "3",
+            "user_id": 26,
+            "credentials": 3,
             "password": "4ec434994decffa3005b477cc7f992e6",
             "username": "kenolg",
             "first_name": "Kenan",
@@ -41,8 +41,8 @@ var DB = {
             "phone": "0706569560"
         },
         {
-            "user_id": "25",
-            "credentials": "1",
+            "user_id": 25,
+            "credentials": 1,
             "password": "971299fa95fe467db26e8bf01864d48d",
             "username": "saskru",
             "first_name": "Sa\u0161a",
@@ -51,8 +51,8 @@ var DB = {
             "phone": "0705349276"
         },
         {
-            "user_id": "24",
-            "credentials": "1",
+            "user_id": 24,
+            "credentials": 1,
             "password": "2a3db2cc165057da53ef13a348e9787f",
             "username": "ervtod",
             "first_name": "Ervin",
@@ -61,8 +61,8 @@ var DB = {
             "phone": "0702339018"
         },
         {
-            "user_id": "23",
-            "credentials": "3",
+            "user_id": 23,
+            "credentials": 3,
             "password": "743444f0ff666f1f90580e7bc3af5099",
             "username": "aqulyn",
             "first_name": "Aquilina",
@@ -71,8 +71,8 @@ var DB = {
             "phone": "0702611287"
         },
         {
-            "user_id": "22",
-            "credentials": "3",
+            "user_id": 22,
+            "credentials": 3,
             "password": "fc4fd22287923f3b47b91fc5f0a85af5",
             "username": "lasnic",
             "first_name": "Lasse",
@@ -81,8 +81,8 @@ var DB = {
             "phone": "0703238992"
         },
         {
-            "user_id": "21",
-            "credentials": "3",
+            "user_id": 21,
+            "credentials": 3,
             "password": "849d51ea793c93194952478aa85694af",
             "username": "maihon",
             "first_name": "Maiken",
@@ -91,8 +91,8 @@ var DB = {
             "phone": "0709533955"
         },
         {
-            "user_id": "20",
-            "credentials": "2",
+            "user_id": 20,
+            "credentials": 2,
             "password": "739d0d428ff99dc043e8955b5a4885bc",
             "username": "hirchr",
             "first_name": "Hiram",
@@ -101,8 +101,8 @@ var DB = {
             "phone": "0709599269"
         },
         {
-            "user_id": "19",
-            "credentials": "3",
+            "user_id": 19,
+            "credentials": 3,
             "password": "7e3f6af9d6c2385a79b49b03e87234e5",
             "username": "larsch",
             "first_name": "Lara",
@@ -111,8 +111,8 @@ var DB = {
             "phone": "0702721289"
         },
         {
-            "user_id": "18",
-            "credentials": "3",
+            "user_id": 18,
+            "credentials": 3,
             "password": "1db930e727e73c027fc58b5554935be8",
             "username": "janhei",
             "first_name": "Jancsi",
@@ -121,8 +121,8 @@ var DB = {
             "phone": "0707977965"
         },
         {
-            "user_id": "17",
-            "credentials": "2",
+            "user_id": 17,
+            "credentials": 2,
             "password": "f3e3fbabe1b745defda645e5d85a6ac7",
             "username": "svetor",
             "first_name": "Svetlana",
@@ -131,8 +131,8 @@ var DB = {
             "phone": "0707459505"
         },
         {
-            "user_id": "16",
-            "credentials": "3",
+            "user_id": 16,
+            "credentials": 3,
             "password": "75f589d96b212b65298b31717a2641c9",
             "username": "pomgra",
             "first_name": "Pompeius",
@@ -141,8 +141,8 @@ var DB = {
             "phone": "0701584121"
         },
         {
-            "user_id": "29",
-            "credentials": "3",
+            "user_id": 29,
+            "credentials": 3,
             "password": "9e44cc19b9f726583ccc93fa7908f7fd",
             "username": "valpag",
             "first_name": "Valeria",
@@ -151,8 +151,8 @@ var DB = {
             "phone": "0703156441"
         },
         {
-            "user_id": "30",
-            "credentials": "3",
+            "user_id": 30,
+            "credentials": 3,
             "password": "0f1903b5119eadb705ddba7f2750792f",
             "username": "domolh",
             "first_name": "Domen",
@@ -161,8 +161,8 @@ var DB = {
             "phone": "0702459084"
         },
         {
-            "user_id": "31",
-            "credentials": "3",
+            "user_id": 31,
+            "credentials": 3,
             "password": "3fb65e8d64eb23e63c71a86ea97951e0",
             "username": "gollan",
             "first_name": "Golnar",
@@ -171,8 +171,8 @@ var DB = {
             "phone": "0702677189"
         },
         {
-            "user_id": "32",
-            "credentials": "3",
+            "user_id": 32,
+            "credentials": 3,
             "password": "3c244190040aedd134913562509a5ea0",
             "username": "hyrlap",
             "first_name": "Hyram",
@@ -181,8 +181,8 @@ var DB = {
             "phone": "0702177650"
         },
         {
-            "user_id": "33",
-            "credentials": "3",
+            "user_id": 33,
+            "credentials": 3,
             "password": "84db5f68a5f2ad3f25bb4445148f434c",
             "username": "katfab",
             "first_name": "Katrien",
@@ -191,8 +191,8 @@ var DB = {
             "phone": "0705701344"
         },
         {
-            "user_id": "34",
-            "credentials": "3",
+            "user_id": 34,
+            "credentials": 3,
             "password": "edc2623f10cd4d069e710653f3fc630c",
             "username": "sulpen",
             "first_name": "Sulis\u0142aw",
@@ -203,18 +203,18 @@ var DB = {
     ],
     "account": [
         {
-            "user_id": "28",
-            "creditSEK" : "450"
+            "user_id": 28,
+            "creditSEK": 450
         },
         {
-            "user_id": "27",
-            "creditSEK" : "450"
+            "user_id": 27,
+            "creditSEK": 450
         }
     ],
     "orders": [
         {
-            "id": "1",
-            "table": "6",
+            "id": 1,
+            "table": 6,
             "items": [
                 {
                     "nr": "120003",
@@ -223,11 +223,11 @@ var DB = {
             ],
             "notes": "",
             "done": false,
-            "billId": "1"
+            "billId": 1
         },
         {
-            "id": "2",
-            "table": "3",
+            "id": 2,
+            "table": 3,
             "items": [
                 {
                     "nr": "120003",
@@ -248,24 +248,24 @@ var DB = {
             ],
             "notes": "",
             "done": false,
-            "billId": "2"
+            "billId": 2
         }
     ],
     "bills": [
         {
-            "id": "1",
+            "id": 1,
             "type": "single",
             "vipAccount": false,
             "timestamp": "2022-02-18T12:46:13Z",
-            "amountSEK": "40"
+            "amountSEK": 40
         },
         {
-            "id": "2",
+            "id": 2,
             "type": "split",
-            "split": "4",
+            "split": 4,
             "vipAccount": false,
             "timestamp": "2022-02-18T12:46:13Z",
-            "amountSEK": "160"
+            "amountSEK": 160
         }
     ],
     "tannins": [
@@ -302,302 +302,302 @@ var DB = {
     ],
     "inventory": [
         {
-            "id": "190201",
-            "quantity": "42",
+            "id": 190201,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "190715",
-            "quantity": "42",
+            "id": 190715,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "191801",
-            "quantity": "42",
+            "id": 191801,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "120003",
-            "quantity": "42",
+            "id": 120003,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "192201",
-            "quantity": "42",
+            "id": 192201,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "192401",
-            "quantity": "42",
+            "id": 192401,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "192502",
-            "quantity": "42",
+            "id": 192502,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "192601",
-            "quantity": "42",
+            "id": 192601,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "192701",
-            "quantity": "42",
+            "id": 192701,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8115706",
-            "quantity": "42",
+            "id": 8115706,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "291702",
-            "quantity": "42",
+            "id": 291702,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "157612",
-            "quantity": "42",
+            "id": 157612,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1101402",
-            "quantity": "42",
+            "id": 1101402,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1101502",
-            "quantity": "42",
+            "id": 1101502,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "196202",
-            "quantity": "42",
+            "id": 196202,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "181214",
-            "quantity": "42",
+            "id": 181214,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "184914",
-            "quantity": "42",
+            "id": 184914,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1104803",
-            "quantity": "42",
+            "id": 1104803,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1105603",
-            "quantity": "42",
+            "id": 1105603,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1105703",
-            "quantity": "42",
+            "id": 1105703,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1108501",
-            "quantity": "42",
+            "id": 1108501,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1160401",
-            "quantity": "42",
+            "id": 1160401,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "71002",
-            "quantity": "42",
+            "id": 71002,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "68301",
-            "quantity": "42",
+            "id": 68301,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "76501",
-            "quantity": "42",
+            "id": 76501,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "75902",
-            "quantity": "42",
+            "id": 75902,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "76901",
-            "quantity": "42",
+            "id": 76901,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8642507",
-            "quantity": "42",
+            "id": 8642507,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1012601",
-            "quantity": "42",
+            "id": 1012601,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1041301",
-            "quantity": "42",
+            "id": 1041301,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1104903",
-            "quantity": "42",
+            "id": 1104903,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "10401",
-            "quantity": "42",
+            "id": 10401,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "74901",
-            "quantity": "42",
+            "id": 74901,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "76002",
-            "quantity": "42",
+            "id": 76002,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1174603",
-            "quantity": "42",
+            "id": 1174603,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1202501",
-            "quantity": "42",
+            "id": 1202501,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "76201",
-            "quantity": "42",
+            "id": 76201,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "2022701",
-            "quantity": "42",
+            "id": 2022701,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8513101",
-            "quantity": "42",
+            "id": 8513101,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8505701",
-            "quantity": "42",
+            "id": 8505701,
+            "quantity": 42,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8507802",
-            "quantity": "5",
+            "id": 8507802,
+            "quantity": 5,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8568201",
-            "quantity": "5",
+            "id": 8568201,
+            "quantity": 5,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "4040602",
-            "quantity": "5",
+            "id": 4040602,
+            "quantity": 5,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8115806",
-            "quantity": "6",
+            "id": 8115806,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8776802",
-            "quantity": "6",
+            "id": 8776802,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8691202",
-            "quantity": "6",
+            "id": 8691202,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "8773101",
-            "quantity": "6",
+            "id": 8773101,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "7112102",
-            "quantity": "6",
+            "id": 7112102,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "2231601",
-            "quantity": "6",
+            "id": 2231601,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         },
         {
-            "id": "1217401",
-            "quantity": "6",
+            "id": 1217401,
+            "quantity": 6,
             "hideFromMenu": false,
             "active": true
         }
