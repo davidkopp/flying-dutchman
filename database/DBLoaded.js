@@ -217,7 +217,7 @@ var DB = {
             "table": "6",
             "items": [
                 {
-                    "nr": "1174603",
+                    "nr": "120003",
                     "productOnTheHouse": false,
                 }
             ],
@@ -230,11 +230,11 @@ var DB = {
             "table": "3",
             "items": [
                 {
-                    "nr": "1174603",
+                    "nr": "120003",
                     "productOnTheHouse": false,
                 },
                 {
-                    "nr": "1174603",
+                    "nr": "120003",
                     "productOnTheHouse": false,
                 },
                 {
@@ -320,7 +320,7 @@ var DB = {
             "active": true
         },
         {
-            "id": "192003",
+            "id": "120003",
             "quantity": "42",
             "hideFromMenu": false,
             "active": true
@@ -356,7 +356,7 @@ var DB = {
             "active": true
         },
         {
-            "id": "196303",
+            "id": "8115706",
             "quantity": "42",
             "hideFromMenu": false,
             "active": true
@@ -387,12 +387,6 @@ var DB = {
         },
         {
             "id": "196202",
-            "quantity": "42",
-            "hideFromMenu": false,
-            "active": true
-        },
-        {
-            "id": "196303",
             "quantity": "42",
             "hideFromMenu": false,
             "active": true
@@ -566,7 +560,7 @@ var DB = {
             "active": true
         },
         {
-            "id": "8623801",
+            "id": "8115806",
             "quantity": "6",
             "hideFromMenu": false,
             "active": true
