@@ -1,3 +1,13 @@
+/*
+ * File: DatabaseAPI.js
+ *
+ * DESCRIPTION
+ *
+ * Author: David Kopp
+ * -----
+ * Last Modified: Thursday, 24th February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
 /* global DB, BeveragesDB */
 
 DatabaseAPI = (function ($) {

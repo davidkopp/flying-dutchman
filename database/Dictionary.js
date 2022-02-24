@@ -1,3 +1,14 @@
+/*
+ * File: Dictionary.js
+ *
+ * Dictionary that is used for the localization of the application.
+ *
+ * Author: David Kopp
+ * -----
+ * Last Modified: Wednesday, 23rd February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 Dictionary = (function () {
     let language = "en";
 

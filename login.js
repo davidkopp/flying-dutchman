@@ -1,3 +1,14 @@
+/*
+ * File: login.js
+ *
+ * Login handling of the staff and VIP members.
+ *
+ * Author: Paarth Sanhotra
+ * -----
+ * Last Modified: Wednesday, 23rd February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 const login_form = $("#login-form");
 const login_button = $("#login-form-submit");
 

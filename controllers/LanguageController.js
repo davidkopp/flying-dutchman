@@ -1,3 +1,14 @@
+/*
+ * File: LanguageController.js
+ *
+ * Controller that is responsible for changing the language and updating the view accordingly.
+ *
+ * Author: David Kopp
+ * -----
+ * Last Modified: Wednesday, 23rd February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 (function ($, exports) {
     /**
      * Changes the language for the whole system and updates the view automatically.
