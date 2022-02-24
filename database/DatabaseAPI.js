@@ -1,15 +1,26 @@
 /*
  * File: DatabaseAPI.js
  *
- * API functions to the databases `DBLoaded` and `BeveragesAPI`.
+ * DESCRIPTION
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 23rd February 2022
+ * Last Modified: Thursday, 24th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
+/* global DB, BeveragesDB */
 
-DatabaseAPI = (function () {
+DatabaseAPI = (function ($) {
+    /**
+     * Creates a deep copy of an given object.
+     *
+     * @param {object} obj The object to copy
+     * @returns {object} The copied object
+     */
+    function copy(obj) {
+        return $.extend(true, {}, obj);
+    }
+
     /**
      * Get an array with the user names of all users in our database.
      *
@@ -325,6 +336,82 @@ DatabaseAPI = (function () {
         return Number(percentStr.slice(0, -1));
     }
 
+    //=====================================================================================================
+    // ORDERS
+    //=====================================================================================================
+
+    /**
+     * Returns the last order in the database.
+     *
+     * @returns {object} Order object
+     */
+    function getLastOrder() {
+        return DB.orders[DB.orders.length - 1];
+    }
+
+    /**
+     * Function to get an order of the database with an ID.
+     *
+     * @param {number} id ID of an order
+     * @returns {object} The order object, or `undefined` if there is no order
+     *   with this id.
+     */
+    function getOrderById(id) {
+        if (!id) {
+            return undefined;
+        }
+        return copy(DB.orders.find((order) => order.id === id));
+    }
+
+    /**
+     * Function to get all orders of the database.
+     *
+     * @returns {Array} The array with all order objects.
+     */
+    function getOrders() {
+        return copy(DB.orders);
+    }
+
+    /**
+     * Function to get all undone orders of the database.
+     *
+     * @returns {Array} The array with all undone order objects
+     */
+    function getUndoneOrders() {
+        return copy(DB.orders.filter((order) => order.done === false));
+    }
+
+    /**
+     * Function to save a order in the database.
+     *
+     * @param {object} order The order object.
+     * @returns {object} The stored order object.
+     */
+    function saveOrder(order) {
+        let existingOrder = getOrderById(order.id);
+        if (!existingOrder) {
+            // Create new order object in database
+            const lastOrder = getLastOrder();
+            const newId = lastOrder.id + 1;
+            order.id = newId;
+            DB.orders.push(order);
+        } else {
+            // Replace the existing order object in the database.
+            existingOrder = order;
+        }
+        // Return a deep copy of the stored order object so the caller can't manipulate the database object.
+        return copy(order);
+    }
+
+    /**
+     * Function to remove an order in the database by ID.
+     *
+     * @param {number} id The order ID
+     */
+    function removeOrderById(id) {
+        DB.orders = DB.orders.filter((o) => o.id != id);
+    }
+
     /**
      * Make functions available to others (especially controllers) Usage: e.g.
      * `DatabaseAPI.Users.getAllUserUserNames();`
@@ -336,6 +423,7 @@ DatabaseAPI = (function () {
             changeBalance: changeBalance,
         },
         Beverages: {
+            findBeverageByNr: findBeverageByNr,
             getAllBeverages: allBeverages,
             getAllStrongBeverages: allStrongBeverages,
             getBeverageNumbersSortedByPopularity:
@@ -345,5 +433,12 @@ DatabaseAPI = (function () {
             getBeverageTypesSortedByAlphabet: beverageTypesSortedByAlphabet,
             getBeverageTypesSortedByPopularity: beverageTypesSortedByPopularity,
         },
+        Orders: {
+            getOrders: getOrders,
+            getUndoneOrders: getUndoneOrders,
+            getOrderById: getOrderById,
+            saveOrder: saveOrder,
+            removeOrderById: removeOrderById,
+        },
     };
-})();
+})(jQuery);
