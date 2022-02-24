@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title data-lang="page-title">Flying Dutchman</title>
+
+        <!-- Prevent browser from requesting a favicon -->
+        <link rel="icon" href="data:;base64,=" />
+        <link rel="stylesheet" href="style.css" />
+        <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
+
+        <script type="text/javascript" src="database/BeveragesDB.js"></script>
+        <script type="text/javascript" src="database/DBLoaded.js"></script>
+        <script type="text/javascript" src="database/DatabaseAPI.js"></script>
+        <script type="text/javascript" src="database/Dictionary.js"></script>
+
+        <script type="text/javascript" src="controllers/LanguageController.js"></script>
+    </head>
+
+    <body>
+        <h1 id="caption" data-lang="caption"></h1>
+
+        <button onclick="changeLang('en')">
+            <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
+            <span data-lang="language-switcher-text-english">English</span>
+        </button>
+        <button onclick="changeLang('de')">
+            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
+            <span data-lang="language-switcher-text-german">German</span>
+        </button>
+        <button onclick="changeLang('pt')">
+            <img class="language-button" id="portuguese-flag" src="" alt="" />
+            <span data-lang="language-switcher-text-portuguese">Portuguese</span>
+        </button>
+        <br />
+        <br />
+        <a href="login.html" data-lang="link-to-login-page"></a>
+    </body>
+</html>

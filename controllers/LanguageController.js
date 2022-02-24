@@ -33,14 +33,43 @@
         updateView();
     }
 
-    /** Updates the view by replacing all text strings. */
+    /**
+     * Extracts the current page name out of the window location, removes the
+     * slash in the front and removes the filetype.
+     *
+     * @returns {string} Current page name
+     */
+    function getCurrentPageName() {
+        let currentPageName = window.location.pathname;
+        if (currentPageName.charAt(0) === "/") {
+            currentPageName = currentPageName.slice(1);
+        }
+        if (currentPageName.includes(".html")) {
+            currentPageName = currentPageName.slice(
+                0,
+                currentPageName.indexOf(".html")
+            );
+        }
+        return currentPageName;
+    }
+
+    /**
+     * Updates the current view by replacing all text strings. Per default it
+     * uses the html element property `text` to replace the text. However, not
+     * all HTML elements has a `text` property. If the data attribute includes
+     * the suffix `[value]`, the `value` property will be used instead.
+     */
     function updateView() {
-        $("#welcome-text").text(Dictionary.getString("hello_text"));
-        $("#username-label").text(Dictionary.getString("username"));
-        $("#password-label").text(Dictionary.getString("password"));
-        $("#order").text(Dictionary.getString("order"));
-        $("#pay").text(Dictionary.getString("pay"));
-        $("#login-form-submit").val(Dictionary.getString("login"));
+        const currentPageName = getCurrentPageName();
+        $("[data-lang]").each(function (index, element) {
+            let langKey = $(element).data("lang").trim();
+            if (langKey.startsWith("[value]")) {
+                langKey = langKey.slice(7, langKey.length);
+                $(element).val(Dictionary.getString(langKey, currentPageName));
+            } else {
+                $(element).text(Dictionary.getString(langKey, currentPageName));
+            }
+        });
     }
 
     $(document).ready(function () {

@@ -7,9 +7,9 @@
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "rules": { "quote-props": ["warn", "consistent"] },
     "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
     "plugins": ["jsdoc", "jasmine"],
-    "rules": {},
     "globals": {
         "DatabaseAPI": "writable",
         "Dictionary": "writable"
