@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Database Base Document</title>
+        <title id="page-title">Flying Dutchman</title>
 
         <!-- Prevent browser from requesting a favicon -->
         <link rel="icon" href="data:;base64,=" />
@@ -19,22 +19,25 @@
     </head>
 
     <body>
-        <h1 id="welcome-text"></h1>
+        <h1 id="caption"></h1>
 
         <button onclick="changeLang('en')">
             <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-            <span>English</span>
+            <span id="language-switcher-text-english">English</span>
         </button>
         <button onclick="changeLang('de')">
             <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-            <span>German</span>
+            <span id="language-switcher-text-german">German</span>
         </button>
         <button onclick="changeLang('pt')">
             <img class="language-button" id="portugese-flag" src="" alt="" />
-            <span>Portugese</span>
+            <span id="language-switcher-text-portugese">Portugese</span>
         </button>
         <br />
         <br />
-        <a href="login.html"><label for="login" id="login"></label></a>
+        <a id="link-to-menu-page" href="menu.html"></a>
+        <br />
+        <br />
+        <a id="link-to-login-page" href="login.html"><label for="login" id="login"></label></a>
     </body>
 </html>

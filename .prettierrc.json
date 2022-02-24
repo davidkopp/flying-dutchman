@@ -1,5 +1,6 @@
 {
     "printWidth": 80,
+    "quoteProps": "consistent",
     "overrides": [
         {
             "files": "**/*.html",

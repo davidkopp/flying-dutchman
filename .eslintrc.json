@@ -8,7 +8,7 @@
         "ecmaVersion": "latest"
     },
     "plugins": ["jsdoc"],
-    "rules": {},
+    "rules": { "quote-props": ["warn", "consistent"] },
     "globals": {
         "DB": "writable",
         "BeveragesDB": "writable",
