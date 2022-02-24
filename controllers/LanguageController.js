@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 23rd February 2022
+ * Last Modified: Thursday, 24th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -34,23 +34,23 @@
     }
 
     /**
-     * Extracts the current page name out of the window location, removes the
-     * slash in the front and removes the filetype.
+     * Extracts the current path out of the window location, removes the slash
+     * in the front and removes the filetype. A '/' will be mapped to 'index'.
      *
      * @returns {string} Current page name
      */
-    function getCurrentPageName() {
-        let currentPageName = window.location.pathname;
-        if (currentPageName.charAt(0) === "/") {
-            currentPageName = currentPageName.slice(1);
+    function getCurrentPath() {
+        let currentPath = window.location.pathname;
+        if (currentPath.charAt(0) === "/") {
+            currentPath = currentPath.slice(1);
         }
-        if (currentPageName.includes(".html")) {
-            currentPageName = currentPageName.slice(
-                0,
-                currentPageName.indexOf(".html")
-            );
+        if (currentPath.includes(".html")) {
+            currentPath = currentPath.slice(0, currentPath.indexOf(".html"));
         }
-        return currentPageName;
+        if (!currentPath) {
+            currentPath = "index";
+        }
+        return currentPath;
     }
 
     /**
@@ -60,14 +60,14 @@
      * the suffix `[value]`, the `value` property will be used instead.
      */
     function updateView() {
-        const currentPageName = getCurrentPageName();
+        const currentPath = getCurrentPath();
         $("[data-lang]").each(function (index, element) {
             let langKey = $(element).data("lang").trim();
             if (langKey.startsWith("[value]")) {
                 langKey = langKey.slice(7, langKey.length);
-                $(element).val(Dictionary.getString(langKey, currentPageName));
+                $(element).val(Dictionary.getString(langKey, currentPath));
             } else {
-                $(element).text(Dictionary.getString(langKey, currentPageName));
+                $(element).text(Dictionary.getString(langKey, currentPath));
             }
         });
     }
