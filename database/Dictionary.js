@@ -2,14 +2,23 @@
  * File: Dictionary.js
  *
  * Dictionary that is used for the localization of the application.
+ * The file also includes some constants.
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 23rd February 2022
+ * Last Modified: Thursday, 24th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
+/* eslint-disable no-redeclare */
+/* eslint-disable no-unused-vars */
 
-Dictionary = (function () {
+const Constants = {
+    PAGE_HOME: "index",
+    PAGE_LOGIN: "login",
+    PAGE_MENU: "menu",
+};
+
+const Dictionary = (function () {
     let language = "en";
 
     const dict = {

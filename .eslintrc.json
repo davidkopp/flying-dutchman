@@ -12,6 +12,7 @@
     "plugins": ["jsdoc", "jasmine"],
     "globals": {
         "DatabaseAPI": "writable",
-        "Dictionary": "writable"
+        "Dictionary": "writable",
+        "Constants": "writable"
     }
 }

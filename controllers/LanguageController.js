@@ -35,7 +35,8 @@
 
     /**
      * Extracts the current path out of the window location, removes the slash
-     * in the front and removes the filetype. A '/' will be mapped to 'index'.
+     * in the front and removes the filetype. A '/' will be mapped to the
+     * default home page path.
      *
      * @returns {string} Current page name
      */
@@ -48,7 +49,7 @@
             currentPath = currentPath.slice(0, currentPath.indexOf(".html"));
         }
         if (!currentPath) {
-            currentPath = "index";
+            currentPath = Constants.PAGE_HOME;
         }
         return currentPath;
     }
