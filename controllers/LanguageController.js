@@ -42,75 +42,23 @@
         return currentPageName;
     }
 
-    /** Updates the current view by replacing all text strings. */
+    /**
+     * Updates the current view by replacing all text strings. Per default it
+     * uses the html element property `text` to replace the text. However, not
+     * all HTML elements has a `text` property. If the data attribute includes
+     * the suffix `[value]`, the `value` property will be used instead.
+     */
     function updateView() {
-        updateCommonTextStrings();
         const currentPageName = getCurrentPageName();
-        switch (currentPageName) {
-            case "index":
-                updateViewIndex();
-                break;
-            case "login":
-                updateViewLogin();
-                break;
-            case "menu":
-                updateViewMenu();
-                break;
-            default:
-                console.log(
-                    `LanguageController.updateView | Page '${currentPageName}' unknown!`
-                );
-                break;
-        }
-    }
-
-    /** Updates text strings that are common through multiple pages. */
-    function updateCommonTextStrings() {
-        $("#language-switcher-text-english").text(
-            Dictionary.getCommonString("language-switcher-text-english")
-        );
-        $("#language-switcher-text-german").text(
-            Dictionary.getCommonString("language-switcher-text-german")
-        );
-        $("#language-switcher-text-portugese").text(
-            Dictionary.getCommonString("language-switcher-text-portugese")
-        );
-    }
-
-    /** Updates the view 'index' by replacing all text strings. */
-    function updateViewIndex() {
-        const page = "index";
-        $("#page-title").text(Dictionary.getPageString(page, "page-title"));
-        $("#caption").text(Dictionary.getPageString(page, "caption"));
-        $("#welcome-text").text(Dictionary.getPageString(page, "hello_text"));
-        $("#link-to-login-page").text(
-            Dictionary.getPageString(page, "link-to-login-page")
-        );
-        $("#link-to-menu-page").text(
-            Dictionary.getPageString(page, "link-to-menu-page")
-        );
-    }
-
-    /** Updates the view 'login' by replacing all text strings. */
-    function updateViewLogin() {
-        const page = "login";
-        $("#page-title").text(Dictionary.getPageString(page, "page-title"));
-        $("#caption").text(Dictionary.getPageString(page, "caption"));
-        $("#username-label").text(Dictionary.getPageString(page, "username"));
-        $("#password-label").text(Dictionary.getPageString(page, "password"));
-        $("#login-form-submit").val(
-            Dictionary.getPageString(page, "login-form-submit")
-        );
-    }
-
-    /** Updates the view 'menu' by replacing all text strings. */
-    function updateViewMenu() {
-        const page = "menu";
-
-        $("#page-title").text(Dictionary.getPageString(page, "page-title"));
-        $("#caption").text(Dictionary.getPageString(page, "caption"));
-        $("#order").text(Dictionary.getPageString(page, "order"));
-        $("#pay").text(Dictionary.getPageString(page, "pay"));
+        $("[data-lang]").each(function (index, element) {
+            let langKey = $(element).data("lang").trim();
+            if (langKey.startsWith("[value]")) {
+                langKey = langKey.slice(7, langKey.length);
+                $(element).val(Dictionary.getString(langKey, currentPageName));
+            } else {
+                $(element).text(Dictionary.getString(langKey, currentPageName));
+            }
+        });
     }
 
     $(document).ready(function () {

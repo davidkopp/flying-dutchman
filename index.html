@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title id="page-title">Flying Dutchman</title>
+        <title data-lang="page-title">Flying Dutchman</title>
 
         <!-- Prevent browser from requesting a favicon -->
         <link rel="icon" href="data:;base64,=" />
@@ -19,25 +19,25 @@
     </head>
 
     <body>
-        <h1 id="caption"></h1>
+        <h1 id="caption" data-lang="caption"></h1>
 
         <button onclick="changeLang('en')">
             <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-            <span id="language-switcher-text-english">English</span>
+            <span data-lang="language-switcher-text-english">English</span>
         </button>
         <button onclick="changeLang('de')">
             <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-            <span id="language-switcher-text-german">German</span>
+            <span data-lang="language-switcher-text-german">German</span>
         </button>
         <button onclick="changeLang('pt')">
-            <img class="language-button" id="portugese-flag" src="" alt="" />
-            <span id="language-switcher-text-portugese">Portugese</span>
+            <img class="language-button" id="portuguese-flag" src="" alt="" />
+            <span data-lang="language-switcher-text-portuguese">Portuguese</span>
         </button>
         <br />
         <br />
-        <a id="link-to-menu-page" href="menu.html"></a>
+        <a href="menu.html" data-lang="link-to-menu-page"></a>
         <br />
         <br />
-        <a id="link-to-login-page" href="login.html"><label for="login" id="login"></label></a>
+        <a href="login.html" data-lang="link-to-login-page"></a>
     </body>
 </html>
