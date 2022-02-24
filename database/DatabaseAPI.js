@@ -1,7 +1,7 @@
 /*
  * File: DatabaseAPI.js
  *
- * DESCRIPTION
+ * Provides API functions for all databases: BeveragesDB and DB (includes users, orders, bills, inventory, etc.)
  *
  * Author: David Kopp
  * -----

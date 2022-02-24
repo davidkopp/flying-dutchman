@@ -1,3 +1,14 @@
+/*
+ * File: OrderController.js
+ *
+ * Controller that is responsible for everything around an order: retrieving, adding, removing, etc.
+ *
+ * Author: David Kopp
+ * -----
+ * Last Modified: Thursday, 24th February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 (function ($, exports) {
     /**
      * Get all undone orders.
