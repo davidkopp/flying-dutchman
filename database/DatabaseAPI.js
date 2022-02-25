@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 24th February 2022
+ * Last Modified: Friday, 25th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -20,6 +20,10 @@ DatabaseAPI = (function ($) {
     function copy(obj) {
         return $.extend(true, {}, obj);
     }
+
+    //=========================================================================
+    // USERS
+    //=========================================================================
 
     /**
      * Get an array with the user names of all users in our database.
@@ -79,18 +83,48 @@ DatabaseAPI = (function ($) {
     }
 
     /**
+     * Checks if the given username and password are valid and if so, return the
+     * user information.
+     *
+     * @param {string} username The user name.
+     * @param {string} password The password.
+     * @returns {object} The user information or `null` if the credentials are invalid.
+     */
+    function getUserDetailsIfCredentialsAreValid(username, password) {
+        let foundUser = DB.users.find((u) => u.username === username);
+        if (!foundUser) {
+            console.log(
+                `DatabaseAPI.checkUserCredentials | User with username '${username}' does not exist in database.`
+            );
+            return null;
+        }
+        if (foundUser.password !== password) {
+            console.log(
+                `DatabaseAPI.checkUserCredentials | Password of user '${username}' is incorrect!`
+            );
+            return null;
+        }
+
+        return foundUser;
+    }
+
+    //=========================================================================
+    // VIP ACCOUNTING
+    //=========================================================================
+
+    /**
      * Change the credit amount in the user's account. Note that the amount
      * given as argument is the new balance and not the changed amount (± balance).
      *
-     * @param {string} userName The user name.
+     * @param {string} username The user name.
      * @param {string} newAmount The new amount.
      */
-    function changeBalance(userName, newAmount) {
+    function changeBalance(username, newAmount) {
         let userID;
 
         // First we find the userID in the user data base.
         for (let i = 0; i < DB.users.length; i++) {
-            if (DB.users[i].username == userName) {
+            if (DB.users[i].username == username) {
                 userID = DB.users[i].user_id;
             }
         }
@@ -103,6 +137,10 @@ DatabaseAPI = (function ($) {
             }
         }
     }
+
+    //=========================================================================
+    // Beverages
+    //=========================================================================
 
     /**
      * Get a list of all the names (and categories) of the beverages in the database.
@@ -336,9 +374,9 @@ DatabaseAPI = (function ($) {
         return Number(percentStr.slice(0, -1));
     }
 
-    //=====================================================================================================
+    //=========================================================================
     // ORDERS
-    //=====================================================================================================
+    //=========================================================================
 
     /**
      * Returns the last order in the database.
@@ -420,6 +458,8 @@ DatabaseAPI = (function ($) {
         Users: {
             getAllUserNames: allUserNames,
             getUserDetailsByUserName: userDetails,
+            getUserDetailsIfCredentialsAreValid:
+                getUserDetailsIfCredentialsAreValid,
             changeBalance: changeBalance,
         },
         Beverages: {
