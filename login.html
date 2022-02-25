@@ -25,6 +25,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="database/DBLoaded.js"></script>
         <script type="text/javascript" src="database/DatabaseAPI.js"></script>
         <script type="text/javascript" src="database/Dictionary.js"></script>
+        <script type="text/javascript" src="login.js" defer></script>
 
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <title>Log into the Flying Dutchman</title>
@@ -41,7 +42,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <span data-lang="language-switcher-text-german">German</span>
         </button>
         <button onclick="changeLang('pt')">
-            <img class="language-button" id="portuguese-flag" src="" alt="" />
+            <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
             <span data-lang="language-switcher-text-portuguese">Portuguese</span>
         </button>
         <br />
@@ -52,8 +53,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 type="text"
                 id="username-input-field"
                 name="username"
-                required
-                class="login-form-field"
+                requiredclass="login-form-field"
             /><br /><br />
             <label for="password" id="password-label" data-lang="password-label">: </label>
             <input
