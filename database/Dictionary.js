@@ -6,7 +6,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 24th February 2022
+ * Last Modified: Friday, 25th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -16,6 +16,20 @@ const Constants = {
     PAGE_HOME: "index",
     PAGE_LOGIN: "login",
     PAGE_MENU: "menu",
+
+    BEER_CATEGORY: ["ÖL", "CIDER"],
+    WINE_CATEGORY: ["MOUSSERANDE", "VIN"],
+    DRINKS_CATEGORY: [
+        "APERITIF",
+        "BLANDDRYCKER",
+        "LIKÖR",
+        "COCKTAIL",
+        "WHISKY",
+        "SAKE",
+        "SPRIT",
+        "ROM",
+    ],
+    WATER_CATEGORY: ["VATTEN"],
 };
 
 const Dictionary = (function () {
