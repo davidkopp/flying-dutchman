@@ -5,7 +5,7 @@ Login page for the staff and VIP members.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Wednesday, 23rd February 2022
+Last Modified: Friday, 25th February 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -27,6 +27,8 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="database/Dictionary.js"></script>
 
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
+
         <title>Log into the Flying Dutchman</title>
     </head>
     <body>
@@ -41,7 +43,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <span data-lang="language-switcher-text-german">German</span>
         </button>
         <button onclick="changeLang('pt')">
-            <img class="language-button" id="portuguese-flag" src="" alt="" />
+            <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
             <span data-lang="language-switcher-text-portuguese">Portuguese</span>
         </button>
         <br />
@@ -52,15 +54,16 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 type="text"
                 id="username-input-field"
                 name="username"
-                required
                 class="login-form-field"
+                required
             /><br /><br />
             <label for="password" id="password-label" data-lang="password-label">: </label>
             <input
                 type="password"
                 id="password-input-field"
                 name="password"
-                requiredclass="login-form-field"
+                class="login-form-field"
+                required
             /><br /><br />
             <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
         </form>
