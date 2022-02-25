@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 24th February 2022
+ * Last Modified: Friday, 25th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -412,6 +412,21 @@ DatabaseAPI = (function ($) {
         DB.orders = DB.orders.filter((o) => o.id != id);
     }
 
+    //=========================================================================
+    // INVENTORY
+    //=========================================================================
+
+    /**
+     * Get all beverages including the information about the quantity in the
+     * inventory and if they should be hidden from the menu and are set to
+     * active. Note: Also beverages are included, that have a `quantity` of 0.
+     *
+     * @returns {Array} Array that contains all beverages in inventory.
+     */
+    function getInventory() {
+        return DB.inventory;
+    }
+
     /**
      * Make functions available to others (especially controllers) Usage: e.g.
      * `DatabaseAPI.Users.getAllUserUserNames();`
@@ -439,6 +454,9 @@ DatabaseAPI = (function ($) {
             getOrderById: getOrderById,
             saveOrder: saveOrder,
             removeOrderById: removeOrderById,
+        },
+        Inventory: {
+            getInventory: getInventory,
         },
     };
 })(jQuery);

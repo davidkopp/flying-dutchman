@@ -1,3 +1,44 @@
+/*
+ * File: style.css
+ *
+ * The stylesheet for the Flying Dutchman!
+ *
+ * Author: Rosemary Lima
+ * -----
+ * Last Modified: Friday, 25th February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 .language-button {
     width: 10px;
+}
+
+.menu-item {
+    max-width: 300px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.menu-item-beer {
+    border: solid 3px brown;
+}
+
+.menu-item-wine {
+    border: solid 3px violet;
+}
+
+.menu-item-drink {
+    border: solid 3px gold;
+}
+
+.menu-item-water {
+    border: solid 3px aqua;
+}
+
+.menu-item-other {
+    border: solid 3px red;
+}
+
+.menu-item-name {
+    font-weight: bold;
 }

@@ -7,7 +7,7 @@
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    "rules": { "quote-props": ["warn", "consistent"] },
+    "rules": { "quote-props": ["warn", "consistent"], "no-continue": "off" },
     "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
     "plugins": ["jsdoc", "jasmine"],
     "globals": {
