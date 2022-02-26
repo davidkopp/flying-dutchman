@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 24th February 2022
+ * Last Modified: Saturday, 26th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -125,7 +125,8 @@
     }
 
     /**
-     * Edits an order.
+     * Edits an order. It does not change the items of an order. To change the
+     * items of an order use `addItemToOrder` or `removeItemFromOrder`.
      *
      * @param {object} order The order object
      * @returns {object} The edited order object, or null if there was an error.
@@ -143,9 +144,10 @@
             );
             return null;
         }
+
         let orderToEdit = DatabaseAPI.Orders.getOrderById(order.id);
+
         orderToEdit.table = order.table;
-        orderToEdit.items = order.items;
         if (typeof order.notes == "string") {
             orderToEdit.notes = order.notes;
         }
@@ -156,9 +158,7 @@
             orderToEdit.billId = order.billId;
         }
 
-        DatabaseAPI.Orders.saveOrder(order);
-
-        return orderToEdit;
+        return DatabaseAPI.Orders.saveOrder(orderToEdit);
     }
 
     /**
