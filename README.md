@@ -10,6 +10,11 @@ This is the repository for the development of the project "Flying Dutchman" of g
 -   [Paarth Sanhotra](https://github.com/PaarthSan)
 -   [Rosemary Lima](https://github.com/Murka2022)
 
+## Coordination
+
+We use a WhatsApp group for quick communication and the GitHub project board for the organization of the tasks:
+https://github.com/davidkopp/flying-dutchman/projects/1
+
 ## Development Setup
 
 We use [EditorConfig](https://editorconfig.org/) to apply some configuration across various editors and IDEs.
