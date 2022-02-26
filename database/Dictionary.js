@@ -6,7 +6,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Friday, 25th February 2022
+ * Last Modified: Saturday, 26th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -66,6 +66,9 @@ const Dictionary = (function () {
                 "password-label": "Password",
                 "login-form-submit": "Login",
             },
+            SpecRunner: {
+                "unit-test": "english",
+            },
         },
         // GERMAN
         de: {
@@ -96,6 +99,9 @@ const Dictionary = (function () {
                 "username-label": "Benutzername",
                 "password-label": "Passwort",
                 "login-form-submit": "Anmelden",
+            },
+            SpecRunner: {
+                "unit-test": "german",
             },
         },
         // Portuguese
@@ -128,6 +134,9 @@ const Dictionary = (function () {
                 "password-label": "",
                 "login-form-submit": "",
             },
+            SpecRunner: {
+                "unit-test": "portuguese",
+            },
         },
     };
 
@@ -144,19 +153,28 @@ const Dictionary = (function () {
         let result = undefined;
         if (page) {
             // Get the value for the key and the provided page.
-            result = dict[language][page][key];
-            if (!result) {
-                // The key does not exist for the given page.
-                // Check if the key is known as a common key.
-                result = dict[language]["_"][key];
+            let pageDict = dict[language][page];
+            if (pageDict) {
+                result = pageDict[key];
                 if (!result) {
-                    console.log(
-                        `Dictionary.getString | Language key '${key}' is not set for language '${language}' and page '${page}'.`
-                    );
+                    // The key does not exist for the given page.
+                    // Check if the key is known as a common key.
+                    result = dict[language]["_"][key];
+                    if (!result) {
+                        console.log(
+                            `Dictionary.getString | Language key '${key}' is not set for language '${language}' and page '${page}'.`
+                        );
+                    }
                 }
+            } else {
+                console.log(
+                    `Dictionary.getString | Page '${page}' is unknown in the Dictionary.`
+                );
             }
-        } else {
-            // Get the value for the common key.
+        }
+
+        if (!result) {
+            // Try to get the value for the common key.
             result = dict[language]["_"][key];
             if (!result) {
                 console.log(

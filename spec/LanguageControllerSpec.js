@@ -1,17 +1,28 @@
+/*
+ * File: LanguageControllerSpec.js
+ *
+ * Author: David Kopp
+ * -----
+ * Last Modified: Saturday, 26th February 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
+ */
+
 describe("LanguageController", function () {
     beforeEach(function () {
-        $("body").append("<span id='welcome-text'></span>");
+        $("body").append(
+            "<span id='test-element' data-lang='unit-test'></span>"
+        );
     });
 
     afterEach(function () {
-        $("#welcome-text").remove();
+        $("#test-element").remove();
     });
 
     it("should be able to change the language", function () {
         changeLang("en");
-        let firstString = $("#welcome-text").text();
+        let firstString = $("#test-element").text();
         changeLang("de");
-        let secondString = $("#welcome-text").text();
+        let secondString = $("#test-element").text();
 
         expect(firstString).not.toEqual(secondString);
     });
