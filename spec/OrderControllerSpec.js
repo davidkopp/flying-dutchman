@@ -184,4 +184,83 @@ describe("OrderController", function () {
         expect(editedOrder.items[0]).toBeTruthy();
         expect(editedOrder.items[0].beverageNr).toBe("1202501");
     });
+
+    it("should be able to add / update a note from an existing order", function () {
+        let order = {
+            table: 42,
+            items: [
+                {
+                    beverageNr: "120003",
+                },
+                {
+                    beverageNr: "1202501",
+                },
+            ],
+            notes: "Note",
+        };
+
+        let createdOrder = OrderController.createOrder(order);
+
+        let updatedNote = "Note updated";
+
+        let updatedOrder = OrderController.changeNoteOfOrder(
+            createdOrder.id,
+            updatedNote
+        );
+
+        expect(updatedOrder).toBeTruthy();
+        expect(updatedOrder.note).toBeTruthy();
+        expect(updatedOrder.note).toBe(updatedNote);
+    });
+
+    it("should be able to declare an item from an order as a product on the house", function () {
+        let order = {
+            table: 42,
+            items: [
+                {
+                    beverageNr: "120003",
+                },
+            ],
+        };
+
+        let createdOrder = OrderController.createOrder(order);
+
+        expect(createdOrder.items[0].productOnTheHouse).toBe(undefined);
+
+        let updatedOrder = OrderController.declareItemAsProductOnTheHouse(
+            createdOrder.id,
+            createdOrder.items[0].id
+        );
+
+        expect(updatedOrder).toBeTruthy();
+        expect(updatedOrder.items).toBeTruthy();
+        expect(updatedOrder.items[0]).toBeTruthy();
+        expect(updatedOrder.items[0].productOnTheHouse).toBeTruthy();
+    });
+
+    it("should be able to undeclare an item from an order as a product on the house", function () {
+        let order = {
+            table: 42,
+            items: [
+                {
+                    beverageNr: "120003",
+                    productOnTheHouse: true,
+                },
+            ],
+        };
+
+        let createdOrder = OrderController.createOrder(order);
+
+        expect(createdOrder.items[0].productOnTheHouse).toBe(true);
+
+        let updatedOrder = OrderController.undeclareItemAsProductOnTheHouse(
+            createdOrder.id,
+            createdOrder.items[0].id
+        );
+
+        expect(updatedOrder).toBeTruthy();
+        expect(updatedOrder.items).toBeTruthy();
+        expect(updatedOrder.items[0]).toBeTruthy();
+        expect(updatedOrder.items[0].productOnTheHouse).toBeFalsy();
+    });
 });

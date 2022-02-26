@@ -234,6 +234,83 @@
         return DatabaseAPI.Orders.saveOrder(order);
     }
 
+    /**
+     * Adds a new note to the order. Attention: It overwrites the old note!
+     *
+     * @param {string} orderId The order ID
+     * @param {string} newNote The new note
+     * @returns {object} The stored order object with the note
+     */
+    function changeNoteOfOrder(orderId, newNote) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.changeNoteOfOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        order.note = newNote;
+
+        return DatabaseAPI.Orders.saveOrder(order);
+    }
+
+    /**
+     * Declares an item on the order as a "product on the house".
+     *
+     * @param {string} orderId The order ID
+     * @param {string} newNote The new note
+     * @returns {object} The stored order object with the updated item.
+     */
+    function declareItemAsProductOnTheHouse(orderId, itemId) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.declareItemAsProductOnTheHouse | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        let foundItem = order.items.find((i) => i.id === itemId);
+        if (!foundItem) {
+            console.log(
+                `OrderController.declareItemAsProductOnTheHouse | Item with id '${itemId}' does not exist in the order with the id '${orderId}'!`
+            );
+            return null;
+        }
+        foundItem.productOnTheHouse = true;
+
+        return DatabaseAPI.Orders.saveOrder(order);
+    }
+
+    /**
+     * Undeclare an item of the order as a "product on the house".
+     *
+     * @param {string} orderId The order ID
+     * @param {string} newNote The new note
+     * @returns {object} The stored order object with the updated item.
+     */
+    function undeclareItemAsProductOnTheHouse(orderId, itemId) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.undeclareItemAsProductOnTheHouse | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        let foundItem = order.items.find((i) => i.id === itemId);
+        if (!foundItem) {
+            console.log(
+                `OrderController.undeclareItemAsProductOnTheHouse | Item with id '${itemId}' does not exist in the order with the id '${orderId}'!`
+            );
+            return null;
+        }
+        foundItem.productOnTheHouse = false;
+
+        return DatabaseAPI.Orders.saveOrder(order);
+    }
+
     exports.OrderController = {};
     exports.OrderController.getUndoneOrders = getUndoneOrders;
     exports.OrderController.createOrder = createOrder;
@@ -241,4 +318,9 @@
     exports.OrderController.removeOrderById = removeOrderById;
     exports.OrderController.addItemToOrder = addItemToOrder;
     exports.OrderController.removeItemFromOrder = removeItemFromOrder;
+    exports.OrderController.changeNoteOfOrder = changeNoteOfOrder;
+    exports.OrderController.declareItemAsProductOnTheHouse =
+        declareItemAsProductOnTheHouse;
+    exports.OrderController.undeclareItemAsProductOnTheHouse =
+        undeclareItemAsProductOnTheHouse;
 })(jQuery, window);
