@@ -5,20 +5,27 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Friday, 25th February 2022
+ * Last Modified: Saturday, 26th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
 
 DatabaseAPI = (function ($) {
     /**
-     * Creates a deep copy of an given object.
+     * Creates a deep copy of an given object or array. If it's not an object or
+     * an array it returns the parameter.
      *
-     * @param {object} obj The object to copy
-     * @returns {object} The copied object
+     * @param {object} obj The object or array to copy
+     * @returns {object} The copied object or array
      */
     function copy(obj) {
-        return $.extend(true, {}, obj);
+        if (Array.isArray(obj)) {
+            return $.extend(true, [], obj);
+        }
+        if (typeof obj === "object") {
+            return $.extend(true, {}, obj);
+        }
+        return obj;
     }
 
     //=========================================================================
