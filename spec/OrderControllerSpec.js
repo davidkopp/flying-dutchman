@@ -3,30 +3,34 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 26th February 2022
+ * Last Modified: Sunday, 27th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals DB, OrderController */
 
 describe("OrderController", function () {
     let savedOrders;
+    let savedInventory;
+
     beforeEach(function () {
         savedOrders = $.extend(true, [], DB.orders);
+        savedInventory = $.extend(true, [], DB.inventory);
     });
 
     afterEach(function () {
         DB.orders = $.extend(true, [], savedOrders);
+        DB.inventory = $.extend(true, [], savedInventory);
     });
 
     it("should be able to get undone orders", function () {
-        let undoneOrders = OrderController.getUndoneOrders();
+        const undoneOrders = OrderController.getUndoneOrders();
 
         expect(undoneOrders).toBeTruthy();
         expect(undoneOrders.length).toBeGreaterThan(0);
     });
 
     it("should be able to create a simple order", function () {
-        let newOrder = {
+        const newOrder = {
             table: 42,
             items: [
                 {
@@ -38,7 +42,7 @@ describe("OrderController", function () {
             ],
             notes: "Note",
         };
-        let createdOrder = OrderController.createOrder(newOrder);
+        const createdOrder = OrderController.createOrder(newOrder);
 
         //console.log(JSON.stringify(createdOrder));
 
@@ -57,7 +61,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to edit a simple order", function () {
-        let newOrder = {
+        const newOrder = {
             table: 42,
             items: [
                 {
@@ -69,9 +73,9 @@ describe("OrderController", function () {
             ],
             notes: "Note",
         };
-        let createdOrder = OrderController.createOrder(newOrder);
+        const createdOrder = OrderController.createOrder(newOrder);
 
-        let orderEdited = {
+        const orderEdited = {
             id: createdOrder.id,
             table: 4,
             items: [
@@ -85,7 +89,7 @@ describe("OrderController", function () {
             notes: "Note2",
         };
 
-        let editedOrder = OrderController.editOrder(orderEdited);
+        const editedOrder = OrderController.editOrder(orderEdited);
 
         expect(editedOrder).toBeTruthy();
         expect(editedOrder.id).toBeTruthy();
@@ -97,7 +101,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to remove an existing order", function () {
-        let newOrder = {
+        const newOrder = {
             table: 42,
             items: [
                 {
@@ -109,14 +113,14 @@ describe("OrderController", function () {
             ],
             notes: "Note",
         };
-        let createdOrder = OrderController.createOrder(newOrder);
+        const createdOrder = OrderController.createOrder(newOrder);
 
-        let numberOfOrdersBeforeRemoving =
+        const numberOfOrdersBeforeRemoving =
             OrderController.getUndoneOrders().length;
 
         OrderController.removeOrderById(createdOrder.id);
 
-        let numberOfOrdersAfterRemoving =
+        const numberOfOrdersAfterRemoving =
             OrderController.getUndoneOrders().length;
 
         expect(numberOfOrdersAfterRemoving).toBe(
@@ -125,7 +129,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to add an item to an existing order", function () {
-        let newOrder = {
+        const newOrder = {
             table: 42,
             items: [
                 {
@@ -138,13 +142,13 @@ describe("OrderController", function () {
             notes: "Note",
         };
 
-        let createdOrder = OrderController.createOrder(newOrder);
+        const createdOrder = OrderController.createOrder(newOrder);
 
-        let newItem = {
+        const newItem = {
             beverageNr: "8507802",
         };
 
-        let editedOrder = OrderController.addItemToOrder(
+        const editedOrder = OrderController.addItemToOrder(
             createdOrder.id,
             newItem
         );
@@ -158,7 +162,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to remove an item from an existing order", function () {
-        let newOrder = {
+        const newOrder = {
             table: 42,
             items: [
                 {
@@ -171,9 +175,9 @@ describe("OrderController", function () {
             notes: "Note",
         };
 
-        let createdOrder = OrderController.createOrder(newOrder);
+        const createdOrder = OrderController.createOrder(newOrder);
 
-        let editedOrder = OrderController.removeItemFromOrder(
+        const editedOrder = OrderController.removeItemFromOrder(
             createdOrder.id,
             createdOrder.items[0]
         );
@@ -186,7 +190,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to add / update a note from an existing order", function () {
-        let order = {
+        const order = {
             table: 42,
             items: [
                 {
@@ -199,11 +203,11 @@ describe("OrderController", function () {
             notes: "Note",
         };
 
-        let createdOrder = OrderController.createOrder(order);
+        const createdOrder = OrderController.createOrder(order);
 
-        let updatedNote = "Note updated";
+        const updatedNote = "Note updated";
 
-        let updatedOrder = OrderController.changeNoteOfOrder(
+        const updatedOrder = OrderController.changeNoteOfOrder(
             createdOrder.id,
             updatedNote
         );
@@ -214,7 +218,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to declare an item from an order as a product on the house", function () {
-        let order = {
+        const order = {
             table: 42,
             items: [
                 {
@@ -223,11 +227,11 @@ describe("OrderController", function () {
             ],
         };
 
-        let createdOrder = OrderController.createOrder(order);
+        const createdOrder = OrderController.createOrder(order);
 
         expect(createdOrder.items[0].productOnTheHouse).toBe(undefined);
 
-        let updatedOrder = OrderController.declareItemAsProductOnTheHouse(
+        const updatedOrder = OrderController.declareItemAsProductOnTheHouse(
             createdOrder.id,
             createdOrder.items[0].id
         );
@@ -239,7 +243,7 @@ describe("OrderController", function () {
     });
 
     it("should be able to undeclare an item from an order as a product on the house", function () {
-        let order = {
+        const order = {
             table: 42,
             items: [
                 {
@@ -249,11 +253,11 @@ describe("OrderController", function () {
             ],
         };
 
-        let createdOrder = OrderController.createOrder(order);
+        const createdOrder = OrderController.createOrder(order);
 
         expect(createdOrder.items[0].productOnTheHouse).toBe(true);
 
-        let updatedOrder = OrderController.undeclareItemAsProductOnTheHouse(
+        const updatedOrder = OrderController.undeclareItemAsProductOnTheHouse(
             createdOrder.id,
             createdOrder.items[0].id
         );
@@ -262,5 +266,308 @@ describe("OrderController", function () {
         expect(updatedOrder.items).toBeTruthy();
         expect(updatedOrder.items[0]).toBeTruthy();
         expect(updatedOrder.items[0].productOnTheHouse).toBeFalsy();
+    });
+
+    describe("that updates the number in stock (inventory)", function () {
+        it("when new order is created", function () {
+            const beverageNr = "120003";
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: beverageNr,
+                    },
+                    {
+                        beverageNr: beverageNr,
+                        productOnTheHouse: true,
+                    },
+                ],
+            };
+
+            const numberInStockBeforeOrderCreation =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+
+            OrderController.createOrder(newOrder);
+
+            const actualNumberInStockAfterOrderCreation =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+            const expectedNumberInStockAfterOrderCreation =
+                numberInStockBeforeOrderCreation - 2;
+
+            expect(actualNumberInStockAfterOrderCreation).toBe(
+                expectedNumberInStockAfterOrderCreation
+            );
+        });
+
+        it("when order is removed", function () {
+            const beverageNr = "120003";
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: beverageNr,
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const numberInStockOfBeverageBeforeOrderIsRemoved =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+
+            OrderController.removeOrderById(createdOrder.id);
+
+            const actualNumberInStockOfBeverageAfterOrderIsRemoved =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+            const expectedNumberInStockOfBeverageAfterOrderIsRemoved =
+                numberInStockOfBeverageBeforeOrderIsRemoved + 1;
+
+            expect(actualNumberInStockOfBeverageAfterOrderIsRemoved).toBe(
+                expectedNumberInStockOfBeverageAfterOrderIsRemoved
+            );
+        });
+
+        it("when an item is added to an order", function () {
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const newItem = {
+                beverageNr: "8507802",
+            };
+
+            const numberInStockBeforeItemIsAddedToOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    newItem.beverageNr
+                ).quantity;
+
+            OrderController.addItemToOrder(createdOrder.id, newItem);
+
+            const actualNumberInStockAfterItemIsAddedToOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    newItem.beverageNr
+                ).quantity;
+            const expectedNumberInStockAfterItemIsAddedToOrder =
+                numberInStockBeforeItemIsAddedToOrder - 1;
+
+            expect(actualNumberInStockAfterItemIsAddedToOrder).toBe(
+                expectedNumberInStockAfterItemIsAddedToOrder
+            );
+        });
+
+        it("when an item is removed from an order", function () {
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const numberInStockBeforeItemIsRemovedFromOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    createdOrder.items[0].beverageNr
+                ).quantity;
+
+            OrderController.removeItemFromOrder(
+                createdOrder.id,
+                createdOrder.items[0]
+            );
+
+            const actualNumberInStockAfterItemIsRemovedFromOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    createdOrder.items[0].beverageNr
+                ).quantity;
+            const expectedNumberInStockAfterItemIsRemovedFromOrder =
+                numberInStockBeforeItemIsRemovedFromOrder + 1;
+
+            expect(actualNumberInStockAfterItemIsRemovedFromOrder).toBe(
+                expectedNumberInStockAfterItemIsRemovedFromOrder
+            );
+        });
+
+        it("and checks if quantity in inventory is high enough", function () {
+            const beverageNr = "1217401";
+            const numberOfBeveragesInInventoryBeforeChange =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+
+            let items = [];
+            for (let i = 0; i < numberOfBeveragesInInventoryBeforeChange; i++) {
+                items.push({
+                    beverageNr: beverageNr,
+                });
+            }
+
+            const order1 = {
+                table: 42,
+                items: items,
+            };
+
+            const createdOrder1 = OrderController.createOrder(order1);
+
+            const numberOfBeveragesInInventoryAfterCreateOrder1 =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+
+            expect(createdOrder1).toBeTruthy();
+            expect(numberOfBeveragesInInventoryAfterCreateOrder1).toBe(0);
+
+            // Try to create another order with the same beverage → should not be possible, because there are no items left in the inventory.
+            const order2 = {
+                table: 43,
+                items: [
+                    {
+                        beverageNr: beverageNr,
+                    },
+                ],
+            };
+
+            const createdOrder2 = OrderController.createOrder(order2);
+
+            const numberOfBeveragesInInventoryAfterCreateOrder2 =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    beverageNr
+                ).quantity;
+
+            expect(createdOrder2).toBeFalsy();
+            expect(numberOfBeveragesInInventoryAfterCreateOrder2).toBe(0);
+        });
+    });
+
+    describe("that handles also the bills", function () {
+        let savedBills;
+
+        beforeEach(function () {
+            savedBills = $.extend(true, [], DB.bills);
+        });
+
+        afterEach(function () {
+            DB.bills = $.extend(true, [], savedBills);
+        });
+
+        it("should be able to create a new bill for an order", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                    {
+                        beverageNr: "1202501",
+                    },
+                    {
+                        beverageNr: "120003",
+                        productOnTheHouse: true,
+                    },
+                ],
+            };
+
+            const expectedTotalAmount = 13.9 + 62.0 + 0;
+
+            const createdOrder = OrderController.createOrder(order);
+            const createdBill = OrderController.createBillForOrder(
+                createdOrder.id
+            );
+
+            expect(createdBill).toBeTruthy();
+            expect(createdBill.id).toBeTruthy();
+            expect(createdBill.vipAccount).toBe(false);
+            expect(createdBill.timestamp instanceof Date).toBe(true);
+            expect(createdBill.amountSEK).toBe(expectedTotalAmount);
+        });
+
+        it("should be able to create a new bill for an order of a VIP member", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(order);
+            const createdBill = OrderController.createBillForOrder(
+                createdOrder.id,
+                "single",
+                true
+            );
+
+            expect(createdBill).toBeTruthy();
+            expect(createdBill.vipAccount).toBe(true);
+        });
+
+        it("should be able to create a new bill for an order with group splitting", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(order);
+            const createdBill = OrderController.createBillForOrder(
+                createdOrder.id,
+                "group"
+            );
+
+            expect(createdBill).toBeTruthy();
+            expect(createdBill.type).toBe("group");
+        });
+
+        it("should be able to complete an order", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                    {
+                        beverageNr: "120003",
+                        productOnTheHouse: true,
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(order);
+            const createdBill = OrderController.createBillForOrder(
+                createdOrder.id
+            );
+
+            const completedOrder = OrderController.completeOrder(
+                createdOrder.id,
+                createdBill.id
+            );
+
+            expect(completedOrder).toBeTruthy();
+            expect(completedOrder.done).toBe(true);
+            expect(completedOrder.billId).toBe(createdBill.id);
+        });
     });
 });

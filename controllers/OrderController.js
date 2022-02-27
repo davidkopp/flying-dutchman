@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 26th February 2022
+ * Last Modified: Sunday, 27th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -121,6 +121,16 @@
             billId: order.billId ? order.billId : null,
         };
 
+        // Try to update number in stock for the items
+        try {
+            reduceNumberInStockOfItemsByOne(newOrder.items);
+        } catch (error) {
+            console.log(
+                `OrderController.createOrder | Exception was thrown: ${error.message}`
+            );
+            return null;
+        }
+
         return DatabaseAPI.Orders.saveOrder(newOrder);
     }
 
@@ -174,15 +184,20 @@
             );
             return;
         }
+
+        // Update number in stock
+        increaseNumberInStockOfItemsByOne(order.items);
+
         DatabaseAPI.Orders.removeOrderById(order.id);
     }
 
     /**
-     * Adds an item to an existing order.
+     * Adds an item to an existing order. If there are not enough items left in
+     * stock, the item won't be added.
      *
-     * @param {number} orderId The order ID
-     * @param {object} item The order item object to add
-     * @returns {object} The stored order object containing the item
+     * @param {number} orderId The order ID.
+     * @param {object} item The order item object to add.
+     * @returns {object} The stored order object.
      */
     function addItemToOrder(orderId, item) {
         if (!validateItem(item)) {
@@ -198,12 +213,29 @@
             return null;
         }
 
+        // Check if there are enough beverages left in the inventory
+        const inventoryItem =
+            DatabaseAPI.Inventory.getInventoryItemByBeverageNr(item.beverageNr);
+        if (inventoryItem.quantity >= 1) {
+            // TODO: Update number of beverages in stock
+        }
+
         // Generate id for the item
         let newItemId = 1;
         if (order.items.length >= 1) {
             newItemId = order.items[order.items.length - 1].id + 1;
         }
         item.id = newItemId;
+
+        // Try to update number in stock for this item
+        try {
+            reduceNumberInStockOfItemsByOne([item]);
+        } catch (error) {
+            console.log(
+                `OrderController.addItemToOrder | Exception was thrown: ${error.message}`
+            );
+            return null;
+        }
 
         order.items.push(item);
         return DatabaseAPI.Orders.saveOrder(order);
@@ -229,6 +261,9 @@
             );
             return null;
         }
+
+        // Update number in stock for this item
+        increaseNumberInStockOfItemsByOne([item]);
 
         order.items = order.items.filter((i) => i.id != item.id);
         return DatabaseAPI.Orders.saveOrder(order);
@@ -311,6 +346,172 @@
         return DatabaseAPI.Orders.saveOrder(order);
     }
 
+    /**
+     * Calculates the total amount of order items. It considers if an item is a
+     * product on the house.
+     *
+     * @param {Array} items The array with order items
+     * @returns {number} The result as a float number
+     */
+    function calculateTotalAmount(items) {
+        let totalAmountForOrder = 0;
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (item.productOnTheHouse) {
+                // Item is declared as a product on the house → skip it
+                continue;
+            }
+
+            const beverage = DatabaseAPI.Beverages.findBeverageByNr(
+                item.beverageNr
+            );
+            if (beverage) {
+                const amount = parseFloat(beverage.priceinclvat);
+                if (isNaN(amount)) {
+                    console.log(
+                        `OrderController.calculateTotalAmount | Beverage with number '${item.beverageNr}' does not have a valid price set ('${beverage.priceinclvat}')!`
+                    );
+                    continue;
+                }
+                totalAmountForOrder += amount;
+            }
+        }
+        return totalAmountForOrder;
+    }
+
+    /**
+     * Creates a bill for an order.
+     *
+     * @param {number} orderId The order id.
+     * @param {string} splittingType 'single' or 'group'. If omitted, 'single' is used.
+     * @param {boolean} vipAccount 'true' if account balance of an VIP should be
+     *   used for the bill. If omitted, 'false' is used.
+     * @returns {object} The bill object stored in the database.
+     */
+    function createBillForOrder(orderId, splittingType, vipAccount) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.createBillForOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        const totalAmountForOrder = calculateTotalAmount(order.items);
+
+        if (vipAccount) {
+            // TODO: Check if the account balance is high enough for the order
+        }
+
+        const newBill = {
+            type: splittingType ? splittingType : "single",
+            vipAccount: vipAccount ? vipAccount : false,
+            timestamp: new Date(),
+            amountSEK: totalAmountForOrder,
+        };
+
+        return DatabaseAPI.Bills.saveBill(newBill);
+    }
+
+    /**
+     * Completes an order: Add bill to an order, set order to done and reduce
+     * account balance of VIP if the bill is for an VIP member.
+     *
+     * @param {number} orderId The order id.
+     * @param {number} billId The bill id.
+     * @returns {object} The updated order object.
+     */
+    function completeOrder(orderId, billId) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderController.completeOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        const bill = DatabaseAPI.Bills.getBillById(billId);
+        if (!bill) {
+            console.log(
+                `OrderController.completeOrder | Bill with id '${billId}' does not exist!`
+            );
+            return null;
+        }
+
+        order.billId = billId;
+        order.done = true;
+
+        if (bill.vipAccount) {
+            // TODO: Reduce account balance for VIP
+        }
+
+        return DatabaseAPI.Orders.saveOrder(order);
+    }
+
+    /**
+     * Internal function to reduce the number in stock of the items by one each.
+     *
+     * @param {Array} items The items
+     * @throws Will throw an error if there are not enough items left in the inventory.
+     */
+    function reduceNumberInStockOfItemsByOne(items) {
+        // Check first if there are enough items left in the inventory.
+        let collector = {};
+        for (let i = 0; i < items.length; i++) {
+            const beverageNr = items[i].beverageNr;
+
+            if (!Object.prototype.hasOwnProperty.call(collector, beverageNr)) {
+                const inventoryItem =
+                    DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                        beverageNr
+                    );
+                collector[beverageNr] = inventoryItem.quantity - 1;
+            } else {
+                collector[beverageNr] = collector[beverageNr] - 1;
+            }
+        }
+
+        for (const beverageNr in collector) {
+            if (Object.hasOwnProperty.call(collector, beverageNr)) {
+                const newQuantityTemp = collector[beverageNr];
+                if (newQuantityTemp < 0) {
+                    throw new Error(
+                        `Inventory has not enough items left for beverage '${beverageNr}'. Cancel operation.`
+                    );
+                }
+            }
+        }
+
+        // Now we can finally reduce the quantity from the inventory.
+        for (const beverageNr in collector) {
+            if (Object.hasOwnProperty.call(collector, beverageNr)) {
+                const newQuantityTemp = collector[beverageNr];
+                DatabaseAPI.Inventory.updateNumberInStockForBeverage(
+                    beverageNr,
+                    newQuantityTemp
+                );
+            }
+        }
+    }
+
+    /**
+     * Internal function to increase the number in stock of the items by one each.
+     *
+     * @param {Array} items The items
+     */
+    function increaseNumberInStockOfItemsByOne(items) {
+        for (let i = 0; i < items.length; i++) {
+            const beverageNr = items[i].beverageNr;
+            const inventoryItem =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(beverageNr);
+            const newQuantity = inventoryItem.quantity + 1;
+            DatabaseAPI.Inventory.updateNumberInStockForBeverage(
+                beverageNr,
+                newQuantity
+            );
+        }
+    }
+
     exports.OrderController = {};
     exports.OrderController.getUndoneOrders = getUndoneOrders;
     exports.OrderController.createOrder = createOrder;
@@ -323,4 +524,6 @@
         declareItemAsProductOnTheHouse;
     exports.OrderController.undeclareItemAsProductOnTheHouse =
         undeclareItemAsProductOnTheHouse;
+    exports.OrderController.createBillForOrder = createBillForOrder;
+    exports.OrderController.completeOrder = completeOrder;
 })(jQuery, window);

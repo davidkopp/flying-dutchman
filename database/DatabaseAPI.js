@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 26th February 2022
+ * Last Modified: Sunday, 27th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -112,7 +112,7 @@ DatabaseAPI = (function ($) {
             return null;
         }
 
-        return foundUser;
+        return copy(foundUser);
     }
 
     //=========================================================================
@@ -202,9 +202,10 @@ DatabaseAPI = (function ($) {
      * @returns {object} Beverage object or undefined
      */
     function findBeverageByNr(beverageNr) {
-        return BeveragesDB.beverages.find(
+        const beverage = BeveragesDB.beverages.find(
             (beverage) => beverage.nr === beverageNr
         );
+        return copy(beverage);
     }
 
     /**
@@ -391,7 +392,7 @@ DatabaseAPI = (function ($) {
      * @returns {object} Order object
      */
     function getLastOrder() {
-        return DB.orders[DB.orders.length - 1];
+        return copy(DB.orders[DB.orders.length - 1]);
     }
 
     /**
@@ -433,6 +434,9 @@ DatabaseAPI = (function ($) {
      * @returns {object} The stored order object.
      */
     function saveOrder(order) {
+        if (!order) {
+            return undefined;
+        }
         let existingOrder = getOrderById(order.id);
         if (!existingOrder) {
             // Create new order object in database
@@ -469,7 +473,91 @@ DatabaseAPI = (function ($) {
      * @returns {Array} Array that contains all beverages in inventory.
      */
     function getInventory() {
-        return DB.inventory;
+        return copy(DB.inventory);
+    }
+
+    /**
+     * Returns the inventory item for a specific beverage. Internal: No deep copy.
+     *
+     * @param {string} beverageNr The beverage number
+     * @returns Inventory item if beverage number exists in inventory. Otherwise
+     *   `undefined`
+     */
+    function getInventoryItemByBeverageNrInternal(beverageNr) {
+        return DB.inventory.find((item) => (item.beverageNr = beverageNr));
+    }
+
+    /**
+     * Returns the inventory item for a specific beverage.
+     *
+     * @param {string} beverageNr The beverage number
+     * @returns Inventory item if beverage number exists in inventory. Otherwise
+     *   `undefined`
+     */
+    function getInventoryItemByBeverageNr(beverageNr) {
+        return copy(getInventoryItemByBeverageNrInternal(beverageNr));
+    }
+
+    /**
+     * Updates the number in stock for a specific beverage. Note: The provided
+     * `newQuantity` replaces the number in stock, no calculation and no check
+     * for validity.
+     *
+     * @param {string} beverageNr The beverage number
+     * @param {number} newQuantity The new quantity
+     * @returns The updated inventory item
+     */
+    function updateNumberInStockForBeverage(beverageNr, newQuantity) {
+        let inventoryItem = getInventoryItemByBeverageNrInternal(beverageNr);
+        if (inventoryItem) {
+            inventoryItem.quantity = newQuantity;
+        }
+        return copy(inventoryItem);
+    }
+
+    //=========================================================================
+    // BILLS
+    //=========================================================================
+
+    /**
+     * Returns the last bill in the database.
+     *
+     * @returns {object} Bill object
+     */
+    function getLastBill() {
+        return copy(DB.bills[DB.bills.length - 1]);
+    }
+
+    /**
+     * Get a bill by its id.
+     *
+     * @param {number} id The bill id.
+     * @returns {object} The bill object.
+     */
+    function getBillById(id) {
+        if (!id) {
+            return undefined;
+        }
+        return copy(DB.bills.find((bill) => bill.id === id));
+    }
+
+    function saveBill(bill) {
+        if (!bill) {
+            return undefined;
+        }
+        let existingBill = getBillById(bill.id);
+        if (!existingBill) {
+            // Create new bill object in database
+            const lastBill = getLastBill();
+            const newId = lastBill.id + 1;
+            bill.id = newId;
+            DB.bills.push(bill);
+        } else {
+            // Replace the existing bill object in the database.
+            existingBill = bill;
+        }
+        // Return a deep copy of the stored bill object so the caller can't manipulate the database object.
+        return copy(bill);
     }
 
     /**
@@ -502,8 +590,15 @@ DatabaseAPI = (function ($) {
             saveOrder: saveOrder,
             removeOrderById: removeOrderById,
         },
+        Bills: {
+            getBillById: getBillById,
+            saveBill: saveBill,
+        },
         Inventory: {
             getInventory: getInventory,
+            getInventoryItemByBeverageNr: getInventoryItemByBeverageNr,
+            updateNumberInStockForBeverage,
+            updateNumberInStockForBeverage,
         },
     };
 })(jQuery);
