@@ -9,7 +9,7 @@
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
-(function ($) {
+(function ($, exports) {
     $(document).ready(function () {
         initMenu();
     });
@@ -17,7 +17,7 @@
     /** Initialize the menu with the information about the available beverages. */
     function initMenu() {
         const inventoryItems = DatabaseAPI.Inventory.getInventory();
-        const hideFromMenuList = DatabaseAPI.HideFromMenu.getHideFromMenuList();
+        const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
             let beverageNr = inventoryItem.beverageNr;
@@ -76,6 +76,9 @@
             // Beer or cider
             menuItemHTML = `
             <div class="menu-item menu-item-beer">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -109,6 +112,9 @@
             // Wine
             menuItemHTML = `
             <div class="menu-item menu-item-wine">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -142,6 +148,9 @@
             // Cocktails / Drinks / Mixed drinks
             menuItemHTML = `
             <div class="menu-item menu-item-drink">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -171,6 +180,9 @@
             // Water
             menuItemHTML = `
             <div class="menu-item menu-item-water">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -190,6 +202,9 @@
             );
             menuItemHTML = `
             <div class="menu-item menu-item-other">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -213,6 +228,35 @@
     }
 
     /**
+     * Refreshes the menu in the view by removing all child notes from the menu
+     * container and reinitializes it.
+     */
+    function refreshMenu() {
+        $("#menu-container").empty();
+        initMenu();
+    }
+
+    /**
+     * Removes a beverage from the list "hideFromMenu" and refreshes the menu in the view.
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+    function showBeverageInMenu(beverageNr) {
+        DatabaseAPI.HideFromMenu.removeBeverageNrFromList(beverageNr);
+        refreshMenu();
+    }
+
+    /**
+     * Adds a beverage to the list "hideFromMenu" and refreshes the menu in the view.
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+    function hideBeverageFromMenu(beverageNr) {
+        DatabaseAPI.HideFromMenu.addBeverageNrToList(beverageNr);
+        refreshMenu();
+    }
+
+    /**
      * Checks if a text includes substrings given by an array.
      *
      * @param {string} text The text to check
@@ -233,4 +277,9 @@
     function extractYearOutOfDate(dateString) {
         return new Date(dateString).getFullYear();
     }
+
+    exports.MenuController = {};
+    exports.MenuController.initMenu = initMenu;
+    exports.MenuController.showBeverageInMenu = showBeverageInMenu;
+    exports.MenuController.hideBeverageFromMenu = hideBeverageFromMenu;
 })(jQuery, window);

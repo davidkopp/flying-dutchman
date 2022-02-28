@@ -16,6 +16,11 @@
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
 }
+
+.hidden {
+    display: none;
+}
+
 .language-button {
     width: 10px;
 }
