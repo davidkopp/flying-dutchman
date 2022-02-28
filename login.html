@@ -32,40 +32,45 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <title>Log into the Flying Dutchman</title>
     </head>
     <body>
-        <h1 id="caption" data-lang="caption"></h1>
-
-        <button onclick="changeLang('en')">
-            <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-            <span data-lang="language-switcher-text-english">English</span>
-        </button>
-        <button onclick="changeLang('de')">
-            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-            <span data-lang="language-switcher-text-german">German</span>
-        </button>
-        <button onclick="changeLang('pt')">
-            <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-            <span data-lang="language-switcher-text-portuguese">Portuguese</span>
-        </button>
-        <br />
-        <br />
-        <form id="login_form">
-            <label for="username" id="username-label" data-lang="username-label">: </label>
-            <input
-                type="text"
-                id="username-input-field"
-                name="username"
-                class="login-form-field"
-                required
-            /><br /><br />
-            <label for="password" id="password-label" data-lang="password-label">: </label>
-            <input
-                type="password"
-                id="password-input-field"
-                name="password"
-                class="login-form-field"
-                required
-            /><br /><br />
-            <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
-        </form>
+        <div class="login_wrapper">
+            <div class="login">
+                <h1 class="mb-20 text-center" id="caption" data-lang="caption"></h1>
+                <div class=" lang">
+                    <button onclick="changeLang('en')">
+                        <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
+                        <span data-lang="language-switcher-text-english">English</span>
+                    </button>
+                    <button onclick="changeLang('de')">
+                        <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
+                        <span data-lang="language-switcher-text-german">German</span>
+                    </button>
+                    <button onclick="changeLang('pt')">
+                        <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
+                        <span data-lang="language-switcher-text-portuguese">Portuguese</span>
+                    </button>
+                </div>
+                
+                <form id="login_form" action="vip_dashboard.html">
+                    <div class="box">
+                        <label for="username" id="username-label" data-lang="username-label">: </label>
+                        <input
+                            type="text"
+                            id="username-input-field"
+                            name="username"
+                            class="login-form-field"
+                            required
+                        />
+                    </div>
+                    <div class="box">
+                        <label for="password" id="password-label" data-lang="password-label">: </label>
+                        <div class="input_box">
+                            <input type="password" id="password-input-field" name="password" class="login-form-field"
+                                required />
+                        </div>
+                    </div>
+                    <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
+                </form>        
+            </div>
+        </div>
     </body>
 </html>
