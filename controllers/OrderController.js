@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 27th February 2022
+ * Last Modified: Monday, 28th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -17,6 +17,16 @@
      */
     function getUndoneOrders() {
         return DatabaseAPI.Orders.getUndoneOrders();
+    }
+
+    /**
+     * Get all undone orders for a certain table.
+     *
+     * @param {number} table The table number.
+     * @returns {Array} The array with all undone orders for the table.
+     */
+    function getUndoneOrdersForTable(table) {
+        return getUndoneOrders().filter((o) => (o.table = table));
     }
 
     /**
@@ -526,4 +536,5 @@
         undeclareItemAsProductOnTheHouse;
     exports.OrderController.createBillForOrder = createBillForOrder;
     exports.OrderController.completeOrder = completeOrder;
+    exports.OrderController.getUndoneOrdersForTable = getUndoneOrdersForTable;
 })(jQuery, window);

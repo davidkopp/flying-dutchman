@@ -3,7 +3,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 27th February 2022
+ * Last Modified: Monday, 28th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals DB, OrderController */
@@ -27,6 +27,21 @@ describe("OrderController", function () {
 
         expect(undoneOrders).toBeTruthy();
         expect(undoneOrders.length).toBeGreaterThan(0);
+    });
+
+    it("should be able to get undone orders for a certain table", function () {
+        const newOrder = {
+            table: 42,
+            items: [],
+        };
+
+        const createdOrder = OrderController.createOrder(newOrder);
+
+        const result = OrderController.getUndoneOrdersForTable(newOrder.table);
+
+        expect(result).toBeTruthy();
+        expect(result.length).toBeGreaterThan(0);
+        expect(result[result.length - 1]).toEqual(createdOrder);
     });
 
     it("should be able to create a simple order", function () {
