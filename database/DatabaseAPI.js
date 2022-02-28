@@ -516,6 +516,19 @@ DatabaseAPI = (function ($) {
     }
 
     //=========================================================================
+    // HIDE FROM MENU
+    //=========================================================================
+
+    /**
+     * Returns the list of beverages that should be hidden in the menu.
+     *
+     * @returns {Array} The array with beverages numbers
+     */
+    function getHideFromMenuList() {
+        return copy(DB.hideFromMenu);
+    }
+
+    //=========================================================================
     // BILLS
     //=========================================================================
 
@@ -598,6 +611,9 @@ DatabaseAPI = (function ($) {
             getInventory: getInventory,
             getInventoryItemByBeverageNr: getInventoryItemByBeverageNr,
             updateNumberInStockForBeverage: updateNumberInStockForBeverage,
+        },
+        HideFromMenu: {
+            getHideFromMenuList: getHideFromMenuList,
         },
     };
 })(jQuery);

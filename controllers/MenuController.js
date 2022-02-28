@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Friday, 25th February 2022
+ * Last Modified: Monday, 28th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -16,19 +16,23 @@
 
     /** Initialize the menu with the information about the available beverages. */
     function initMenu() {
-        let inventoryItems = DatabaseAPI.Inventory.getInventory();
+        const inventoryItems = DatabaseAPI.Inventory.getInventory();
+        const hideFromMenuList = DatabaseAPI.HideFromMenu.getHideFromMenuList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
             let beverageNr = inventoryItem.beverageNr;
 
-            // Check if it is set to `active` or should be hidden from the menu.
-            // If so, skip it.
-            if (
-                inventoryItem.hideFromMenu === true ||
-                inventoryItem.active === false
-            ) {
+            // Check if the beverage number is marked as "hide from menu". If so, skip it.
+            if (hideFromMenuList.includes(beverageNr)) {
                 console.log(
-                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' has the "hideFromMenu" property set to '${inventoryItem.hideFromMenu}' and the "active" property set to '${inventoryItem.active}'. Don't show it in the menu.`
+                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' is included in the "hideFromMenu" list. Don't show it in the menu.`
+                );
+                continue;
+            }
+            // Check if the inventory item is set to `active`. If not, skip it.
+            if (inventoryItem.active === false) {
+                console.log(
+                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' has the "active" property set to '${inventoryItem.active}'. Don't show it in the menu.`
                 );
                 continue;
             }
