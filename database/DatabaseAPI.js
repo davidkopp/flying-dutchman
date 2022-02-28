@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 27th February 2022
+ * Last Modified: Monday, 28th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -597,8 +597,7 @@ DatabaseAPI = (function ($) {
         Inventory: {
             getInventory: getInventory,
             getInventoryItemByBeverageNr: getInventoryItemByBeverageNr,
-            updateNumberInStockForBeverage,
-            updateNumberInStockForBeverage,
+            updateNumberInStockForBeverage: updateNumberInStockForBeverage,
         },
     };
 })(jQuery);
