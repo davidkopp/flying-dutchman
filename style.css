@@ -5,25 +5,29 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Friday, 25th February 2022
+ * Last Modified: Monday, 28th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
- @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500&display=swap");
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
 }
 
 .hidden {
     display: none;
 }
 
+/*=============Language Switcher================*/
+
 .language-button {
     width: 10px;
 }
+
+/*=============Menu Page================*/
 
 .menu-item {
     max-width: 300px;
@@ -55,51 +59,48 @@
     font-weight: bold;
 }
 
-
-
 /*=============Landing Page================*/
-.align{
+.align {
     display: flex;
     justify-content: space-between;
     padding: 15px;
     background-color: #f2f2f2;
     align-items: center;
 }
-.align .left h1{
+.align .left h1 {
     margin-bottom: 0;
     font-size: 20px;
     font-weight: 500;
 }
-.align .right{
+.align .right {
     padding-right: 20px;
 }
-.align .right ul{
+.align .right ul {
     list-style: none;
     display: flex;
     align-items: center;
 }
-.align .right ul li a{
+.align .right ul li a {
     display: inline-block;
     padding: 0 10px;
     color: #000;
     text-decoration: none;
-
 }
-.banner{
-    background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+.banner {
+    background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
     background-size: cover;
     background-position: center;
     width: 100%;
     height: calc(100vh - 54px);
     position: relative;
 }
-.banner .overlay{
+.banner .overlay {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
-.banner .overlay .content{
+.banner .overlay .content {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -107,31 +108,31 @@
     height: 100%;
     align-items: center;
 }
-.banner .overlay .content h1{
+.banner .overlay .content h1 {
     text-align: center;
     font-size: 50px;
     font-weight: 500;
     color: #fff;
-
 }
- .lang{
+.lang {
     position: absolute;
     top: 20px;
     right: 40px;
 }
-#menu_wrapper .lang{
+#menu_wrapper .lang {
     top: 70px;
     right: 20px;
 }
-.lang button,.lang-flag button{
+.lang button,
+.lang-flag button {
     display: inline-block;
     padding: 5px 20px;
     border: none;
 }
-.banner .overlay .content .routes{
+.banner .overlay .content .routes {
     margin: 15px 0;
 }
-.btn{
+.btn {
     border: none;
     display: inline-block;
     color: #000;
@@ -142,20 +143,19 @@
     text-align: center;
     font-weight: 500;
 }
-.btn-security{
-background-color: #8a3704;
-color: #fff;
-min-width: unset;
+.btn-security {
+    background-color: #8a3704;
+    color: #fff;
+    min-width: unset;
 }
-.btn-bill{
-background-color: #d9810f;
-color: #fff;
-min-width: unset;
+.btn-bill {
+    background-color: #d9810f;
+    color: #fff;
+    min-width: unset;
 }
-
 
 /*===================Login================*/
-.login_wrapper{
+.login_wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -163,36 +163,36 @@ min-width: unset;
     width: 100%;
     background-color: #033d66;
 }
-.login{
+.login {
     max-width: 400px;
     width: 100%;
-    padding:40px 20px 30px;
+    padding: 40px 20px 30px;
     background-color: #fff;
 }
-.box{
-display: flex;
-margin-bottom: 15px;
-align-items: center;
+.box {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
 }
-.box label{
+.box label {
     margin-bottom: 0;
     min-width: 80px;
     margin-bottom: 0;
 }
-.box .input_box{
+.box .input_box {
     margin-left: 20px;
     max-width: 300px;
     width: 100%;
 }
 .box .input_box input,
-.box .input_box select{
+.box .input_box select {
     height: 30px;
     border: 1px solid #e1e1e1;
     outline: none;
     width: 100%;
     padding-left: 10px;
 }
-.login #login-form-submit{
+.login #login-form-submit {
     width: 100%;
     display: block;
     padding: 10px;
@@ -204,15 +204,15 @@ align-items: center;
     cursor: pointer;
 }
 
-.mb-20{
+.mb-20 {
     margin-bottom: 20px;
 }
-.text-center{
+.text-center {
     text-align: center;
 }
-.text-white{
+.text-white {
     color: #fff;
 }
-.mt-20{
+.mt-20 {
     margin-top: 20px;
 }
