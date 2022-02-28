@@ -5,30 +5,34 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Friday, 25th February 2022
+ * Last Modified: Monday, 28th February 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
-(function ($) {
+(function ($, exports) {
     $(document).ready(function () {
         initMenu();
     });
 
     /** Initialize the menu with the information about the available beverages. */
     function initMenu() {
-        let inventoryItems = DatabaseAPI.Inventory.getInventory();
+        const inventoryItems = DatabaseAPI.Inventory.getInventory();
+        const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
             let beverageNr = inventoryItem.beverageNr;
 
-            // Check if it is set to `active` or should be hidden from the menu.
-            // If so, skip it.
-            if (
-                inventoryItem.hideFromMenu === true ||
-                inventoryItem.active === false
-            ) {
+            // Check if the beverage number is marked as "hide from menu". If so, skip it.
+            if (hideFromMenuList.includes(beverageNr)) {
                 console.log(
-                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' has the "hideFromMenu" property set to '${inventoryItem.hideFromMenu}' and the "active" property set to '${inventoryItem.active}'. Don't show it in the menu.`
+                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' is included in the "hideFromMenu" list. Don't show it in the menu.`
+                );
+                continue;
+            }
+            // Check if the inventory item is set to `active`. If not, skip it.
+            if (inventoryItem.active === false) {
+                console.log(
+                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' has the "active" property set to '${inventoryItem.active}'. Don't show it in the menu.`
                 );
                 continue;
             }
@@ -72,6 +76,9 @@
             // Beer or cider
             menuItemHTML = `
             <div class="menu-item menu-item-beer">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -105,6 +112,9 @@
             // Wine
             menuItemHTML = `
             <div class="menu-item menu-item-wine">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -138,6 +148,9 @@
             // Cocktails / Drinks / Mixed drinks
             menuItemHTML = `
             <div class="menu-item menu-item-drink">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -167,6 +180,9 @@
             // Water
             menuItemHTML = `
             <div class="menu-item menu-item-water">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -186,6 +202,9 @@
             );
             menuItemHTML = `
             <div class="menu-item menu-item-other">
+                <span class="menu-item-property menu-item-id hidden">
+                ${beverage.nr}
+                </span>
                 <span class="menu-item-property menu-item-name">
                 ${beverage.name}
                 </span>
@@ -209,6 +228,35 @@
     }
 
     /**
+     * Refreshes the menu in the view by removing all child notes from the menu
+     * container and reinitializes it.
+     */
+    function refreshMenu() {
+        $("#menu-container").empty();
+        initMenu();
+    }
+
+    /**
+     * Removes a beverage from the list "hideFromMenu" and refreshes the menu in the view.
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+    function showBeverageInMenu(beverageNr) {
+        DatabaseAPI.HideFromMenu.removeBeverageNrFromList(beverageNr);
+        refreshMenu();
+    }
+
+    /**
+     * Adds a beverage to the list "hideFromMenu" and refreshes the menu in the view.
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+    function hideBeverageFromMenu(beverageNr) {
+        DatabaseAPI.HideFromMenu.addBeverageNrToList(beverageNr);
+        refreshMenu();
+    }
+
+    /**
      * Checks if a text includes substrings given by an array.
      *
      * @param {string} text The text to check
@@ -229,4 +277,9 @@
     function extractYearOutOfDate(dateString) {
         return new Date(dateString).getFullYear();
     }
+
+    exports.MenuController = {};
+    exports.MenuController.initMenu = initMenu;
+    exports.MenuController.showBeverageInMenu = showBeverageInMenu;
+    exports.MenuController.hideBeverageFromMenu = hideBeverageFromMenu;
 })(jQuery, window);

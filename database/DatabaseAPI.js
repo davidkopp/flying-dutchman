@@ -11,23 +11,6 @@
 /* global DB, BeveragesDB */
 
 DatabaseAPI = (function ($) {
-    /**
-     * Creates a deep copy of an given object or array. If it's not an object or
-     * an array it returns the parameter.
-     *
-     * @param {object} obj The object or array to copy
-     * @returns {object} The copied object or array
-     */
-    function copy(obj) {
-        if (Array.isArray(obj)) {
-            return $.extend(true, [], obj);
-        }
-        if (typeof obj === "object") {
-            return $.extend(true, {}, obj);
-        }
-        return obj;
-    }
-
     //=========================================================================
     // USERS
     //=========================================================================
@@ -356,32 +339,6 @@ DatabaseAPI = (function ($) {
         return collectorSortable;
     }
 
-    /**
-     * Adds an item to a set, only if the item is not already there. The set is
-     * modelled using an array.
-     *
-     * @param {Array} set The set.
-     * @param {object} item The item.
-     * @returns {Array} Set that contains the item.
-     */
-    function addToSet(set, item) {
-        if (!set.includes(item)) {
-            set.push(item);
-        }
-        return set;
-    }
-
-    /**
-     * Convenience function to change "xx%" into the percentage in whole numbers
-     * (non-strings).
-     *
-     * @param {string} percentStr The percentage as a string.
-     * @returns {number} The percentage as a number.
-     */
-    function percentToNumber(percentStr) {
-        return Number(percentStr.slice(0, -1));
-    }
-
     //=========================================================================
     // ORDERS
     //=========================================================================
@@ -516,6 +473,45 @@ DatabaseAPI = (function ($) {
     }
 
     //=========================================================================
+    // HIDE FROM MENU
+    //=========================================================================
+
+    /**
+     * Returns the list of beverages that should be hidden in the menu.
+     *
+     * @returns {Array} The array with beverages numbers
+     */
+    function getHideFromMenuList() {
+        return copy(DB.hideFromMenu);
+    }
+
+    /**
+     * Adds a beverage number to the "hideFromMenu" list.
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+    function addBeverageNrToList(beverageNr) {
+        if (!beverageNr) {
+            return;
+        }
+
+        DB.hideFromMenu = addToSet(DB.hideFromMenu, beverageNr);
+    }
+
+    /**
+     * Removes a beverage number from the "hideFromMenu" list.
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+    function removeBeverageNrFromList(beverageNr) {
+        if (!beverageNr) {
+            return;
+        }
+
+        DB.hideFromMenu = removeFromArray(DB.hideFromMenu, beverageNr);
+    }
+
+    //=========================================================================
     // BILLS
     //=========================================================================
 
@@ -560,6 +556,68 @@ DatabaseAPI = (function ($) {
         return copy(bill);
     }
 
+    //=========================================================================
+    // HELPER FUNCTIONS
+    //=========================================================================
+
+    /**
+     * Creates a deep copy of an given object or array. If it's not an object or
+     * an array it returns the parameter.
+     *
+     * @param {object} obj The object or array to copy
+     * @returns {object} The copied object or array
+     */
+    function copy(obj) {
+        if (Array.isArray(obj)) {
+            return $.extend(true, [], obj);
+        }
+        if (typeof obj === "object") {
+            return $.extend(true, {}, obj);
+        }
+        return obj;
+    }
+
+    /**
+     * Adds an item to a set, only if the item is not already there. The set is
+     * modelled using an array.
+     *
+     * @param {Array} set The set.
+     * @param {object} item The item.
+     * @returns {Array} Set that contains the item.
+     */
+    function addToSet(set, item) {
+        if (!set.includes(item)) {
+            set.push(item);
+        }
+        return set;
+    }
+
+    /**
+     * Removes an item from an array (or set).
+     *
+     * @param {Array} set The array.
+     * @param {object} item The item.
+     * @returns {Array} Array without the item.
+     */
+    function removeFromArray(array, item) {
+        const index = array.indexOf(item);
+        if (index > -1) {
+            array.splice(index, 1); // 2nd parameter means remove one item only
+        }
+        return array;
+    }
+
+    /**
+     * Convenience function to change "xx%" into the percentage in whole numbers
+     * (non-strings).
+     *
+     * @param {string} percentStr The percentage as a string.
+     * @returns {number} The percentage as a number.
+     */
+    function percentToNumber(percentStr) {
+        return Number(percentStr.slice(0, -1));
+    }
+
     /**
      * Make functions available to others (especially controllers) Usage: e.g.
      * `DatabaseAPI.Users.getAllUserUserNames();`
@@ -598,6 +656,11 @@ DatabaseAPI = (function ($) {
             getInventory: getInventory,
             getInventoryItemByBeverageNr: getInventoryItemByBeverageNr,
             updateNumberInStockForBeverage: updateNumberInStockForBeverage,
+        },
+        HideFromMenu: {
+            getList: getHideFromMenuList,
+            addBeverageNrToList: addBeverageNrToList,
+            removeBeverageNrFromList: removeBeverageNrFromList,
         },
     };
 })(jQuery);
