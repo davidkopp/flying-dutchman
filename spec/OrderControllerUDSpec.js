@@ -8,7 +8,7 @@
  */
 /* globals DB, OrderControllerUD, UNDOmanager */
 
-describe("OrderControllerUD.UD", function () {
+describe("OrderControllerUD", function () {
     let savedOrders;
     let savedInventory;
     let undoManager;
@@ -62,8 +62,7 @@ describe("OrderControllerUD.UD", function () {
             ],
             notes: "Note",
         };
-        const createOrderFunc = OrderControllerUD.createOrderFunc();
-        const createdOrder = UNDOmanager.doit(createOrderFunc(newOrder));
+        const createdOrder = OrderControllerUD.createOrder(newOrder);
 
         expect(createdOrder).toBeTruthy();
         expect(createdOrder.id).toBeTruthy();
@@ -108,7 +107,8 @@ describe("OrderControllerUD.UD", function () {
             notes: "Note2",
         };
 
-        const editedOrder = OrderControllerUD.editOrder(orderEdited);
+        const editOrderFunc = OrderControllerUD.editOrderUNDOFunc(orderEdited);
+        const editedOrder = undoManager.doit(editOrderFunc);
 
         expect(editedOrder).toBeTruthy();
         expect(editedOrder.id).toBeTruthy();
@@ -167,10 +167,11 @@ describe("OrderControllerUD.UD", function () {
             beverageNr: "8507802",
         };
 
-        const editedOrder = OrderControllerUD.addItemToOrder(
+        const addItemToOrderFunc = OrderControllerUD.addItemToOrderUNDOFunc(
             createdOrder.id,
             newItem
         );
+        const editedOrder = undoManager.doit(addItemToOrderFunc);
 
         expect(editedOrder).toBeTruthy();
         expect(editedOrder.items).toBeTruthy();
@@ -196,10 +197,12 @@ describe("OrderControllerUD.UD", function () {
 
         const createdOrder = OrderControllerUD.createOrder(newOrder);
 
-        const editedOrder = OrderControllerUD.removeItemFromOrder(
-            createdOrder.id,
-            createdOrder.items[0]
-        );
+        const removeItemFromOrderFunc =
+            OrderControllerUD.removeItemFromOrderUNDOFunc(
+                createdOrder.id,
+                createdOrder.items[0]
+            );
+        const editedOrder = undoManager.doit(removeItemFromOrderFunc);
 
         expect(editedOrder).toBeTruthy();
         expect(editedOrder.items).toBeTruthy();
@@ -226,10 +229,12 @@ describe("OrderControllerUD.UD", function () {
 
         const updatedNote = "Note updated";
 
-        const updatedOrder = OrderControllerUD.changeNoteOfOrder(
-            createdOrder.id,
-            updatedNote
-        );
+        const changeNoteOfOrderFunc =
+            OrderControllerUD.changeNoteOfOrderUNDOFunc(
+                createdOrder.id,
+                updatedNote
+            );
+        const updatedOrder = undoManager.doit(changeNoteOfOrderFunc);
 
         expect(updatedOrder).toBeTruthy();
         expect(updatedOrder.note).toBeTruthy();
@@ -250,9 +255,13 @@ describe("OrderControllerUD.UD", function () {
 
         expect(createdOrder.items[0].productOnTheHouse).toBe(undefined);
 
-        const updatedOrder = OrderControllerUD.declareItemAsProductOnTheHouse(
-            createdOrder.id,
-            createdOrder.items[0].id
+        const declareItemAsProductOnTheHouseFunc =
+            OrderControllerUD.declareItemAsProductOnTheHouseUNDOFunc(
+                createdOrder.id,
+                createdOrder.items[0].id
+            );
+        const updatedOrder = undoManager.doit(
+            declareItemAsProductOnTheHouseFunc
         );
 
         expect(updatedOrder).toBeTruthy();
@@ -276,9 +285,13 @@ describe("OrderControllerUD.UD", function () {
 
         expect(createdOrder.items[0].productOnTheHouse).toBe(true);
 
-        const updatedOrder = OrderControllerUD.undeclareItemAsProductOnTheHouse(
-            createdOrder.id,
-            createdOrder.items[0].id
+        const undeclareItemAsProductOnTheHouseFunc =
+            OrderControllerUD.undeclareItemAsProductOnTheHouseUNDOFunc(
+                createdOrder.id,
+                createdOrder.items[0].id
+            );
+        const updatedOrder = undoManager.doit(
+            undeclareItemAsProductOnTheHouseFunc
         );
 
         expect(updatedOrder).toBeTruthy();
@@ -375,7 +388,11 @@ describe("OrderControllerUD.UD", function () {
                     newItem.beverageNr
                 ).quantity;
 
-            OrderControllerUD.addItemToOrder(createdOrder.id, newItem);
+            const addItemToOrderFunc = OrderControllerUD.addItemToOrderUNDOFunc(
+                createdOrder.id,
+                newItem
+            );
+            undoManager.doit(addItemToOrderFunc);
 
             const actualNumberInStockAfterItemIsAddedToOrder =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
@@ -406,10 +423,12 @@ describe("OrderControllerUD.UD", function () {
                     createdOrder.items[0].beverageNr
                 ).quantity;
 
-            OrderControllerUD.removeItemFromOrder(
-                createdOrder.id,
-                createdOrder.items[0]
-            );
+            const removeItemFromOrderFunc =
+                OrderControllerUD.removeItemFromOrderUNDOFunc(
+                    createdOrder.id,
+                    createdOrder.items[0]
+                );
+            undoManager.doit(removeItemFromOrderFunc);
 
             const actualNumberInStockAfterItemIsRemovedFromOrder =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(

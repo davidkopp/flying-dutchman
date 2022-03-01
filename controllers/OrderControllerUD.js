@@ -8,7 +8,6 @@
  * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals UNDOmanager */
 
 (function ($, exports) {
     //=========================================================================
@@ -39,30 +38,6 @@
     //=========================================================================
 
     /**
-     * Creates a function object for the operation "create order" that can be
-     * used with the UNDOmanager.
-     *
-     * @param {object} order The order object.
-     * @returns {object} Object with the three functions `execute`, `unexecute`
-     *   and `reexecute`.
-     */
-    function createOrderFunc(order) {
-        return {
-            execute: function () {
-                return _createOrder(order);
-            },
-
-            unexecute: function () {
-                return _removeOrderById(order.id);
-            },
-
-            reexecute: function () {
-                return _createOrder(order);
-            },
-        };
-    }
-
-    /**
      * Creates a function object for the operation "edit order" that can be used
      * with the UNDOmanager. *
      *
@@ -70,7 +45,7 @@
      * @returns {object} Object with the three functions `execute`, `unexecute`
      *   and `reexecute`.
      */
-    function editOrderFunc(order) {
+    function editOrderUNDOFunc(order) {
         return {
             oldOrder: _copyObject(order),
 
@@ -89,32 +64,6 @@
     }
 
     /**
-     * Creates a function object for the operation "remove order" that can be
-     * used with the UNDOmanager. *
-     *
-     * @param {object} order The order object.
-     * @returns {object} Object with the three functions `execute`, `unexecute`
-     *   and `reexecute`.
-     */
-    function removeOrderFunc(order) {
-        return {
-            oldOrder: _copyObject(order),
-
-            execute: function () {
-                return _removeOrderById(order.id);
-            },
-
-            unexecute: function () {
-                return _restoreOrder(this.oldOrder);
-            },
-
-            reexecute: function () {
-                return _removeOrderById(order.id);
-            },
-        };
-    }
-
-    /**
      * Creates a function object for the operation "add item to order" that can
      * be used with the UNDOmanager. *
      *
@@ -123,7 +72,7 @@
      * @returns {object} Object with the three functions `execute`, `unexecute`
      *   and `reexecute`.
      */
-    function addItemToOrderFunc(orderId, item) {
+    function addItemToOrderUNDOFunc(orderId, item) {
         return {
             execute: function () {
                 return _addItemToOrder(orderId, item);
@@ -148,7 +97,7 @@
      * @returns {object} Object with the three functions `execute`, `unexecute`
      *   and `reexecute`.
      */
-    function removeItemFromOrderFunc(orderId, item) {
+    function removeItemFromOrderUNDOFunc(orderId, item) {
         return {
             execute: function () {
                 return _removeItemFromOrder(orderId, item);
@@ -173,7 +122,7 @@
      * @param {string} newNote The new note
      * @returns {object} The stored order object with the note
      */
-    function changeNoteOfOrderFunc(orderId, newNote) {
+    function changeNoteOfOrderUNDOFunc(orderId, newNote) {
         return {
             oldNote: (function () {
                 const order = DatabaseAPI.Orders.getOrderById(orderId);
@@ -205,7 +154,7 @@
      * @param {string} itemId The item ID.
      * @returns {object} The stored order object with the updated item.
      */
-    function declareItemAsProductOnTheHouseFunc(orderId, itemId) {
+    function declareItemAsProductOnTheHouseUNDOFunc(orderId, itemId) {
         return {
             execute: function () {
                 return _declareItemAsProductOnTheHouse(orderId, itemId);
@@ -229,7 +178,7 @@
      * @param {string} itemId The item ID.
      * @returns {object} The stored order object with the updated item.
      */
-    function undeclareItemAsProductOnTheHouseFunc(orderId, itemId) {
+    function undeclareItemAsProductOnTheHouseUNDOFunc(orderId, itemId) {
         return {
             execute: function () {
                 return _undeclareItemAsProductOnTheHouse(orderId, itemId);
@@ -243,6 +192,145 @@
                 return _undeclareItemAsProductOnTheHouse(orderId, itemId);
             },
         };
+    }
+
+    //=========================================================================
+    // PUBLIC FUNCTIONS WITHOUT UNDO CAPABILITIES
+    //=========================================================================
+
+    /**
+     * Creates a new order. Note: It directly updates the inventory on the basis
+     * of the order items, to make sure that they are reserved and will
+     * definitely be available for this order.
+     *
+     * @param {object} order The new order
+     * @returns {object} The created order object, or null if there was an error.
+     */
+    function createOrder(order) {
+        if (!_validateOrder(order)) {
+            // TODO: Error Handling
+            return null;
+        }
+        if (order.id) {
+            console.log(
+                "OrderControllerUD.createOrder | To create a new order it must not have an ID! To change the order use `editOrder` instead."
+            );
+        }
+
+        // Set an id to every item (→ removing an item with an id is easy)
+        for (let i = 0; i < order.items.length; i++) {
+            order.items[i].id = i + 1;
+        }
+
+        const newOrder = {
+            table: order.table,
+            items: order.items,
+            notes: typeof order.notes == "string" ? order.notes : "",
+            done: typeof order.done == "boolean" ? order.done : false,
+            billId: order.billId ? order.billId : null,
+        };
+
+        // Try to update number in stock for the items
+        try {
+            _reduceNumberInStockOfItemsByOne(newOrder.items);
+        } catch (error) {
+            console.log(
+                `OrderControllerUD.createOrder | Exception was thrown: ${error.message}`
+            );
+            return null;
+        }
+
+        return DatabaseAPI.Orders.saveOrder(newOrder);
+    }
+
+    /**
+     * Remove an order by ID. Note: It directly updates the inventory on the
+     * basis of the order items, so the items are available for other orders again.
+     *
+     * @param {number} orderId The ID of the order to remove
+     */
+    function removeOrderById(orderId) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderControllerUD.removeOrderById | Order with id '${orderId}' does not exist!`
+            );
+            return;
+        }
+
+        // Update number in stock
+        _increaseNumberInStockOfItemsByOne(order.items);
+
+        DatabaseAPI.Orders.removeOrderById(order.id);
+    }
+
+    /**
+     * Creates a bill for an order.
+     *
+     * @param {number} orderId The order id.
+     * @param {string} splittingType 'single' or 'group'. If omitted, 'single' is used.
+     * @param {boolean} vipAccount 'true' if account balance of an VIP should be
+     *   used for the bill. If omitted, 'false' is used.
+     * @returns {object} The bill object stored in the database.
+     */
+    function createBillForOrder(orderId, splittingType, vipAccount) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderControllerUD._createBillForOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        const totalAmountForOrder = _calculateTotalAmount(order.items);
+
+        if (vipAccount) {
+            // TODO: Check if the account balance is high enough for the order
+        }
+
+        const newBill = {
+            type: splittingType ? splittingType : "single",
+            vipAccount: vipAccount ? vipAccount : false,
+            timestamp: new Date(),
+            amountSEK: totalAmountForOrder,
+        };
+
+        return DatabaseAPI.Bills.saveBill(newBill);
+    }
+
+    /**
+     * Completes an order: Add bill to an order, set order to done and reduce
+     * account balance of VIP if the bill is for an VIP member.
+     *
+     * @param {number} orderId The order id.
+     * @param {number} billId The bill id.
+     * @returns {object} The updated order object.
+     */
+    function completeOrder(orderId, billId) {
+        let order = DatabaseAPI.Orders.getOrderById(orderId);
+        if (!order) {
+            console.log(
+                `OrderControllerUD._completeOrder | Order with id '${orderId}' does not exist!`
+            );
+            return null;
+        }
+
+        const bill = DatabaseAPI.Bills.getBillById(billId);
+        if (!bill) {
+            console.log(
+                `OrderControllerUD._completeOrder | Bill with id '${billId}' does not exist!`
+            );
+            return null;
+        }
+
+        order.billId = billId;
+        order.done = true;
+
+        if (bill.vipAccount) {
+            // TODO: Reduce account balance for VIP
+        }
+
+        return DatabaseAPI.Orders.saveOrder(order);
     }
 
     //=========================================================================
@@ -322,96 +410,8 @@
     }
 
     //=========================================================================
-    // FUNCTIONS TO UPDATE THE VIEW
-    //=========================================================================
-
-    /** Updates the view. */
-    function _updateView() {
-        // TODO: Implement logic for update view
-    }
-
-    //=========================================================================
     // PRIVATE FUNCTIONS FOR HANDLING THE ACTUAL LOGIC
     //=========================================================================
-
-    /**
-     * Creates a new order. Note: It directly updates the inventory on the basis
-     * of the order items, to make sure that they are reserved and will
-     * definitely be available for this order.
-     *
-     * @param {object} order The new order
-     * @returns {object} The created order object, or null if there was an error.
-     */
-    function _createOrder(order) {
-        if (!_validateOrder(order)) {
-            // TODO: Error Handling
-            return null;
-        }
-        if (order.id) {
-            console.log(
-                "OrderControllerUD.createOrder | To create a new order it must not have an ID! To change the order use `editOrder` instead."
-            );
-        }
-
-        // Set an id to every item (→ removing an item with an id is easy)
-        for (let i = 0; i < order.items.length; i++) {
-            order.items[i].id = i + 1;
-        }
-
-        const newOrder = {
-            table: order.table,
-            items: order.items,
-            notes: typeof order.notes == "string" ? order.notes : "",
-            done: typeof order.done == "boolean" ? order.done : false,
-            billId: order.billId ? order.billId : null,
-        };
-
-        // Try to update number in stock for the items
-        try {
-            _reduceNumberInStockOfItemsByOne(newOrder.items);
-        } catch (error) {
-            console.log(
-                `OrderControllerUD.createOrder | Exception was thrown: ${error.message}`
-            );
-            return null;
-        }
-
-        return DatabaseAPI.Orders.saveOrder(newOrder);
-    }
-
-    /**
-     * Restores a previous already existing order. This function should be only
-     * used in the context of UNDO-REDO. Note: It directly updates the inventory
-     * on the basis of the order items, to make sure that they are reserved and
-     * will definitely be available for this order.
-     *
-     * @param {object} order The order object.
-     * @returns {object} The restored order object in the database, or null if
-     *   there was an error.
-     */
-    function _restoreOrder(order) {
-        if (!_validateOrder(order)) {
-            // TODO: Error Handling
-            return null;
-        }
-        if (!order.id) {
-            console.log(
-                "OrderControllerUD._restoreOrder | To restore an order it must have an ID! To create a new order use `createOrder` instead."
-            );
-        }
-
-        // Try to update number in stock for the items
-        try {
-            _reduceNumberInStockOfItemsByOne(order.items);
-        } catch (error) {
-            console.log(
-                `OrderControllerUD._restoreOrder | Exception was thrown: ${error.message}`
-            );
-            return null;
-        }
-
-        return DatabaseAPI.Orders.saveOrder(order);
-    }
 
     /**
      * Edits an order. It does not change the items of an order. To change the
@@ -448,27 +448,6 @@
         }
 
         return DatabaseAPI.Orders.saveOrder(orderToEdit);
-    }
-
-    /**
-     * Remove an order by ID. Note: It directly updates the inventory on the
-     * basis of the order items, so the items are available for other orders again.
-     *
-     * @param {number} orderId The ID of the order to remove
-     */
-    function _removeOrderById(orderId) {
-        let order = DatabaseAPI.Orders.getOrderById(orderId);
-        if (!order) {
-            console.log(
-                `OrderControllerUD.removeOrderById | Order with id '${orderId}' does not exist!`
-            );
-            return;
-        }
-
-        // Update number in stock
-        _increaseNumberInStockOfItemsByOne(order.items);
-
-        DatabaseAPI.Orders.removeOrderById(order.id);
     }
 
     /**
@@ -630,75 +609,6 @@
         return DatabaseAPI.Orders.saveOrder(order);
     }
 
-    /**
-     * Creates a bill for an order.
-     *
-     * @param {number} orderId The order id.
-     * @param {string} splittingType 'single' or 'group'. If omitted, 'single' is used.
-     * @param {boolean} vipAccount 'true' if account balance of an VIP should be
-     *   used for the bill. If omitted, 'false' is used.
-     * @returns {object} The bill object stored in the database.
-     */
-    function createBillForOrder(orderId, splittingType, vipAccount) {
-        let order = DatabaseAPI.Orders.getOrderById(orderId);
-        if (!order) {
-            console.log(
-                `OrderControllerUD._createBillForOrder | Order with id '${orderId}' does not exist!`
-            );
-            return null;
-        }
-
-        const totalAmountForOrder = _calculateTotalAmount(order.items);
-
-        if (vipAccount) {
-            // TODO: Check if the account balance is high enough for the order
-        }
-
-        const newBill = {
-            type: splittingType ? splittingType : "single",
-            vipAccount: vipAccount ? vipAccount : false,
-            timestamp: new Date(),
-            amountSEK: totalAmountForOrder,
-        };
-
-        return DatabaseAPI.Bills.saveBill(newBill);
-    }
-
-    /**
-     * Completes an order: Add bill to an order, set order to done and reduce
-     * account balance of VIP if the bill is for an VIP member.
-     *
-     * @param {number} orderId The order id.
-     * @param {number} billId The bill id.
-     * @returns {object} The updated order object.
-     */
-    function completeOrder(orderId, billId) {
-        let order = DatabaseAPI.Orders.getOrderById(orderId);
-        if (!order) {
-            console.log(
-                `OrderControllerUD._completeOrder | Order with id '${orderId}' does not exist!`
-            );
-            return null;
-        }
-
-        const bill = DatabaseAPI.Bills.getBillById(billId);
-        if (!bill) {
-            console.log(
-                `OrderControllerUD._completeOrder | Bill with id '${billId}' does not exist!`
-            );
-            return null;
-        }
-
-        order.billId = billId;
-        order.done = true;
-
-        if (bill.vipAccount) {
-            // TODO: Reduce account balance for VIP
-        }
-
-        return DatabaseAPI.Orders.saveOrder(order);
-    }
-
     //=========================================================================
     // PRIVATE HELPER FUNCTIONS
     //=========================================================================
@@ -815,18 +725,24 @@
     //=========================================================================
 
     exports.OrderControllerUD = {};
+
+    // Public functions without UNDO capabilities
     exports.OrderControllerUD.getUndoneOrders = getUndoneOrders;
     exports.OrderControllerUD.getUndoneOrdersForTable = getUndoneOrdersForTable;
-    exports.OrderControllerUD.createOrderFunc = createOrderFunc;
-    exports.OrderControllerUD.editOrderFunc = editOrderFunc;
-    exports.OrderControllerUD.removeOrderFunc = removeOrderFunc;
-    exports.OrderControllerUD.addItemToOrderFunc = addItemToOrderFunc;
-    exports.OrderControllerUD.removeItemFromOrderFunc = removeItemFromOrderFunc;
-    exports.OrderControllerUD.changeNoteOfOrderFunc = changeNoteOfOrderFunc;
-    exports.OrderControllerUD.declareItemAsProductOnTheHouseFunc =
-        declareItemAsProductOnTheHouseFunc;
-    exports.OrderControllerUD.undeclareItemAsProductOnTheHouseFunc =
-        undeclareItemAsProductOnTheHouseFunc;
+    exports.OrderControllerUD.createOrder = createOrder;
     exports.OrderControllerUD.createBillForOrder = createBillForOrder;
     exports.OrderControllerUD.completeOrder = completeOrder;
+    exports.OrderControllerUD.removeOrderById = removeOrderById;
+
+    // Public functions with UNDO capabilities
+    exports.OrderControllerUD.editOrderUNDOFunc = editOrderUNDOFunc;
+    exports.OrderControllerUD.addItemToOrderUNDOFunc = addItemToOrderUNDOFunc;
+    exports.OrderControllerUD.removeItemFromOrderUNDOFunc =
+        removeItemFromOrderUNDOFunc;
+    exports.OrderControllerUD.changeNoteOfOrderUNDOFunc =
+        changeNoteOfOrderUNDOFunc;
+    exports.OrderControllerUD.declareItemAsProductOnTheHouseUNDOFunc =
+        declareItemAsProductOnTheHouseUNDOFunc;
+    exports.OrderControllerUD.undeclareItemAsProductOnTheHouseUNDOFunc =
+        undeclareItemAsProductOnTheHouseUNDOFunc;
 })(jQuery, window);
