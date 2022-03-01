@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -437,8 +437,8 @@ DatabaseAPI = (function ($) {
      * Returns the inventory item for a specific beverage. Internal: No deep copy.
      *
      * @param {string} beverageNr The beverage number
-     * @returns Inventory item if beverage number exists in inventory. Otherwise
-     *   `undefined`
+     * @returns {object} Inventory item if beverage number exists in inventory.
+     *   Otherwise `undefined`
      */
     function getInventoryItemByBeverageNrInternal(beverageNr) {
         return DB.inventory.find((item) => (item.beverageNr = beverageNr));
@@ -448,8 +448,8 @@ DatabaseAPI = (function ($) {
      * Returns the inventory item for a specific beverage.
      *
      * @param {string} beverageNr The beverage number
-     * @returns Inventory item if beverage number exists in inventory. Otherwise
-     *   `undefined`
+     * @returns {object} Inventory item if beverage number exists in inventory.
+     *   Otherwise `undefined`
      */
     function getInventoryItemByBeverageNr(beverageNr) {
         return copy(getInventoryItemByBeverageNrInternal(beverageNr));
@@ -462,7 +462,7 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number
      * @param {number} newQuantity The new quantity
-     * @returns The updated inventory item
+     * @returns {object} The updated inventory item
      */
     function updateNumberInStockForBeverage(beverageNr, newQuantity) {
         let inventoryItem = getInventoryItemByBeverageNrInternal(beverageNr);
@@ -537,6 +537,12 @@ DatabaseAPI = (function ($) {
         return copy(DB.bills.find((bill) => bill.id === id));
     }
 
+    /**
+     * Saves a bill to the database.
+     *
+     * @param {object} bill The bill object.
+     * @returns {object} The stored bill object.
+     */
     function saveBill(bill) {
         if (!bill) {
             return undefined;
@@ -595,7 +601,7 @@ DatabaseAPI = (function ($) {
     /**
      * Removes an item from an array (or set).
      *
-     * @param {Array} set The array.
+     * @param {Array} array The array.
      * @param {object} item The item.
      * @returns {Array} Array without the item.
      */

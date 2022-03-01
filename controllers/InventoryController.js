@@ -4,7 +4,7 @@
  * Controller that is responsible for everything around managing the inventory: getting inventory items, set items to hide from menu, etc. *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -22,8 +22,8 @@
      * Get the inventory item for a specific beverage.
      *
      * @param {string} beverageNr The beverage number.
-     * @returns Inventory item if beverage number exists in inventory. Otherwise
-     *   `undefined`.
+     * @returns {object} Inventory item if beverage number exists in inventory.
+     *   Otherwise `undefined`.
      */
     function getInventoryItemByBeverageNr(beverageNr) {
         return DatabaseAPI.Inventory.getInventoryItemByBeverageNr(beverageNr);

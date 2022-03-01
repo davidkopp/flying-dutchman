@@ -3,9 +3,10 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 26th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
+/* globals changeLang */
 
 describe("LanguageController", function () {
     beforeEach(function () {

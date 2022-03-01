@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -303,8 +303,8 @@
     /**
      * Declares an item on the order as a "product on the house".
      *
-     * @param {string} orderId The order ID
-     * @param {string} newNote The new note
+     * @param {string} orderId The order ID.
+     * @param {string} itemId The item ID.
      * @returns {object} The stored order object with the updated item.
      */
     function declareItemAsProductOnTheHouse(orderId, itemId) {
@@ -331,8 +331,8 @@
     /**
      * Undeclare an item of the order as a "product on the house".
      *
-     * @param {string} orderId The order ID
-     * @param {string} newNote The new note
+     * @param {string} orderId The order ID.
+     * @param {string} itemId The item ID.
      * @returns {object} The stored order object with the updated item.
      */
     function undeclareItemAsProductOnTheHouse(orderId, itemId) {

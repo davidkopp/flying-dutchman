@@ -8,7 +8,11 @@
         "ecmaVersion": "latest"
     },
     "rules": { "quote-props": ["warn", "consistent"], "no-continue": "off" },
-    "extends": ["eslint:recommended", "plugin:jasmine/recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:jasmine/recommended",
+        "plugin:jsdoc/recommended"
+    ],
     "plugins": ["jsdoc", "jasmine"],
     "globals": {
         "DatabaseAPI": "writable",

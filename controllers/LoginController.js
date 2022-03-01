@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Friday, 25th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -15,6 +15,11 @@
         $("#login-form-submit").click(loginEventHandler);
     });
 
+    /**
+     * The event handler for the the login of an user.
+     *
+     * @param {object} e The event object.
+     */
     function loginEventHandler(e) {
         e.preventDefault();
 

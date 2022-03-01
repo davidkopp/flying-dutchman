@@ -3,12 +3,18 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals DB, MenuController */
 
 describe("MenuController", function () {
+    /**
+     * Checks if the string is somehow part of the menu container in the DOM.
+     *
+     * @param {string} string The string.
+     * @returns {boolean} `true` if string is contained in menu container, `false` if not.
+     */
     function checkIfMenuInDOMContains(string) {
         return $(`#menu-container:contains(${string})`).length >= 1;
     }
