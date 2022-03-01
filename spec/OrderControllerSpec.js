@@ -3,10 +3,10 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals DB, OrderController */
+/* globals DB, OrderController, UNDOmanager */
 
 describe("OrderController", function () {
     let savedOrders;
@@ -583,6 +583,202 @@ describe("OrderController", function () {
             expect(completedOrder).toBeTruthy();
             expect(completedOrder.done).toBe(true);
             expect(completedOrder.billId).toBe(createdBill.id);
+        });
+    });
+
+    describe("with UNDO REDO capabilities", function () {
+        let undoManager;
+
+        beforeEach(function () {
+            undoManager = new UNDOmanager();
+        });
+
+        afterEach(function () {
+            undoManager.cleanup();
+        });
+
+        it("should be able to undo and redo the operation 'add an item to an order'", function () {
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                    {
+                        beverageNr: "1202501",
+                    },
+                ],
+                notes: "Note",
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const newItem = {
+                beverageNr: "8507802",
+            };
+
+            const addItemToOrderFunc = OrderController.addItemToOrderUNDOFunc(
+                createdOrder.id,
+                newItem
+            );
+            const editedOrder = undoManager.doit(addItemToOrderFunc);
+
+            expect(editedOrder).not.toEqual(createdOrder);
+
+            const undoResult = undoManager.undoit(addItemToOrderFunc);
+
+            expect(undoResult).toEqual(createdOrder);
+
+            const redoResult = undoManager.redoit(addItemToOrderFunc);
+
+            expect(redoResult).toEqual(editedOrder);
+        });
+
+        it("should be able to undo and redo the operation 'remove an item from an order'", function () {
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                    {
+                        beverageNr: "1202501",
+                    },
+                ],
+                notes: "Note",
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const removeItemFromOrderFunc =
+                OrderController.removeItemFromOrderUNDOFunc(
+                    createdOrder.id,
+                    createdOrder.items[0]
+                );
+            const editedOrder = undoManager.doit(removeItemFromOrderFunc);
+
+            expect(editedOrder).not.toEqual(createdOrder);
+
+            const undoResult = undoManager.undoit(removeItemFromOrderFunc);
+
+            expect(undoResult).toEqual(createdOrder);
+
+            const redoResult = undoManager.redoit(removeItemFromOrderFunc);
+
+            expect(redoResult).toEqual(editedOrder);
+        });
+
+        it("should be able to undo and redo the operation 'add / update a note from an order'", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                    {
+                        beverageNr: "1202501",
+                    },
+                ],
+                notes: "Note",
+            };
+
+            const createdOrder = OrderController.createOrder(order);
+
+            const updatedNote = "Note updated";
+
+            const changeNoteOfOrderFunc =
+                OrderController.changeNoteOfOrderUNDOFunc(
+                    createdOrder.id,
+                    updatedNote
+                );
+            const updatedOrder = undoManager.doit(changeNoteOfOrderFunc);
+
+            expect(updatedOrder).not.toEqual(createdOrder);
+
+            const undoResult = undoManager.undoit(changeNoteOfOrderFunc);
+
+            expect(undoResult).toEqual(createdOrder);
+
+            const redoResult = undoManager.redoit(changeNoteOfOrderFunc);
+
+            expect(redoResult).toEqual(updatedOrder);
+        });
+
+        it("should be able to undo and redo the operation 'declare an item from an order as a product on the house'", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(order);
+
+            expect(createdOrder.items[0].productOnTheHouse).toBe(undefined);
+
+            const declareItemAsProductOnTheHouseFunc =
+                OrderController.declareItemAsProductOnTheHouseUNDOFunc(
+                    createdOrder.id,
+                    createdOrder.items[0].id
+                );
+            const updatedOrder = undoManager.doit(
+                declareItemAsProductOnTheHouseFunc
+            );
+
+            expect(updatedOrder.items[0].productOnTheHouse).toBe(true);
+
+            const undoResult = undoManager.undoit(
+                declareItemAsProductOnTheHouseFunc
+            );
+
+            expect(undoResult.items[0].productOnTheHouse).toBe(false);
+
+            const redoResult = undoManager.redoit(
+                declareItemAsProductOnTheHouseFunc
+            );
+
+            expect(redoResult.items[0].productOnTheHouse).toBe(true);
+        });
+
+        it("should be able to undo and redo the operation 'undeclare an item from an order as a product on the house'", function () {
+            const order = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                        productOnTheHouse: true,
+                    },
+                ],
+            };
+
+            const createdOrder = OrderController.createOrder(order);
+
+            expect(createdOrder.items[0].productOnTheHouse).toBe(true);
+
+            const undeclareItemAsProductOnTheHouseFunc =
+                OrderController.undeclareItemAsProductOnTheHouseUNDOFunc(
+                    createdOrder.id,
+                    createdOrder.items[0].id
+                );
+            const updatedOrder = undoManager.doit(
+                undeclareItemAsProductOnTheHouseFunc
+            );
+
+            expect(updatedOrder.items[0].productOnTheHouse).toBe(false);
+
+            const undoResult = undoManager.undoit(
+                undeclareItemAsProductOnTheHouseFunc
+            );
+
+            expect(undoResult.items[0].productOnTheHouse).toBe(true);
+
+            const redoResult = undoManager.redoit(
+                undeclareItemAsProductOnTheHouseFunc
+            );
+
+            expect(redoResult.items[0].productOnTheHouse).toBe(false);
         });
     });
 });
