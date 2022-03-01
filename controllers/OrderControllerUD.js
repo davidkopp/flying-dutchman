@@ -8,11 +8,9 @@
  * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
+/* globals UNDOmanager */
 
 (function ($, exports) {
-    // TODO: Use UNDOmanager variable
-    const UNDOmanager = new UNDOmanager(_updateView);
-
     //=========================================================================
     // PUBLIC FUNCTIONS WITHOUT REDO FUNCTIONALITIES
     //=========================================================================
@@ -816,7 +814,7 @@
     // EXPORTS: MAKE FUNCTIONS PUBLIC
     //=========================================================================
 
-    exports.OrderController = {};
+    exports.OrderControllerUD = {};
     exports.OrderControllerUD.getUndoneOrders = getUndoneOrders;
     exports.OrderControllerUD.getUndoneOrdersForTable = getUndoneOrdersForTable;
     exports.OrderControllerUD.createOrderFunc = createOrderFunc;

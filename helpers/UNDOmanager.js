@@ -6,7 +6,7 @@
  *
  * Author: Lars Oestreicher
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /*eslint no-unused-vars: ["error", { "vars": "local" }]*/
@@ -17,7 +17,7 @@
  * @param {Function} [updateViewCallback] A optional callback function that
  *   updates a view.
  */
-const UNDOmanager = function (updateViewCallback) {
+var UNDOmanager = function (updateViewCallback) {
     /**
      * The data base for the UNDO-REDO mechanism is stored in two stacks. Both
      * of these are empty to start with.
@@ -81,5 +81,10 @@ const UNDOmanager = function (updateViewCallback) {
         undostack.push(funcobj);
         callback();
         return retVal;
+    };
+
+    this.cleanup = function () {
+        undostack = [];
+        redostack = [];
     };
 };
