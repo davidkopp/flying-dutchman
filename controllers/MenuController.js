@@ -1,22 +1,25 @@
 /*
- * File: MenuController.js
+ * File: style.css
  *
  * Controller that is responsible for displaying and updating the menu for customers.
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {
+    const inventoryName = Constants.INVENTORIES.BAR;
+
     $(document).ready(function () {
         initMenu();
     });
 
     /** Initialize the menu with the information about the available beverages. */
     function initMenu() {
-        const inventoryItems = DatabaseAPI.Inventory.getInventory();
+        const inventoryItems =
+            DatabaseAPI.Inventory.getInventory(inventoryName);
         const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
@@ -41,7 +44,7 @@
             let quantity = inventoryItem.quantity;
             if (!quantity || quantity < 1) {
                 console.log(
-                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' doesn't have enough quanities left in the inventory (${quantity}). Don't show it in the menu.`
+                    `MenuController.initMenu | The item in the inventory '${inventoryName}' with the beverage number '${beverageNr}' doesn't have enough quanities left in the inventory (${quantity}). Don't show it in the menu.`
                 );
                 continue;
             }
@@ -50,12 +53,12 @@
             // Check if the beverage exists in the beverage db.
             if (!beverage) {
                 console.log(
-                    `MenuController.initMenu | The inventory includes a beverage with the number '${beverageNr}' that is unknown!`
+                    `MenuController.initMenu | The inventory '${inventoryName}' includes a beverage with the number '${beverageNr}' that is unknown!`
                 );
                 continue;
             }
 
-            displayBeverageInMenu(beverage);
+            displayBeverageInMenu(beverage, quantity);
         }
     }
 
@@ -63,10 +66,16 @@
      * Displays the information about a beverage in the menu.
      *
      * @param {object} beverage The beverage item.
+     * @param {number} quantity Number of available beverages left.
      */
-    function displayBeverageInMenu(beverage) {
+    function displayBeverageInMenu(beverage, quantity) {
         if (!beverage) {
             return;
+        }
+
+        let optClassLowInStock;
+        if (quantity < Constants.LOW_STOCK_NUMBER) {
+            optClassLowInStock = "menu-item-is-low-in-stock";
         }
 
         var menuItemHTML = "";
@@ -75,7 +84,7 @@
         if (containsAnyOf(type, Constants.BEER_CATEGORY)) {
             // Beer or cider
             menuItemHTML = `
-            <div class="menu-item menu-item-beer">
+            <div class="menu-item menu-item-beer ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
                 </span>
@@ -111,7 +120,7 @@
         } else if (containsAnyOf(type, Constants.WINE_CATEGORY)) {
             // Wine
             menuItemHTML = `
-            <div class="menu-item menu-item-wine">
+            <div class="menu-item menu-item-wine ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
                 </span>
@@ -147,7 +156,7 @@
         } else if (containsAnyOf(type, Constants.DRINKS_CATEGORY)) {
             // Cocktails / Drinks / Mixed drinks
             menuItemHTML = `
-            <div class="menu-item menu-item-drink">
+            <div class="menu-item menu-item-drink ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
                 </span>
@@ -179,7 +188,7 @@
         } else if (containsAnyOf(type, Constants.WATER_CATEGORY)) {
             // Water
             menuItemHTML = `
-            <div class="menu-item menu-item-water">
+            <div class="menu-item menu-item-water ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
                 </span>
@@ -201,7 +210,7 @@
                 `MenuController.displayBeverageInMenu | Beverage with number '${beverage.nr}' has an unknown type '${beverage.category}'! Display some basic info that could be relevant...`
             );
             menuItemHTML = `
-            <div class="menu-item menu-item-other">
+            <div class="menu-item menu-item-other ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
                 </span>

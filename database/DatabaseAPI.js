@@ -424,35 +424,43 @@ DatabaseAPI = (function ($) {
 
     /**
      * Get all beverages including the information about the quantity in the
-     * inventory and if they should be hidden from the menu and are set to
-     * active. Note: Also beverages are included, that have a `quantity` of 0.
+     * desired inventory and if they should be hidden from the menu and are set
+     * to active. Note: Also beverages are included, that have a `quantity` of 0.
      *
+     * @param {string} inventoryName The name of the inventory (`barInventory`
+     *   or `vipInventory`)
      * @returns {Array} Array that contains all beverages in inventory.
      */
-    function getInventory() {
-        return copy(DB.inventory);
+    function getInventory(inventoryName) {
+        return copy(DB[inventoryName]);
     }
 
     /**
      * Returns the inventory item for a specific beverage. Internal: No deep copy.
      *
+     * @param {string} inventoryName The name of the inventory (`barInventory`
+     *   or `vipInventory`)
      * @param {string} beverageNr The beverage number
      * @returns {object} Inventory item if beverage number exists in inventory.
      *   Otherwise `undefined`
      */
-    function getInventoryItemByBeverageNrInternal(beverageNr) {
-        return DB.inventory.find((item) => (item.beverageNr = beverageNr));
+    function getInventoryItemByBeverageNrInternal(inventoryName, beverageNr) {
+        return DB[inventoryName].find((item) => (item.beverageNr = beverageNr));
     }
 
     /**
      * Returns the inventory item for a specific beverage.
      *
+     * @param {string} inventoryName The name of the inventory (`barInventory`
+     *   or `vipInventory`)
      * @param {string} beverageNr The beverage number
      * @returns {object} Inventory item if beverage number exists in inventory.
      *   Otherwise `undefined`
      */
-    function getInventoryItemByBeverageNr(beverageNr) {
-        return copy(getInventoryItemByBeverageNrInternal(beverageNr));
+    function getInventoryItemByBeverageNr(inventoryName, beverageNr) {
+        return copy(
+            getInventoryItemByBeverageNrInternal(inventoryName, beverageNr)
+        );
     }
 
     /**
@@ -460,12 +468,20 @@ DatabaseAPI = (function ($) {
      * `newQuantity` replaces the number in stock, no calculation and no check
      * for validity.
      *
+     * @param {string} inventoryName The name of the inventory (`barInventory`
      * @param {string} beverageNr The beverage number
      * @param {number} newQuantity The new quantity
      * @returns {object} The updated inventory item
      */
-    function updateNumberInStockForBeverage(beverageNr, newQuantity) {
-        let inventoryItem = getInventoryItemByBeverageNrInternal(beverageNr);
+    function updateNumberInStockForBeverage(
+        inventoryName,
+        beverageNr,
+        newQuantity
+    ) {
+        let inventoryItem = getInventoryItemByBeverageNrInternal(
+            inventoryName,
+            beverageNr
+        );
         if (inventoryItem) {
             inventoryItem.quantity = newQuantity;
         }

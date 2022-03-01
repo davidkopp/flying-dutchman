@@ -223,6 +223,7 @@ var DB = {
                 },
             ],
             notes: "",
+            inventory: "barInventory",
             done: false,
             billId: 1,
         },
@@ -252,6 +253,7 @@ var DB = {
                 },
             ],
             notes: "",
+            inventory: "barInventory",
             done: false,
             billId: 2,
         },
@@ -321,7 +323,7 @@ var DB = {
             beverages: ["7112102"],
         },
     ],
-    inventory: [
+    barInventory: [
         {
             beverageNr: "190201",
             quantity: 42,
@@ -524,7 +526,7 @@ var DB = {
         },
         {
             beverageNr: "8568201",
-            quantity: 5,
+            quantity: 4,
             active: true,
         },
         {
@@ -565,6 +567,38 @@ var DB = {
         {
             beverageNr: "1217401",
             quantity: 6,
+            active: true,
+        },
+    ],
+    vipInventory: [
+        {
+            beverageNr: "190715",
+            quantity: 12,
+            active: true,
+        },
+        {
+            beverageNr: "120003",
+            quantity: 4,
+            active: true,
+        },
+        {
+            beverageNr: "1101402",
+            quantity: 20,
+            active: true,
+        },
+        {
+            beverageNr: "157612",
+            quantity: 2,
+            active: true,
+        },
+        {
+            beverageNr: "1105703",
+            quantity: 14,
+            active: true,
+        },
+        {
+            beverageNr: "1160401",
+            quantity: 8,
             active: true,
         },
     ],

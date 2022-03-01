@@ -10,16 +10,29 @@
 
 describe("OrderController", function () {
     let savedOrders;
-    let savedInventory;
+    let savedInventories = {};
+    const inventoryNames = Object.values(Constants.INVENTORIES);
 
     beforeEach(function () {
         savedOrders = $.extend(true, [], DB.orders);
-        savedInventory = $.extend(true, [], DB.inventory);
+
+        inventoryNames.forEach((inventoryName) => {
+            savedInventories[inventoryName] = $.extend(
+                true,
+                [],
+                DB[inventoryName]
+            );
+        });
     });
 
     afterEach(function () {
         DB.orders = $.extend(true, [], savedOrders);
-        DB.inventory = $.extend(true, [], savedInventory);
+
+        for (const inventoryName in savedInventories) {
+            if (Object.hasOwnProperty.call(savedInventories, inventoryName)) {
+                DB[inventoryName] = savedInventories[inventoryName];
+            }
+        }
     });
 
     it("should be able to get undone orders", function () {
@@ -33,6 +46,7 @@ describe("OrderController", function () {
         const newOrder = {
             table: 42,
             items: [],
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const createdOrder = OrderController.createOrder(newOrder);
@@ -56,10 +70,9 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note",
+            inventory: Constants.INVENTORIES.BAR,
         };
         const createdOrder = OrderController.createOrder(newOrder);
-
-        //console.log(JSON.stringify(createdOrder));
 
         expect(createdOrder).toBeTruthy();
         expect(createdOrder.id).toBeTruthy();
@@ -72,6 +85,7 @@ describe("OrderController", function () {
         expect(createdOrder.items[1].id).toBeTruthy();
         expect(createdOrder.items[0].id).not.toEqual(createdOrder.items[1].id);
         expect(createdOrder.notes).toBe("Note");
+        expect(createdOrder.inventory).toBe(Constants.INVENTORIES.BAR);
         expect(createdOrder.done).toBe(false);
     });
 
@@ -87,6 +101,7 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note",
+            inventory: Constants.INVENTORIES.BAR,
         };
         const createdOrder = OrderController.createOrder(newOrder);
 
@@ -102,6 +117,7 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note2",
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const editedOrder = OrderController.editOrder(orderEdited);
@@ -127,6 +143,7 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note",
+            inventory: Constants.INVENTORIES.BAR,
         };
         const createdOrder = OrderController.createOrder(newOrder);
 
@@ -155,6 +172,7 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note",
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const createdOrder = OrderController.createOrder(newOrder);
@@ -188,6 +206,7 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note",
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const createdOrder = OrderController.createOrder(newOrder);
@@ -216,6 +235,7 @@ describe("OrderController", function () {
                 },
             ],
             notes: "Note",
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const createdOrder = OrderController.createOrder(order);
@@ -240,6 +260,7 @@ describe("OrderController", function () {
                     beverageNr: "120003",
                 },
             ],
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const createdOrder = OrderController.createOrder(order);
@@ -266,6 +287,7 @@ describe("OrderController", function () {
                     productOnTheHouse: true,
                 },
             ],
+            inventory: Constants.INVENTORIES.BAR,
         };
 
         const createdOrder = OrderController.createOrder(order);
@@ -283,8 +305,8 @@ describe("OrderController", function () {
         expect(updatedOrder.items[0].productOnTheHouse).toBeFalsy();
     });
 
-    describe("that updates the number in stock (inventory)", function () {
-        it("when new order is created", function () {
+    describe("that updates the number in bar inventory", function () {
+        it("when new order is created (bar inventory)", function () {
             const beverageNr = "120003";
             const newOrder = {
                 table: 42,
@@ -297,10 +319,12 @@ describe("OrderController", function () {
                         productOnTheHouse: true,
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const numberInStockBeforeOrderCreation =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     beverageNr
                 ).quantity;
 
@@ -308,6 +332,7 @@ describe("OrderController", function () {
 
             const actualNumberInStockAfterOrderCreation =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     beverageNr
                 ).quantity;
             const expectedNumberInStockAfterOrderCreation =
@@ -318,7 +343,7 @@ describe("OrderController", function () {
             );
         });
 
-        it("when order is removed", function () {
+        it("when order is removed (bar inventory)", function () {
             const beverageNr = "120003";
             const newOrder = {
                 table: 42,
@@ -327,12 +352,14 @@ describe("OrderController", function () {
                         beverageNr: beverageNr,
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(newOrder);
 
             const numberInStockOfBeverageBeforeOrderIsRemoved =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     beverageNr
                 ).quantity;
 
@@ -340,6 +367,7 @@ describe("OrderController", function () {
 
             const actualNumberInStockOfBeverageAfterOrderIsRemoved =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     beverageNr
                 ).quantity;
             const expectedNumberInStockOfBeverageAfterOrderIsRemoved =
@@ -350,7 +378,7 @@ describe("OrderController", function () {
             );
         });
 
-        it("when an item is added to an order", function () {
+        it("when an item is added to an order (bar inventory)", function () {
             const newOrder = {
                 table: 42,
                 items: [
@@ -358,6 +386,7 @@ describe("OrderController", function () {
                         beverageNr: "120003",
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(newOrder);
@@ -368,6 +397,7 @@ describe("OrderController", function () {
 
             const numberInStockBeforeItemIsAddedToOrder =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     newItem.beverageNr
                 ).quantity;
 
@@ -375,6 +405,7 @@ describe("OrderController", function () {
 
             const actualNumberInStockAfterItemIsAddedToOrder =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     newItem.beverageNr
                 ).quantity;
             const expectedNumberInStockAfterItemIsAddedToOrder =
@@ -385,7 +416,7 @@ describe("OrderController", function () {
             );
         });
 
-        it("when an item is removed from an order", function () {
+        it("when an item is removed from an order (bar inventory)", function () {
             const newOrder = {
                 table: 42,
                 items: [
@@ -393,12 +424,14 @@ describe("OrderController", function () {
                         beverageNr: "120003",
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(newOrder);
 
             const numberInStockBeforeItemIsRemovedFromOrder =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     createdOrder.items[0].beverageNr
                 ).quantity;
 
@@ -409,6 +442,7 @@ describe("OrderController", function () {
 
             const actualNumberInStockAfterItemIsRemovedFromOrder =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     createdOrder.items[0].beverageNr
                 ).quantity;
             const expectedNumberInStockAfterItemIsRemovedFromOrder =
@@ -419,10 +453,11 @@ describe("OrderController", function () {
             );
         });
 
-        it("and checks if quantity in inventory is high enough", function () {
+        it("and checks if quantity in inventory is high enough (bar inventory)", function () {
             const beverageNr = "1217401";
             const numberOfBeveragesInInventoryBeforeChange =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     beverageNr
                 ).quantity;
 
@@ -436,12 +471,14 @@ describe("OrderController", function () {
             const order1 = {
                 table: 42,
                 items: items,
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder1 = OrderController.createOrder(order1);
 
             const numberOfBeveragesInInventoryAfterCreateOrder1 =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
                     beverageNr
                 ).quantity;
 
@@ -456,12 +493,218 @@ describe("OrderController", function () {
                         beverageNr: beverageNr,
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder2 = OrderController.createOrder(order2);
 
             const numberOfBeveragesInInventoryAfterCreateOrder2 =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.BAR,
+                    beverageNr
+                ).quantity;
+
+            expect(createdOrder2).toBeFalsy();
+            expect(numberOfBeveragesInInventoryAfterCreateOrder2).toBe(0);
+        });
+    });
+
+    describe("that updates the number in VIP inventory", function () {
+        it("when new order is created (VIP inventory)", function () {
+            const beverageNr = "120003";
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: beverageNr,
+                    },
+                    {
+                        beverageNr: beverageNr,
+                        productOnTheHouse: true,
+                    },
+                ],
+                inventory: Constants.INVENTORIES.VIP,
+            };
+
+            const numberInStockBeforeOrderCreation =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    beverageNr
+                ).quantity;
+
+            OrderController.createOrder(newOrder);
+
+            const actualNumberInStockAfterOrderCreation =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    beverageNr
+                ).quantity;
+            const expectedNumberInStockAfterOrderCreation =
+                numberInStockBeforeOrderCreation - 2;
+
+            expect(actualNumberInStockAfterOrderCreation).toBe(
+                expectedNumberInStockAfterOrderCreation
+            );
+        });
+
+        it("when order is removed (VIP inventory)", function () {
+            const beverageNr = "120003";
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: beverageNr,
+                    },
+                ],
+                inventory: Constants.INVENTORIES.VIP,
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const numberInStockOfBeverageBeforeOrderIsRemoved =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    beverageNr
+                ).quantity;
+
+            OrderController.removeOrderById(createdOrder.id);
+
+            const actualNumberInStockOfBeverageAfterOrderIsRemoved =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    beverageNr
+                ).quantity;
+            const expectedNumberInStockOfBeverageAfterOrderIsRemoved =
+                numberInStockOfBeverageBeforeOrderIsRemoved + 1;
+
+            expect(actualNumberInStockOfBeverageAfterOrderIsRemoved).toBe(
+                expectedNumberInStockOfBeverageAfterOrderIsRemoved
+            );
+        });
+
+        it("when an item is added to an order (VIP inventory)", function () {
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+                inventory: Constants.INVENTORIES.VIP,
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const newItem = {
+                beverageNr: "8507802",
+            };
+
+            const numberInStockBeforeItemIsAddedToOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    newItem.beverageNr
+                ).quantity;
+
+            OrderController.addItemToOrder(createdOrder.id, newItem);
+
+            const actualNumberInStockAfterItemIsAddedToOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    newItem.beverageNr
+                ).quantity;
+            const expectedNumberInStockAfterItemIsAddedToOrder =
+                numberInStockBeforeItemIsAddedToOrder - 1;
+
+            expect(actualNumberInStockAfterItemIsAddedToOrder).toBe(
+                expectedNumberInStockAfterItemIsAddedToOrder
+            );
+        });
+
+        it("when an item is removed from an order (VIP inventory)", function () {
+            const newOrder = {
+                table: 42,
+                items: [
+                    {
+                        beverageNr: "120003",
+                    },
+                ],
+                inventory: Constants.INVENTORIES.VIP,
+            };
+
+            const createdOrder = OrderController.createOrder(newOrder);
+
+            const numberInStockBeforeItemIsRemovedFromOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    createdOrder.items[0].beverageNr
+                ).quantity;
+
+            OrderController.removeItemFromOrder(
+                createdOrder.id,
+                createdOrder.items[0]
+            );
+
+            const actualNumberInStockAfterItemIsRemovedFromOrder =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    createdOrder.items[0].beverageNr
+                ).quantity;
+            const expectedNumberInStockAfterItemIsRemovedFromOrder =
+                numberInStockBeforeItemIsRemovedFromOrder + 1;
+
+            expect(actualNumberInStockAfterItemIsRemovedFromOrder).toBe(
+                expectedNumberInStockAfterItemIsRemovedFromOrder
+            );
+        });
+
+        it("and checks if quantity in inventory is high enough (VIP inventory)", function () {
+            const beverageNr = "1217401";
+            const numberOfBeveragesInInventoryBeforeChange =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    beverageNr
+                ).quantity;
+
+            let items = [];
+            for (let i = 0; i < numberOfBeveragesInInventoryBeforeChange; i++) {
+                items.push({
+                    beverageNr: beverageNr,
+                });
+            }
+
+            const order1 = {
+                table: 42,
+                items: items,
+                inventory: Constants.INVENTORIES.VIP,
+            };
+
+            const createdOrder1 = OrderController.createOrder(order1);
+
+            const numberOfBeveragesInInventoryAfterCreateOrder1 =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
+                    beverageNr
+                ).quantity;
+
+            expect(createdOrder1).toBeTruthy();
+            expect(numberOfBeveragesInInventoryAfterCreateOrder1).toBe(0);
+
+            // Try to create another order with the same beverage → should not be possible, because there are no items left in the inventory.
+            const order2 = {
+                table: 43,
+                items: [
+                    {
+                        beverageNr: beverageNr,
+                    },
+                ],
+                inventory: Constants.INVENTORIES.VIP,
+            };
+
+            const createdOrder2 = OrderController.createOrder(order2);
+
+            const numberOfBeveragesInInventoryAfterCreateOrder2 =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    Constants.INVENTORIES.VIP,
                     beverageNr
                 ).quantity;
 
@@ -496,6 +739,7 @@ describe("OrderController", function () {
                         productOnTheHouse: true,
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const expectedTotalAmount = 13.9 + 62.0 + 0;
@@ -520,6 +764,7 @@ describe("OrderController", function () {
                         beverageNr: "120003",
                     },
                 ],
+                inventory: Constants.INVENTORIES.VIP,
             };
 
             const createdOrder = OrderController.createOrder(order);
@@ -544,6 +789,7 @@ describe("OrderController", function () {
                         beverageNr: "120003",
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(order);
@@ -568,6 +814,7 @@ describe("OrderController", function () {
                         productOnTheHouse: true,
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(order);
@@ -609,6 +856,7 @@ describe("OrderController", function () {
                     },
                 ],
                 notes: "Note",
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(newOrder);
@@ -646,6 +894,7 @@ describe("OrderController", function () {
                     },
                 ],
                 notes: "Note",
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(newOrder);
@@ -680,6 +929,7 @@ describe("OrderController", function () {
                     },
                 ],
                 notes: "Note",
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(order);
@@ -712,6 +962,7 @@ describe("OrderController", function () {
                         beverageNr: "120003",
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(order);
@@ -751,6 +1002,7 @@ describe("OrderController", function () {
                         productOnTheHouse: true,
                     },
                 ],
+                inventory: Constants.INVENTORIES.BAR,
             };
 
             const createdOrder = OrderController.createOrder(order);

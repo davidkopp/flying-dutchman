@@ -6,7 +6,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 26th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -30,6 +30,13 @@ const Constants = {
         "ROM",
     ],
     WATER_CATEGORY: ["VATTEN"],
+
+    INVENTORIES: {
+        BAR: "barInventory",
+        VIP: "vipInventory",
+    },
+
+    LOW_STOCK_NUMBER: 5,
 };
 
 const Dictionary = (function () {

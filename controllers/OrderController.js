@@ -217,6 +217,10 @@
     function createOrder(order) {
         if (!validateOrder(order)) {
             // TODO: Error Handling
+            console.log(
+                "OrderController.createOrder | Invalid order:\n" +
+                    JSON.stringify(order)
+            );
             return null;
         }
         if (order.id) {
@@ -234,13 +238,14 @@
             table: order.table,
             items: order.items,
             notes: typeof order.notes == "string" ? order.notes : "",
+            inventory: order.inventory,
             done: typeof order.done == "boolean" ? order.done : false,
             billId: order.billId ? order.billId : null,
         };
 
         // Try to update number in stock for the items
         try {
-            reduceNumberInStockOfItemsByOne(newOrder.items);
+            reduceNumberInStockOfItemsByOne(order.inventory, newOrder.items);
         } catch (error) {
             console.log(
                 `OrderController.createOrder | Exception was thrown: ${error.message}`
@@ -267,7 +272,7 @@
         }
 
         // Update number in stock
-        increaseNumberInStockOfItemsByOne(order.items);
+        increaseNumberInStockOfItemsByOne(order.inventory, order.items);
 
         DatabaseAPI.Orders.removeOrderById(order.id);
     }
@@ -380,6 +385,22 @@
                 }
             });
         }
+        const validInventoryNames = Object.values(Constants.INVENTORIES);
+        if (!order.inventory) {
+            console.log(
+                "OrderController.validateOrder | Inventory name is missing! Order:\n" +
+                    JSON.stringify(order)
+            );
+            valid = false;
+        } else if (!validInventoryNames.includes(order.inventory)) {
+            console.log(
+                "OrderController.validateOrder | Inventory name is invalid! It has to be one of the following names: '" +
+                    validInventoryNames.join(", ") +
+                    "' . Order:\n" +
+                    JSON.stringify(order)
+            );
+            valid = false;
+        }
 
         return valid;
     }
@@ -444,6 +465,15 @@
 
         let orderToEdit = DatabaseAPI.Orders.getOrderById(order.id);
 
+        if (order.inventory !== orderToEdit.inventory) {
+            // TODO: Error Handling
+            console.log(
+                "OrderController.editOrder | Change of the inventory is not possible! Order:\n" +
+                    JSON.stringify(order)
+            );
+            return null;
+        }
+
         orderToEdit.table = order.table;
         if (typeof order.notes == "string") {
             orderToEdit.notes = order.notes;
@@ -484,7 +514,10 @@
 
         // Check if there are enough beverages left in the inventory
         const inventoryItem =
-            DatabaseAPI.Inventory.getInventoryItemByBeverageNr(item.beverageNr);
+            DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                order.inventory,
+                item.beverageNr
+            );
         if (inventoryItem.quantity >= 1) {
             // TODO: Update number of beverages in stock
         }
@@ -500,7 +533,7 @@
 
         // Try to update number in stock for this item
         try {
-            reduceNumberInStockOfItemsByOne([item]);
+            reduceNumberInStockOfItemsByOne(order.inventory, [item]);
         } catch (error) {
             console.log(
                 `OrderController.addItemToOrder | Exception was thrown: ${error.message}`
@@ -536,7 +569,7 @@
         }
 
         // Update number in stock for this item
-        increaseNumberInStockOfItemsByOne([item]);
+        increaseNumberInStockOfItemsByOne(order.inventory, [item]);
 
         order.items = order.items.filter((i) => i.id != item.id);
         return DatabaseAPI.Orders.saveOrder(order);
@@ -669,10 +702,11 @@
     /**
      * Internal function to reduce the number in stock of the items by one each.
      *
-     * @param {Array} items The items
+     * @param {string} inventoryName The inventory name.
+     * @param {Array} items The items.
      * @throws Will throw an error if there are not enough items left in the inventory.
      */
-    function reduceNumberInStockOfItemsByOne(items) {
+    function reduceNumberInStockOfItemsByOne(inventoryName, items) {
         // Check first if there are enough items left in the inventory.
         let collector = {};
         for (let i = 0; i < items.length; i++) {
@@ -681,6 +715,7 @@
             if (!Object.prototype.hasOwnProperty.call(collector, beverageNr)) {
                 const inventoryItem =
                     DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                        inventoryName,
                         beverageNr
                     );
                 collector[beverageNr] = inventoryItem.quantity - 1;
@@ -694,7 +729,7 @@
                 const newQuantityTemp = collector[beverageNr];
                 if (newQuantityTemp < 0) {
                     throw new Error(
-                        `Inventory has not enough items left for beverage '${beverageNr}'. Cancel operation.`
+                        `Inventory '${inventoryName}' has not enough items left for beverage '${beverageNr}'. Cancel operation.`
                     );
                 }
             }
@@ -705,6 +740,7 @@
             if (Object.hasOwnProperty.call(collector, beverageNr)) {
                 const newQuantityTemp = collector[beverageNr];
                 DatabaseAPI.Inventory.updateNumberInStockForBeverage(
+                    inventoryName,
                     beverageNr,
                     newQuantityTemp
                 );
@@ -715,15 +751,20 @@
     /**
      * Internal function to increase the number in stock of the items by one each.
      *
+     * @param {string} inventoryName The inventory name.
      * @param {Array} items The items
      */
-    function increaseNumberInStockOfItemsByOne(items) {
+    function increaseNumberInStockOfItemsByOne(inventoryName, items) {
         for (let i = 0; i < items.length; i++) {
             const beverageNr = items[i].beverageNr;
             const inventoryItem =
-                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(beverageNr);
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    inventoryName,
+                    beverageNr
+                );
             const newQuantity = inventoryItem.quantity + 1;
             DatabaseAPI.Inventory.updateNumberInStockForBeverage(
+                inventoryName,
                 beverageNr,
                 newQuantity
             );

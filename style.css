@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Monday, 28th February 2022
+ * Last Modified: Tuesday, 1st March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -57,6 +57,10 @@
 
 .menu-item-name {
     font-weight: bold;
+}
+
+.menu-item-is-low-in-stock {
+    background-color: lightgray;
 }
 
 /*=============Landing Page================*/
