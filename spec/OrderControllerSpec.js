@@ -3,7 +3,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Wednesday, 2nd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals DB, OrderController, UNDOmanager */
@@ -596,7 +596,7 @@ describe("OrderController", function () {
             const createdOrder = OrderController.createOrder(newOrder);
 
             const newItem = {
-                beverageNr: "8507802",
+                beverageNr: "190715",
             };
 
             const numberInStockBeforeItemIsAddedToOrder =
@@ -658,7 +658,7 @@ describe("OrderController", function () {
         });
 
         it("and checks if quantity in inventory is high enough (VIP inventory)", function () {
-            const beverageNr = "1217401";
+            const beverageNr = "190715";
             const numberOfBeveragesInInventoryBeforeChange =
                 DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
                     Constants.INVENTORIES.VIP,

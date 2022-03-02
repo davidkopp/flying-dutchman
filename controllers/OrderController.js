@@ -1,11 +1,11 @@
 /*
- * File: OrderController.js
+ * File: DatabaseAPI.js
  *
  * Extends the OrderController by operations with undo / redo functionalities...
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Wednesday, 2nd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -30,7 +30,7 @@
      * @returns {Array} The array with all undone orders for the table.
      */
     function getUndoneOrdersForTable(table) {
-        return getUndoneOrders().filter((o) => (o.table = table));
+        return getUndoneOrders().filter((o) => o.table === table);
     }
 
     //=========================================================================
@@ -237,9 +237,9 @@
         const newOrder = {
             table: order.table,
             items: order.items,
-            notes: typeof order.notes == "string" ? order.notes : "",
+            notes: typeof order.notes === "string" ? order.notes : "",
             inventory: order.inventory,
-            done: typeof order.done == "boolean" ? order.done : false,
+            done: typeof order.done === "boolean" ? order.done : false,
             billId: order.billId ? order.billId : null,
         };
 
@@ -475,10 +475,10 @@
         }
 
         orderToEdit.table = order.table;
-        if (typeof order.notes == "string") {
+        if (typeof order.notes === "string") {
             orderToEdit.notes = order.notes;
         }
-        if (typeof order.done == "boolean") {
+        if (typeof order.done === "boolean") {
             orderToEdit.done = order.done;
         }
         if (order.billId) {

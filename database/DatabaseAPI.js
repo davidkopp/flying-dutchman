@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Wednesday, 2nd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -44,7 +44,7 @@ DatabaseAPI = (function ($) {
         // First we find the user ID of the selected user. We also save the
         // index number for the record in the JSON structure.
         for (let i = 0; i < DB.users.length; i++) {
-            if (DB.users[i].username == userName) {
+            if (DB.users[i].username === userName) {
                 userID = DB.users[i].user_id;
                 userIndex = i;
             }
@@ -53,7 +53,7 @@ DatabaseAPI = (function ($) {
         // We get the current account status from another table in the database,
         // account. We store this in a variable here for convenience.
         for (let i = 0; i < DB.account.length; i++) {
-            if (DB.account[i].user_id == userID) {
+            if (DB.account[i].user_id === userID) {
                 account = DB.account[i].creditSEK;
             }
         }
@@ -114,7 +114,7 @@ DatabaseAPI = (function ($) {
 
         // First we find the userID in the user data base.
         for (let i = 0; i < DB.users.length; i++) {
-            if (DB.users[i].username == username) {
+            if (DB.users[i].username === username) {
                 userID = DB.users[i].user_id;
             }
         }
@@ -122,7 +122,7 @@ DatabaseAPI = (function ($) {
         // Then we match the userID with the account list. and change the
         // account balance.
         for (let i = 0; i < DB.account.length; i++) {
-            if (DB.account[i].user_id == userID) {
+            if (DB.account[i].user_id === userID) {
                 DB.account[i].creditSEK = newAmount;
             }
         }
@@ -445,7 +445,7 @@ DatabaseAPI = (function ($) {
      *   Otherwise `undefined`
      */
     function getInventoryItemByBeverageNrInternal(inventoryName, beverageNr) {
-        return DB[inventoryName].find((item) => (item.beverageNr = beverageNr));
+        return DB[inventoryName].find((item) => item.beverageNr === beverageNr);
     }
 
     /**
