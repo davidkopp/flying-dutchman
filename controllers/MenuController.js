@@ -1,11 +1,11 @@
 /*
- * File: style.css
+ * File: MenuController.js
  *
  * Controller that is responsible for displaying and updating the menu for customers.
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Thursday, 3rd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
