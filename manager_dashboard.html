@@ -5,8 +5,8 @@ The Manager's Dashboard.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Monday, 3rd March 2022
-Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
+Last Modified: Thursday, 3rd March 2022
+Modified By: David Kopp (mail@davidkopp.de>)
 -->
 <!DOCTYPE html>
 
@@ -33,7 +33,7 @@ Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
 
     <body>
         <div class="manager_dashboard_wrapper">
-            <div class=" lang">
+            <div class="lang">
                 <button onclick="changeLang('en')">
                     <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
                     <span data-lang="language-switcher-text-english">English</span>
@@ -48,29 +48,28 @@ Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
                 </button>
             </div>
             <h1>Manage Stocks</h1>
-            <h3 id = "revise-amounts-label">Revise Amount of Beverages</h3>
-            <div id = "revise-amounts" style="display:none">
+            <h3 id="revise-amounts-label">Revise Amount of Beverages</h3>
+            <div id="revise-amounts" style="display: none">
                 <label for="amount-serial-number" id="serial-number-label"></label>
-                <input type="text" name="amount-serial-number" id="amount-serial-number">
+                <input type="text" name="amount-serial-number" id="amount-serial-number" />
                 <button id="get-amount-button">Get Price</button>
-                <div id = "amount"></div>
-                <input type="number" name="revise-amount-figure" id="revise-amount-figure">
+                <div id="amount"></div>
+                <input type="number" name="revise-amount-figure" id="revise-amount-figure" />
                 <button id="revise-amount-button">Change Price</button>
             </div>
 
-            <h3 id = "refil-beverages-label">Order Refil of Beverages</h3>
-            <div id = "refil-beverages" style="display:none">
+            <h3 id="refil-beverages-label">Order Refil of Beverages</h3>
+            <div id="refil-beverages" style="display: none">
                 <label for="refil-serial-number" id="serial-number-label"></label>
-                <input type="text" name="refil-serial-number" id="refil-serial-number">
+                <input type="text" name="refil-serial-number" id="refil-serial-number" />
                 <button id="get-quantity-button">Get Quantity</button>
-                <div id = "quantity"></div>
-                <input type="number" name="refil-beverages-figure" id="refil-beverages-figure">
+                <div id="quantity"></div>
+                <input type="number" name="refil-beverages-figure" id="refil-beverages-figure" />
                 <button id="refil-beverages-button">Order Stocks</button>
             </div>
 
-            <h3 id = "add-remove-beverages-label">Add/Remove Beverages</h3>
-            <div id = "add-remove-beverages" style="display:none"></div>
+            <h3 id="add-remove-beverages-label">Add/Remove Beverages</h3>
+            <div id="add-remove-beverages" style="display: none"></div>
         </div>
     </body>
 </html>
-
