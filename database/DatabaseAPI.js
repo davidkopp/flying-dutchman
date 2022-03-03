@@ -6,7 +6,7 @@
  * Author: David Kopp
  * -----
  * Last Modified: Wednesday, 2nd March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
+ * Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
  */
 /* global DB, BeveragesDB */
 
@@ -528,6 +528,46 @@ DatabaseAPI = (function ($) {
     }
 
     //=========================================================================
+    // ACTIVE/NOT-ACTIVE
+    //=========================================================================
+
+    /**
+     * Gets the status of a beverage (active: true/false)
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+     function getStatusOfBeverage(beverageNr) {
+        if (!beverageNr)
+        {
+            console.log("DatabaseAPI | Enter a valid Beverage Number")
+            return;
+        }
+        var beverage = getInventoryItemByBeverageNr(beverageNr);
+        return beverage.active;
+    }
+
+    /**
+     * Changes the status of a beverage (active: true/false)
+     *
+     * @param {string} beverageNr The beverage number.
+     */
+     function changeStatusOfBeverage(beverageNr) {
+        var active = DatabaseAPI.ActiveCheck.getStatusOfBeverage(beverageNr);
+
+        for (let index = 0; index < DB.inventory.length; index++)
+        {
+            if(DB.inventory[index].beverageNr == beverageNr)
+            {
+                DB.inventory[index].active = !active;
+            }
+        }
+
+        // var beverage = getInventoryItemByBeverageNrInternal(beverageNr);
+        // active == true ? beverage.active = false : beverage.active = true;
+        // beverage.active = !active;
+    }
+
+    //=========================================================================
     // BILLS
     //=========================================================================
 
@@ -683,6 +723,10 @@ DatabaseAPI = (function ($) {
             getList: getHideFromMenuList,
             addBeverageNrToList: addBeverageNrToList,
             removeBeverageNrFromList: removeBeverageNrFromList,
+        },
+        ActiveCheck: {
+            getStatusOfBeverage: getStatusOfBeverage,
+            changeStatusOfBeverage: changeStatusOfBeverage,
         },
     };
 })(jQuery);
