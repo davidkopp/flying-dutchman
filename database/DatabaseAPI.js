@@ -352,6 +352,25 @@ DatabaseAPI = (function ($) {
         return collectorSortable;
     }
 
+    /**
+     * Updates the price of a beverage. Note: No validation is made if the price
+     * makes sense.
+     *
+     * @param {string} beverageNr The beverage number.
+     * @param {number} newPrice The new price as a float number.
+     */
+    function setPriceOfBeveragePublic(beverageNr, newPrice) {
+        if (!beverageNr || !newPrice) {
+            return;
+        }
+        let beverage = findBeverageByNr(beverageNr);
+        if (!beverage) {
+            return;
+        }
+        // Update price of beverage
+        beverage.priceinclvat = newPrice;
+    }
+
     //=========================================================================
     // ORDERS
     //=========================================================================
@@ -554,6 +573,40 @@ DatabaseAPI = (function ($) {
     }
 
     //=========================================================================
+    // ACTIVE/NOT-ACTIVE
+    //=========================================================================
+
+    /**
+     * Gets the status of a beverage in a specific inventory (active: true/false)
+     *
+     * @param {string} inventoryName The inventory name.
+     * @param {string} beverageNr The beverage number.
+     * @returns {boolean} Status of the beverage (active: true/false).
+     */
+    function getStatusOfBeveragePublic(inventoryName, beverageNr) {
+        var beverage = getInventoryItemByBeverageNr(inventoryName, beverageNr);
+        return beverage.active;
+    }
+
+    /**
+     * Changes the status of a beverage (active: true/false)
+     *
+     * @param {string} inventoryName The inventory name.
+     * @param {string} beverageNr The beverage number.
+     * @returns {boolean} The new status.
+     */
+    function changeStatusOfBeveragePublic(inventoryName, beverageNr) {
+        var inventoryItem = getInventoryItemByBeverageNr(
+            inventoryName,
+            beverageNr
+        );
+        if (inventoryItem) {
+            inventoryItem.active = !inventoryItem.active;
+        }
+        return inventoryItem.active;
+    }
+
+    //=========================================================================
     // BILLS
     //=========================================================================
 
@@ -706,6 +759,7 @@ DatabaseAPI = (function ($) {
                 beverageTypesSortedByAlphabetPublic,
             getBeverageTypesSortedByPopularity:
                 beverageTypesSortedByPopularityPublic,
+            setPriceOfBeverage: setPriceOfBeveragePublic,
         },
         Orders: {
             getOrders: getOrdersPublic,
@@ -728,6 +782,10 @@ DatabaseAPI = (function ($) {
             getList: getHideFromMenuListPublic,
             addBeverageNrToList: addBeverageNrToListPublic,
             removeBeverageNrFromList: removeBeverageNrFromListPublic,
+        },
+        ActiveCheck: {
+            getStatusOfBeverage: getStatusOfBeveragePublic,
+            changeStatusOfBeverage: changeStatusOfBeveragePublic,
         },
     };
 })(jQuery);

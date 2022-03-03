@@ -1,1 +1,73 @@
-Manager Dashboard
+<!--
+File: manager_dashboard.html
+
+The Manager's Dashboard.
+
+Author: Paarth Sanhotra
+-----
+Last Modified: Thursday, 3rd March 2022
+Modified By: David Kopp (mail@davidkopp.de>)
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title data-lang="page-title">Manager's Dashboard</title>
+
+        <!-- Prevent browser from requesting a favicon -->
+        <link rel="icon" href="data:;base64,=" />
+        <link rel="stylesheet" href="style.css" />
+        <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
+
+        <script type="text/javascript" src="database/BeveragesDB.js"></script>
+        <script type="text/javascript" src="database/DBLoaded.js"></script>
+        <script type="text/javascript" src="database/DatabaseAPI.js"></script>
+        <script type="text/javascript" src="database/Dictionary.js"></script>
+
+        <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
+        <script type="text/javascript" src="controllers/ManagerDashboardController.js"></script>
+        <script type="text/javascript" src="controllers/InventoryController.js"></script>
+    </head>
+
+    <body>
+        <div class="manager_dashboard_wrapper">
+            <div class="lang">
+                <button onclick="changeLang('en')">
+                    <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
+                    <span data-lang="language-switcher-text-english">English</span>
+                </button>
+                <button onclick="changeLang('de')">
+                    <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
+                    <span data-lang="language-switcher-text-german">German</span>
+                </button>
+                <button onclick="changeLang('pt')">
+                    <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
+                    <span data-lang="language-switcher-text-portuguese">Portuguese</span>
+                </button>
+            </div>
+            <h1>Manage Stocks</h1>
+            <h3 id="revise-amounts-label">Revise Amount of Beverages</h3>
+            <div id="revise-amounts">
+                <label for="price-serial-number" id="serial-number-label"></label>
+                <input type="text" name="price-serial-number" id="price-serial-number" />
+                <button id="get-price-button">Get Price</button>
+                <div id="price"></div>
+                <input type="number" name="revise-price-figure" id="revise-price-figure" />
+                <button id="revise-price-button">Change Price</button>
+            </div>
+
+            <h3 id="refil-beverages-label">Order Refil of Beverages</h3>
+            <div id="refil-beverages">
+                <label for="refil-serial-number" id="serial-number-label"></label>
+                <input type="text" name="refil-serial-number" id="refil-serial-number" />
+                <button id="get-quantity-button">Get Quantity</button>
+                <div id="quantity"></div>
+            </div>
+
+            <h3 id="add-remove-beverages-label">Add/Remove Beverages</h3>
+            <div id="add-remove-beverages"></div>
+        </div>
+    </body>
+</html>
