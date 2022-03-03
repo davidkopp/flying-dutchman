@@ -276,24 +276,6 @@ var DB = {
         },
     ],
     tannins: ["291702", "2231601", "1217401", "1202501"],
-    bills: [
-        {
-            id: "1",
-            type: "single",
-            vipAccount: false,
-            timestamp: "2022-02-18T12:46:13Z",
-            amountSEK: "40",
-        },
-        {
-            id: "2",
-            type: "split",
-            split: "4",
-            vipAccount: false,
-            timestamp: "2022-02-18T12:46:13Z",
-            amountSEK: "160",
-        },
-    ],
-    tannins: ["291702", "2231601", "1217401", "1202501"],
     allergies: [
         {
             name: "sulfite",
