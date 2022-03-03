@@ -1,27 +1,16 @@
 /*
  * File: ManagerDashboardController.js
  *
- * DESCRIPTION
+ * The Manager's Dashboard Controller.
  *
- * Author: David Kopp
+ * Author: Paarth Sanhotra
  * -----
  * Last Modified: Thursday, 3rd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
-// File: ManagerDashboardController.js
-
-// The Manager's Dashboard Controller.
-
-// Author: Paarth Sanhotra
-// -----
-// Last Modified: Monday, 3rd March 2022
-// Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
-
 (function ($, exports) {
     $(document).ready(function () {
-        let finalindex, beverage, inventoryItem, stocks, beverageNr;
-
         // Hide the divs at the beginning
         $("#revise-amounts").hide();
         $("#refil-beverages").hide();
@@ -39,156 +28,254 @@
         $("#add-remove-beverages-label").click(function () {
             // Show / Hide div "add / remove beverages"
             $("#add-remove-beverages").toggle();
-        });
 
-        $("#get-amount-button").click(function () {
-            const serialNumber = $("#amount-serial-number").val();
-            if (serialNumber !== "") {
-                for (
-                    let index = 0;
-                    index < BeveragesDB.beverages.length;
-                    index++
-                ) {
-                    beverage = BeveragesDB.beverages[index];
-                    if (beverage.nr == serialNumber) {
-                        finalindex = index;
-                        console.log(`Beverage found: '${beverage.name}'`);
-                        $("#amount").empty();
-                        $("#amount").append(
-                            `<h6>${beverage.priceinclvat}</h6>`
-                        );
-                        break;
-                    }
-                }
-            } else {
-                $("#amount").empty();
-                console.log(
-                    "ManagerDashboardController | Search with a valid serial number"
-                );
+            if ($("#add-remove-beverages").is(":visible")) {
+                showMenuWithStatus();
             }
         });
 
-        $("#revise-amount-button").click(function () {
-            const newvalue = $("#revise-amount-figure").val();
+        $("#get-price-button").click(showPrice);
 
-            if (finalindex != 0 && beverage != null && newvalue != "") {
-                BeveragesDB.beverages[finalindex].priceinclvat = newvalue;
-                console.log(
-                    `Price of '${beverage.name}' changed to '${newvalue}'`
-                );
-                alert(`Price of '${beverage.name}' changed to '${newvalue}'`);
-            } else {
-                console.log(
-                    `Value of Index = '${finalindex}', Value of Beverage = '${beverage.name}', New Value = '${newvalue}'`
-                );
-                finalindex = 0;
-                beverage = null;
-            }
-        });
+        $("#revise-price-button").click(revicePrice);
 
-        $("#get-quantity-button").click(function () {
-            const serialNumber = $("#refil-serial-number").val();
-            inventoryItem = DatabaseAPI.Inventory.getInventory(inventoryName);
-            if (serialNumber !== "") {
-                for (let index = 0; index < inventoryItem.length; index++) {
-                    beverage = inventoryItem[index];
-                    if (beverage.beverageNr == serialNumber) {
-                        finalindex = index;
-                        stocks = beverage.quantity;
-                        console.log(`Beverage found: '${beverage.quantity}'`);
-                        $("#quantity").empty();
-                        $("#quantity").append(`<h6>${beverage.quantity}</h6>`);
-                        break;
-                    }
-                }
-            } else {
-                $("#quantity").empty();
-                console.log(
-                    "ManagerDashboardController | Search with a valid serial number"
-                );
-            }
-        });
+        $("#get-quantity-button").click(showQuantity);
+    });
 
-        $("#refil-beverages-button").click(function () {
-            const newvalue = $("#refil-beverages-figure").val();
-
-            if (finalindex != 0 && beverage != null && newvalue != "") {
-                let item = DatabaseAPI.Inventory.updateNumberInStockForBeverage(
-                    beverage.beverageNr,
-                    parseInt(newvalue) + parseInt(stocks)
-                );
-                console.log(
-                    `'${newvalue}' stocks ordered for '${beverage.beverageNr}'`
-                );
-                alert(
-                    `'${newvalue}' stocks ordered for '${beverage.beverageNr}'`
-                );
-            } else {
-                console.log(
-                    `Value of Index = '${finalindex}', Value of Beverage = '${beverage.name}', New Value = '${newvalue}'`
-                );
-                finalindex = 0;
-                beverage = null;
-            }
-        });
-
-        $(document).ready(function () {
-            initMenu();
-        });
-
-        // Menu with all the inventory items to show or hide the beverage
-        function initMenu() {
-            const inventoryItems = DatabaseAPI.Inventory.getInventory();
-            var menu = "";
-
-            for (let i = 0; i < inventoryItems.length; i++) {
-                const inventoryItem = inventoryItems[i];
-                // console.log(inventoryItem.beverageNr);
-                active = DatabaseAPI.ActiveCheck.getStatusOfBeverage(
-                    inventoryItem.beverageNr
-                );
-                active == true ? (active = "Active") : (active = "Removed");
-                // console.log("Status"+active);
-                beverage = DatabaseAPI.Beverages.findBeverageByNr(
-                    inventoryItem.beverageNr
-                );
-                menu =
-                    menu +
-                    `
-                    <span id="span">
-                        <span id="span-` +
-                    inventoryItem.beverageNr +
-                    `">
-                            ${inventoryItem.beverageNr}
-                            ${beverage.name}
-                            ${active}
-                        </span>
-                        <button id="beverage-` +
-                    inventoryItem.beverageNr +
-                    `-button" class="beverage-show-hide-button">Show/Hide</button>
-                    </span>
-                    <br>
-                `;
-            }
-
-            $("#add-remove-beverages").append(menu);
+    /** Event handler that show the price of the given beverage number. */
+    function showPrice() {
+        const inputSerialNumber = $("#price-serial-number").val();
+        if (!inputSerialNumber) {
+            return;
         }
 
-        $(document).on("click", ".beverage-show-hide-button", function (event) {
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            beverageNr = event.target.id.split("-")[1];
-            DatabaseAPI.ActiveCheck.changeStatusOfBeverage(beverageNr);
-            active = DatabaseAPI.ActiveCheck.getStatusOfBeverage(beverageNr);
-            active == true ? (active = "Active") : (active = "Removed");
-            beverage = DatabaseAPI.Beverages.findBeverageByNr(beverageNr);
-            $("#span-" + beverageNr).empty();
-            new_span = `
-                ${beverageNr}
-                ${beverage.name}
-                ${active}
-            `;
-            $("#span-" + beverageNr).append(new_span);
+        const serialNumber = inputSerialNumber.trim();
+        const beverage = DatabaseAPI.Beverages.findBeverageByNr(serialNumber);
+        if (beverage) {
+            $("#price").empty();
+            $("#price").append(
+                `<span class="price">${parseFloat(
+                    beverage.priceinclvat
+                ).toFixed(2)}</span>`
+            );
+        } else {
+            // TODO: Display to the user that the beverage number does not exist.
+            console.log(
+                `ManagerDashboardController | Beverage with number ${inputSerialNumber} does not exist!`
+            );
+        }
+    }
+
+    /** Event handler that changes the price of a beverage accordingly to the input fields. */
+    function revicePrice() {
+        const inputSerialNumber = $("#price-serial-number").val();
+        const inputNewValue = $("#revise-price-figure").val();
+
+        if (!inputSerialNumber) {
+            return;
+        }
+        const serialNumber = inputSerialNumber.trim();
+        const newValue = parseFloat(inputNewValue.trim());
+        if (isNaN(newValue)) {
+            // TODO: Display error to user.
+            console.log(
+                `Provided value '${inputNewValue}' is not a valid number!`
+            );
+            return;
+        }
+
+        DatabaseAPI.Beverages.setPriceOfBeverage(serialNumber, newValue);
+
+        // Update the displayed price, so their is no confusion.
+        showPrice();
+    }
+
+    /** Event handler to show the quantity of a given beverage. */
+    function showQuantity() {
+        const inputSerialNumber = $("#refil-serial-number").val();
+        if (!inputSerialNumber) {
+            return;
+        }
+        const serialNumber = inputSerialNumber.trim();
+
+        const inventoryNames = Object.values(Constants.INVENTORIES);
+        var collector = [];
+        inventoryNames.forEach((inventoryName) => {
+            const inventoryItem =
+                DatabaseAPI.Inventory.getInventoryItemByBeverageNr(
+                    inventoryName,
+                    serialNumber
+                );
+            if (inventoryItem) {
+                collector.push({
+                    inventoryName: inventoryName,
+                    beverageNr: serialNumber,
+                    quantity: inventoryItem.quantity,
+                });
+            }
         });
-    });
+        if (collector.length === 0) {
+            // Beverage does not exist in any inventory!
+
+            // TODO: Display to the user that the beverage number does not exist.
+            console.log(
+                `ManagerDashboardController | Item with beverage number ${inputSerialNumber} does not exist in any inventory!`
+            );
+            return;
+        }
+
+        let htmlTable = `<table>
+            <tr>
+                <th>Inventory</th>
+                <th>Quantity</th>
+                <th>Order Stocks</th>
+                <th></th>
+            </tr>
+        `;
+
+        collector.forEach((obj) => {
+            htmlTable += `<tr>
+                <td>${obj.inventoryName}</td>
+                <td>${obj.quantity}</td>
+                <td>
+                    <input type="number" id="refill-beverages-input-${obj.inventoryName}-${obj.beverageNr}" name="refill-beverages-input" class="refill-beverages-input" />
+
+                </td>
+                <td><button class="refil-beverages-button" onclick="refillBeverages('${obj.inventoryName}', '${obj.beverageNr}', ${obj.quantity})">Confirm</button></td>
+            </tr>`;
+        });
+        htmlTable += "</table>";
+
+        $("#quantity").empty();
+        $("#quantity").append(htmlTable);
+    }
+
+    /**
+     * Event handler to refill the beverages.
+     *
+     * @param {string} inventoryName The inventory name.
+     * @param {string} beverageNr The beverage number.
+     * @param {number} currentQuantity The current quantity.
+     */
+    function refillBeverages(inventoryName, beverageNr, currentQuantity) {
+        if (!inventoryName || !beverageNr) {
+            return;
+        }
+        if (isNaN(currentQuantity)) {
+            console.log(
+                `Given quantity '${currentQuantity}' of beverage number '${beverageNr}' is not valid!`
+            );
+            return;
+        }
+
+        const inputAddQuantity = $(
+            `#refill-beverages-input-${inventoryName}-${beverageNr}`
+        ).val();
+        const addQuantity = parseInt(inputAddQuantity.trim());
+        if (isNaN(addQuantity)) {
+            // TODO: Display error to user.
+            console.log(
+                `Provided value '${inputAddQuantity}' is not a valid number!`
+            );
+            return;
+        }
+
+        const newQuantity = addQuantity + currentQuantity;
+        let item = DatabaseAPI.Inventory.updateNumberInStockForBeverage(
+            inventoryName,
+            beverageNr,
+            newQuantity
+        );
+        console.log(
+            `'${addQuantity}' stocks ordered for '${item.beverageNr}' in inventory '${inventoryName}'. New number in stock: ${item.quantity}`
+        );
+
+        // Update view
+        showQuantity();
+    }
+
+    /** Menu with all the inventory items to show or hide the beverage */
+    function showMenuWithStatus() {
+        let htmlTable = `<table>
+            <tr>
+                <th>Inventory</th>
+                <th>Beverage number</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        `;
+
+        const inventoryNames = Object.values(Constants.INVENTORIES);
+
+        inventoryNames.forEach((inventoryName) => {
+            const inventoryItems =
+                DatabaseAPI.Inventory.getInventory(inventoryName);
+
+            inventoryItems.forEach((inventoryItem) => {
+                const beverage = DatabaseAPI.Beverages.findBeverageByNr(
+                    inventoryItem.beverageNr
+                );
+                const active = DatabaseAPI.ActiveCheck.getStatusOfBeverage(
+                    inventoryName,
+                    inventoryItem.beverageNr
+                );
+                let statusHTML, buttonHTML;
+                if (active) {
+                    statusHTML = `<span id='status-text-${inventoryName}-${inventoryItem.beverageNr}'>Active</span>`;
+                    buttonHTML = `<button class="beverage-show-hide-button" onclick="beverageShowHide('${inventoryName}', '${inventoryItem.beverageNr}')">
+                    <span id="show-hide-button-text-${inventoryName}-${inventoryItem.beverageNr}">Hide</span>
+                    </button>`;
+                } else {
+                    statusHTML = `<span id='status-text-${inventoryName}-${inventoryItem.beverageNr}'>Removed</span>`;
+                    buttonHTML = `<button class="beverage-show-hide-button" onclick="beverageShowHide('${inventoryName}', '${inventoryItem.beverageNr}')">
+                    <span id="show-hide-button-text-${inventoryName}-${inventoryItem.beverageNr}">Show</span>
+                    </button>`;
+                }
+
+                htmlTable += `
+                <tr>
+                <td>${inventoryName}</td>
+                <td>${beverage.nr}</td>
+                <td>${beverage.name}</td>
+                <td>${statusHTML}</td>
+                <td>${buttonHTML}</td>
+                </tr>`;
+            });
+        });
+        htmlTable += "</table>";
+
+        $("#add-remove-beverages").append(htmlTable);
+    }
+
+    /**
+     * Event handler for the show-hide buttons.
+     *
+     * @param {string} inventoryName The inventory name.
+     * @param {any} beverageNr The beverage name.
+     */
+    function beverageShowHide(inventoryName, beverageNr) {
+        const newStatus = DatabaseAPI.ActiveCheck.changeStatusOfBeverage(
+            inventoryName,
+            beverageNr
+        );
+        console.log("newStatus: " + newStatus);
+        let statusText, buttonText;
+
+        // TODO: Move strings to dictionary and enable language switching functionality.
+        if (newStatus) {
+            statusText = "Active";
+            buttonText = "Hide";
+        } else {
+            statusText = "Removed";
+            buttonText = "Show";
+        }
+
+        $(`#status-text-${inventoryName}-${beverageNr}`).text(statusText);
+        $(`#show-hide-button-text-${inventoryName}-${beverageNr}`).text(
+            buttonText
+        );
+    }
+
+    exports.refillBeverages = refillBeverages;
+    exports.beverageShowHide = beverageShowHide;
 })(jQuery, window);
