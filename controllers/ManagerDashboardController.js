@@ -20,14 +20,24 @@
 
 (function ($, exports) {
     $(document).ready(function () {
-        var finalindex, beverage, inventoryItem, stocks, beverageNr;
+        let finalindex, beverage, inventoryItem, stocks, beverageNr;
+
+        // Hide the divs at the beginning
+        $("#revise-amounts").hide();
+        $("#refil-beverages").hide();
+        $("#add-remove-beverages").hide();
+
+        // Add event handlers
         $("#revise-amounts-label").click(function () {
+            // Show / Hide div "revise amounts"
             $("#revise-amounts").toggle();
         });
         $("#refil-beverages-label").click(function () {
+            // Show / Hide div "refill beverages"
             $("#refil-beverages").toggle();
         });
         $("#add-remove-beverages-label").click(function () {
+            // Show / Hide div "add / remove beverages"
             $("#add-remove-beverages").toggle();
         });
 
@@ -78,7 +88,7 @@
 
         $("#get-quantity-button").click(function () {
             const serialNumber = $("#refil-serial-number").val();
-            inventoryItem = DatabaseAPI.Inventory.getInventory(inventoryItem);
+            inventoryItem = DatabaseAPI.Inventory.getInventory(inventoryName);
             if (serialNumber !== "") {
                 for (let index = 0; index < inventoryItem.length; index++) {
                     beverage = inventoryItem[index];
