@@ -99,22 +99,14 @@
      */
     function removeItemFromOrderUNDOFunc(orderId, item) {
         return {
-            oldOrder: (function () {
-                const order = DatabaseAPI.Orders.getOrderById(orderId);
-                if (order) {
-                    return copyObject(order);
-                } else {
-                    return undefined;
-                }
-            })(),
+            oldItem: item,
 
             execute: function () {
                 return removeItemFromOrder(orderId, item);
             },
 
             unexecute: function () {
-                // TODO: Add the item again!!
-                return editOrder(this.oldOrder);
+                return addItemToOrder(orderId, this.oldItem);
             },
 
             reexecute: function () {
@@ -525,8 +517,10 @@
 
         if (!item.id) {
             // Generate id for the item
-            let newItemId = 1;
-            if (order.items.length >= 1) {
+            let newItemId;
+            if (order.items.length === 0) {
+                newItemId = 1;
+            } else {
                 newItemId = order.items[order.items.length - 1].id + 1;
             }
             item.id = newItemId;

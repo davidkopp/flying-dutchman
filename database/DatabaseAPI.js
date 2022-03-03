@@ -418,6 +418,7 @@ DatabaseAPI = (function ($) {
         if (!order) {
             return undefined;
         }
+        let result;
         let existingOrder = getOrderById(order.id);
         if (!existingOrder) {
             // Create new order object in database
@@ -425,13 +426,15 @@ DatabaseAPI = (function ($) {
             const newId = lastOrder.id + 1;
             order.id = newId;
             DB.orders.push(order);
+            result = order;
         } else {
             // Replace the existing order object in the database.
             const indexOf = DB.orders.indexOf(existingOrder);
             DB.orders[indexOf] = order;
+            result = DB.orders[indexOf];
         }
         // Return a deep copy of the stored order object so the caller can't manipulate the database object.
-        return copy(order);
+        return copy(result);
     }
 
     /**
@@ -596,6 +599,7 @@ DatabaseAPI = (function ($) {
         if (!bill) {
             return undefined;
         }
+        let result;
         let existingBill = getBillById(bill.id);
         if (!existingBill) {
             // Create new bill object in database
@@ -603,14 +607,16 @@ DatabaseAPI = (function ($) {
             const newId = lastBill.id + 1;
             bill.id = newId;
             DB.bills.push(bill);
+            result = bill;
         } else {
             // Replace the existing bill object in the database.
             // Replace the existing order object in the database.
             const indexOf = DB.bills.indexOf(existingBill);
             DB.bills[indexOf] = bill;
+            result = DB.bills[indexOf];
         }
         // Return a deep copy of the stored bill object so the caller can't manipulate the database object.
-        return copy(bill);
+        return copy(result);
     }
 
     //=========================================================================
