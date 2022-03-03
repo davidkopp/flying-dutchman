@@ -6,7 +6,7 @@
  *
  * Author: Lars Oestreicher
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Thursday, 3rd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /*eslint no-unused-vars: ["error", { "vars": "local" }]*/
@@ -56,7 +56,7 @@ var UNDOmanager = function (updateViewCallback) {
      * function object that's on top of the UNDO-stack. The function object will
      * be removed from the UNDO-stack and added to the REDO-stack.
      *
-     * @returns {any} The return value of the execution function.
+     * @returns {any} The return value of the unexecution function.
      */
     this.undoit = function () {
         const funcobj = undostack.pop();
@@ -68,11 +68,11 @@ var UNDOmanager = function (updateViewCallback) {
     };
 
     /**
-     * Undo the operation by calling the `reexecute` function inside the
+     * Redo the operation by calling the `reexecute` function inside the
      * function object that's on top of the REDO-stack. The function object will
      * be removed from the REDO-stack and added to the UNDO-stack.
      *
-     * @returns {any} The return value of the execution function.
+     * @returns {any} The return value of the reexecution function.
      */
     this.redoit = function () {
         const funcobj = redostack.pop();
@@ -83,8 +83,27 @@ var UNDOmanager = function (updateViewCallback) {
         return retVal;
     };
 
+    /** Cleans up the undo and redo stacks. Can be helpful for testing. */
     this.cleanup = function () {
         undostack = [];
         redostack = [];
+    };
+
+    /**
+     * Returns the number of operations in the undo stack. Can be helpful for testing.
+     *
+     * @returns {number} The number of operations in the undo stack.
+     */
+    this.getNumberOfOperationsInUndoStack = function () {
+        return undostack.length;
+    };
+
+    /**
+     * Returns the number of operations in the redo stack. Can be helpful for testing.
+     *
+     * @returns {number} The number of operations in the redo stack.
+     */
+    this.getNumberOfOperationsInRedoStack = function () {
+        return redostack.length;
     };
 };

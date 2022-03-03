@@ -1,11 +1,11 @@
 /*
- * File: DatabaseAPI.js
+ * File: OrderController.js
  *
  * Extends the OrderController by operations with undo / redo functionalities...
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 2nd March 2022
+ * Last Modified: Thursday, 3rd March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -99,21 +99,14 @@
      */
     function removeItemFromOrderUNDOFunc(orderId, item) {
         return {
-            oldOrder: (function () {
-                const order = DatabaseAPI.Orders.getOrderById(orderId);
-                if (order) {
-                    return copyObject(order);
-                } else {
-                    return undefined;
-                }
-            })(),
+            oldItem: item,
 
             execute: function () {
                 return removeItemFromOrder(orderId, item);
             },
 
             unexecute: function () {
-                return editOrder(this.oldOrder);
+                return addItemToOrder(orderId, this.oldItem);
             },
 
             reexecute: function () {
@@ -524,8 +517,10 @@
 
         if (!item.id) {
             // Generate id for the item
-            let newItemId = 1;
-            if (order.items.length >= 1) {
+            let newItemId;
+            if (order.items.length === 0) {
+                newItemId = 1;
+            } else {
                 newItemId = order.items[order.items.length - 1].id + 1;
             }
             item.id = newItemId;

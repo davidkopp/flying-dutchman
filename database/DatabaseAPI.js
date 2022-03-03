@@ -2,11 +2,13 @@
  * File: DatabaseAPI.js
  *
  * Provides API functions for all databases: BeveragesDB and DB (includes users, orders, bills, inventory, etc.)
+ * The functions with the suffix "Public" will be exported to the public.
+ * Returned values of the "public" functions never have a direct reference to the database, so others aren't able to manipulate the database.
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 2nd March 2022
- * Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
+ * Last Modified: Thursday, 3rd March 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
 
@@ -20,7 +22,7 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with user names as strings.
      */
-    function allUserNames() {
+    function allUserNamesPublic() {
         let nameCollect = [];
         for (let i = 0; i < DB.users.length; i++) {
             nameCollect.push(DB.users[i].username);
@@ -35,7 +37,7 @@ DatabaseAPI = (function ($) {
      * @param {string} userName The user name.
      * @returns {Array} Object with details about the user.
      */
-    function userDetails(userName) {
+    function userDetailsPublic(userName) {
         let userCollect = [];
         let userID;
         let userIndex;
@@ -80,7 +82,7 @@ DatabaseAPI = (function ($) {
      * @param {string} password The password.
      * @returns {object} The user information or `null` if the credentials are invalid.
      */
-    function getUserDetailsIfCredentialsAreValid(username, password) {
+    function getUserDetailsIfCredentialsAreValidPublic(username, password) {
         let foundUser = DB.users.find((u) => u.username === username);
         if (!foundUser) {
             console.log(
@@ -109,7 +111,7 @@ DatabaseAPI = (function ($) {
      * @param {string} username The user name.
      * @param {string} newAmount The new amount.
      */
-    function changeBalance(username, newAmount) {
+    function changeBalancePublic(username, newAmount) {
         let userID;
 
         // First we find the userID in the user data base.
@@ -137,7 +139,7 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with all beverages (name + category).
      */
-    function allBeverages() {
+    function allBeveragesPublic() {
         let collector = [];
 
         for (let i = 0; i < BeveragesDB.beverages.length; i++) {
@@ -157,7 +159,7 @@ DatabaseAPI = (function ($) {
      * @param {number} strength The alcohol strength.
      * @returns {Array} Array with the beverages.
      */
-    function allStrongBeverages(strength) {
+    function allStrongBeveragesPublic(strength) {
         let collector = [];
 
         for (let i = 0; i < BeveragesDB.beverages.length; i++) {
@@ -188,7 +190,17 @@ DatabaseAPI = (function ($) {
         const beverage = BeveragesDB.beverages.find(
             (beverage) => beverage.nr === beverageNr
         );
-        return copy(beverage);
+        return beverage;
+    }
+
+    /**
+     * Finds a beverage by number in the database and returns it.
+     *
+     * @param {string} beverageNr Number of the beverage
+     * @returns {object} Beverage object or undefined
+     */
+    function findBeverageByNrPublic(beverageNr) {
+        return copy(findBeverageByNr(beverageNr));
     }
 
     /**
@@ -198,7 +210,7 @@ DatabaseAPI = (function ($) {
      * @returns {Array} Array with objects that consists of the beverage number
      *   and a count.
      */
-    function beverageNumbersSortedByPopularity() {
+    function beverageNumbersSortedByPopularityPublic() {
         let collectorWithCount = {};
 
         // Get the beverages from the order database and count them.
@@ -241,8 +253,9 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with beverages names
      */
-    function beverageNamesSortedByPopularity() {
-        const beveragesSortedByPopularity = beverageNumbersSortedByPopularity();
+    function beverageNamesSortedByPopularityPublic() {
+        const beveragesSortedByPopularity =
+            beverageNumbersSortedByPopularityPublic();
 
         // Create a new collection out of it that only consists of the beverages name
         let collectorWithBeverageName = [];
@@ -264,7 +277,7 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with all beverages types as strings.
      */
-    function beverageTypes() {
+    function beverageTypesPublic() {
         let types = [];
         for (let i = 0; i < BeveragesDB.beverages.length; i++) {
             addToSet(types, BeveragesDB.beverages[i].category);
@@ -277,8 +290,8 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with all beverages types sorted alphabetically.
      */
-    function beverageTypesSortedByAlphabet() {
-        let types = beverageTypes();
+    function beverageTypesSortedByAlphabetPublic() {
+        let types = beverageTypesPublic();
         return types.sort();
     }
 
@@ -289,8 +302,8 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with objects that consists of the beverage type and a count
      */
-    function beverageTypesSortedByPopularity() {
-        let allBeveragesTypes = beverageTypes();
+    function beverageTypesSortedByPopularityPublic() {
+        let allBeveragesTypes = beverageTypesPublic();
 
         // Create data structure with all existing beverage types
         let collectorWithTypeAndCount = {};
@@ -349,7 +362,7 @@ DatabaseAPI = (function ($) {
      * @returns {object} Order object
      */
     function getLastOrder() {
-        return copy(DB.orders[DB.orders.length - 1]);
+        return DB.orders[DB.orders.length - 1];
     }
 
     /**
@@ -363,7 +376,18 @@ DatabaseAPI = (function ($) {
         if (!id) {
             return undefined;
         }
-        return copy(DB.orders.find((order) => order.id === id));
+        return DB.orders.find((order) => order.id === id);
+    }
+
+    /**
+     * Function to get an order of the database with an ID.
+     *
+     * @param {number} id ID of an order
+     * @returns {object} The order object, or `undefined` if there is no order
+     *   with this id.
+     */
+    function getOrderByIdPublic(id) {
+        return copy(getOrderById(id));
     }
 
     /**
@@ -371,7 +395,7 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with all order objects.
      */
-    function getOrders() {
+    function getOrdersPublic() {
         return copy(DB.orders);
     }
 
@@ -380,7 +404,7 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with all undone order objects
      */
-    function getUndoneOrders() {
+    function getUndoneOrdersPublic() {
         return copy(DB.orders.filter((order) => order.done === false));
     }
 
@@ -390,10 +414,11 @@ DatabaseAPI = (function ($) {
      * @param {object} order The order object.
      * @returns {object} The stored order object.
      */
-    function saveOrder(order) {
+    function saveOrderPublic(order) {
         if (!order) {
             return undefined;
         }
+        let result;
         let existingOrder = getOrderById(order.id);
         if (!existingOrder) {
             // Create new order object in database
@@ -401,12 +426,15 @@ DatabaseAPI = (function ($) {
             const newId = lastOrder.id + 1;
             order.id = newId;
             DB.orders.push(order);
+            result = order;
         } else {
             // Replace the existing order object in the database.
-            existingOrder = order;
+            const indexOf = DB.orders.indexOf(existingOrder);
+            DB.orders[indexOf] = order;
+            result = DB.orders[indexOf];
         }
         // Return a deep copy of the stored order object so the caller can't manipulate the database object.
-        return copy(order);
+        return copy(result);
     }
 
     /**
@@ -414,7 +442,7 @@ DatabaseAPI = (function ($) {
      *
      * @param {number} id The order ID
      */
-    function removeOrderById(id) {
+    function removeOrderByIdPublic(id) {
         DB.orders = DB.orders.filter((o) => o.id != id);
     }
 
@@ -431,7 +459,7 @@ DatabaseAPI = (function ($) {
      *   or `vipInventory`)
      * @returns {Array} Array that contains all beverages in inventory.
      */
-    function getInventory(inventoryName) {
+    function getInventoryPublic(inventoryName) {
         return copy(DB[inventoryName]);
     }
 
@@ -444,7 +472,7 @@ DatabaseAPI = (function ($) {
      * @returns {object} Inventory item if beverage number exists in inventory.
      *   Otherwise `undefined`
      */
-    function getInventoryItemByBeverageNrInternal(inventoryName, beverageNr) {
+    function getInventoryItemByBeverageNr(inventoryName, beverageNr) {
         return DB[inventoryName].find((item) => item.beverageNr === beverageNr);
     }
 
@@ -457,10 +485,8 @@ DatabaseAPI = (function ($) {
      * @returns {object} Inventory item if beverage number exists in inventory.
      *   Otherwise `undefined`
      */
-    function getInventoryItemByBeverageNr(inventoryName, beverageNr) {
-        return copy(
-            getInventoryItemByBeverageNrInternal(inventoryName, beverageNr)
-        );
+    function getInventoryItemByBeverageNrPublic(inventoryName, beverageNr) {
+        return copy(getInventoryItemByBeverageNr(inventoryName, beverageNr));
     }
 
     /**
@@ -473,12 +499,12 @@ DatabaseAPI = (function ($) {
      * @param {number} newQuantity The new quantity
      * @returns {object} The updated inventory item
      */
-    function updateNumberInStockForBeverage(
+    function updateNumberInStockForBeveragePublic(
         inventoryName,
         beverageNr,
         newQuantity
     ) {
-        let inventoryItem = getInventoryItemByBeverageNrInternal(
+        let inventoryItem = getInventoryItemByBeverageNr(
             inventoryName,
             beverageNr
         );
@@ -497,7 +523,7 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with beverages numbers
      */
-    function getHideFromMenuList() {
+    function getHideFromMenuListPublic() {
         return copy(DB.hideFromMenu);
     }
 
@@ -506,7 +532,7 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number.
      */
-    function addBeverageNrToList(beverageNr) {
+    function addBeverageNrToListPublic(beverageNr) {
         if (!beverageNr) {
             return;
         }
@@ -519,7 +545,7 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number.
      */
-    function removeBeverageNrFromList(beverageNr) {
+    function removeBeverageNrFromListPublic(beverageNr) {
         if (!beverageNr) {
             return;
         }
@@ -536,10 +562,9 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number.
      */
-     function getStatusOfBeverage(beverageNr) {
-        if (!beverageNr)
-        {
-            console.log("DatabaseAPI | Enter a valid Beverage Number")
+    function getStatusOfBeverage(beverageNr) {
+        if (!beverageNr) {
+            console.log("DatabaseAPI | Enter a valid Beverage Number");
             return;
         }
         var beverage = getInventoryItemByBeverageNr(beverageNr);
@@ -551,13 +576,11 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number.
      */
-     function changeStatusOfBeverage(beverageNr) {
+    function changeStatusOfBeverage(beverageNr) {
         var active = DatabaseAPI.ActiveCheck.getStatusOfBeverage(beverageNr);
 
-        for (let index = 0; index < DB.inventory.length; index++)
-        {
-            if(DB.inventory[index].beverageNr == beverageNr)
-            {
+        for (let index = 0; index < DB.inventory.length; index++) {
+            if (DB.inventory[index].beverageNr == beverageNr) {
                 DB.inventory[index].active = !active;
             }
         }
@@ -577,7 +600,7 @@ DatabaseAPI = (function ($) {
      * @returns {object} Bill object
      */
     function getLastBill() {
-        return copy(DB.bills[DB.bills.length - 1]);
+        return DB.bills[DB.bills.length - 1];
     }
 
     /**
@@ -590,7 +613,17 @@ DatabaseAPI = (function ($) {
         if (!id) {
             return undefined;
         }
-        return copy(DB.bills.find((bill) => bill.id === id));
+        return DB.bills.find((bill) => bill.id === id);
+    }
+
+    /**
+     * Get a bill by its id.
+     *
+     * @param {number} id The bill id.
+     * @returns {object} The bill object.
+     */
+    function getBillByIdPublic(id) {
+        return copy(getBillById(id));
     }
 
     /**
@@ -599,10 +632,11 @@ DatabaseAPI = (function ($) {
      * @param {object} bill The bill object.
      * @returns {object} The stored bill object.
      */
-    function saveBill(bill) {
+    function saveBillPublic(bill) {
         if (!bill) {
             return undefined;
         }
+        let result;
         let existingBill = getBillById(bill.id);
         if (!existingBill) {
             // Create new bill object in database
@@ -610,12 +644,16 @@ DatabaseAPI = (function ($) {
             const newId = lastBill.id + 1;
             bill.id = newId;
             DB.bills.push(bill);
+            result = bill;
         } else {
             // Replace the existing bill object in the database.
-            existingBill = bill;
+            // Replace the existing order object in the database.
+            const indexOf = DB.bills.indexOf(existingBill);
+            DB.bills[indexOf] = bill;
+            result = DB.bills[indexOf];
         }
         // Return a deep copy of the stored bill object so the caller can't manipulate the database object.
-        return copy(bill);
+        return copy(result);
     }
 
     //=========================================================================
@@ -686,43 +724,47 @@ DatabaseAPI = (function ($) {
      */
     return {
         Users: {
-            getAllUserNames: allUserNames,
-            getUserDetailsByUserName: userDetails,
+            getAllUserNames: allUserNamesPublic,
+            getUserDetailsByUserName: userDetailsPublic,
             getUserDetailsIfCredentialsAreValid:
-                getUserDetailsIfCredentialsAreValid,
-            changeBalance: changeBalance,
+                getUserDetailsIfCredentialsAreValidPublic,
+            changeBalance: changeBalancePublic,
         },
         Beverages: {
-            findBeverageByNr: findBeverageByNr,
-            getAllBeverages: allBeverages,
-            getAllStrongBeverages: allStrongBeverages,
+            findBeverageByNr: findBeverageByNrPublic,
+            getAllBeverages: allBeveragesPublic,
+            getAllStrongBeverages: allStrongBeveragesPublic,
             getBeverageNumbersSortedByPopularity:
-                beverageNumbersSortedByPopularity,
-            getBeverageNamesSortedByPopularity: beverageNamesSortedByPopularity,
-            getBeverageTypes: beverageTypes,
-            getBeverageTypesSortedByAlphabet: beverageTypesSortedByAlphabet,
-            getBeverageTypesSortedByPopularity: beverageTypesSortedByPopularity,
+                beverageNumbersSortedByPopularityPublic,
+            getBeverageNamesSortedByPopularity:
+                beverageNamesSortedByPopularityPublic,
+            getBeverageTypes: beverageTypesPublic,
+            getBeverageTypesSortedByAlphabet:
+                beverageTypesSortedByAlphabetPublic,
+            getBeverageTypesSortedByPopularity:
+                beverageTypesSortedByPopularityPublic,
         },
         Orders: {
-            getOrders: getOrders,
-            getUndoneOrders: getUndoneOrders,
-            getOrderById: getOrderById,
-            saveOrder: saveOrder,
-            removeOrderById: removeOrderById,
+            getOrders: getOrdersPublic,
+            getUndoneOrders: getUndoneOrdersPublic,
+            getOrderById: getOrderByIdPublic,
+            saveOrder: saveOrderPublic,
+            removeOrderById: removeOrderByIdPublic,
         },
         Bills: {
-            getBillById: getBillById,
-            saveBill: saveBill,
+            getBillById: getBillByIdPublic,
+            saveBill: saveBillPublic,
         },
         Inventory: {
-            getInventory: getInventory,
-            getInventoryItemByBeverageNr: getInventoryItemByBeverageNr,
-            updateNumberInStockForBeverage: updateNumberInStockForBeverage,
+            getInventory: getInventoryPublic,
+            getInventoryItemByBeverageNr: getInventoryItemByBeverageNrPublic,
+            updateNumberInStockForBeverage:
+                updateNumberInStockForBeveragePublic,
         },
         HideFromMenu: {
-            getList: getHideFromMenuList,
-            addBeverageNrToList: addBeverageNrToList,
-            removeBeverageNrFromList: removeBeverageNrFromList,
+            getList: getHideFromMenuListPublic,
+            addBeverageNrToList: addBeverageNrToListPublic,
+            removeBeverageNrFromList: removeBeverageNrFromListPublic,
         },
         ActiveCheck: {
             getStatusOfBeverage: getStatusOfBeverage,
