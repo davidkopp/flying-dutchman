@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -297,7 +297,7 @@
         const newBill = {
             type: splittingType ? splittingType : "single",
             vipAccount: vipAccount ? vipAccount : false,
-            timestamp: new Date(),
+            timestamp: new Date().toString(),
             amountSEK: totalAmountForOrder,
         };
 

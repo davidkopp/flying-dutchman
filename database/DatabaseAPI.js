@@ -2,17 +2,85 @@
  * File: DatabaseAPI.js
  *
  * Provides API functions for all databases: BeveragesDB and DB (includes users, orders, bills, inventory, etc.)
- * The functions with the suffix "Public" will be exported to the public.
+ * The functions with the suffix "" will be exported to the public.
  * Returned values of the "public" functions never have a direct reference to the database, so others aren't able to manipulate the database.
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
 
-DatabaseAPI = (function ($) {
+DatabaseAPI = (function () {
+    //=========================================================================
+    // Load everything into the local storage
+    //=========================================================================
+
+    /**
+     * Returns the object for the key from the storage. The 'short-circuit
+     * evaluation' ensures that the function returns `null` immediately if the
+     * key is not in storage and there will be no error.
+     *
+     * @param {string} key The key.
+     * @returns {object} The object.
+     */
+    function getObject(key) {
+        var value = localStorage.getItem(key);
+        return value && JSON.parse(value);
+    }
+
+    /**
+     * Saves the object for the key into the storage.
+     *
+     * @param {string} key The key.
+     * @param {object} value The object.
+     */
+    function saveObject(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    /** Load all databases into local storage when they don't exist yet. */
+    function loadDatabases() {
+        if (!getObject(Constants.STORAGE_DB_USERS_KEY)) {
+            saveObject(Constants.STORAGE_DB_USERS_KEY, DB.users);
+        }
+        if (!getObject(Constants.STORAGE_DB_ACCOUNT_KEY)) {
+            saveObject(Constants.STORAGE_DB_ACCOUNT_KEY, DB.account);
+        }
+        if (!getObject(Constants.STORAGE_DB_ORDERS_KEY)) {
+            saveObject(Constants.STORAGE_DB_ORDERS_KEY, DB.orders);
+        }
+        if (!getObject(Constants.STORAGE_DB_BILLS_KEY)) {
+            saveObject(Constants.STORAGE_DB_BILLS_KEY, DB.bills);
+        }
+        if (!getObject(Constants.STORAGE_DB_TANNINS_KEY)) {
+            saveObject(Constants.STORAGE_DB_TANNINS_KEY, DB.tannins);
+        }
+        if (!getObject(Constants.STORAGE_DB_ALLERGIES_KEY)) {
+            saveObject(Constants.STORAGE_DB_ALLERGIES_KEY, DB.allergies);
+        }
+        if (!getObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY)) {
+            saveObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY, DB.barInventory);
+        }
+        if (!getObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY)) {
+            saveObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY, DB.vipInventory);
+        }
+        if (!getObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY)) {
+            saveObject(
+                Constants.STORAGE_DB_HIDE_FROM_MENU_KEY,
+                DB.hideFromMenu
+            );
+        }
+        if (!getObject(Constants.STORAGE_DB_BEVERAGES_KEY)) {
+            saveObject(
+                Constants.STORAGE_DB_BEVERAGES_KEY,
+                BeveragesDB.beverages
+            );
+        }
+    }
+    loadDatabases();
+
     //=========================================================================
     // USERS
     //=========================================================================
@@ -22,10 +90,11 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with user names as strings.
      */
-    function allUserNamesPublic() {
+    function allUserNames() {
         let nameCollect = [];
-        for (let i = 0; i < DB.users.length; i++) {
-            nameCollect.push(DB.users[i].username);
+        const users = getObject(Constants.STORAGE_DB_USERS_KEY);
+        for (let i = 0; i < users.length; i++) {
+            nameCollect.push(users[i].username);
         }
         return nameCollect;
     }
@@ -37,38 +106,41 @@ DatabaseAPI = (function ($) {
      * @param {string} userName The user name.
      * @returns {Array} Object with details about the user.
      */
-    function userDetailsPublic(userName) {
+    function userDetails(userName) {
+        const users = getObject(Constants.STORAGE_DB_USERS_KEY);
+        const account = getObject(Constants.STORAGE_DB_ACCOUNT_KEY);
+
         let userCollect = [];
         let userID;
         let userIndex;
-        let account;
+        let userAccount;
 
         // First we find the user ID of the selected user. We also save the
         // index number for the record in the JSON structure.
-        for (let i = 0; i < DB.users.length; i++) {
-            if (DB.users[i].username === userName) {
-                userID = DB.users[i].user_id;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].username === userName) {
+                userID = users[i].user_id;
                 userIndex = i;
             }
         }
 
         // We get the current account status from another table in the database,
         // account. We store this in a variable here for convenience.
-        for (let i = 0; i < DB.account.length; i++) {
-            if (DB.account[i].user_id === userID) {
-                account = DB.account[i].creditSEK;
+        for (let i = 0; i < account.length; i++) {
+            if (account[i].user_id === userID) {
+                userAccount = account[i].creditSEK;
             }
         }
 
         // Add the details to an own data structure.
         userCollect.push(
-            DB.users[userIndex].user_id,
-            DB.users[userIndex].username,
-            DB.users[userIndex].first_name,
-            DB.users[userIndex].last_name,
-            DB.users[userIndex].email,
+            users[userIndex].user_id,
+            users[userIndex].username,
+            users[userIndex].first_name,
+            users[userIndex].last_name,
+            users[userIndex].email,
 
-            account
+            userAccount
         );
 
         return userCollect;
@@ -82,8 +154,10 @@ DatabaseAPI = (function ($) {
      * @param {string} password The password.
      * @returns {object} The user information or `null` if the credentials are invalid.
      */
-    function getUserDetailsIfCredentialsAreValidPublic(username, password) {
-        let foundUser = DB.users.find((u) => u.username === username);
+    function getUserDetailsIfCredentialsAreValid(username, password) {
+        const users = getObject(Constants.STORAGE_DB_USERS_KEY);
+
+        let foundUser = users.find((u) => u.username === username);
         if (!foundUser) {
             console.log(
                 `DatabaseAPI.checkUserCredentials | User with username '${username}' does not exist in database.`
@@ -97,7 +171,7 @@ DatabaseAPI = (function ($) {
             return null;
         }
 
-        return copy(foundUser);
+        return foundUser;
     }
 
     //=========================================================================
@@ -111,23 +185,27 @@ DatabaseAPI = (function ($) {
      * @param {string} username The user name.
      * @param {string} newAmount The new amount.
      */
-    function changeBalancePublic(username, newAmount) {
+    function changeBalance(username, newAmount) {
+        const users = getObject(Constants.STORAGE_DB_USERS_KEY);
+        const accounts = getObject(Constants.STORAGE_DB_ACCOUNT_KEY);
+
         let userID;
 
         // First we find the userID in the user data base.
-        for (let i = 0; i < DB.users.length; i++) {
-            if (DB.users[i].username === username) {
-                userID = DB.users[i].user_id;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].username === username) {
+                userID = users[i].user_id;
             }
         }
 
         // Then we match the userID with the account list. and change the
         // account balance.
-        for (let i = 0; i < DB.account.length; i++) {
-            if (DB.account[i].user_id === userID) {
-                DB.account[i].creditSEK = newAmount;
+        for (let i = 0; i < accounts.length; i++) {
+            if (accounts[i].user_id === userID) {
+                accounts[i].creditSEK = newAmount;
             }
         }
+        saveObject(Constants.STORAGE_DB_ACCOUNT_KEY, accounts);
     }
 
     //=========================================================================
@@ -139,14 +217,13 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with all beverages (name + category).
      */
-    function allBeveragesPublic() {
+    function allBeverages() {
+        const beverages = getObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+
         let collector = [];
 
-        for (let i = 0; i < BeveragesDB.beverages.length; i++) {
-            collector.push([
-                BeveragesDB.beverages[i].name,
-                BeveragesDB.beverages[i].category,
-            ]);
+        for (let i = 0; i < beverages.length; i++) {
+            collector.push([beverages[i].name, beverages[i].category]);
         }
 
         return collector;
@@ -159,21 +236,17 @@ DatabaseAPI = (function ($) {
      * @param {number} strength The alcohol strength.
      * @returns {Array} Array with the beverages.
      */
-    function allStrongBeveragesPublic(strength) {
+    function allStrongBeverages(strength) {
+        const beverages = getObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+
         let collector = [];
 
-        for (let i = 0; i < BeveragesDB.beverages.length; i++) {
+        for (let i = 0; i < beverages.length; i++) {
             // We check if the percentage alcohol strength stored in the
             // database is lower than the given limit strength. If the limit is
             // set to 14, also liqueuers are listed.
-            if (
-                percentToNumber(BeveragesDB.beverages[i].alcoholstrength) >
-                strength
-            ) {
-                collector.push([
-                    BeveragesDB.beverages[i].name,
-                    BeveragesDB.beverages[i].category,
-                ]);
+            if (percentToNumber(beverages[i].alcoholstrength) > strength) {
+                collector.push([beverages[i].name, beverages[i].category]);
             }
         }
 
@@ -187,20 +260,11 @@ DatabaseAPI = (function ($) {
      * @returns {object} Beverage object or undefined
      */
     function findBeverageByNr(beverageNr) {
-        const beverage = BeveragesDB.beverages.find(
+        const beverages = getObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+        const beverage = beverages.find(
             (beverage) => beverage.nr === beverageNr
         );
         return beverage;
-    }
-
-    /**
-     * Finds a beverage by number in the database and returns it.
-     *
-     * @param {string} beverageNr Number of the beverage
-     * @returns {object} Beverage object or undefined
-     */
-    function findBeverageByNrPublic(beverageNr) {
-        return copy(findBeverageByNr(beverageNr));
     }
 
     /**
@@ -210,12 +274,14 @@ DatabaseAPI = (function ($) {
      * @returns {Array} Array with objects that consists of the beverage number
      *   and a count.
      */
-    function beverageNumbersSortedByPopularityPublic() {
+    function beverageNumbersSortedByPopularity() {
+        const orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+
         let collectorWithCount = {};
 
         // Get the beverages from the order database and count them.
-        for (let i = 0; i < DB.orders.length; i++) {
-            const order = DB.orders[i];
+        for (let i = 0; i < orders.length; i++) {
+            const order = orders[i];
             const beveragesInOrder = order.items.map((item) => item.nr);
             for (let j = 0; j < beveragesInOrder.length; j++) {
                 const beverageNr = beveragesInOrder[j];
@@ -253,9 +319,8 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with beverages names
      */
-    function beverageNamesSortedByPopularityPublic() {
-        const beveragesSortedByPopularity =
-            beverageNumbersSortedByPopularityPublic();
+    function beverageNamesSortedByPopularity() {
+        const beveragesSortedByPopularity = beverageNumbersSortedByPopularity();
 
         // Create a new collection out of it that only consists of the beverages name
         let collectorWithBeverageName = [];
@@ -277,10 +342,12 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with all beverages types as strings.
      */
-    function beverageTypesPublic() {
+    function beverageTypes() {
+        const beverages = getObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+
         let types = [];
-        for (let i = 0; i < BeveragesDB.beverages.length; i++) {
-            addToSet(types, BeveragesDB.beverages[i].category);
+        for (let i = 0; i < beverages.length; i++) {
+            addToSet(types, beverages[i].category);
         }
         return types;
     }
@@ -290,8 +357,8 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with all beverages types sorted alphabetically.
      */
-    function beverageTypesSortedByAlphabetPublic() {
-        let types = beverageTypesPublic();
+    function beverageTypesSortedByAlphabet() {
+        let types = beverageTypes();
         return types.sort();
     }
 
@@ -302,8 +369,10 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} Array with objects that consists of the beverage type and a count
      */
-    function beverageTypesSortedByPopularityPublic() {
-        let allBeveragesTypes = beverageTypesPublic();
+    function beverageTypesSortedByPopularity() {
+        const orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+
+        let allBeveragesTypes = beverageTypes();
 
         // Create data structure with all existing beverage types
         let collectorWithTypeAndCount = {};
@@ -313,8 +382,8 @@ DatabaseAPI = (function ($) {
         }
 
         // Collect all beverages from the orders and count them.
-        for (let i = 0; i < DB.orders.length; i++) {
-            const order = DB.orders[i];
+        for (let i = 0; i < orders.length; i++) {
+            const order = orders[i];
             const beveragesInOrder = order.items.map((item) => item.nr);
             for (let j = 0; j < beveragesInOrder.length; j++) {
                 const beverageNr = beveragesInOrder[j];
@@ -359,16 +428,18 @@ DatabaseAPI = (function ($) {
      * @param {string} beverageNr The beverage number.
      * @param {number} newPrice The new price as a float number.
      */
-    function setPriceOfBeveragePublic(beverageNr, newPrice) {
+    function setPriceOfBeverage(beverageNr, newPrice) {
         if (!beverageNr || !newPrice) {
             return;
         }
-        let beverage = findBeverageByNr(beverageNr);
+        let beverages = getObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+        let beverage = beverages.find((beverage) => beverage.nr === beverageNr);
         if (!beverage) {
             return;
         }
         // Update price of beverage
         beverage.priceinclvat = newPrice;
+        saveObject(Constants.STORAGE_DB_BEVERAGES_KEY, beverages);
     }
 
     //=========================================================================
@@ -381,7 +452,9 @@ DatabaseAPI = (function ($) {
      * @returns {object} Order object
      */
     function getLastOrder() {
-        return DB.orders[DB.orders.length - 1];
+        const orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+
+        return orders[orders.length - 1];
     }
 
     /**
@@ -395,18 +468,8 @@ DatabaseAPI = (function ($) {
         if (!id) {
             return undefined;
         }
-        return DB.orders.find((order) => order.id === id);
-    }
-
-    /**
-     * Function to get an order of the database with an ID.
-     *
-     * @param {number} id ID of an order
-     * @returns {object} The order object, or `undefined` if there is no order
-     *   with this id.
-     */
-    function getOrderByIdPublic(id) {
-        return copy(getOrderById(id));
+        const orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+        return orders.find((order) => order.id === id);
     }
 
     /**
@@ -414,8 +477,8 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with all order objects.
      */
-    function getOrdersPublic() {
-        return copy(DB.orders);
+    function getOrders() {
+        return getObject(Constants.STORAGE_DB_ORDERS_KEY);
     }
 
     /**
@@ -423,8 +486,18 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with all undone order objects
      */
-    function getUndoneOrdersPublic() {
-        return copy(DB.orders.filter((order) => order.done === false));
+    function getUndoneOrders() {
+        const orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+        return orders.filter((order) => order.done === false);
+    }
+
+    /**
+     * Overwrite all orders in the database.
+     *
+     * @param {Array} orders The array with all order objects.
+     */
+    function saveOrders(orders) {
+        saveObject(Constants.STORAGE_DB_ORDERS_KEY, orders);
     }
 
     /**
@@ -433,27 +506,26 @@ DatabaseAPI = (function ($) {
      * @param {object} order The order object.
      * @returns {object} The stored order object.
      */
-    function saveOrderPublic(order) {
+    function saveOrder(order) {
         if (!order) {
             return undefined;
         }
-        let result;
-        let existingOrder = getOrderById(order.id);
+
+        let orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+        let existingOrder = orders.find((o) => o.id === order.id);
         if (!existingOrder) {
             // Create new order object in database
             const lastOrder = getLastOrder();
             const newId = lastOrder.id + 1;
             order.id = newId;
-            DB.orders.push(order);
-            result = order;
+            orders.push(order);
         } else {
             // Replace the existing order object in the database.
-            const indexOf = DB.orders.indexOf(existingOrder);
-            DB.orders[indexOf] = order;
-            result = DB.orders[indexOf];
+            const indexOf = orders.indexOf(existingOrder);
+            orders[indexOf] = order;
         }
-        // Return a deep copy of the stored order object so the caller can't manipulate the database object.
-        return copy(result);
+        saveOrders(orders);
+        return getOrderById(order.id);
     }
 
     /**
@@ -461,8 +533,11 @@ DatabaseAPI = (function ($) {
      *
      * @param {number} id The order ID
      */
-    function removeOrderByIdPublic(id) {
-        DB.orders = DB.orders.filter((o) => o.id != id);
+    function removeOrderById(id) {
+        let orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
+
+        orders = orders.filter((o) => o.id != id);
+        saveOrders(orders);
     }
 
     //=========================================================================
@@ -478,21 +553,48 @@ DatabaseAPI = (function ($) {
      *   or `vipInventory`)
      * @returns {Array} Array that contains all beverages in inventory.
      */
-    function getInventoryPublic(inventoryName) {
-        return copy(DB[inventoryName]);
+    function getInventory(inventoryName) {
+        switch (inventoryName) {
+            case Constants.INVENTORIES.BAR:
+                return getObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY);
+
+            case Constants.INVENTORIES.VIP:
+                return getObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY);
+
+            default:
+                console.log(
+                    "DatabaseAPI.getInventory | Unknown inventory '" +
+                        inventoryName +
+                        "'!"
+                );
+                return undefined;
+        }
     }
 
     /**
-     * Returns the inventory item for a specific beverage. Internal: No deep copy.
+     * Overwrites the inventory in the database.
      *
      * @param {string} inventoryName The name of the inventory (`barInventory`
      *   or `vipInventory`)
-     * @param {string} beverageNr The beverage number
-     * @returns {object} Inventory item if beverage number exists in inventory.
-     *   Otherwise `undefined`
+     * @param {object} inventory The inventory.
      */
-    function getInventoryItemByBeverageNr(inventoryName, beverageNr) {
-        return DB[inventoryName].find((item) => item.beverageNr === beverageNr);
+    function saveInventory(inventoryName, inventory) {
+        switch (inventoryName) {
+            case Constants.INVENTORIES.BAR:
+                saveObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY, inventory);
+                break;
+
+            case Constants.INVENTORIES.VIP:
+                saveObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY, inventory);
+                break;
+
+            default:
+                console.log(
+                    "DatabaseAPI.saveInventory | Unknown inventory '" +
+                        inventoryName +
+                        "'!"
+                );
+        }
     }
 
     /**
@@ -504,8 +606,9 @@ DatabaseAPI = (function ($) {
      * @returns {object} Inventory item if beverage number exists in inventory.
      *   Otherwise `undefined`
      */
-    function getInventoryItemByBeverageNrPublic(inventoryName, beverageNr) {
-        return copy(getInventoryItemByBeverageNr(inventoryName, beverageNr));
+    function getInventoryItemByBeverageNr(inventoryName, beverageNr) {
+        const inventory = getInventory(inventoryName);
+        return inventory.find((item) => item.beverageNr === beverageNr);
     }
 
     /**
@@ -518,19 +621,20 @@ DatabaseAPI = (function ($) {
      * @param {number} newQuantity The new quantity
      * @returns {object} The updated inventory item
      */
-    function updateNumberInStockForBeveragePublic(
+    function updateNumberInStockForBeverage(
         inventoryName,
         beverageNr,
         newQuantity
     ) {
-        let inventoryItem = getInventoryItemByBeverageNr(
-            inventoryName,
-            beverageNr
+        let inventory = getInventory(inventoryName);
+        let inventoryItem = inventory.find(
+            (item) => item.beverageNr === beverageNr
         );
         if (inventoryItem) {
             inventoryItem.quantity = newQuantity;
         }
-        return copy(inventoryItem);
+        saveInventory(inventoryName, inventory);
+        return getInventoryItemByBeverageNr(inventoryName, beverageNr);
     }
 
     //=========================================================================
@@ -542,8 +646,17 @@ DatabaseAPI = (function ($) {
      *
      * @returns {Array} The array with beverages numbers
      */
-    function getHideFromMenuListPublic() {
-        return copy(DB.hideFromMenu);
+    function getHideFromMenuList() {
+        return getObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY);
+    }
+
+    /**
+     * Saves a list of beverages that should be hidden in the menu.
+     *
+     * @param {Array} list The array with beverages numbers
+     */
+    function saveHideFromMenuList(list) {
+        saveObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY, list);
     }
 
     /**
@@ -551,12 +664,16 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number.
      */
-    function addBeverageNrToListPublic(beverageNr) {
+    function addBeverageNrToList(beverageNr) {
         if (!beverageNr) {
             return;
         }
+        let hideFromMenuList = getObject(
+            Constants.STORAGE_DB_HIDE_FROM_MENU_KEY
+        );
 
-        DB.hideFromMenu = addToSet(DB.hideFromMenu, beverageNr);
+        hideFromMenuList = addToSet(hideFromMenuList, beverageNr);
+        saveHideFromMenuList(hideFromMenuList);
     }
 
     /**
@@ -564,12 +681,16 @@ DatabaseAPI = (function ($) {
      *
      * @param {string} beverageNr The beverage number.
      */
-    function removeBeverageNrFromListPublic(beverageNr) {
+    function removeBeverageNrFromList(beverageNr) {
         if (!beverageNr) {
             return;
         }
 
-        DB.hideFromMenu = removeFromArray(DB.hideFromMenu, beverageNr);
+        let hideFromMenuList = getObject(
+            Constants.STORAGE_DB_HIDE_FROM_MENU_KEY
+        );
+        hideFromMenuList = removeFromArray(hideFromMenuList, beverageNr);
+        saveHideFromMenuList(hideFromMenuList);
     }
 
     //=========================================================================
@@ -583,8 +704,11 @@ DatabaseAPI = (function ($) {
      * @param {string} beverageNr The beverage number.
      * @returns {boolean} Status of the beverage (active: true/false).
      */
-    function getStatusOfBeveragePublic(inventoryName, beverageNr) {
-        var beverage = getInventoryItemByBeverageNr(inventoryName, beverageNr);
+    function getStatusOfBeverage(inventoryName, beverageNr) {
+        const beverage = getInventoryItemByBeverageNr(
+            inventoryName,
+            beverageNr
+        );
         return beverage.active;
     }
 
@@ -595,15 +719,20 @@ DatabaseAPI = (function ($) {
      * @param {string} beverageNr The beverage number.
      * @returns {boolean} The new status.
      */
-    function changeStatusOfBeveragePublic(inventoryName, beverageNr) {
-        var inventoryItem = getInventoryItemByBeverageNr(
-            inventoryName,
-            beverageNr
+    function changeStatusOfBeverage(inventoryName, beverageNr) {
+        let inventory = getInventory(inventoryName);
+        let inventoryItem = inventory.find(
+            (item) => item.beverageNr === beverageNr
         );
         if (inventoryItem) {
             inventoryItem.active = !inventoryItem.active;
         }
-        return inventoryItem.active;
+        saveInventory(inventoryName, inventory);
+        const updatedInventoryItem = getInventoryItemByBeverageNr(
+            inventoryName,
+            beverageNr
+        );
+        return updatedInventoryItem.active;
     }
 
     //=========================================================================
@@ -616,7 +745,26 @@ DatabaseAPI = (function ($) {
      * @returns {object} Bill object
      */
     function getLastBill() {
-        return DB.bills[DB.bills.length - 1];
+        const bills = getObject(Constants.STORAGE_DB_BILLS_KEY);
+        return bills[bills.length - 1];
+    }
+
+    /**
+     * Get all bills.
+     *
+     * @returns {Array} The bills.
+     */
+    function getBills() {
+        return getObject(Constants.STORAGE_DB_BILLS_KEY);
+    }
+
+    /**
+     * Overwrites all bills.
+     *
+     * @param {Array} bills The bills.
+     */
+    function saveBills(bills) {
+        saveObject(Constants.STORAGE_DB_BILLS_KEY, bills);
     }
 
     /**
@@ -629,17 +777,8 @@ DatabaseAPI = (function ($) {
         if (!id) {
             return undefined;
         }
-        return DB.bills.find((bill) => bill.id === id);
-    }
-
-    /**
-     * Get a bill by its id.
-     *
-     * @param {number} id The bill id.
-     * @returns {object} The bill object.
-     */
-    function getBillByIdPublic(id) {
-        return copy(getBillById(id));
+        const bills = getObject(Constants.STORAGE_DB_BILLS_KEY);
+        return bills.find((bill) => bill.id === id);
     }
 
     /**
@@ -648,50 +787,32 @@ DatabaseAPI = (function ($) {
      * @param {object} bill The bill object.
      * @returns {object} The stored bill object.
      */
-    function saveBillPublic(bill) {
+    function saveBill(bill) {
         if (!bill) {
             return undefined;
         }
-        let result;
+        let bills = getObject(Constants.STORAGE_DB_BILLS_KEY);
+
         let existingBill = getBillById(bill.id);
         if (!existingBill) {
             // Create new bill object in database
             const lastBill = getLastBill();
             const newId = lastBill.id + 1;
             bill.id = newId;
-            DB.bills.push(bill);
-            result = bill;
+            bills.push(bill);
         } else {
             // Replace the existing bill object in the database.
             // Replace the existing order object in the database.
-            const indexOf = DB.bills.indexOf(existingBill);
-            DB.bills[indexOf] = bill;
-            result = DB.bills[indexOf];
+            const indexOf = bills.indexOf(existingBill);
+            bills[indexOf] = bill;
         }
-        // Return a deep copy of the stored bill object so the caller can't manipulate the database object.
-        return copy(result);
+        saveBills(bills);
+        return getBillById(bill.id);
     }
 
     //=========================================================================
     // HELPER FUNCTIONS
     //=========================================================================
-
-    /**
-     * Creates a deep copy of an given object or array. If it's not an object or
-     * an array it returns the parameter.
-     *
-     * @param {object} obj The object or array to copy
-     * @returns {object} The copied object or array
-     */
-    function copy(obj) {
-        if (Array.isArray(obj)) {
-            return $.extend(true, [], obj);
-        }
-        if (typeof obj === "object") {
-            return $.extend(true, {}, obj);
-        }
-        return obj;
-    }
 
     /**
      * Adds an item to a set, only if the item is not already there. The set is
@@ -740,52 +861,53 @@ DatabaseAPI = (function ($) {
      */
     return {
         Users: {
-            getAllUserNames: allUserNamesPublic,
-            getUserDetailsByUserName: userDetailsPublic,
+            getAllUserNames: allUserNames,
+            getUserDetailsByUserName: userDetails,
             getUserDetailsIfCredentialsAreValid:
-                getUserDetailsIfCredentialsAreValidPublic,
-            changeBalance: changeBalancePublic,
+                getUserDetailsIfCredentialsAreValid,
+            changeBalance: changeBalance,
         },
         Beverages: {
-            findBeverageByNr: findBeverageByNrPublic,
-            getAllBeverages: allBeveragesPublic,
-            getAllStrongBeverages: allStrongBeveragesPublic,
+            findBeverageByNr: findBeverageByNr,
+            getAllBeverages: allBeverages,
+            getAllStrongBeverages: allStrongBeverages,
             getBeverageNumbersSortedByPopularity:
-                beverageNumbersSortedByPopularityPublic,
-            getBeverageNamesSortedByPopularity:
-                beverageNamesSortedByPopularityPublic,
-            getBeverageTypes: beverageTypesPublic,
-            getBeverageTypesSortedByAlphabet:
-                beverageTypesSortedByAlphabetPublic,
-            getBeverageTypesSortedByPopularity:
-                beverageTypesSortedByPopularityPublic,
-            setPriceOfBeverage: setPriceOfBeveragePublic,
+                beverageNumbersSortedByPopularity,
+            getBeverageNamesSortedByPopularity: beverageNamesSortedByPopularity,
+            getBeverageTypes: beverageTypes,
+            getBeverageTypesSortedByAlphabet: beverageTypesSortedByAlphabet,
+            getBeverageTypesSortedByPopularity: beverageTypesSortedByPopularity,
+            setPriceOfBeverage: setPriceOfBeverage,
         },
         Orders: {
-            getOrders: getOrdersPublic,
-            getUndoneOrders: getUndoneOrdersPublic,
-            getOrderById: getOrderByIdPublic,
-            saveOrder: saveOrderPublic,
-            removeOrderById: removeOrderByIdPublic,
+            getOrders: getOrders,
+            getUndoneOrders: getUndoneOrders,
+            getOrderById: getOrderById,
+            saveOrders: saveOrders,
+            saveOrder: saveOrder,
+            removeOrderById: removeOrderById,
         },
         Bills: {
-            getBillById: getBillByIdPublic,
-            saveBill: saveBillPublic,
+            getBillById: getBillById,
+            saveBill: saveBill,
+            getBills: getBills,
+            saveBills: saveBills,
         },
         Inventory: {
-            getInventory: getInventoryPublic,
-            getInventoryItemByBeverageNr: getInventoryItemByBeverageNrPublic,
-            updateNumberInStockForBeverage:
-                updateNumberInStockForBeveragePublic,
+            getInventory: getInventory,
+            getInventoryItemByBeverageNr: getInventoryItemByBeverageNr,
+            updateNumberInStockForBeverage: updateNumberInStockForBeverage,
+            saveInventory: saveInventory,
         },
         HideFromMenu: {
-            getList: getHideFromMenuListPublic,
-            addBeverageNrToList: addBeverageNrToListPublic,
-            removeBeverageNrFromList: removeBeverageNrFromListPublic,
+            getList: getHideFromMenuList,
+            saveList: saveHideFromMenuList,
+            addBeverageNrToList: addBeverageNrToList,
+            removeBeverageNrFromList: removeBeverageNrFromList,
         },
         ActiveCheck: {
-            getStatusOfBeverage: getStatusOfBeveragePublic,
-            changeStatusOfBeverage: changeStatusOfBeveragePublic,
+            getStatusOfBeverage: getStatusOfBeverage,
+            changeStatusOfBeverage: changeStatusOfBeverage,
         },
     };
-})(jQuery);
+})();

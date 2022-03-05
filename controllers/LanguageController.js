@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -95,7 +95,7 @@
      * @returns {string} The current language as country code.
      */
     function getCurrentLanguage() {
-        return sessionStorage.getItem(Constants.SESSION_STORAGE_LANGUAGE_KEY);
+        return sessionStorage.getItem(Constants.STORAGE_LANGUAGE_KEY);
     }
 
     /**
@@ -104,7 +104,7 @@
      * @param {string} newLang The new language as country code.
      */
     function setLanguage(newLang) {
-        sessionStorage.setItem(Constants.SESSION_STORAGE_LANGUAGE_KEY, newLang);
+        sessionStorage.setItem(Constants.STORAGE_LANGUAGE_KEY, newLang);
     }
 
     /**
