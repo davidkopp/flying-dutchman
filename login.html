@@ -5,7 +5,7 @@ Login page for the staff and VIP members.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Friday, 25th February 2022
+Last Modified: Saturday, 5th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -23,8 +23,8 @@ Modified By: David Kopp (mail@davidkopp.de>)
 
         <script type="text/javascript" src="database/BeveragesDB.js"></script>
         <script type="text/javascript" src="database/DBLoaded.js"></script>
-        <script type="text/javascript" src="database/DatabaseAPI.js"></script>
         <script type="text/javascript" src="database/Dictionary.js"></script>
+        <script type="text/javascript" src="database/DatabaseAPI.js"></script>
 
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
@@ -35,7 +35,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <div class="login_wrapper">
             <div class="login">
                 <h1 class="mb-20 text-center" id="caption" data-lang="caption"></h1>
-                <div class=" lang">
+                <div class="lang">
                     <button onclick="changeLang('en')">
                         <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
                         <span data-lang="language-switcher-text-english">English</span>
@@ -49,24 +49,34 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         <span data-lang="language-switcher-text-portuguese">Portuguese</span>
                     </button>
                 </div>
-                
+
                 <form id="login_form" action="vip_dashboard.html">
                     <div class="box">
                         <label for="username" id="username-label" data-lang="username-label">: </label>
                         <div class="input_box">
-                            <input type="text" id="username-input-field" name="username" class="login-form-field"
-                                required />
+                            <input
+                                type="text"
+                                id="username-input-field"
+                                name="username"
+                                class="login-form-field"
+                                required
+                            />
                         </div>
                     </div>
                     <div class="box">
                         <label for="password" id="password-label" data-lang="password-label">: </label>
                         <div class="input_box">
-                            <input type="password" id="password-input-field" name="password" class="login-form-field"
-                                required />
+                            <input
+                                type="password"
+                                id="password-input-field"
+                                name="password"
+                                class="login-form-field"
+                                required
+                            />
                         </div>
                     </div>
                     <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
-                </form>        
+                </form>
             </div>
         </div>
     </body>

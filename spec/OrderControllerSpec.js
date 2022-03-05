@@ -3,10 +3,10 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals DB, OrderController, UNDOmanager */
+/* globals OrderController, UNDOmanager */
 
 describe("OrderController", function () {
     let savedOrders;
@@ -14,23 +14,23 @@ describe("OrderController", function () {
     const inventoryNames = Object.values(Constants.INVENTORIES);
 
     beforeEach(function () {
-        savedOrders = $.extend(true, [], DB.orders);
+        savedOrders = DatabaseAPI.Orders.getOrders();
 
         inventoryNames.forEach((inventoryName) => {
-            savedInventories[inventoryName] = $.extend(
-                true,
-                [],
-                DB[inventoryName]
-            );
+            savedInventories[inventoryName] =
+                DatabaseAPI.Inventory.getInventory(inventoryName);
         });
     });
 
     afterEach(function () {
-        DB.orders = $.extend(true, [], savedOrders);
+        DatabaseAPI.Orders.saveOrders(savedOrders);
 
         for (const inventoryName in savedInventories) {
             if (Object.hasOwnProperty.call(savedInventories, inventoryName)) {
-                DB[inventoryName] = savedInventories[inventoryName];
+                DatabaseAPI.Inventory.saveInventory(
+                    inventoryName,
+                    savedInventories[inventoryName]
+                );
             }
         }
     });
@@ -742,11 +742,11 @@ describe("OrderController", function () {
         let savedBills;
 
         beforeEach(function () {
-            savedBills = $.extend(true, [], DB.bills);
+            savedBills = DatabaseAPI.Bills.getBills();
         });
 
         afterEach(function () {
-            DB.bills = $.extend(true, [], savedBills);
+            DatabaseAPI.Bills.saveBills(savedBills);
         });
 
         it("should be able to create a new bill for an order", function () {
@@ -777,7 +777,7 @@ describe("OrderController", function () {
             expect(createdBill).toBeTruthy();
             expect(createdBill.id).toBeTruthy();
             expect(createdBill.vipAccount).toBe(false);
-            expect(createdBill.timestamp instanceof Date).toBe(true);
+            expect(Date.parse(createdBill.timestamp)).not.toBeNaN();
             expect(createdBill.amountSEK).toBe(expectedTotalAmount);
         });
 

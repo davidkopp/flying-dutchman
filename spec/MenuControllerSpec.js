@@ -3,10 +3,10 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals DB, MenuController */
+/* globals MenuController */
 
 describe("MenuController", function () {
     /**
@@ -46,11 +46,11 @@ describe("MenuController", function () {
         let savedHideFromMenuList;
 
         beforeEach(function () {
-            savedHideFromMenuList = $.extend(true, [], DB.hideFromMenu);
+            savedHideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         });
 
         afterEach(function () {
-            DB.hideFromMenu = $.extend(true, [], savedHideFromMenuList);
+            DatabaseAPI.HideFromMenu.saveList(savedHideFromMenuList);
         });
 
         it("should be able to hide a beverage from the menu", function () {

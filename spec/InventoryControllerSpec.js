@@ -1,12 +1,12 @@
 /*
- * File: OrderController.js
+ * File: InventoryControllerSpec.js
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals DB, InventoryController */
+/* globals InventoryController */
 
 describe("InventoryController", function () {
     describe("that handles the bar inventory", function () {
@@ -20,17 +20,14 @@ describe("InventoryController", function () {
         });
 
         beforeEach(function () {
-            savedBarInventory = $.extend(
-                true,
-                [],
-                DB[Constants.INVENTORIES.BAR]
+            savedBarInventory = DatabaseAPI.Inventory.getInventory(
+                Constants.INVENTORIES.BAR
             );
         });
 
         afterEach(function () {
-            DB[Constants.INVENTORIES.BAR] = $.extend(
-                true,
-                [],
+            DatabaseAPI.Inventory.saveInventory(
+                Constants.INVENTORIES.BAR,
                 savedBarInventory
             );
         });
@@ -54,17 +51,14 @@ describe("InventoryController", function () {
         });
 
         beforeEach(function () {
-            savedVipInventory = $.extend(
-                true,
-                [],
-                DB[Constants.INVENTORIES.VIP]
+            savedVipInventory = DatabaseAPI.Inventory.getInventory(
+                Constants.INVENTORIES.VIP
             );
         });
 
         afterEach(function () {
-            DB[Constants.INVENTORIES.VIP] = $.extend(
-                true,
-                [],
+            DatabaseAPI.Inventory.saveInventory(
+                Constants.INVENTORIES.VIP,
                 savedVipInventory
             );
         });

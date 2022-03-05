@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -39,7 +39,17 @@ const Constants = {
 
     LOW_STOCK_NUMBER: 5,
 
-    SESSION_STORAGE_LANGUAGE_KEY: "language",
+    STORAGE_LANGUAGE_KEY: "language",
+    STORAGE_DB_USERS_KEY: "db_users",
+    STORAGE_DB_ACCOUNT_KEY: "db_account",
+    STORAGE_DB_ORDERS_KEY: "db_orders",
+    STORAGE_DB_BILLS_KEY: "db_bills",
+    STORAGE_DB_TANNINS_KEY: "db_tannins",
+    STORAGE_DB_ALLERGIES_KEY: "db_allergies",
+    STORAGE_DB_INVENTORY_BAR_KEY: "db_inventory_bar",
+    STORAGE_DB_INVENTORY_VIP_KEY: "db_inventory_vip",
+    STORAGE_DB_HIDE_FROM_MENU_KEY: "db_hideFromMenu",
+    STORAGE_DB_BEVERAGES_KEY: "db_beverages",
 };
 
 const Dictionary = {
