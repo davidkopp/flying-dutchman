@@ -70,6 +70,11 @@
         }
     }
 
+    /** Initializes or refreshes the text strings on the current page. */
+    function refreshTextStrings() {
+        updateView();
+    }
+
     /**
      * Updates the current view by replacing all text strings. Per default it
      * uses the html element property `text` to replace the text. However, not
@@ -154,4 +159,6 @@
     }
 
     exports.changeLang = changeLang;
+    exports.LanguageController = {};
+    exports.LanguageController.refreshTextStrings = refreshTextStrings;
 })(jQuery, window);
