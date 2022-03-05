@@ -35,7 +35,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
     </head>
 
     <body>
-        <div class="staff-dashboard-container">
+        <div id="staff-dashboard-container">
             <div class="lang">
                 <button onclick="changeLang('en')">
                     <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
@@ -102,18 +102,27 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <!-- Overlay for the orders details -->
             <div id="overlay-orders-details" class="overlay">
                 <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
                     <span data-lang="order-details-table-label"></span>
                     <span id="order-details-table"></span>
                     <br />
                     <br />
                     <span data-lang="order-details-items-label"></span>
                     <div id="order-details-items-container"></div>
+                    <button id="delete-order-button" class="overlay-button" data-order-id="">
+                        <span data-lang="delete-order-button"></span>
+                    </button>
                 </div>
             </div>
 
             <!-- Overlay for the inventory details -->
             <div id="overlay-inventory-details" class="overlay">
                 <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
                     <span data-lang="inventory-details-label"></span>
                     <span id="inventory-details-inventory-name"></span>
                     <br />
@@ -126,7 +135,63 @@ Modified By: David Kopp (mail@davidkopp.de>)
             </div>
 
             <!-- Overlay for creating a new order -->
-            <div id="overlay-create-order" class="overlay"></div>
+            <div id="overlay-create-order" class="overlay">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span data-lang="create-order-title"></span>
+                    <br />
+                    <form id="create-order-form">
+                        <div class="box">
+                            <label for="table" data-lang="create-order-table-label"></label>
+                            <div class="input_box">
+                                <input type="number" name="table" required />
+                            </div>
+                        </div>
+                        <div id="create-order-items-container">
+                            <span data-lang="create-order-items-label"></span>
+                            <br />
+                            <div id="create-order-items-inner-container">
+                                <div class="add-item box">
+                                    <div class="input_box">
+                                        <input type="text" name="addItem" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="add-item-button">
+                                <span data-lang="add-item-button"></span>
+                            </button>
+                        </div>
+                        <div class="box">
+                            <label for="notes" data-lang="create-order-notes-label"></label>
+                            <div class="input_box">
+                                <input type="textarea" name="notes" />
+                            </div>
+                        </div>
+                        <div class="box">
+                            <span data-lang="create-order-inventory-label"></span>
+                            <div>
+                                <label for="inventory" data-lang="create-order-inventory-label-bar"></label>
+                                <input type="radio" name="inventory" value="barInventory" checked />
+                                <label for="inventory" data-lang="create-order-inventory-label-vip"></label>
+                                <input type="radio" name="inventory" value="vipInventory" />
+                            </div>
+                        </div>
+                        <input type="submit" data-lang="[value]create-order-form-submit" />
+                    </form>
+                </div>
+            </div>
+
+            <!-- Overlay for restock -->
+            <div id="overlay-restock" class="overlay">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span>NOT IMPLEMENTED YET</span>
+                </div>
+            </div>
         </div>
     </body>
 </html>

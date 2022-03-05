@@ -24,12 +24,57 @@
         initOrdersList();
         initInventoryOverview();
 
-        $("#create-order-button").click(createOrder);
+        // Add event handlers to all buttons
+        $("#create-order-button").click(function () {
+            // Clear form values.
+            $("#create-order-form")
+                .find("input[type=text], input[type=number], textarea")
+                .val("");
+            $("#create-order-form")
+                .find("input[name=inventory]")
+                .prop("checked", false);
+            $("#added-items-list").empty();
+            $("#overlay-create-order").show();
+        });
+
+        $("#add-item-button").click(function () {
+            $(this).parent().find("input[name=addItem]").val();
+            $(".add-item")
+                .first()
+                .clone()
+                .appendTo("#create-order-items-inner-container")
+                .find("input")
+                .val("");
+        });
+
+        $("#restock-button").click(function () {
+            $("#overlay-restock").show();
+        });
+
+        $("#delete-order-button").click(handleDeleteOrder);
+
+        $("#create-order-form").on("submit", handleCreateOrder);
+
+        $(".overlay-close-button").click(function () {
+            // Hide the overlay div this close button belongs to.
+            $(this).parent().closest(".overlay").hide();
+        });
+
+        // Enable closing an overlay by clicking somewhere outside of the centered overlay content.
+        $(document).mouseup(function (e) {
+            var container = $(".overlay-content");
+
+            // If the target of the click event isn't the container (overlay content) nor a descendant of the container, hide all overlays (=close).
+            if (
+                !container.is(e.target) &&
+                container.has(e.target).length === 0
+            ) {
+                $(".overlay").hide();
+            }
+        });
 
         // Hide all prepared overlays at the beginning.
         $(".overlay").hide();
-
-        LanguageController.refreshTextStrings();
     });
 
     /** Initializes the order list in the view. */
@@ -40,15 +85,23 @@
         let ordersListHTML = "";
         orders.forEach((order) => {
             ordersListHTML += `
-            <div class="order-element" onclick="showOrderDetails(${order.id})">
+            <div class="order-element" data-order-id="${order.id}">
                 <div class="order-user-picture-container"></div>
                 <div class="order-table-number">${order.table}</div>
             </div>`;
         });
         $("#orders-list").empty().append(ordersListHTML);
 
+        // Add event handlers
+        $(".order-element").click(function () {
+            const orderId = $(this).data("order-id");
+            showOrderDetails(orderId);
+        });
+
         // Add number of current orders to the footer of the overview
         $("#orders-list-total-number").empty().append(orders.length);
+
+        LanguageController.refreshTextStrings();
     }
 
     /** Initializes the inventory overview in the view. */
@@ -60,6 +113,12 @@
         ${createHTMLForInventoryElement(vipInventoryController)}
         </div>`;
         $("#inventory-list-container").empty().append(inventoryListHTML);
+
+        // Add event handlers
+        $(".inventory-element").click(function () {
+            const inventoryName = $(this).data("inventory-name");
+            showInventoryDetails(inventoryName);
+        });
 
         // Add hover effect to the inventory images.
         $(".inventory-element-image")
@@ -80,6 +139,8 @@
         $("#inventory-notifications-total-number")
             .empty()
             .append(sumOfItemsRunningLow);
+
+        LanguageController.refreshTextStrings();
     }
 
     /**
@@ -110,7 +171,7 @@
                 break;
         }
         const html = `
-        <div class="inventory-element" onclick="showInventoryDetails('${inventoryController.getName()}')">
+        <div class="inventory-element" data-inventory-name="${inventoryController.getName()}">
             <img src="${imageSource}" data-src="${imageSource}" data-hover="${imageSourceHover}" alt="${alt}" class="inventory-element-image ${classRunningLow}">
         </div>`;
         return html;
@@ -144,10 +205,8 @@
         // Refresh all text strings
         LanguageController.refreshTextStrings();
 
-        // Add event handler to be able to hide the overlay again
-        $("#overlay-orders-details").click(function () {
-            $(this).hide();
-        });
+        // Set the current order id as a data attribute to the delete order button, so it will be able to delete the correct order.
+        $("#delete-order-button").data("order-id", orderId);
 
         // Finally show the overlay
         $("#overlay-orders-details").show();
@@ -187,11 +246,6 @@
         // Refresh all text strings
         LanguageController.refreshTextStrings();
 
-        // Add event handler to be able to hide the overlay again
-        $("#overlay-inventory-details").click(function () {
-            $(this).hide();
-        });
-
         // Finally show the overlay
         $("#overlay-inventory-details").show();
     }
@@ -200,7 +254,8 @@
      * Returns the inventory controller for the given inventory name.
      *
      * @param {string} inventoryName The inventory name.
-     * @returns {object} The inventory controller.
+     * @returns {object} The inventory controller or `undefined` if the
+     *   inventory name is unknown.
      */
     function getInventoryController(inventoryName) {
         let inventoryController;
@@ -223,8 +278,75 @@
         return inventoryController;
     }
 
-    /** Function for creating an new order. */
-    function createOrder() {}
+    /**
+     * Event handler for creating a new order.
+     *
+     * @param {object} event The event object.
+     */
+    function handleCreateOrder(event) {
+        event.preventDefault();
+
+        const data = getFormData("create-order-form");
+        const items = [];
+        $("input[name=addItem]").each(function () {
+            const beverageNr = $(this).val().trim();
+            if (beverageNr) {
+                items.push({
+                    beverageNr: beverageNr,
+                });
+            }
+        });
+
+        const order = {
+            table: data.table,
+            items: items,
+            notes: data.notes,
+            inventory: data.inventory,
+        };
+        const createdOrder = OrderController.createOrder(order);
+
+        // If the order was created successfully, update the order list and close the overlay.
+        if (createdOrder) {
+            // Update order list
+            initOrdersList();
+
+            // Hide overlay
+            $("#overlay-create-order").hide();
+        }
+    }
+
+    /**
+     * Event handler for deleting an order.
+     *
+     * @param {object} event The event object.
+     */
+    function handleDeleteOrder(event) {
+        event.preventDefault();
+
+        const orderId = parseInt($(this).data("order-id"));
+        OrderController.removeOrderById(orderId);
+
+        // Update order list
+        initOrdersList();
+
+        // Hide overlay
+        $("#overlay-orders-details").hide();
+    }
+
+    /**
+     * Get the data from a form and create a object with key-value pairs out of it.
+     *
+     * @param {string} formId The form id.
+     * @returns {object} Object as key-value pairs.
+     */
+    function getFormData(formId) {
+        return $(`#${formId}`)
+            .serializeArray()
+            .reduce(function (obj, item) {
+                obj[item.name] = item.value.trim();
+                return obj;
+            }, {});
+    }
 
     exports.showOrderDetails = showOrderDetails;
     exports.showInventoryDetails = showInventoryDetails;

@@ -544,7 +544,7 @@ Staff dashboard
     }
 }
 
-.staff-dashboard-container {
+#staff-dashboard-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -629,7 +629,6 @@ Staff dashboard
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
     transform: zoom-in 1s ease;
 }
 
@@ -641,4 +640,17 @@ Staff dashboard
     color: white;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+    background-color: lightcoral;
+    padding: 30px;
+    min-width: 16em;
+}
+
+.overlay-close-button {
+    width: 1em;
+    float: right;
+    border: orange;
+    cursor: pointer;
+}
+
+.overlay-button {
 }
