@@ -1,0 +1,197 @@
+<!--
+File: staff_dashboard.html
+
+The dashboard for staff members like bartenders, waiter, waitress, etc.
+
+Author: David Kopp
+-----
+Last Modified: Saturday, 5th March 2022
+Modified By: David Kopp (mail@davidkopp.de>)
+-->
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title data-lang="page-title">Staff Dashboard</title>
+
+        <!-- Prevent browser from requesting a favicon -->
+        <link rel="icon" href="data:;base64,=" />
+        <link rel="stylesheet" href="style.css" />
+        <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
+
+        <script type="text/javascript" src="database/BeveragesDB.js"></script>
+        <script type="text/javascript" src="database/DBLoaded.js"></script>
+        <script type="text/javascript" src="database/Dictionary.js"></script>
+        <script type="text/javascript" src="database/DatabaseAPI.js"></script>
+
+        <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
+
+        <script type="text/javascript" src="controllers/OrderController.js"></script>
+        <script type="text/javascript" src="controllers/InventoryController.js"></script>
+        <script type="text/javascript" src="controllers/StaffDashboardController.js"></script>
+    </head>
+
+    <body>
+        <div id="staff-dashboard-container">
+            <div class="lang">
+                <button onclick="changeLang('en')">
+                    <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
+                    <span data-lang="language-switcher-text-english">English</span>
+                </button>
+                <button onclick="changeLang('de')">
+                    <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
+                    <span data-lang="language-switcher-text-german">German</span>
+                </button>
+                <button onclick="changeLang('pt')">
+                    <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
+                    <span data-lang="language-switcher-text-portuguese">Portuguese</span>
+                </button>
+            </div>
+
+            <!-- Orders overview -->
+            <div id="orders-overview" class="overview-container">
+                <div class="overview-header">
+                    <span id="orders-overview-title" data-lang="orders-overview-title"></span>
+                    <button id="create-order-button" class="overview-buttons">
+                        <span data-lang="create-order-button-text"></span>
+                    </button>
+                </div>
+                <div id="orders-list-container" class="overview-list-container">
+                    <div id="orders-list">
+                        <div class="order-element">
+                            <div class="order-user-picture-container"></div>
+                            <div class="order-table-number"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="orders-list-footer" class="overview-container-footer">
+                    <div>
+                        <span data-lang="orders-list-total-number-label"></span>
+                        <span id="orders-list-total-number"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory overview -->
+            <div id="inventory-overview" class="overview-container">
+                <div class="overview-header">
+                    <span id="inventory-overview-title" data-lang="inventory-overview-title"></span>
+                    <button id="restock-button" class="overview-buttons">
+                        <span data-lang="restock-button-text"></span>
+                    </button>
+                </div>
+                <div id="inventory-list-container" class="overview-list-container">
+                    <div id="inventory-list">
+                        <div class="inventory-element">
+                            <div class="inventory-picture"></div>
+                            <div class="inventory-name"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="inventory-overview-footer" class="overview-container-footer">
+                    <div>
+                        <span data-lang="inventory-notifications-total-number-label"></span>
+                        <span id="inventory-notifications-total-number"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay for the orders details -->
+            <div id="overlay-orders-details" class="overlay">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span data-lang="order-details-table-label"></span>
+                    <span id="order-details-table"></span>
+                    <br />
+                    <br />
+                    <span data-lang="order-details-items-label"></span>
+                    <div id="order-details-items-container"></div>
+                    <button id="delete-order-button" class="overlay-button" data-order-id="">
+                        <span data-lang="delete-order-button"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Overlay for the inventory details -->
+            <div id="overlay-inventory-details" class="overlay">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span data-lang="inventory-details-label"></span>
+                    <span id="inventory-details-inventory-name"></span>
+                    <br />
+                    <br />
+                    <div id="inventory-details-items-running-low-container">
+                        <span data-lang="inventory-details-items-running-low-label"></span>
+                        <div id="inventory-details-items-running-low"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay for creating a new order -->
+            <div id="overlay-create-order" class="overlay">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span data-lang="create-order-title"></span>
+                    <br />
+                    <form id="create-order-form">
+                        <div class="box">
+                            <label for="table" data-lang="create-order-table-label"></label>
+                            <div class="input_box">
+                                <input type="number" name="table" required />
+                            </div>
+                        </div>
+                        <div id="create-order-items-container">
+                            <span data-lang="create-order-items-label"></span>
+                            <br />
+                            <div id="create-order-items-inner-container">
+                                <div class="add-item box">
+                                    <div class="input_box">
+                                        <input type="text" name="addItem" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="add-item-button">
+                                <span data-lang="add-item-button"></span>
+                            </button>
+                        </div>
+                        <div class="box">
+                            <label for="notes" data-lang="create-order-notes-label"></label>
+                            <div class="input_box">
+                                <input type="textarea" name="notes" />
+                            </div>
+                        </div>
+                        <div class="box">
+                            <span data-lang="create-order-inventory-label"></span>
+                            <div>
+                                <label for="inventory" data-lang="create-order-inventory-label-bar"></label>
+                                <input type="radio" name="inventory" value="barInventory" checked />
+                                <label for="inventory" data-lang="create-order-inventory-label-vip"></label>
+                                <input type="radio" name="inventory" value="vipInventory" />
+                            </div>
+                        </div>
+                        <input type="submit" data-lang="[value]create-order-form-submit" />
+                    </form>
+                </div>
+            </div>
+
+            <!-- Overlay for restock -->
+            <div id="overlay-restock" class="overlay">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span>NOT IMPLEMENTED YET</span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

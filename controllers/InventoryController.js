@@ -6,13 +6,22 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {
     var InventoryController = function (inventoryName) {
         this.inventoryName = inventoryName;
+
+        /**
+         * Returns the inventory name.
+         *
+         * @returns {string} The inventory name.
+         */
+        this.getName = function () {
+            return this.inventoryName;
+        };
 
         /**
          * Get all inventory items.
@@ -62,6 +71,22 @@
                 return null;
             }
             return result;
+        };
+
+        /**
+         * Returns a list of all inventory items that are running low in stock.
+         *
+         * @returns {Array} Array with the inventory items.
+         */
+        this.getItemsThatRunOutOfStock = function () {
+            const inventory = this.getInventory();
+            let collector = [];
+            inventory.forEach((inventoryItem) => {
+                if (inventoryItem.quantity < Constants.LOW_STOCK_NUMBER) {
+                    collector.push(inventoryItem);
+                }
+            });
+            return collector;
         };
     };
 

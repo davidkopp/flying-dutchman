@@ -15,6 +15,17 @@
     //=========================================================================
 
     /**
+     * Function to get an order of the database with an ID.
+     *
+     * @param {number} orderId ID of an order.
+     * @returns {object} The order object, or `undefined` if there is no order
+     *   with this id.
+     */
+    function getOrderById(orderId) {
+        return DatabaseAPI.Orders.getOrderById(orderId);
+    }
+
+    /**
      * Get all undone orders.
      *
      * @returns {Array} Array with all undone orders
@@ -773,6 +784,7 @@
     exports.OrderController = {};
 
     // Public functions without UNDO capabilities
+    exports.OrderController.getOrderById = getOrderById;
     exports.OrderController.getUndoneOrders = getUndoneOrders;
     exports.OrderController.getUndoneOrdersForTable = getUndoneOrdersForTable;
     exports.OrderController.createOrder = createOrder;

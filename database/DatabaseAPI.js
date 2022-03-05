@@ -535,7 +535,6 @@ DatabaseAPI = (function () {
      */
     function removeOrderById(id) {
         let orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
-
         orders = orders.filter((o) => o.id != id);
         saveOrders(orders);
     }
