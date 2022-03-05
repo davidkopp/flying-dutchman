@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Saturday, 5th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -42,7 +42,7 @@
                 break;
             case 1:
             case 2:
-                window.location.href = "waiter_dashboard.html";
+                window.location.href = "staff_dashboard.html";
                 break;
             case 3:
                 window.location.href = "vip_dashboard.html";
