@@ -1,6 +1,36 @@
 var DB = {
     users: [
         {
+            user_id: 100,
+            credentials: 0,
+            password: "password",
+            username: "manager",
+            first_name: "Manager",
+            last_name: "Test-User",
+            email: "manager.test@it.uu.se",
+            phone: "",
+        },
+        {
+            user_id: 101,
+            credentials: 1,
+            password: "password",
+            username: "bartender",
+            first_name: "Bartender",
+            last_name: "Test-User",
+            email: "bartender.test@it.uu.se",
+            phone: "",
+        },
+        {
+            user_id: 102,
+            credentials: 3,
+            password: "password",
+            username: "vip",
+            first_name: "VIP",
+            last_name: "Test-User",
+            email: "vip.test@it.uu.se",
+            phone: "",
+        },
+        {
             user_id: 2,
             credentials: 0,
             password: "b690bc2447d40ea8a6f78345eb979a28",
