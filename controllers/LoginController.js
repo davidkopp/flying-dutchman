@@ -172,4 +172,4 @@
     exports.LoginController = {};
     exports.LoginController.getAccessLevelOfLoggedInUser =
         getAccessLevelOfLoggedInUser;
-})(jQuery);
+})(jQuery, window);
