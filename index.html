@@ -1,11 +1,11 @@
 <!--
-File: index.html
+File: Dictionary.js
 
 Home page of the Flying Dutchman.
 
 Author: David Kopp
 -----
-Last Modified: Saturday, 5th March 2022
+Last Modified: Sunday, 6th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -27,6 +27,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="database/DatabaseAPI.js"></script>
 
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
     </head>
 
     <body>
@@ -50,5 +51,14 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <br />
         <br />
         <a href="login.html" data-lang="link-to-login-page"></a>
+        <footer>
+            <div class="footer-align">
+                <div id="logged-in-user-container">
+                    <span data-lang="logged-in-user-label"></span>
+                    <span id="logged-in-user"></span>
+                    <button id="logout-button" class="logout_btn">Logout</button>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>

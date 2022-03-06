@@ -5,7 +5,7 @@ Menu page of the Flying Dutchman.
 
 Author: David Kopp
 -----
-Last Modified: Saturday, 5th March 2022
+Last Modified: Sunday, 6th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -28,6 +28,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="database/DatabaseAPI.js"></script>
 
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
         <script type="text/javascript" src="controllers/MenuController.js"></script>
     </head>
 
@@ -104,7 +105,11 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     <button>Button1</button>
                     <button>Button1</button>
                 </div>
-                <button class="logout_btn">Logout</button>
+                <div id="logged-in-user-container">
+                    <span data-lang="logged-in-user-label"></span>
+                    <span id="logged-in-user"></span>
+                    <button id="logout-button" class="logout_btn">Logout</button>
+                </div>
             </div>
         </footer>
     </body>

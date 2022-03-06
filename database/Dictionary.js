@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Sunday, 6th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -40,6 +40,7 @@ const Constants = {
     LOW_STOCK_NUMBER: 5,
 
     STORAGE_LANGUAGE_KEY: "language",
+    STORAGE_LOGGED_IN_USER_KEY: "logged_in_user",
     STORAGE_DB_USERS_KEY: "db_users",
     STORAGE_DB_ACCOUNT_KEY: "db_account",
     STORAGE_DB_ORDERS_KEY: "db_orders",
@@ -50,6 +51,12 @@ const Constants = {
     STORAGE_DB_INVENTORY_VIP_KEY: "db_inventory_vip",
     STORAGE_DB_HIDE_FROM_MENU_KEY: "db_hideFromMenu",
     STORAGE_DB_BEVERAGES_KEY: "db_beverages",
+
+    ACCESS_LEVEL_MANAGER: 0,
+    ACCESS_LEVEL_BARTENDER: 1,
+    ACCESS_LEVEL_WAITER: 2,
+    ACCESS_LEVEL_VIP: 3,
+    ACCESS_LEVEL_NONE: 4,
 };
 
 const Dictionary = {
@@ -61,6 +68,7 @@ const Dictionary = {
             "language-switcher-text-german": "German",
             "language-switcher-text-portuguese": "Portuguese",
             "link-to-login-page": "Login",
+            "logged-in-user-label": "Logged in user:",
         },
         // Text strings for the page 'index'
         index: {
