@@ -14,8 +14,7 @@
             "**/DBLoaded.js"
         ],
         "autoHeader": "autoSave",
-        "enforceHeader": true,
-        "replace": ["File:"]
+        "enforceHeader": true
     },
     "psi-header.templates": [
         {
