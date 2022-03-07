@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 6th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -94,11 +94,12 @@ const Dictionary = {
         staff_dashboard: {
             "page-title": "Flying Dutchman - Staff Dashboard",
             "orders-overview-title": "Orders",
+            "orders-overview-table-label": "Table",
             "create-order-button-text": "Create",
             "inventory-overview-title": "Inventory",
             "restock-button-text": "Restock",
-            "orders-list-total-number-label": "total:",
-            "inventory-notifications-total-number-label": "total:",
+            "orders-list-total-number-label": "Number of orders:",
+            "inventory-notifications-total-number-label": "Items running out:",
             "order-details-table-label": "Table:",
             "create-order-items-label": "Items:",
             "order-details-items-label": "Items:",

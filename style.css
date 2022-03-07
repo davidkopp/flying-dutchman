@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -517,7 +517,7 @@ Staff dashboard
 ========================*/
 
 .order-table-number {
-    font-size: 60px;
+    font-size: 50px;
     font-weight: 900;
     color: white;
     cursor: pointer;
@@ -561,7 +561,7 @@ Staff dashboard
     text-align: center;
     position: relative;
     height: 50vh;
-    width: 300px;
+    width: 320px;
     padding: 20px;
     overflow: auto;
 }

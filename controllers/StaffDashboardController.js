@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController */
@@ -87,7 +87,10 @@
             ordersListHTML += `
             <div class="order-element" data-order-id="${order.id}">
                 <div class="order-user-picture-container"></div>
-                <div class="order-table-number">${order.table}</div>
+                <div class="order-table-number">
+                    <span data-lang="orders-overview-table-label"></span>
+                    <span>${order.table}</span>
+                </div>
             </div>`;
         });
         $("#orders-list").empty().append(ordersListHTML);
