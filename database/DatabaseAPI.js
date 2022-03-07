@@ -7,7 +7,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -139,7 +139,7 @@ DatabaseAPI = (function () {
             first_name: users[userIndex].first_name,
             last_name: users[userIndex].last_name,
             email: users[userIndex].email,
-            creditSEK: userAccount
+            creditSEK: userAccount,
         };
 
         return result;
@@ -222,12 +222,11 @@ DatabaseAPI = (function () {
         let collector = [];
 
         for (let i = 0; i < beverages.length; i++) {
-            collector.push(
-            {
+            collector.push({
                 id: beverages[i].nr,
                 name: beverages[i].name,
                 price: beverages[i].priceinclvat,
-                strength: beverages[i].alcoholstrength
+                strength: beverages[i].alcoholstrength,
             });
         }
 

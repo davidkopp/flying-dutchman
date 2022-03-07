@@ -5,8 +5,8 @@ VIP Dashboard of the Flying Dutchman.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Sunday, 7th March 2022
-Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
+Last Modified: Monday, 7th March 2022
+Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
 <!DOCTYPE html>
@@ -62,24 +62,28 @@ Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
             </div>
         </div>
         <main>
-            <h2 id = "main-tab">Menu</h2> <h2 id = "vip-tab">Specials</h2>
+            <h2 id="main-tab">Menu</h2>
+            <h2 id="vip-tab">Specials</h2>
             <div class="drag-drop">
-                <div id="main-menu"
-                     style="float: left; background-color: aquamarine; width: 50%;"
-                     ondrop="dropItem(event)"
-                     ondragover="allowDropOnItem(event)">
-                </div>
-                <div id="vip-menu"
-                     style="float: left; background-color: aquamarine; width: 50%;"
-                     ondrop="dropItem(event)"
-                     ondragover="allowDropOnItem(event)">
-                </div>
-                <div id="order"
-                     style="float: right; background-color: #FFFFFF; width: 50%; height: 500px;"
-                     ondrop="dropItem(event)"
-                     ondragover="allowDropOnItem(event)">
-                </div>
-                <button id = "place-order" style="position: absolute; bottom: 0px">Place Order</button>
+                <div
+                    id="main-menu"
+                    style="float: left; background-color: aquamarine; width: 50%"
+                    ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"
+                ></div>
+                <div
+                    id="vip-menu"
+                    style="float: left; background-color: aquamarine; width: 50%"
+                    ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"
+                ></div>
+                <div
+                    id="order"
+                    style="float: right; background-color: #ffffff; width: 50%; height: 500px"
+                    ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"
+                ></div>
+                <button id="place-order" style="position: absolute; bottom: 0px">Place Order</button>
             </div>
         </main>
         <footer>
@@ -89,7 +93,6 @@ Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
                     <span id="logged-in-user"></span>
                     <button id="logout-button" class="logout_btn">Logout</button>
                 </div>
-
             </div>
         </footer>
     </body>
