@@ -39,15 +39,15 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <div class="lang">
                 <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
                     <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-                    <span data-lang="language-switcher-text-english">English</span>
+                    <span data-lang="language-switcher-text-english"></span>
                 </button>
                 <button onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
                     <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-                    <span data-lang="language-switcher-text-german">German</span>
+                    <span data-lang="language-switcher-text-german"></span>
                 </button>
                 <button onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
                     <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-                    <span data-lang="language-switcher-text-portuguese">Portuguese</span>
+                    <span data-lang="language-switcher-text-portuguese"></span>
                 </button>
             </div>
 
@@ -55,13 +55,13 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <div id="orders-overview" class="overview-container">
                 <div class="overview-header">
                     <span id="orders-overview-title" data-lang="orders-overview-title"></span>
-                    <button id="create-order-button" class="overview-buttons">
+                    <button type="button" id="create-order-button" class="overview-buttons">
                         <span data-lang="create-order-button-text"></span>
                     </button>
                 </div>
                 <div id="orders-list-container" class="overview-list-container">
                     <div id="orders-list">
-                        <div class="order-element">
+                        <div class="table-element">
                             <div class="order-user-picture-container"></div>
                             <div class="order-table-number"></div>
                         </div>
@@ -79,7 +79,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <div id="inventory-overview" class="overview-container">
                 <div class="overview-header">
                     <span id="inventory-overview-title" data-lang="inventory-overview-title"></span>
-                    <button id="restock-button" class="overview-buttons">
+                    <button type="button" id="restock-button" class="overview-buttons">
                         <span data-lang="restock-button-text"></span>
                     </button>
                 </div>
@@ -99,48 +99,61 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
             </div>
 
-            <!-- Overlay for the orders details -->
-            <div id="overlay-orders-details" class="overlay">
+            <!-- Overlay for the orders details for a specific table -->
+            <div id="overlay-orders-details" class="overlay hidden">
                 <div class="overlay-content">
-                    <div class="overlay-close-button">
+                    <div type="button" class="overlay-close-button">
                         <img src="assets/images/icon_close.svg" />
                     </div>
-                    <span data-lang="order-details-table-label"></span>
-                    <span id="order-details-table"></span>
-                    <br />
-                    <br />
-                    <span data-lang="order-details-items-label"></span>
-                    <div id="order-details-items-container"></div>
-                    <button id="delete-order-button" class="overlay-button" data-order-id="">
-                        <span data-lang="delete-order-button"></span>
-                    </button>
+                    <div class="overlay-details-heading">
+                        <span data-lang="order-details-heading-with-table-number"></span>
+                        <span id="order-details-table"></span>
+                    </div>
+                    <div id="order-details-list">
+                        <div class="order-details-order-element">
+                            <div>
+                                <span class="overlay-details-label" data-lang="order-details-id-label"></span>
+                                <span class="overlay-details-value"></span>
+                            </div>
+                            <div>
+                                <span class="overlay-details-label" data-lang="order-details-items-label"></span>
+                                <div>...</div>
+                                <button type="button" class="overlay-button delete-order-button" data-order-id="">
+                                    <span data-lang="delete-order-button"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Overlay for the inventory details -->
-            <div id="overlay-inventory-details" class="overlay">
+            <div id="overlay-inventory-details" class="overlay hidden">
                 <div class="overlay-content">
                     <div class="overlay-close-button">
                         <img src="assets/images/icon_close.svg" />
                     </div>
-                    <span data-lang="inventory-details-label"></span>
-                    <span id="inventory-details-inventory-name"></span>
+                    <span class="overlay-details-label" data-lang="inventory-details-label"></span>
+                    <span class="overlay-details-value" id="inventory-details-inventory-name"></span>
                     <br />
                     <br />
                     <div id="inventory-details-items-running-low-container">
-                        <span data-lang="inventory-details-items-running-low-label"></span>
-                        <div id="inventory-details-items-running-low"></div>
+                        <span
+                            class="overlay-details-label"
+                            data-lang="inventory-details-items-running-low-label"
+                        ></span>
+                        <div class="overlay-details-value" id="inventory-details-items-running-low"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Overlay for creating a new order -->
-            <div id="overlay-create-order" class="overlay">
+            <div id="overlay-create-order" class="overlay hidden">
                 <div class="overlay-content">
                     <div class="overlay-close-button">
                         <img src="assets/images/icon_close.svg" />
                     </div>
-                    <span data-lang="create-order-title"></span>
+                    <span class="overlay-details-heading" data-lang="create-order-title"></span>
                     <br />
                     <form id="create-order-form">
                         <div class="box">
@@ -159,8 +172,8 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                     </div>
                                 </div>
                             </div>
-                            <button id="add-item-button">
-                                <span data-lang="add-item-button"></span>
+                            <button type="button" id="add-more-items-button" class="overlay-button">
+                                <span data-lang="add-more-items-button"></span>
                             </button>
                         </div>
                         <div class="box">
@@ -178,13 +191,18 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                 <input type="radio" name="inventory" value="vipInventory" />
                             </div>
                         </div>
-                        <input type="submit" data-lang="[value]create-order-form-submit" />
+                        <input
+                            id="create-order-form-submit"
+                            type="submit"
+                            class="overlay-button"
+                            data-lang="[value]create-order-form-submit"
+                        />
                     </form>
                 </div>
             </div>
 
             <!-- Overlay for restock -->
-            <div id="overlay-restock" class="overlay">
+            <div id="overlay-restock" class="overlay hidden">
                 <div class="overlay-content">
                     <div class="overlay-close-button">
                         <img src="assets/images/icon_close.svg" />
@@ -198,7 +216,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <div id="logged-in-user-container">
                     <span data-lang="logged-in-user-label"></span>
                     <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">Logout</button>
+                    <button type="button" id="logout-button" class="logout_btn">Logout</button>
                 </div>
             </div>
         </footer>

@@ -19,25 +19,41 @@
     );
 
     $(document).ready(function () {
-        $("#overlay").hide();
-
         initOrdersList();
         initInventoryOverview();
 
-        // Add event handlers to all buttons
+        addEventHandlers();
+    });
+
+    /** Add event handlers to all buttons. */
+    function addEventHandlers() {
         $("#create-order-button").click(function () {
             // Clear form values.
             $("#create-order-form")
-                .find("input[type=text], input[type=number], textarea")
+                .find(
+                    "input[type=text], input[type=number], input[type=textarea]"
+                )
                 .val("");
             $("#create-order-form")
                 .find("input[name=inventory]")
                 .prop("checked", false);
             $("#added-items-list").empty();
+
+            // Show only one item input field
+            const addItemBoxes = $(
+                "#create-order-items-inner-container"
+            ).children();
+            $(addItemBoxes).each(function (index, element) {
+                if (index > 0) {
+                    element.remove();
+                }
+            });
+
+            // Finally show overlay
             $("#overlay-create-order").show();
         });
 
-        $("#add-item-button").click(function () {
+        $("#add-more-items-button").click(function () {
             $(this).parent().find("input[name=addItem]").val();
             $(".add-item")
                 .first()
@@ -50,8 +66,6 @@
         $("#restock-button").click(function () {
             $("#overlay-restock").show();
         });
-
-        $("#delete-order-button").click(handleDeleteOrder);
 
         $("#create-order-form").on("submit", handleCreateOrder);
 
@@ -72,37 +86,42 @@
                 $(".overlay").hide();
             }
         });
-
-        // Hide all prepared overlays at the beginning.
-        $(".overlay").hide();
-    });
+    }
 
     /** Initializes the order list in the view. */
     function initOrdersList() {
-        const orders = OrderController.getUndoneOrders();
+        const ordersSortedByTable =
+            OrderController.getUndoneOrdersSortedByTable();
 
-        // Add current orders to overview
-        let ordersListHTML = "";
-        orders.forEach((order) => {
-            ordersListHTML += `
-            <div class="order-element" data-order-id="${order.id}">
-                <div class="order-user-picture-container"></div>
-                <div class="order-table-number">
-                    <span data-lang="orders-overview-table-label"></span>
-                    <span>${order.table}</span>
-                </div>
-            </div>`;
-        });
-        $("#orders-list").empty().append(ordersListHTML);
+        // Add table with orders to the overview
+        let tableOrdersListHTML = "";
+        let numberOfOrders = 0;
+        for (const table in ordersSortedByTable) {
+            if (Object.hasOwnProperty.call(ordersSortedByTable, table)) {
+                const orders = ordersSortedByTable[table];
+
+                // TODO: Add user picture (normal / vip)
+                tableOrdersListHTML += `
+                <div class="table-element" data-table-nr="${table}">
+                    <div class="order-user-picture-container"></div>
+                    <div class="order-table-number">
+                        <span data-lang="orders-overview-table-label"></span>
+                        <span>${table}</span>
+                    </div>
+                </div>`;
+                numberOfOrders += orders.length;
+            }
+        }
+        $("#orders-list").html(tableOrdersListHTML);
 
         // Add event handlers
-        $(".order-element").click(function () {
-            const orderId = $(this).data("order-id");
-            showOrderDetails(orderId);
+        $(".table-element").click(function () {
+            const table = $(this).data("table-nr");
+            showOrderDetailsForTable(table);
         });
 
         // Add number of current orders to the footer of the overview
-        $("#orders-list-total-number").empty().append(orders.length);
+        $("#orders-list-total-number").html(numberOfOrders);
 
         LanguageController.refreshTextStrings();
     }
@@ -115,7 +134,7 @@
         ${createHTMLForInventoryElement(barInventoryController)}
         ${createHTMLForInventoryElement(vipInventoryController)}
         </div>`;
-        $("#inventory-list-container").empty().append(inventoryListHTML);
+        $("#inventory-list-container").html(inventoryListHTML);
 
         // Add event handlers
         $(".inventory-element").click(function () {
@@ -181,35 +200,77 @@
     }
 
     /**
-     * Event handler for showing the details of a specific order.
+     * Event handler for showing the details of the order for a specific table. *
      *
-     * @param {number} orderId The order id.
+     * @param {number} table The table number.
      */
-    function showOrderDetails(orderId) {
-        const order = OrderController.getOrderById(orderId);
-        if (!order) {
-            return;
-        }
+    function showOrderDetailsForTable(table) {
+        const ordersForTable = OrderController.getUndoneOrdersForTable(table);
 
-        // Add order table
-        $("#order-details-table").empty().append(order.table);
+        // Add table number
+        $("#order-details-table").html(table);
 
-        // Add order items
-        let orderItemsHTML = "";
-        order.items.forEach((item) => {
-            orderItemsHTML += `
-            <span class="order-details-beverage">
-                ${item.beverageNr}
-            </span>
-            <br/>`;
+        // Add order details for each table
+        let ordersListHTML = "";
+        ordersForTable.forEach((order) => {
+            // Order number
+            const orderNrHTML = `
+            <div>
+                <span class="overlay-details-label" data-lang="order-details-id-label"></span>
+                <span class="overlay-details-value">${order.id}</span>
+            </div>`;
+
+            // Inventory
+            const orderInventoryHTML = `
+            <div>
+                <span class="overlay-details-label" data-lang="order-details-inventory-label"></span>
+                <span class="overlay-details-value">${order.inventory}</span>
+            </div>`;
+
+            // Create HTML for order items
+            let orderItemsHTML = "<ul>";
+            order.items.forEach((item) => {
+                const beverageNr = item.beverageNr;
+                const beverage =
+                    DatabaseAPI.Beverages.findBeverageByNr(beverageNr);
+
+                orderItemsHTML += `
+                <li class="order-details-beverage overlay-details-value">
+                ${beverage.name}
+                </li>
+                `;
+            });
+            orderItemsHTML += "</ul>";
+
+            // Order items and delete button
+            const orderItemsContainerHTML = `
+            <div>
+                <span class="overlay-details-label" data-lang="order-details-items-label"></span>
+                <div>
+                    ${orderItemsHTML}
+                </div>
+                <button type="button" class="overlay-button delete-order-button" data-order-id="${order.id}">
+                    <span data-lang="delete-order-button"></span>
+                </button>
+            </div>
+            `;
+
+            ordersListHTML += `
+            <div class="order-details-order-element">
+            ${orderNrHTML}
+            ${orderInventoryHTML}
+            ${orderItemsContainerHTML}
+            </div>`;
         });
-        $("#order-details-items-container").empty().append(orderItemsHTML);
+
+        // Add the html to the DOM
+        $("#order-details-list").html(ordersListHTML);
+
+        // Add an event handler to the delete button
+        $(".delete-order-button").click(handleDeleteOrder);
 
         // Refresh all text strings
         LanguageController.refreshTextStrings();
-
-        // Set the current order id as a data attribute to the delete order button, so it will be able to delete the correct order.
-        $("#delete-order-button").data("order-id", orderId);
 
         // Finally show the overlay
         $("#overlay-orders-details").show();
@@ -227,7 +288,7 @@
         }
 
         // Add inventory name
-        $("#inventory-details-inventory-name").empty().append(inventoryName);
+        $("#inventory-details-inventory-name").html(inventoryName);
 
         // Add details of items that are running low
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
@@ -301,7 +362,7 @@
         });
 
         const order = {
-            table: data.table,
+            table: parseInt(data.table.trim()),
             items: items,
             notes: data.notes,
             inventory: data.inventory,
@@ -351,6 +412,6 @@
             }, {});
     }
 
-    exports.showOrderDetails = showOrderDetails;
+    exports.showOrderDetailsForTable = showOrderDetailsForTable;
     exports.showInventoryDetails = showInventoryDetails;
 })(jQuery, window);

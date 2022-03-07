@@ -585,6 +585,16 @@ Staff dashboard
     background-color: #79a1c6;
 }
 
+.order-details-order-element {
+    margin: 10px;
+    background-color: #ec9898;
+    padding: 10px;
+}
+
+#order-details-list ul {
+    margin-left: 30px;
+}
+
 .inventory-element {
     cursor: pointer;
     margin: 40px 0px;
@@ -598,7 +608,7 @@ Staff dashboard
     border: 3px solid red;
 }
 
-.order-element {
+.table-element {
     margin: 40px;
 }
 
@@ -616,6 +626,30 @@ Staff dashboard
     padding: 5px;
     color: white;
     font-size: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.overlay-button {
+    background-color: #79a1c6;
+    padding: 5px;
+    color: white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.overlay-details-label {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.overlay-details-value {
+    font-size: 24px;
+}
+
+.overlay-details-heading {
+    font-size: 32px;
 }
 
 .overlay {

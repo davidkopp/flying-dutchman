@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -32,6 +32,27 @@
      */
     function getUndoneOrders() {
         return DatabaseAPI.Orders.getUndoneOrders();
+    }
+
+    /**
+     * Get all undone orders sorted by table.
+     *
+     * @returns {object} The object with keys for every table that contains an
+     *   array with the undone orders.
+     */
+    function getUndoneOrdersSortedByTable() {
+        const undoneOrders = getUndoneOrders();
+        let ordersSorted = {};
+        undoneOrders.forEach((order) => {
+            if (
+                !Object.prototype.hasOwnProperty.call(ordersSorted, order.table)
+            ) {
+                ordersSorted[order.table] = [order];
+            } else {
+                ordersSorted[order.table].push(order);
+            }
+        });
+        return ordersSorted;
     }
 
     /**
@@ -786,6 +807,8 @@
     // Public functions without UNDO capabilities
     exports.OrderController.getOrderById = getOrderById;
     exports.OrderController.getUndoneOrders = getUndoneOrders;
+    exports.OrderController.getUndoneOrdersSortedByTable =
+        getUndoneOrdersSortedByTable;
     exports.OrderController.getUndoneOrdersForTable = getUndoneOrdersForTable;
     exports.OrderController.createOrder = createOrder;
     exports.OrderController.editOrder = editOrder;
