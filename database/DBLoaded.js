@@ -238,7 +238,59 @@ var DB = {
         },
         {
             user_id: 27,
+            creditSEK: 400,
+        },
+        {
+            user_id: 26,
+            creditSEK: 5000,
+        },
+        {
+            user_id: 23,
             creditSEK: 450,
+        },
+        {
+            user_id: 22,
+            creditSEK: 650,
+        },
+        {
+            user_id: 21,
+            creditSEK: 490,
+        },
+        {
+            user_id: 19,
+            creditSEK: 850,
+        },
+        {
+            user_id: 18,
+            creditSEK: 1050,
+        },
+        {
+            user_id: 16,
+            creditSEK: 850,
+        },
+        {
+            user_id: 29,
+            creditSEK: 480,
+        },
+        {
+            user_id: 30,
+            creditSEK: 900,
+        },
+        {
+            user_id: 31,
+            creditSEK: 0,
+        },
+        {
+            user_id: 32,
+            creditSEK: 900,
+        },
+        {
+            user_id: 33,
+            creditSEK: 400,
+        },
+        {
+            user_id: 34,
+            creditSEK: 1000,
         },
     ],
     orders: [

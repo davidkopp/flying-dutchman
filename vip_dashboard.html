@@ -1,12 +1,12 @@
 <!--
 File: vip_dashboard.html
 
-Menu page of the Flying Dutchman.
+VIP Dashboard of the Flying Dutchman.
 
-Author: David Kopp
+Author: Paarth Sanhotra
 -----
-Last Modified: Monday, 7th March 2022
-Modified By: David Kopp (mail@davidkopp.de>)
+Last Modified: Sunday, 7th March 2022
+Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
 -->
 
 <!DOCTYPE html>
@@ -30,6 +30,9 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
         <script type="text/javascript" src="controllers/MenuController.js"></script>
+        <script type="text/javascript" src="controllers/VIPDashboardController.js"></script>
+        <script type="text/javascript" src="controllers/InventoryController.js"></script>
+        <script type="text/javascript" src="controllers/OrderController.js"></script>
     </head>
 
     <body style="background-color: #033d66">
@@ -50,66 +53,43 @@ Modified By: David Kopp (mail@davidkopp.de>)
             </div>
         </header>
         <div class="sub_header">
-            <h2>VIP</h2>
             <h1>Flying Dutchman</h1>
+            <h3 id="vip-account"></h3>
+            <h3 id="table-number"></h3>
             <div class="btn-actions">
                 <button class="btn btn-waiter">Waiter Call</button>
                 <button class="btn btn-bill">Pay Bill</button>
             </div>
         </div>
         <main>
-            <div class="items-order-list">
-                <div class="item">
-                    <div class="thumbnail">
-                        <img
-                            src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                            alt=""
-                        />
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="thumbnail">
-                        <img
-                            src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
-                            alt=""
-                        />
-                    </div>
-                    <div class="thumbnail">
-                        <img
-                            src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
-                            alt=""
-                        />
-                    </div>
-                    <div class="thumbnail">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="thumbnail">
-                        <img
-                            src="https://media.istockphoto.com/vectors/coffee-cup-symbol-icon-vector-id1262293120?k=20&m=1262293120&s=612x612&w=0&h=5bh3Kbt9z_ROk1KqtqL_W6gRSwQFjyZOuw03cPBK6Vw="
-                            alt=""
-                        />
-                    </div>
-                </div>
-            </div>
+            <h2 id = "main-tab">Menu</h2> <h2 id = "vip-tab">Specials</h2>
             <div class="drag-drop">
-                <div class="drag-drop-area"></div>
+                <div id="main-menu"
+                     style="float: left; background-color: aquamarine; width: 50%;"
+                     ondrop="dropItem(event)"
+                     ondragover="allowDropOnItem(event)">
+                </div>
+                <div id="vip-menu"
+                     style="float: left; background-color: aquamarine; width: 50%;"
+                     ondrop="dropItem(event)"
+                     ondragover="allowDropOnItem(event)">
+                </div>
+                <div id="order"
+                     style="float: right; background-color: #FFFFFF; width: 50%; height: 500px;"
+                     ondrop="dropItem(event)"
+                     ondragover="allowDropOnItem(event)">
+                </div>
+                <button id = "place-order" style="position: absolute; bottom: 0px">Place Order</button>
             </div>
         </main>
         <footer>
             <div class="footer-align">
-                <div class="details-btn">
-                    <button>Button1</button>
-                    <button>Button1</button>
-                    <button>Button1</button>
-                    <button>Button1</button>
-                </div>
                 <div id="logged-in-user-container">
                     <span data-lang="logged-in-user-label"></span>
                     <span id="logged-in-user"></span>
                     <button id="logout-button" class="logout_btn">Logout</button>
                 </div>
+
             </div>
         </footer>
     </body>
