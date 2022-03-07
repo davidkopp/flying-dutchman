@@ -7,7 +7,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -106,11 +106,10 @@ DatabaseAPI = (function () {
      * @param {string} userName The user name.
      * @returns {Array} Object with details about the user.
      */
-    function userDetails(userName) {
+    function userDetailsByUserName(userName) {
         const users = getObject(Constants.STORAGE_DB_USERS_KEY);
         const account = getObject(Constants.STORAGE_DB_ACCOUNT_KEY);
 
-        let userCollect = [];
         let userID;
         let userIndex;
         let userAccount;
@@ -132,18 +131,15 @@ DatabaseAPI = (function () {
             }
         }
 
-        // Add the details to an own data structure.
-        userCollect.push(
-            users[userIndex].user_id,
-            users[userIndex].username,
-            users[userIndex].first_name,
-            users[userIndex].last_name,
-            users[userIndex].email,
-
-            userAccount
-        );
-
-        return userCollect;
+        // Create an own data structure with the details and return it.
+        return {
+            user_id: users[userIndex].user_id,
+            username: users[userIndex].username,
+            first_name: users[userIndex].first_name,
+            last_name: users[userIndex].last_name,
+            email: users[userIndex].email,
+            creditSEK: userAccount,
+        };
     }
 
     /**
@@ -223,7 +219,12 @@ DatabaseAPI = (function () {
         let collector = [];
 
         for (let i = 0; i < beverages.length; i++) {
-            collector.push([beverages[i].name, beverages[i].category]);
+            collector.push({
+                id: beverages[i].nr,
+                name: beverages[i].name,
+                price: beverages[i].priceinclvat,
+                strength: beverages[i].alcoholstrength,
+            });
         }
 
         return collector;
@@ -861,7 +862,7 @@ DatabaseAPI = (function () {
     return {
         Users: {
             getAllUserNames: allUserNames,
-            getUserDetailsByUserName: userDetails,
+            getUserDetailsByUserName: userDetailsByUserName,
             getUserDetailsIfCredentialsAreValid:
                 getUserDetailsIfCredentialsAreValid,
             changeBalance: changeBalance,

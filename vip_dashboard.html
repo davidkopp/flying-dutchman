@@ -1,9 +1,9 @@
 <!--
 File: vip_dashboard.html
 
-Menu page of the Flying Dutchman.
+VIP Dashboard of the Flying Dutchman.
 
-Author: David Kopp
+Author: Paarth Sanhotra
 -----
 Last Modified: Monday, 7th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
@@ -30,9 +30,12 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
         <script type="text/javascript" src="controllers/MenuController.js"></script>
+        <script type="text/javascript" src="controllers/VIPDashboardController.js"></script>
+        <script type="text/javascript" src="controllers/InventoryController.js"></script>
+        <script type="text/javascript" src="controllers/OrderController.js"></script>
     </head>
 
-    <body style="background-color: #033d66">
+    <body>
         <header>
             <div class="lang-flag mb-20 text-center mt-20">
                 <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
@@ -50,65 +53,64 @@ Modified By: David Kopp (mail@davidkopp.de>)
             </div>
         </header>
         <div class="sub_header">
-            <h2>VIP</h2>
-            <h1>Flying Dutchman</h1>
+            <h1 data-lang="heading"></h1>
+            <h3>
+                <span data-lang="vip-welcome-text"></span>
+                <span id="vip-name"></span>
+            </h3>
+            <h3>
+                <span data-lang="vip-account-balance-text"></span>
+                <span id="vip-account-balance"></span>
+            </h3>
+            <h3>
+                <span data-lang="table-number-heading"></span>
+                <span id="table-number"></span>
+            </h3>
             <div class="btn-actions">
-                <button class="btn btn-waiter">Waiter Call</button>
-                <button class="btn btn-bill">Pay Bill</button>
+                <button class="btn btn-waiter" data-lang="waiter-call-button"></button>
+                <button class="btn btn-bill" data-lang="pay-bill-button"></button>
             </div>
         </div>
         <main>
-            <div class="items-order-list">
-                <div class="item">
-                    <div class="thumbnail">
-                        <img
-                            src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                            alt=""
-                        />
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="thumbnail">
-                        <img
-                            src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
-                            alt=""
-                        />
-                    </div>
-                    <div class="thumbnail">
-                        <img
-                            src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
-                            alt=""
-                        />
-                    </div>
-                    <div class="thumbnail">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="thumbnail">
-                        <img
-                            src="https://media.istockphoto.com/vectors/coffee-cup-symbol-icon-vector-id1262293120?k=20&m=1262293120&s=612x612&w=0&h=5bh3Kbt9z_ROk1KqtqL_W6gRSwQFjyZOuw03cPBK6Vw="
-                            alt=""
-                        />
-                    </div>
-                </div>
-            </div>
+            <h2 id="main-tab" data-lang="menu-heading"></h2>
+            <h2 id="vip-tab" data-lang="specials-heading"></h2>
             <div class="drag-drop">
-                <div class="drag-drop-area"></div>
+                <div
+                    id="main-menu"
+                    class="available-items-area"
+                    ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"
+                ></div>
+                <div
+                    id="vip-menu"
+                    class="available-items-area"
+                    ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"
+                ></div>
+                <div id="order" class="order-area" ondrop="dropItem(event)" ondragover="allowDropOnItem(event)"></div>
+                <button id="place-order" data-lang="place-order-button"></button>
             </div>
         </main>
+
+        <div id="overlay-message-box" class="overlay hidden">
+            <div class="overlay-content">
+                <div class="overlay-close-button">
+                    <img src="assets/images/icon_close.svg" />
+                </div>
+                <span id="info-box-title" data-lang="info-box-title"></span>
+                <br />
+                <span id="info-box-message"></span>
+            </div>
+        </div>
+
         <footer>
             <div class="footer-align">
-                <div class="details-btn">
-                    <button>Button1</button>
-                    <button>Button1</button>
-                    <button>Button1</button>
-                    <button>Button1</button>
-                </div>
                 <div id="logged-in-user-container">
                     <span data-lang="logged-in-user-label"></span>
                     <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">Logout</button>
+                    <button id="logout-button" class="logout_btn">
+                        <span data-lang="logout-button"></span>
+                    </button>
                 </div>
             </div>
         </footer>

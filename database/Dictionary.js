@@ -73,6 +73,7 @@ const Dictionary = {
             "language-switcher-text-portuguese": "Portuguese",
             "link-to-login-page": "Login",
             "logged-in-user-label": "Logged in user:",
+            "logout-button": "Logout",
         },
         // Text strings for the page 'index'
         index: {
@@ -121,6 +122,19 @@ const Dictionary = {
             "create-order-form-submit": "Create Order",
             "delete-order-button": "Delete Order",
             "add-more-items-button": "Add more items",
+        },
+        vip_dashboard: {
+            "page-title": "Flying Dutchman - VIP Dashboard",
+            "heading": "Flying Dutchman",
+            "table-number-heading": "Table Number",
+            "vip-welcome-text": "Welcome",
+            "vip-account-balance-text": "Balance =",
+            "place-order-button": "Place Order",
+            "menu-heading": "Menu",
+            "specials-heading": "Specials",
+            "waiter-call-button": "Waiter Call",
+            "pay-bill-button": "Pay Bill",
+            "info-box-title": "Info",
         },
         SpecRunner: {
             "unit-test": "english",

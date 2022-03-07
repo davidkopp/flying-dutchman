@@ -688,3 +688,42 @@ Staff dashboard
 
 .overlay-button {
 }
+
+/*=======================
+VIP dashboard
+========================*/
+
+body {
+    background-color: #033d66;
+}
+
+.available-items-area {
+    float: left;
+    background-color: aquamarine;
+    width: 50%;
+}
+
+.order-area {
+    float: right;
+    background-color: #ffffff;
+    width: 50%;
+    height: 500px;
+}
+
+.drag-items {
+    cursor: pointer;
+}
+
+#place-order {
+    position: absolute;
+    bottom: 0px;
+}
+
+#info-box-title {
+    text-decoration: underline;
+}
+
+#info-box-message {
+    font-size: 22px;
+    text-align: center;
+}

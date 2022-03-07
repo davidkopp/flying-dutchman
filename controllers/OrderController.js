@@ -273,7 +273,10 @@
             reduceNumberInStockOfItemsByOne(order.inventory, newOrder.items);
         } catch (error) {
             console.log(
-                `OrderController.createOrder | Exception was thrown: ${error.message}`
+                `OrderController.createOrder | Exception was thrown: ${
+                    error.message
+                }
+                Order object: ${JSON.stringify(order)}`
             );
             return null;
         }
