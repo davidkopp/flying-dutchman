@@ -120,6 +120,18 @@ const Dictionary = {
             "delete-order-button": "Delete Order",
             "add-item-button": "Add more items",
         },
+        vip_dashboard: {
+            "page-title": "Flying Dutchman - VIP Dashboard",
+            "heading": "Flying Dutchman",
+            "table-number-heading": "Table Number",
+            "vip-welcome-text": "Welcome",
+            "vip-account-balance-text": "Balance =",
+            "place-order-button": "Place Order",
+            "menu-heading": "Menu",
+            "specials-heading": "Specials",
+            "waiter-call-button": "Waiter Call",
+            "pay-bill-button": "Pay Bill",
+        },
         SpecRunner: {
             "unit-test": "english",
         },

@@ -110,7 +110,6 @@ DatabaseAPI = (function () {
         const users = getObject(Constants.STORAGE_DB_USERS_KEY);
         const account = getObject(Constants.STORAGE_DB_ACCOUNT_KEY);
 
-        let result = {};
         let userID;
         let userIndex;
         let userAccount;
@@ -132,8 +131,8 @@ DatabaseAPI = (function () {
             }
         }
 
-        // Add the details to an own data structure.
-        result = {
+        // Create an own data structure with the details and return it.
+        return {
             user_id: users[userIndex].user_id,
             username: users[userIndex].username,
             first_name: users[userIndex].first_name,
@@ -141,8 +140,6 @@ DatabaseAPI = (function () {
             email: users[userIndex].email,
             creditSEK: userAccount,
         };
-
-        return result;
     }
 
     /**

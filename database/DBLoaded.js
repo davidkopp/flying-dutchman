@@ -292,6 +292,10 @@ var DB = {
             user_id: 34,
             creditSEK: 1000,
         },
+        {
+            user_id: 102,
+            creditSEK: 999,
+        },
     ],
     orders: [
         {

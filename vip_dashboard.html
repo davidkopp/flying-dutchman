@@ -35,7 +35,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/OrderController.js"></script>
     </head>
 
-    <body style="background-color: #033d66">
+    <body>
         <header>
             <div class="lang-flag mb-20 text-center mt-20">
                 <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
@@ -53,37 +53,42 @@ Modified By: David Kopp (mail@davidkopp.de>)
             </div>
         </header>
         <div class="sub_header">
-            <h1>Flying Dutchman</h1>
-            <h3 id="vip-account"></h3>
-            <h3 id="table-number"></h3>
+            <h1 data-lang="heading"></h1>
+            <h3>
+                <span data-lang="vip-welcome-text"></span>
+                <span id="vip-name"></span>
+            </h3>
+            <h3>
+                <span data-lang="vip-account-balance-text"></span>
+                <span id="vip-account-balance"></span>
+            </h3>
+            <h3>
+                <span data-lang="table-number-heading"></span>
+                <span id="table-number"></span>
+            </h3>
             <div class="btn-actions">
-                <button class="btn btn-waiter">Waiter Call</button>
-                <button class="btn btn-bill">Pay Bill</button>
+                <button class="btn btn-waiter" data-lang="waiter-call-button"></button>
+                <button class="btn btn-bill" data-lang="pay-bill-button"></button>
             </div>
         </div>
         <main>
-            <h2 id="main-tab">Menu</h2>
-            <h2 id="vip-tab">Specials</h2>
+            <h2 id="main-tab" data-lang="menu-heading"></h2>
+            <h2 id="vip-tab" data-lang="specials-heading"></h2>
             <div class="drag-drop">
                 <div
                     id="main-menu"
-                    style="float: left; background-color: aquamarine; width: 50%"
+                    class="available-items-area"
                     ondrop="dropItem(event)"
                     ondragover="allowDropOnItem(event)"
                 ></div>
                 <div
                     id="vip-menu"
-                    style="float: left; background-color: aquamarine; width: 50%"
+                    class="available-items-area"
                     ondrop="dropItem(event)"
                     ondragover="allowDropOnItem(event)"
                 ></div>
-                <div
-                    id="order"
-                    style="float: right; background-color: #ffffff; width: 50%; height: 500px"
-                    ondrop="dropItem(event)"
-                    ondragover="allowDropOnItem(event)"
-                ></div>
-                <button id="place-order" style="position: absolute; bottom: 0px">Place Order</button>
+                <div id="order" class="order-area" ondrop="dropItem(event)" ondragover="allowDropOnItem(event)"></div>
+                <button id="place-order" data-lang="place-order-button"></button>
             </div>
         </main>
         <footer>
@@ -91,7 +96,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <div id="logged-in-user-container">
                     <span data-lang="logged-in-user-label"></span>
                     <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">Logout</button>
+                    <button id="logout-button" class="logout_btn"></button>
                 </div>
             </div>
         </footer>
