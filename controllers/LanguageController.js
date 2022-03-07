@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -23,14 +23,14 @@
      */
     function changeLang(new_lang) {
         switch (new_lang) {
-            case "en":
-                setLanguage("en");
+            case Constants.LANGUAGE_CODE_ENGLISH:
+                setLanguage(Constants.LANGUAGE_CODE_ENGLISH);
                 break;
-            case "de":
-                setLanguage("de");
+            case Constants.LANGUAGE_CODE_GERMAN:
+                setLanguage(Constants.LANGUAGE_CODE_GERMAN);
                 break;
-            case "pt":
-                setLanguage("pt");
+            case Constants.LANGUAGE_CODE_PORTUGUESE:
+                setLanguage(Constants.LANGUAGE_CODE_PORTUGUESE);
                 break;
             default:
                 console.error(`Language ${new_lang} not known.`);

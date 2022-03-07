@@ -12,6 +12,10 @@
 /* eslint-disable no-unused-vars */
 
 const Constants = {
+    LANGUAGE_CODE_ENGLISH: "en",
+    LANGUAGE_CODE_GERMAN: "de",
+    LANGUAGE_CODE_PORTUGUESE: "pt",
+
     DEFAULT_LANGUAGE: "en",
 
     PAGE_HOME: "index",

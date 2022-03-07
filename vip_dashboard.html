@@ -5,7 +5,7 @@ Menu page of the Flying Dutchman.
 
 Author: David Kopp
 -----
-Last Modified: Sunday, 6th March 2022
+Last Modified: Monday, 7th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -35,15 +35,15 @@ Modified By: David Kopp (mail@davidkopp.de>)
     <body style="background-color: #033d66">
         <header>
             <div class="lang-flag mb-20 text-center mt-20">
-                <button onclick="changeLang('en')">
+                <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
                     <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
                     <span data-lang="language-switcher-text-english">English</span>
                 </button>
-                <button onclick="changeLang('de')">
+                <button onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
                     <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
                     <span data-lang="language-switcher-text-german">German</span>
                 </button>
-                <button onclick="changeLang('pt')">
+                <button onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
                     <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
                     <span data-lang="language-switcher-text-portuguese">Portuguese</span>
                 </button>

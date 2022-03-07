@@ -3,7 +3,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 1st March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals changeLang */
@@ -20,9 +20,9 @@ describe("LanguageController", function () {
     });
 
     it("should be able to change the language", function () {
-        changeLang("en");
+        changeLang(Constants.LANGUAGE_CODE_ENGLISH);
         let firstString = $("#test-element").text();
-        changeLang("de");
+        changeLang(Constants.LANGUAGE_CODE_GERMAN);
         let secondString = $("#test-element").text();
 
         expect(firstString).not.toEqual(secondString);
