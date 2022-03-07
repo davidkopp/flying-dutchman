@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Monday, 7th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -252,7 +252,10 @@
             reduceNumberInStockOfItemsByOne(order.inventory, newOrder.items);
         } catch (error) {
             console.log(
-                `OrderController.createOrder | Exception was thrown: ${error.message}`
+                `OrderController.createOrder | Exception was thrown: ${
+                    error.message
+                }
+                Order object: ${JSON.stringify(order)}`
             );
             return null;
         }

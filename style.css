@@ -676,7 +676,20 @@ body {
     height: 500px;
 }
 
+.drag-items {
+    cursor: pointer;
+}
+
 #place-order {
     position: absolute;
     bottom: 0px;
+}
+
+#info-box-title {
+    text-decoration: underline;
+}
+
+#info-box-message {
+    font-size: 22px;
+    text-align: center;
 }

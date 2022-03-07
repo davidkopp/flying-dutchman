@@ -31,8 +31,24 @@
         initTableNumber();
         initMenus();
 
-        // Add event handler for the button 'place order'
         $("#place-order").click(handlePlaceOrder);
+
+        $(".overlay-close-button").click(function () {
+            $(this).parent().closest(".overlay").hide();
+        });
+
+        // Enable closing an overlay by clicking somewhere outside of the centered overlay content.
+        $(document).mouseup(function (e) {
+            var container = $(".overlay-content");
+
+            // If the target of the click event isn't the container (overlay content) nor a descendant of the container, hide all overlays (=close).
+            if (
+                !container.is(e.target) &&
+                container.has(e.target).length === 0
+            ) {
+                $(".overlay").hide();
+            }
+        });
     });
 
     /** Initializes the table number in the view. */
@@ -64,8 +80,8 @@
         const vip_inventory = DatabaseAPI.Inventory.getInventory(
             Constants.INVENTORIES.VIP
         );
-        $("#main-menu").append(createHTMLForInventoryList(bar_inventory));
-        $("#vip-menu").append(createHTMLForInventoryList(vip_inventory));
+        $("#main-menu").html(createHTMLForInventoryList(bar_inventory));
+        $("#vip-menu").html(createHTMLForInventoryList(vip_inventory));
     }
 
     /**
@@ -82,7 +98,7 @@
             );
             result += `
             <div data-beverage-id = "${inventoryItem.beverageNr}"
-                 class = "vip-items"
+                 class = "drag-items"
                  id = "item-${inventoryItem.beverageNr}"
                  draggable = true
                  ondragstart = "dragItem(event)">
@@ -108,11 +124,17 @@
                 });
             });
 
+        // If there are no items, don't create the order.
+        if (items.length < 1) {
+            console.log("There are no items added to the order!");
+            return;
+        }
+
         // TODO: better approach would be to disallow the mix of the both inventories in the first place.
-        let inventoryName = Constants.Inventory.BAR;
+        let inventoryName = Constants.INVENTORIES.BAR;
         for (let i = 0; i < vip_inventory.length; i++) {
             if (items[0].beverageNr == vip_inventory[i].beverageNr) {
-                inventoryName = Constants.Inventory.VIP;
+                inventoryName = Constants.INVENTORIES.VIP;
                 break;
             }
         }
@@ -122,7 +144,21 @@
             items: items,
             inventory: inventoryName,
         };
-        OrderController.createOrder(order);
+        const createdOrder = OrderController.createOrder(order);
+        if (createdOrder) {
+            console.log(
+                "Order was successfully created: " +
+                    JSON.stringify(createdOrder)
+            );
+
+            // Reset the menus and reset the order area.
+            initMenus();
+            $("#order").empty();
+
+            // Show success
+            $("#info-box-message").html("Placement of order was successful!");
+            $("#overlay-message-box").show();
+        }
     }
     /**
      * Event handler for the event 'ondragover' → prevent the defaults.
@@ -149,8 +185,10 @@
      */
     function drop(ev) {
         ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
+        const data = ev.dataTransfer.getData("text");
+        if (data !== ev.target.id) {
+            ev.target.appendChild(document.getElementById(data));
+        }
     }
 
     exports.dragItem = drag;

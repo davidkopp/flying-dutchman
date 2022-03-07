@@ -91,12 +91,26 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <button id="place-order" data-lang="place-order-button"></button>
             </div>
         </main>
+
+        <div id="overlay-message-box" class="overlay hidden">
+            <div class="overlay-content">
+                <div class="overlay-close-button">
+                    <img src="assets/images/icon_close.svg" />
+                </div>
+                <span id="info-box-title" data-lang="info-box-title"></span>
+                <br />
+                <span id="info-box-message"></span>
+            </div>
+        </div>
+
         <footer>
             <div class="footer-align">
                 <div id="logged-in-user-container">
                     <span data-lang="logged-in-user-label"></span>
                     <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn"></button>
+                    <button id="logout-button" class="logout_btn">
+                        <span data-lang="logout-button"></span>
+                    </button>
                 </div>
             </div>
         </footer>

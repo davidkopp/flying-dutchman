@@ -73,6 +73,7 @@ const Dictionary = {
             "language-switcher-text-portuguese": "Portuguese",
             "link-to-login-page": "Login",
             "logged-in-user-label": "Logged in user:",
+            "logout-button": "Logout",
         },
         // Text strings for the page 'index'
         index: {
@@ -131,6 +132,7 @@ const Dictionary = {
             "specials-heading": "Specials",
             "waiter-call-button": "Waiter Call",
             "pay-bill-button": "Pay Bill",
+            "info-box-title": "Info",
         },
         SpecRunner: {
             "unit-test": "english",
