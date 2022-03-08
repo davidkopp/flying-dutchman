@@ -129,6 +129,7 @@ const Dictionary = {
             "create-order-inventory-label-vip": "VIP",
             "create-order-form-submit": "Create Order",
             "delete-order-button": "Delete Order",
+            "edit-order-button": "Edit Order",
             "add-more-items-button": "Add more items",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",

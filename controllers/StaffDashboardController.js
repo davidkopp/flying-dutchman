@@ -250,13 +250,16 @@
             });
             orderItemsHTML += "</ul>";
 
-            // Order items and delete button
+            // Order items and buttons for editing and deleting
             const orderItemsContainerHTML = `
             <div>
                 <span class="overlay-details-label" data-lang="order-details-items-label"></span>
                 <div>
                     ${orderItemsHTML}
                 </div>
+                <button type="button" class="overlay-button edit-order-button" data-order-id="${order.id}">
+                    <span data-lang="edit-order-button"></span>
+                </button>
                 <button type="button" class="overlay-button delete-order-button" data-order-id="${order.id}">
                     <span data-lang="delete-order-button"></span>
                 </button>
@@ -274,7 +277,8 @@
         // Add the html to the DOM
         $("#order-details-list").html(ordersListHTML);
 
-        // Add an event handler to the delete button
+        // Add an event handler to the buttons
+        $(".edit-order-button").click(handleEditOrder);
         $(".delete-order-button").click(handleDeleteOrder);
 
         // Refresh all text strings
@@ -403,6 +407,22 @@
 
         // Hide overlay
         $("#overlay-orders-details").hide();
+    }
+
+    /**
+     * Event handler for editing an order.
+     *
+     * @param {object} event The event object.
+     */
+    function handleEditOrder(event) {
+        event.preventDefault();
+
+        const orderId = parseInt($(this).data("order-id"));
+
+        // TODO: Implement editing of an order
+
+        alert("NOT IMPLEMENTED YET");
+        //OrderController.editOrder(order);
     }
 
     /**
