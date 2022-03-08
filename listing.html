@@ -1,7 +1,7 @@
 <!--
 File: listing.html
 
-DESCRIPTION
+Menu page of the Flying Dutchman.
 
 Author: David Kopp
 -----
@@ -15,7 +15,10 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Listing Items</title>
+        <title data-lang="page-title">Flying Dutchman</title>
+
+        <!-- Prevent browser from requesting a favicon -->
+        <link rel="icon" href="data:;base64,=" />
         <!--Stylesheet-->
         <link rel="stylesheet" href="style.css" />
         <!--Font Awesome-->
@@ -40,13 +43,20 @@ Modified By: David Kopp (mail@davidkopp.de>)
     </head>
 
     <body class="bg-color">
-        <div class="lang-flags">
-            <div class="flag">
-                <button><i class="fas fa-flag"></i></button>
-                <button><i class="fas fa-flag"></i></button>
-                <button><i class="fas fa-flag"></i></button>
+        <div class="lang">
+            <div class="lang-flags">
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                    <img src="assets/images/icon_england_flag.png" alt="" class="language-button" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="language-button" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="language-button" />
+                </div>
             </div>
         </div>
+
         <header>
             <div class="logo">
                 <h1>Flying Dutchman</h1>
@@ -66,43 +76,45 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </button>
             </div>
         </header>
-        <div class="filter-button">
-            <div class="text-right">
-                <button>Allergies</button>
-                <button>Price</button>
-                <button>Tannin</button>
-                <button>Alcohol%</button>
-            </div>
-        </div>
-
-        <div class="filter-wrapper">
-            <div class="filter-list">
-                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.BEER_filter)" title="Beer">
-                    <img
-                        src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt=""
-                    />
-                </div>
-                <div class="thumbnail" title="Wine" onclick="MenuController.filterMenu(Constants.WINE_filter)">
-                    <img
-                        src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
-                        alt=""
-                    />
-                </div>
-                <div class="thumbnail" title="Drink" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
-                    <img
-                        src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
-                        alt=""
-                    />
-                </div>
-                <div class="thumbnail" title="Water" onclick="MenuController.filterMenu(Constants.WATER_filter)">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
+        <div class="content">
+            <div class="filter-button">
+                <div class="text-right">
+                    <button>Allergies</button>
+                    <button>Price</button>
+                    <button>Tannin</button>
+                    <button>Alcohol%</button>
                 </div>
             </div>
 
-            <div class="filter-result">
-                <div class="list-item">
-                    <div id="menu-container"></div>
+            <div class="filter-wrapper">
+                <div class="filter-list">
+                    <div class="thumbnail" onclick="MenuController.filterMenu(Constants.BEER_filter)" title="Beer">
+                        <img
+                            src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="thumbnail" title="Wine" onclick="MenuController.filterMenu(Constants.WINE_filter)">
+                        <img
+                            src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
+                            alt=""
+                        />
+                    </div>
+                    <div class="thumbnail" title="Drink" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
+                        <img
+                            src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
+                            alt=""
+                        />
+                    </div>
+                    <div class="thumbnail" title="Water" onclick="MenuController.filterMenu(Constants.WATER_filter)">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
+                    </div>
+                </div>
+
+                <div class="filter-result">
+                    <div class="list-item">
+                        <div id="menu-container"></div>
+                    </div>
                 </div>
             </div>
         </div>
