@@ -21,42 +21,6 @@
     display: none;
 }
 
-/*=============Menu Page================*/
-
-.menu-item {
-    max-width: 300px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.menu-item-beer {
-    border: solid 3px brown;
-}
-
-.menu-item-wine {
-    border: solid 3px violet;
-}
-
-.menu-item-drink {
-    border: solid 3px gold;
-}
-
-.menu-item-water {
-    border: solid 3px aqua;
-}
-
-.menu-item-other {
-    border: solid 3px red;
-}
-
-.menu-item-name {
-    font-weight: bold;
-}
-
-.menu-item-is-low-in-stock {
-    background-color: lightgray;
-}
-
 /*=============Landing Page================*/
 .align {
     display: flex;
@@ -245,17 +209,8 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     margin-top: 20px;
 }
 
-/*==============Menu==============*/
-#menu_wrapper {
-    background-color: #033d66;
-}
-#menu_wrapper h1 {
-    padding: 10px 10px;
-}
-#menu_wrapper .filter {
-    justify-content: center;
-    margin-bottom: 20px;
-}
+/*=============Menu Page================*/
+
 #menu-container {
     display: flex;
     flex-wrap: wrap;
@@ -265,31 +220,12 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     justify-content: center;
 }
 
-.menu-item {
-    max-width: 300px;
-    width: 100%;
-    color: #f2f2f2;
+.menu-item-is-low-in-stock {
+    /* TODO: Change the look of menu items that are low in stock */
 }
 
-.order-placement {
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    padding-left: 10px;
-    margin-bottom: 40px;
-}
-.order-container {
-    width: 100%;
-    border: 1px solid #e2e2e2;
-    min-height: 100px;
-}
-.order-action {
-    text-align: right;
-}
-.order-action .material-icons {
-    cursor: pointer;
-}
 /*============VIP_Dashboard=============*/
+
 .sub_header {
     display: flex;
     justify-content: space-between;
@@ -422,7 +358,7 @@ footer .footer-align .logout_btn {
 }
 
 /*=======================
-Listing Page
+Menu Page
 ========================*/
 
 header {
