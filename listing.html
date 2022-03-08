@@ -78,132 +78,45 @@ Modified By: David Kopp (mail@davidkopp.de>)
             
         <div class="filter-wrapper">
             <div class="filter-list">
-                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.BEER_filter)">
+                <div class="thumbnail" 
+                    onclick="MenuController.filterMenu(Constants.BEER_filter)"
+                    title = "Beer"
+                >
                     <img
                         src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                         alt=""
                     />
                 </div>
-                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.WINE_filter)">
+                <div class="thumbnail" 
+                    title = "Wine"
+                    onclick="MenuController.filterMenu(Constants.WINE_filter)">
                     <img
                         src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
                         alt=""
                     />
                 </div>
-                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
+                <div class="thumbnail" 
+                    title = "Drink"
+                    onclick="MenuController.filterMenu(Constants.DRINK_filter)">
                     <img
                         src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
                         alt=""
                     />
                 </div>
-                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.WATER_filter)">
+                <div 
+                    class="thumbnail" 
+                    title = "Water"
+                    onclick="MenuController.filterMenu(Constants.WATER_filter)">
                     <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
                 </div>
             </div>
 
             <div class="filter-result">
                 <div class="list-item">
-                    <div id="menu-container"></div>
-                    <!--<div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>
-                <div class="item">
-                    <ul>
-                        <li>Allergies</li>
-                        <li>Price</li>
-                        <li>Tannin</li>
-                        <li>Alcohol%</li>
-                    </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                        alt="">
-                </div>-->
+                    
+                    <div id="menu-container">
+
+                    </div>                    
                 </div>
             </div>
         </div>

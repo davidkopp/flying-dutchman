@@ -309,7 +309,7 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     height: 75px;
     border: 2px solid #e2e2e2;
     border-radius: 10px;
-    margin: 5px;
+    margin: 5px auto;
     cursor: pointer;
 }
 .items-order-list .item .thumbnail img,
@@ -483,12 +483,10 @@ header .available-options button span {
 }
 .filter-wrapper .filter-list {
     flex: 0 0 15%;
-    text-align: -webkit-center;
 }
 .filter-wrapper .filter-result {
-    margin-left: 30px;
+    margin-left: -20px;
     flex: 0 0 85%;
-    text-align: -webkit-center;
 }
 .filter-wrapper .list-item {
     display: flex;
@@ -498,13 +496,14 @@ header .available-options button span {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    padding: 17px;
     border: 2px solid #51cfe6;
     width: 240px;
     height: 150px;
     border-radius: 40px;
     margin: 0 10px 10px 0;
     background-color: #6bb2e8;
+    
 }
 .filter-wrapper .list-item .item ul {
     list-style: none;
