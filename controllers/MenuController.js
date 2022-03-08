@@ -48,7 +48,7 @@
         console.log(
             "MenuController | Start initializing the menu " +
                 (filterByType
-                    ? "with the filter: " + filterByType
+                    ? "with a filter: " + filterByType
                     : "without a filter.")
         );
 
@@ -207,11 +207,6 @@
                 <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                     alt="">
             </div>`;
-        } else {
-            // Unknown type and a filter is set → should not happen
-            console.log(
-                `MenuController | Unknown type '${type}' given. Not able to match it with the given filter '${filterByType}'.`
-            );
         }
 
         $("#menu-container").append(menuItemHTML);
