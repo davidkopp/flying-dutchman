@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -503,7 +503,6 @@ header .available-options button span {
     border-radius: 40px;
     margin: 0 10px 10px 0;
     background-color: #6bb2e8;
-    
 }
 .filter-wrapper .list-item .item ul {
     list-style: none;
@@ -686,7 +685,6 @@ Staff dashboard
     border: orange;
     cursor: pointer;
 }
-
 
 /*=======================
 VIP dashboard

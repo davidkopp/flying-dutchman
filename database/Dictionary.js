@@ -27,7 +27,6 @@ const Constants = {
     DRINK_filter: "drink",
     WATER_filter: "water",
 
-
     BEER_CATEGORY: ["ÖL", "CIDER"],
     WINE_CATEGORY: ["MOUSSERANDE", "VIN"],
     DRINKS_CATEGORY: [

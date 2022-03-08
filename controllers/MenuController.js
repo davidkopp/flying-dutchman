@@ -22,8 +22,7 @@
      *
      * @param {string} byType The name of type
      */
-    function filterMenu(byType)
-    {
+    function filterMenu(byType) {
         switch (byType) {
             case Constants.BEER_filter:
             case Constants.WINE_filter:
@@ -41,7 +40,8 @@
     /** Initialize the menu with the information about the available beverages. */
     function initMenu(filterByType) {
         // TODO: Differentiate between bar and vip inventory
-        const inventoryItems = DatabaseAPI.Inventory.getInventory(inventoryName);
+        const inventoryItems =
+            DatabaseAPI.Inventory.getInventory(inventoryName);
         const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
@@ -81,9 +81,9 @@
             }
 
             /*if(typeof filterByType !== "undefined") {
-                
+
             } else {
-                
+
             }*/
             displayBeverageInMenu(beverage, quantity, filterByType);
         }
@@ -131,7 +131,6 @@
                 <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                     alt="">
             </div>`;
-            
         } else if (
             filterByType === Constants.WINE_filter &&
             containsAnyOf(type, Constants.WINE_CATEGORY)
@@ -151,7 +150,6 @@
                 <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                     alt="">
             </div>`;
-            
         } else if (
             filterByType === Constants.DRINK_filter &&
             containsAnyOf(type, Constants.DRINKS_CATEGORY)
@@ -169,9 +167,8 @@
                     <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                         alt="">
                 </div>`;
-            
-        } else if ( 
-            filterByType === Constants.WATER_filter && 
+        } else if (
+            filterByType === Constants.WATER_filter &&
             containsAnyOf(type, Constants.WATER_CATEGORY)
         ) {
             // Water
@@ -185,9 +182,7 @@
                 <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                     alt="">
             </div>`;
-            
-        } else if(typeof filterByType !== "undefined" ) {
-
+        } else if (typeof filterByType !== "undefined") {
         } else {
             menuItemHTML = `<div class="item  ${optClassLowInStock}">
                 <ul>

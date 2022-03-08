@@ -39,7 +39,6 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/MenuController.js"></script>
     </head>
 
-
     <body class="bg-color">
         <div class="lang-flags">
             <div class="flag">
@@ -75,51 +74,37 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <button>Alcohol%</button>
             </div>
         </div>
-            
+
         <div class="filter-wrapper">
             <div class="filter-list">
-                <div class="thumbnail" 
-                    onclick="MenuController.filterMenu(Constants.BEER_filter)"
-                    title = "Beer"
-                >
+                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.BEER_filter)" title="Beer">
                     <img
                         src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                         alt=""
                     />
                 </div>
-                <div class="thumbnail" 
-                    title = "Wine"
-                    onclick="MenuController.filterMenu(Constants.WINE_filter)">
+                <div class="thumbnail" title="Wine" onclick="MenuController.filterMenu(Constants.WINE_filter)">
                     <img
                         src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
                         alt=""
                     />
                 </div>
-                <div class="thumbnail" 
-                    title = "Drink"
-                    onclick="MenuController.filterMenu(Constants.DRINK_filter)">
+                <div class="thumbnail" title="Drink" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
                     <img
                         src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
                         alt=""
                     />
                 </div>
-                <div 
-                    class="thumbnail" 
-                    title = "Water"
-                    onclick="MenuController.filterMenu(Constants.WATER_filter)">
+                <div class="thumbnail" title="Water" onclick="MenuController.filterMenu(Constants.WATER_filter)">
                     <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
                 </div>
             </div>
 
             <div class="filter-result">
                 <div class="list-item">
-                    
-                    <div id="menu-container">
-
-                    </div>                    
+                    <div id="menu-container"></div>
                 </div>
             </div>
         </div>
-        
     </body>
 </html>
