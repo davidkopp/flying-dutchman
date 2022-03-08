@@ -100,22 +100,22 @@
             return;
         }
 
-        /*if(typeof filterByType !== "undefined") {
-            console.log(filterByType);
-        }*/
-
         let optClassLowInStock;
         if (quantity < Constants.LOW_STOCK_NUMBER) {
             optClassLowInStock = "menu-item-is-low-in-stock";
         }
 
         var menuItemHTML = "";
+
         // Check type and displays the relevant information depending on the type.
+        // If a filter is defined, use the filter and check if the type matches the filter.
         let type = beverage.category.toUpperCase();
+        console.log("type: " + type);
         if (
-            filterByType === Constants.BEER_filter &&
-            containsAnyOf(type, Constants.BEER_CATEGORY)
+            containsAnyOf(type, Constants.BEER_CATEGORY) &&
+            (!filterByType || filterByType === Constants.BEER_filter)
         ) {
+            console.log("BEER");
             // Beer or cider
             menuItemHTML = `<div class="item  ${optClassLowInStock}">
                 <ul>
@@ -132,8 +132,8 @@
                     alt="">
             </div>`;
         } else if (
-            filterByType === Constants.WINE_filter &&
-            containsAnyOf(type, Constants.WINE_CATEGORY)
+            containsAnyOf(type, Constants.WINE_CATEGORY) &&
+            (!filterByType || filterByType === Constants.WINE_filter)
         ) {
             // Wine
             menuItemHTML = `<div class="item  ${optClassLowInStock}">
@@ -151,8 +151,8 @@
                     alt="">
             </div>`;
         } else if (
-            filterByType === Constants.DRINK_filter &&
-            containsAnyOf(type, Constants.DRINKS_CATEGORY)
+            containsAnyOf(type, Constants.DRINKS_CATEGORY) &&
+            (!filterByType || filterByType === Constants.DRINK_filter)
         ) {
             // Cocktails / Drinks / Mixed drinks
             menuItemHTML = `<div class="item  ${optClassLowInStock}">
@@ -168,8 +168,8 @@
                         alt="">
                 </div>`;
         } else if (
-            filterByType === Constants.WATER_filter &&
-            containsAnyOf(type, Constants.WATER_CATEGORY)
+            containsAnyOf(type, Constants.WATER_CATEGORY) &&
+            (!filterByType || filterByType === Constants.WATER_filter)
         ) {
             // Water
             menuItemHTML = `<div class="item  ${optClassLowInStock}">
@@ -182,8 +182,7 @@
                 <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                     alt="">
             </div>`;
-        } else if (typeof filterByType !== "undefined") {
-        } else {
+        } else if (!filterByType) {
             menuItemHTML = `<div class="item  ${optClassLowInStock}">
                 <ul>
                     <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
