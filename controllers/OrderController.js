@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -252,6 +252,7 @@
             console.log(
                 "OrderController.createOrder | To create a new order it must not have an ID! To change the order use `editOrder` instead."
             );
+            return null;
         }
 
         // Set an id to every item (→ removing an item with an id is easy)

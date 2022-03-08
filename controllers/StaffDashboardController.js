@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController */
@@ -34,10 +34,11 @@
                     "input[type=text], input[type=number], input[type=textarea]"
                 )
                 .val("");
-            $("#create-order-form")
-                .find("input[name=inventory]")
-                .prop("checked", false);
             $("#added-items-list").empty();
+            // The bar inventory radio box should be set to checked as the default.
+            $("#create-order-form")
+                .find("input[value=barInventory]")
+                .prop("checked", true);
 
             // Show only one item input field
             const addItemBoxes = $(
