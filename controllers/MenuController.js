@@ -22,13 +22,15 @@
      *
      * @param {string} byType The name of type
      */
-    function filterMenu(byType) {
+    function filterMenu(byType)
+    {
         switch (byType) {
             case Constants.BEER_filter:
             case Constants.WINE_filter:
             case Constants.DRINK_filter:
             case Constants.WATER_filter:
-                filterByType(byType);
+                $("#menu-container").empty();
+                initMenu(byType);
                 break;
             default:
                 console.log(`menu ${byType} not known.`);
@@ -36,17 +38,10 @@
         }
     }
 
-    function filterByType(byType) {
-        $("#menu-container").empty();
-        initMenu(byType);
-    }
-
     /** Initialize the menu with the information about the available beverages. */
     function initMenu(filterByType) {
         // TODO: Differentiate between bar and vip inventory
-        const inventoryItems =
-            DatabaseAPI.Inventory.getInventory(inventoryName);
-
+        const inventoryItems = DatabaseAPI.Inventory.getInventory(inventoryName);
         const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
