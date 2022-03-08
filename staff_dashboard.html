@@ -26,6 +26,8 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="database/Dictionary.js"></script>
         <script type="text/javascript" src="database/DatabaseAPI.js"></script>
 
+        <script type="text/javascript" src="helpers/UNDOmanager.js"></script>
+
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
 
@@ -48,50 +50,52 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
             </div>
 
-            <!-- Orders overview -->
-            <div id="orders-overview" class="overview-container">
-                <div class="overview-header">
-                    <span id="orders-overview-title" data-lang="orders-overview-title"></span>
-                    <button type="button" id="create-order-button" class="overview-buttons">
-                        <span data-lang="create-order-button-text"></span>
-                    </button>
-                </div>
-                <div id="orders-list-container" class="overview-list-container">
-                    <div id="orders-list">
-                        <div class="table-element">
-                            <div class="order-user-picture-container"></div>
-                            <div class="order-table-number"></div>
+            <div class="row">
+                <!-- Orders overview -->
+                <div id="orders-overview" class="overview-container col-9 col-s-12">
+                    <div class="overview-header">
+                        <span id="orders-overview-title" data-lang="orders-overview-title"></span>
+                        <button type="button" id="create-order-button" class="overview-buttons">
+                            <span data-lang="create-order-button-text"></span>
+                        </button>
+                    </div>
+                    <div id="orders-list-container" class="overview-list-container">
+                        <div id="orders-list">
+                            <div class="table-element">
+                                <div class="order-user-picture-container"></div>
+                                <div class="order-table-number"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="orders-list-footer" class="overview-container-footer">
+                        <div>
+                            <span data-lang="orders-list-total-number-label"></span>
+                            <span id="orders-list-total-number"></span>
                         </div>
                     </div>
                 </div>
-                <div id="orders-list-footer" class="overview-container-footer">
-                    <div>
-                        <span data-lang="orders-list-total-number-label"></span>
-                        <span id="orders-list-total-number"></span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Inventory overview -->
-            <div id="inventory-overview" class="overview-container">
-                <div class="overview-header">
-                    <span id="inventory-overview-title" data-lang="inventory-overview-title"></span>
-                    <button type="button" id="restock-button" class="overview-buttons">
-                        <span data-lang="restock-button-text"></span>
-                    </button>
-                </div>
-                <div id="inventory-list-container" class="overview-list-container">
-                    <div id="inventory-list">
-                        <div class="inventory-element">
-                            <div class="inventory-picture"></div>
-                            <div class="inventory-name"></div>
+                <!-- Inventory overview -->
+                <div id="inventory-overview" class="overview-container col-3 col-s-6">
+                    <div class="overview-header">
+                        <span id="inventory-overview-title" data-lang="inventory-overview-title"></span>
+                        <button type="button" id="restock-button" class="overview-buttons">
+                            <span data-lang="restock-button-text"></span>
+                        </button>
+                    </div>
+                    <div id="inventory-list-container" class="overview-list-container">
+                        <div id="inventory-list">
+                            <div class="inventory-element">
+                                <div class="inventory-picture"></div>
+                                <div class="inventory-name"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="inventory-overview-footer" class="overview-container-footer">
-                    <div>
-                        <span data-lang="inventory-notifications-total-number-label"></span>
-                        <span id="inventory-notifications-total-number"></span>
+                    <div id="inventory-overview-footer" class="overview-container-footer">
+                        <div>
+                            <span data-lang="inventory-notifications-total-number-label"></span>
+                            <span id="inventory-notifications-total-number"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,11 +123,19 @@ Modified By: David Kopp (mail@davidkopp.de>)
                             <div>
                                 <span class="overlay-details-label" data-lang="order-details-items-label"></span>
                                 <div>...</div>
-                                <button type="button" class="overlay-button edit-order-button" data-order-id="">
-                                    <span data-lang="edit-order-button"></span>
+                                <button
+                                    type="button"
+                                    class="overlay-button details-overlay-edit-order-button"
+                                    data-order-id=""
+                                >
+                                    <span data-lang="details-overlay-edit-order-button"></span>
                                 </button>
-                                <button type="button" class="overlay-button delete-order-button" data-order-id="">
-                                    <span data-lang="delete-order-button"></span>
+                                <button
+                                    type="button"
+                                    class="overlay-button details-overlay-delete-order-button"
+                                    data-order-id=""
+                                >
+                                    <span data-lang="details-overlay-delete-order-button"></span>
                                 </button>
                             </div>
                         </div>

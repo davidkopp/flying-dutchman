@@ -463,52 +463,32 @@ Staff dashboard
 ========================*/
 
 .order-table-number {
-    font-size: 50px;
-    font-weight: 900;
-    color: white;
+    font-size: 32px;
+    font-weight: 700;
     cursor: pointer;
 }
 
 .order-table-number:hover {
-    -webkit-mask-image: linear-gradient(
-        -75deg,
-        rgba(0, 0, 0, 0.6) 30%,
-        #000 50%,
-        rgba(0, 0, 0, 0.6) 70%
-    );
-    -webkit-mask-size: 200%;
-    animation: shine 2s infinite;
-}
-
-@-webkit-keyframes shine {
-    from {
-        -webkit-mask-position: 150%;
-    }
-
-    to {
-        -webkit-mask-position: -50%;
-    }
+    color: #0c4068;
 }
 
 #staff-dashboard-container {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    width: 100%;
+    width: 100%;  */
     background-color: #033d66;
 }
 
 .overview-container {
-    margin: 30px;
+    padding: 30px;
 }
 
 .overview-list-container {
     text-align: center;
     position: relative;
-    height: 50vh;
-    width: 320px;
-    padding: 20px;
+    /* min-width: 320px; */
     overflow: auto;
 }
 
@@ -518,13 +498,15 @@ Staff dashboard
     color: white;
     display: flex;
     justify-content: space-between;
-    font-size: 24px;
+    font-size: 32px;
     line-height: 50px;
     text-align: center;
 }
 
 #orders-list-container {
     background-color: #8fd14f;
+    font-size: 24px;
+    height: 70vh;
 }
 
 #inventory-list-container {
@@ -537,25 +519,91 @@ Staff dashboard
     padding: 10px;
 }
 
+.table-element {
+    margin: 20px;
+}
+
+.order-element {
+    background-color: #b4e286;
+    padding: 20px;
+    margin: 10px;
+    text-align: left;
+}
+
+.order-element-number {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.order-element-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.order-element-row > div {
+    flex: 1 1 auto;
+}
+
+.order-list-column-heading {
+    font-weight: 600;
+}
+
 #order-details-list ul {
     margin-left: 30px;
 }
 
-.inventory-element {
+.order-notes-text-field {
+    background: transparent;
+    border: none;
+    font-size: inherit;
+}
+
+.order-notes-text-field:hover {
+    background-color: lightgray;
+}
+
+.order-element ul {
+    margin-left: 30px;
+}
+
+.order-action-button {
     cursor: pointer;
-    margin: 40px 0px;
+    font-size: 35px;
+    margin-right: 20px;
 }
 
-.inventory-element img {
-    min-width: 100px;
+.inventory-element {
+    /* margin: 40px 0px; */
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin: 30px auto;
 }
 
-.inventory-has-items-running-low {
-    border: 3px solid red;
+img.inventory-element-image {
+    display: block;
+    width: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    cursor: pointer;
 }
 
-.table-element {
-    margin: 40px;
+img.inventory-has-items-running-low {
+    display: block;
+    height: auto;
+    width: 40px;
+    position: absolute;
+    top: 0;
+    left: 70px;
+    z-index: 2;
+}
+
+img.inventory-has-enough-items {
+    display: none;
 }
 
 .overview-container-footer {
@@ -681,5 +729,108 @@ Animations
     }
     to {
         -webkit-mask-position: -50%;
+    }
+}
+
+/*=======================
+Responsive Design
+========================*/
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+[class*="col-"] {
+    float: left;
+}
+
+/* For mobile phones */
+[class*="col-"] {
+    width: 100%;
+}
+
+/* For tablets */
+@media only screen and (min-width: 600px) {
+    .col-s-1 {
+        width: 8.33%;
+    }
+    .col-s-2 {
+        width: 16.66%;
+    }
+    .col-s-3 {
+        width: 25%;
+    }
+    .col-s-4 {
+        width: 33.33%;
+    }
+    .col-s-5 {
+        width: 41.66%;
+    }
+    .col-s-6 {
+        width: 50%;
+    }
+    .col-s-7 {
+        width: 58.33%;
+    }
+    .col-s-8 {
+        width: 66.66%;
+    }
+    .col-s-9 {
+        width: 75%;
+    }
+    .col-s-10 {
+        width: 83.33%;
+    }
+    .col-s-11 {
+        width: 91.66%;
+    }
+    .col-s-12 {
+        width: 100%;
+    }
+}
+
+/* For desktop in landscape mode */
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+    .row {
+        margin: 30px 50px;
+    }
+
+    .col-1 {
+        width: 8.33%;
+    }
+    .col-2 {
+        width: 16.66%;
+    }
+    .col-3 {
+        width: 25%;
+    }
+    .col-4 {
+        width: 33.33%;
+    }
+    .col-5 {
+        width: 41.66%;
+    }
+    .col-6 {
+        width: 50%;
+    }
+    .col-7 {
+        width: 58.33%;
+    }
+    .col-8 {
+        width: 66.66%;
+    }
+    .col-9 {
+        width: 75%;
+    }
+    .col-10 {
+        width: 83.33%;
+    }
+    .col-11 {
+        width: 91.66%;
+    }
+    .col-12 {
+        width: 100%;
     }
 }
