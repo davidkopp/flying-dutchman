@@ -14,6 +14,14 @@
     let lastUsedFilter;
 
     $(document).ready(function () {
+        // Add hover effect and focus change to the filter icons.
+        $(".filter-icon > img").click(function () {
+            $(".filter-icon > img").each(function () {
+                $(this).attr("src", $(this).data("src"));
+            });
+            $(this).attr("src", $(this).data("hover"));
+        });
+
         initMenu();
     });
 

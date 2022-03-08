@@ -99,26 +99,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     cursor: pointer;
 }
 
-.language-button:hover {
-    -webkit-mask-image: linear-gradient(
-        -75deg,
-        rgba(0, 0, 0, 0.6) 30%,
-        #000 50%,
-        rgba(0, 0, 0, 0.6) 70%
-    );
-    -webkit-mask-size: 200%;
-    animation: shine 2s infinite;
-}
-
-@-webkit-keyframes shine {
-    from {
-        -webkit-mask-position: 150%;
-    }
-    to {
-        -webkit-mask-position: -50%;
-    }
-}
-
 /* ??? */
 
 .banner .overlay .content .routes {
@@ -256,19 +236,17 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     justify-content: center;
     align-items: center;
 }
-.items-order-list .item .thumbnail,
-.drag-drop-wrapper .thumbnail,
-.filter-wrapper .thumbnail {
+.items-order-list .item .filter-icon,
+.drag-drop-wrapper .filter-icon,
+.filter-wrapper .filter-icon {
     width: 75px;
     height: 75px;
-    border: 2px solid #e2e2e2;
-    border-radius: 10px;
     margin: 5px auto;
     cursor: pointer;
 }
-.items-order-list .item .thumbnail img,
-.drag-drop-wrapper .thumbnail img,
-.filter-wrapper .thumbnail img {
+.items-order-list .item .filter-icon img,
+.drag-drop-wrapper .filter-icon img,
+.filter-wrapper .filter-icon img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -329,11 +307,13 @@ footer .footer-align .logout_btn {
 .drag-drop {
     min-height: 40vh;
 }
+/*
 .drag-drop-area .thumbnail {
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
 }
+*/
 .btn-wrapper {
     display: flex;
     justify-content: space-between;
@@ -350,7 +330,7 @@ footer .footer-align .logout_btn {
     margin: 5px;
     padding: 5px;
 }
-.logout .logout_btn {
+*/ .logout .logout_btn {
     padding: 5px;
 }
 .bg-color {
@@ -668,4 +648,39 @@ body {
 #info-box-message {
     font-size: 22px;
     text-align: center;
+}
+
+/*=======================
+Animations
+========================*/
+
+.language-button:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
+}
+
+.filter-icon > img:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
+}
+
+@-webkit-keyframes shine {
+    from {
+        -webkit-mask-position: 150%;
+    }
+    to {
+        -webkit-mask-position: -50%;
+    }
 }
