@@ -160,7 +160,7 @@
             oldNote: (function () {
                 const order = DatabaseAPI.Orders.getOrderById(orderId);
                 if (order) {
-                    return order.note;
+                    return order.notes;
                 } else {
                     return "";
                 }
@@ -622,7 +622,7 @@
             return null;
         }
 
-        order.note = newNote;
+        order.notes = newNote;
 
         return DatabaseAPI.Orders.saveOrder(order);
     }
