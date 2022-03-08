@@ -36,19 +36,16 @@ Modified By: David Kopp (mail@davidkopp.de>)
 
     <body>
         <div id="staff-dashboard-container">
-            <div class="lang">
-                <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
-                    <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-                    <span data-lang="language-switcher-text-english"></span>
-                </button>
-                <button onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
-                    <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-                    <span data-lang="language-switcher-text-german"></span>
-                </button>
-                <button onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
-                    <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-                    <span data-lang="language-switcher-text-portuguese"></span>
-                </button>
+            <div class="lang-container">
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
+                </div>
             </div>
 
             <!-- Orders overview -->

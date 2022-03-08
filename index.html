@@ -5,7 +5,7 @@ Home page of the Flying Dutchman.
 
 Author: David Kopp
 -----
-Last Modified: Monday, 7th March 2022
+Last Modified: Tuesday, 8th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -31,20 +31,19 @@ Modified By: David Kopp (mail@davidkopp.de>)
     </head>
 
     <body>
-        <h1 id="caption" data-lang="caption"></h1>
+        <div class="lang-container">
+            <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+            </div>
+            <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+            </div>
+            <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
+            </div>
+        </div>
 
-        <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
-            <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-            <span data-lang="language-switcher-text-english">English</span>
-        </button>
-        <button onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
-            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-            <span data-lang="language-switcher-text-german">German</span>
-        </button>
-        <button onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
-            <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-            <span data-lang="language-switcher-text-portuguese">Portuguese</span>
-        </button>
+        <h1 id="caption" data-lang="caption"></h1>
         <br />
         <br />
         <a href="menu.html" data-lang="link-to-menu-page"></a>
