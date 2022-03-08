@@ -5,9 +5,10 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
+/* globals LanguageController */
 
 (function ($, exports) {
     $(document).ready(function () {
@@ -219,22 +220,27 @@
                     inventoryName,
                     inventoryItem.beverageNr
                 );
-                let statusHTML, buttonHTML;
-                if (active) {
-                    statusHTML = `<span id='status-text-${inventoryName}-${inventoryItem.beverageNr}'>Active</span>`;
-                    buttonHTML = `<button class="beverage-show-hide-button" onclick="beverageShowHide('${inventoryName}', '${inventoryItem.beverageNr}')">
-                    <span id="show-hide-button-text-${inventoryName}-${inventoryItem.beverageNr}">Hide</span>
-                    </button>`;
-                } else {
-                    statusHTML = `<span id='status-text-${inventoryName}-${inventoryItem.beverageNr}'>Removed</span>`;
-                    buttonHTML = `<button class="beverage-show-hide-button" onclick="beverageShowHide('${inventoryName}', '${inventoryItem.beverageNr}')">
-                    <span id="show-hide-button-text-${inventoryName}-${inventoryItem.beverageNr}">Show</span>
-                    </button>`;
-                }
+
+                const statusHTML = `
+                <span id='status-text-${inventoryName}-${inventoryItem.beverageNr}'
+                ${Constants.DATA_LANG_DYNAMIC_KEY}="beverage-status-dynamic"
+                ${Constants.DATA_LANG_DYNAMIC_VALUE}=${active}>
+                    ...
+                </span>`;
+
+                const buttonHTML = `
+                <button class="beverage-show-hide-button"
+                    onclick="beverageShowHide('${inventoryName}', '${inventoryItem.beverageNr}')">
+                    <span id="show-hide-button-text-${inventoryName}-${inventoryItem.beverageNr}"
+                    ${Constants.DATA_LANG_DYNAMIC_KEY}="beverage-status-button-dynamic"
+                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${active}>
+                        ...
+                    </span>
+                </button>`;
 
                 htmlTable += `
                 <tr>
-                <td>${inventoryName}</td>
+                <td ${Constants.DATA_LANG_DYNAMIC_KEY}="inventory-name-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}="${inventoryName}">...</td>
                 <td>${beverage.nr}</td>
                 <td>${beverage.name}</td>
                 <td>${statusHTML}</td>
@@ -245,6 +251,9 @@
         htmlTable += "</table>";
 
         $("#add-remove-beverages").append(htmlTable);
+
+        // Refresh all text strings
+        LanguageController.refreshTextStrings();
     }
 
     /**
@@ -258,22 +267,18 @@
             inventoryName,
             beverageNr
         );
-        console.log("newStatus: " + newStatus);
-        let statusText, buttonText;
 
-        // TODO: Move strings to dictionary and enable language switching functionality.
-        if (newStatus) {
-            statusText = "Active";
-            buttonText = "Hide";
-        } else {
-            statusText = "Removed";
-            buttonText = "Show";
-        }
-
-        $(`#status-text-${inventoryName}-${beverageNr}`).text(statusText);
-        $(`#show-hide-button-text-${inventoryName}-${beverageNr}`).text(
-            buttonText
+        $(`#status-text-${inventoryName}-${beverageNr}`).attr(
+            Constants.DATA_LANG_DYNAMIC_VALUE,
+            newStatus
         );
+        $(`#show-hide-button-text-${inventoryName}-${beverageNr}`).attr(
+            Constants.DATA_LANG_DYNAMIC_VALUE,
+            newStatus
+        );
+
+        // Refresh the dynamic text strings so the true / false values will be replaced with adaquate text strings.
+        LanguageController.refreshDynamicTextStrings();
     }
 
     exports.refillBeverages = refillBeverages;

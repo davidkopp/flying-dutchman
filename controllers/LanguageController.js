@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -13,7 +13,7 @@
     /** Initialize the language and update the view when the DOM is ready. */
     $(document).ready(function () {
         init();
-        updateView();
+        refreshTextStrings();
     });
 
     /**
@@ -36,7 +36,7 @@
                 console.error(`Language ${new_lang} not known.`);
                 break;
         }
-        updateView();
+        refreshTextStrings();
     }
 
     /**
@@ -70,28 +70,82 @@
         }
     }
 
-    /** Initializes or refreshes the text strings on the current page. */
+    /** Initializes or refreshes all text strings (static and dynamic) on the current page. */
     function refreshTextStrings() {
-        updateView();
+        refreshStaticTextStrings();
+        refreshDynamicTextStrings();
     }
 
     /**
-     * Updates the current view by replacing all text strings. Per default it
-     * uses the html element property `text` to replace the text. However, not
-     * all HTML elements has a `text` property. If the data attribute includes
-     * the suffix `[value]`, the `value` property will be used instead.
+     * Updates the current view by replacing all static text strings. Per
+     * default it uses the html element property `text` to replace the text.
+     * However, not all HTML elements have a `text` property. If the data
+     * attribute includes the suffix `[value]`, the `value` property will be
+     * used instead.
      */
-    function updateView() {
+    function refreshStaticTextStrings() {
         const currentPath = getCurrentPath();
+        // Update the text strings with static contents
         $("[data-lang]").each(function (index, element) {
             let langKey = $(element).data("lang").trim();
             if (langKey.startsWith("[value]")) {
                 langKey = langKey.slice(7, langKey.length);
-                $(element).val(getString(langKey, currentPath));
+                $(element).val(getValueFromDictionary(langKey, currentPath));
             } else {
-                $(element).text(getString(langKey, currentPath));
+                $(element).text(getValueFromDictionary(langKey, currentPath));
             }
         });
+    }
+
+    /** Updates the current view by replacing all dynamic text strings. */
+    function refreshDynamicTextStrings() {
+        const currentPath = getCurrentPath();
+
+        // Update the text strings with dynamic contents
+        // Depending on the current value, the text will be replaced accordingly.
+        const elements = $(`[${Constants.DATA_LANG_DYNAMIC_KEY}]`);
+        for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            const langDynamicKey = $(element).attr(
+                Constants.DATA_LANG_DYNAMIC_KEY
+            );
+            const langDynamicValue = $(element).attr(
+                Constants.DATA_LANG_DYNAMIC_VALUE
+            );
+            if (!langDynamicValue) {
+                console.log(
+                    `LanguageController | Dynamic content can't be replaced for the key '${langDynamicKey}'. There is no value given.`
+                );
+                continue;
+            }
+            const langObjectFromDict = getValueFromDictionary(
+                langDynamicKey,
+                currentPath
+            );
+
+            if (
+                typeof langObjectFromDict !== "object" ||
+                langObjectFromDict === null
+            ) {
+                console.log(
+                    `LanguageController | Dynamic content '${langDynamicValue}' can't be replaced. There are no values for the key '${langDynamicKey}' defined in the dictionary.`
+                );
+                continue;
+            }
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    langObjectFromDict,
+                    langDynamicValue
+                )
+            ) {
+                $(element).text(langObjectFromDict[langDynamicValue]);
+            } else {
+                console.log(
+                    `LanguageController | Dynamic content '${langDynamicValue}' is not known for the key '${langDynamicValue}'.`
+                );
+            }
+        }
     }
 
     /**
@@ -121,7 +175,7 @@
      *   key for a common string.
      * @returns {string} The text string.
      */
-    function getString(key, page) {
+    function getValueFromDictionary(key, page) {
         let result = undefined;
         const currentLanguage = getCurrentLanguage();
         if (page) {
@@ -135,13 +189,13 @@
                     result = Dictionary[currentLanguage]["_"][key];
                     if (!result) {
                         console.log(
-                            `LanguageController.getString | Language key '${key}' is not set for language '${currentLanguage}' and page '${page}'.`
+                            `LanguageController.getValueFromDictionary | Language key '${key}' is not set for language '${currentLanguage}' and page '${page}'.`
                         );
                     }
                 }
             } else {
                 console.log(
-                    `LanguageController.getString | Page '${page}' is unknown in the Dictionary.`
+                    `LanguageController.getValueFromDictionary | Page '${page}' is unknown in the Dictionary.`
                 );
             }
         }
@@ -151,7 +205,7 @@
             result = Dictionary[currentLanguage]["_"][key];
             if (!result) {
                 console.log(
-                    `LanguageController.getString | Common language key '${key}' is not set for language '${currentLanguage}'.`
+                    `LanguageController.getValueFromDictionary | Common language key '${key}' is not set for language '${currentLanguage}'.`
                 );
             }
         }
@@ -161,4 +215,8 @@
     exports.changeLang = changeLang;
     exports.LanguageController = {};
     exports.LanguageController.refreshTextStrings = refreshTextStrings;
+    exports.LanguageController.refreshStaticTextStrings =
+        refreshStaticTextStrings;
+    exports.LanguageController.refreshDynamicTextStrings =
+        refreshDynamicTextStrings;
 })(jQuery, window);

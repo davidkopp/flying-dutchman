@@ -211,6 +211,8 @@
         // Add table number
         $("#order-details-table").html(table);
 
+        // TODO: Filter out the VIP orders, because only the orders for the bar are relevant in this view.
+
         // Add order details for each table
         let ordersListHTML = "";
         ordersForTable.forEach((order) => {
@@ -225,7 +227,12 @@
             const orderInventoryHTML = `
             <div>
                 <span class="overlay-details-label" data-lang="order-details-inventory-label"></span>
-                <span class="overlay-details-value">${order.inventory}</span>
+                <span
+                    ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
+                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}
+                    class="overlay-details-value">
+                    ...
+                </span>
             </div>`;
 
             // Create HTML for order items

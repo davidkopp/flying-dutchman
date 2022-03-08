@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -61,6 +61,9 @@ const Constants = {
     ACCESS_LEVEL_WAITER: 2,
     ACCESS_LEVEL_VIP: 3,
     ACCESS_LEVEL_NONE: 4,
+
+    DATA_LANG_DYNAMIC_KEY: "data-lang-dynamic-key",
+    DATA_LANG_DYNAMIC_VALUE: "data-lang-dynamic-value",
 };
 
 const Dictionary = {
@@ -122,6 +125,10 @@ const Dictionary = {
             "create-order-form-submit": "Create Order",
             "delete-order-button": "Delete Order",
             "add-more-items-button": "Add more items",
+            "order-inventory-dynamic": {
+                [Constants.INVENTORIES.BAR]: "Bar",
+                [Constants.INVENTORIES.VIP]: "VIP Cooler",
+            },
         },
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
@@ -135,6 +142,21 @@ const Dictionary = {
             "waiter-call-button": "Waiter Call",
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
+        },
+        manager_dashboard: {
+            "page-title": "Flying Dutchman - Manager Dashboard",
+            "inventory-name-dynamic": {
+                [Constants.INVENTORIES.BAR]: "Bar",
+                [Constants.INVENTORIES.VIP]: "VIP Cooler",
+            },
+            "beverage-status-dynamic": {
+                true: "Active",
+                false: "Removed",
+            },
+            "beverage-status-button-dynamic": {
+                true: "Hide",
+                false: "Show",
+            },
         },
         SpecRunner: {
             "unit-test": "english",
@@ -173,6 +195,20 @@ const Dictionary = {
         staff_dashboard: {
             "page-title": "Flying Dutchman - Mitarbeitenden Dashboard",
             "orders-overview-title": "Bestellungen",
+        },
+        manager_dashboard: {
+            "inventory-name-dynamic": {
+                [Constants.INVENTORIES.BAR]: "Bar",
+                [Constants.INVENTORIES.VIP]: "VIP Kühlschrank",
+            },
+            "beverage-status-dynamic": {
+                true: "Aktiv",
+                false: "Entfernt",
+            },
+            "beverage-status-button-dynamic": {
+                true: "Entfernen",
+                false: "Aktivieren",
+            },
         },
         SpecRunner: {
             "unit-test": "german",
