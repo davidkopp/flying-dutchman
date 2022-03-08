@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Thursday, 3rd March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -17,15 +17,12 @@
         initMenu();
     });
 
-
     /**
      * Filtering the item according to type
      *
-     * @param {string} byType the name of type
+     * @param {string} byType The name of type
      */
-    function filterMenu()
-    {
-        var byType = Constants.BEER_filter;
+    function filterMenu(byType) {
         switch (byType) {
             case Constants.BEER_filter:
             case Constants.WINE_filter:
@@ -37,24 +34,23 @@
                 console.log(`menu ${byType} not known.`);
                 break;
         }
-
     }
 
-    function filterByType(byType){
+    function filterByType(byType) {
         $("#menu-container").empty();
         initMenu(byType);
     }
 
     /** Initialize the menu with the information about the available beverages. */
-    function initMenu(byType) {
-        //const inventoryItems = if(byType == null) DatabaseAPI.Inventory.getInventory(inventoryName) else DatabaseAPI.Inventory.getInventory(inventoryName);
-        const inventoryItems = DatabaseAPI.Inventory.getInventory(inventoryName)
-        if(byType != null )
-            console.log(`menu ${byType}`);
+    function initMenu(filterByType) {
+        // TODO: Differentiate between bar and vip inventory
+        const inventoryItems =
+            DatabaseAPI.Inventory.getInventory(inventoryName);
+
         const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
-            let beverageNr = inventoryItem.beverageNr;
+            const beverageNr = inventoryItem.beverageNr;
 
             // Check if the beverage number is marked as "hide from menu". If so, skip it.
             if (hideFromMenuList.includes(beverageNr)) {
@@ -89,7 +85,7 @@
                 continue;
             }
 
-            displayBeverageInMenu(beverage, quantity);
+            displayBeverageInMenu(beverage, quantity, filterByType);
         }
     }
 
@@ -99,7 +95,7 @@
      * @param {object} beverage The beverage item.
      * @param {number} quantity Number of available beverages left.
      */
-    function displayBeverageInMenu(beverage, quantity) {
+    function displayBeverageInMenu(beverage, quantity, filterByType) {
         if (!beverage) {
             return;
         }
@@ -112,7 +108,10 @@
         var menuItemHTML = "";
         // Check type and displays the relevant information depending on the type.
         let type = beverage.category.toUpperCase();
-        if (containsAnyOf(type, Constants.BEER_CATEGORY)) {
+        if (
+            filterByType === Constants.BEER_filter &&
+            containsAnyOf(type, Constants.BEER_CATEGORY)
+        ) {
             // Beer or cider
             menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
                 <ul>
@@ -162,12 +161,16 @@
                 </span>
             </div>
             `;*/
-        } else
-        if (containsAnyOf(type, Constants.WINE_CATEGORY)) {
+        } else if (
+            filterByType === Constants.WINE_filter &&
+            containsAnyOf(type, Constants.WINE_CATEGORY)
+        ) {
             // Wine
             menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
                 <ul>
-                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
+                    <li class="menu-item-property menu-item-id hidden">${
+                        beverage.nr
+                    }</li>
                     <li>${beverage.name}</li>
                     <li>${extractYearOutOfDate(beverage.introduced)}</li>
                     <li>${beverage.category}</li>
@@ -211,8 +214,10 @@
                 </span>
             </div>
             `;*/
-        } else
-        if (containsAnyOf(type, Constants.DRINKS_CATEGORY)) {
+        } else if (
+            filterByType === Constants.DRINK_filter &&
+            containsAnyOf(type, Constants.DRINKS_CATEGORY)
+        ) {
             // Cocktails / Drinks / Mixed drinks
             menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
                     <ul>
@@ -220,7 +225,7 @@
                         <li>${beverage.name}</li>
                         <li>${beverage.category}</li>
                         <li>${beverage.alcoholstrength}</li>
-                        <li>${beverage.packaging}</li>                    
+                        <li>${beverage.packaging}</li>
                         <li>${beverage.priceinclvat}</li>
                     </ul>
                     <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
@@ -257,8 +262,10 @@
                 </span>
             </div>
             `; */
-        } else
-        if (containsAnyOf(type, Constants.WATER_CATEGORY)) {
+        } else if (
+            filterByType === Constants.WATER_filter &&
+            containsAnyOf(type, Constants.WATER_CATEGORY)
+        ) {
             // Water
             menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
                 <ul>
@@ -288,10 +295,9 @@
                 </span>
             </div>
             `;*/
-        }
-        else {
+        } else {
             console.log(
-                `MenuController.displayBeverageInMenu | Beverage with number '${beverage.nr}' has an unknown type '${beverage.category}'! Display some basic info that could be relevant...`
+                `MenuController.displayBeverageInMenu | Beverage with number '${beverage.nr}' has an unknown type '${beverage.category}' or there is an unknown filter '${filterByType}' set! Display some basic info that could be relevant...`
             );
             menuItemHTML = `
             <div class="menu-item menu-item-other ${optClassLowInStock}">
@@ -371,7 +377,6 @@
         return new Date(dateString).getFullYear();
     }
 
-    
     exports.MenuController = {};
     exports.MenuController.filterMenu = filterMenu;
     exports.MenuController.initMenu = initMenu;

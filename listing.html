@@ -1,94 +1,108 @@
+<!--
+File: listing.html
+
+DESCRIPTION
+
+Author: David Kopp
+-----
+Last Modified: Tuesday, 8th March 2022
+Modified By: David Kopp (mail@davidkopp.de>)
+-->
+
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Listing Items</title>
+        <!--Stylesheet-->
+        <link rel="stylesheet" href="style.css" />
+        <!--Font Awesome-->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listing Items</title>
-    <!--Stylesheet-->
-    <link rel="stylesheet" href="style.css" />
-    <!--Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="database/BeveragesDB.js"></script>
+        <script type="text/javascript" src="database/DBLoaded.js"></script>
+        <script type="text/javascript" src="database/Dictionary.js"></script>
+        <script type="text/javascript" src="database/DatabaseAPI.js"></script>
 
-    <script type="text/javascript" src="database/BeveragesDB.js"></script>
-    <script type="text/javascript" src="database/DBLoaded.js"></script>
-    <script type="text/javascript" src="database/Dictionary.js"></script>
-    <script type="text/javascript" src="database/DatabaseAPI.js"></script>
+        <script type="text/javascript" src="controllers/LanguageController.js"></script>
+        <script type="text/javascript" src="controllers/LoginController.js"></script>
+        <script type="text/javascript" src="controllers/MenuController.js"></script>
+    </head>
 
-    <script type="text/javascript" src="controllers/LanguageController.js"></script>
-    <script type="text/javascript" src="controllers/LoginController.js"></script>
-    <script type="text/javascript" src="controllers/MenuController.js"></script>
-
-
-</head>
-
-<body class="bg-color">
-    <div class="lang-flags">
-        <div class="flag">
-            <button><i class="fas fa-flag"></i></button>
-            <button><i class="fas fa-flag"></i></button>
-            <button><i class="fas fa-flag"></i></button>
-        </div>
-    </div>
-    <header>
-        <div class="logo">
-            <h1>Flying Dutchman</h1>
-        </div>
-        <div class="available-options">
-            <button>
-                <i class="fas fa-search bg-blue"></i>
-            </button>
-            <button>
-                <i class="fas fa-mobile-alt"></i>
-            </button>
-            <button>
-                <span>120000</span>
-            </button>
-            <button>
-                <i class="fas fa-dollar-sign bg-blue"></i>
-            </button>
-        </div>
-    </header>
-    <div class="filter-button">
-        <div class="text-right">
-            <button>Allergies</button>
-            <button>Price</button>
-            <button>Tannin</button>
-            <button>Alcohol%</button>
-        </div>
-    </div>
-    <div class="filter-wrapper">
-        <div class="filter-list">
-            <div class="thumbnail" onclick="filterMenu('beer')" >
-                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
-                    alt="">
-            </div>
-            <div class="thumbnail" onclick="filterMenu(Constants.WINE_filter)">
-                <img src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
-                    alt="">
-            </div>
-            <div class="thumbnail" onclick="filterMenu(Constants.DRINK_filter)">
-                <img src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
-                    alt="">
-            </div>
-            <div class="thumbnail" onclick="filterMenu(Constants.WATER_filter)">
-                <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="">
+    <body class="bg-color">
+        <div class="lang-flags">
+            <div class="flag">
+                <button><i class="fas fa-flag"></i></button>
+                <button><i class="fas fa-flag"></i></button>
+                <button><i class="fas fa-flag"></i></button>
             </div>
         </div>
-
-
-
-        <div class="filter-result">
-            <div class="list-item">
-                <div id="menu-container">
-
+        <header>
+            <div class="logo">
+                <h1>Flying Dutchman</h1>
+            </div>
+            <div class="available-options">
+                <button>
+                    <i class="fas fa-search bg-blue"></i>
+                </button>
+                <button>
+                    <i class="fas fa-mobile-alt"></i>
+                </button>
+                <button>
+                    <span>120000</span>
+                </button>
+                <button>
+                    <i class="fas fa-dollar-sign bg-blue"></i>
+                </button>
+            </div>
+        </header>
+        <div class="filter-button">
+            <div class="text-right">
+                <button>Allergies</button>
+                <button>Price</button>
+                <button>Tannin</button>
+                <button>Alcohol%</button>
+            </div>
+        </div>
+        <div class="filter-wrapper">
+            <div class="filter-list">
+                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.BEER_filter)">
+                    <img
+                        src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                        alt=""
+                    />
                 </div>
-                <!--<div class="item">
+                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.WINE_filter)">
+                    <img
+                        src="https://us.123rf.com/450wm/alexskp/alexskp2003/alexskp200300082/143499095-fresh-tasty-burger-isolated-on-white.jpg?ver=6"
+                        alt=""
+                    />
+                </div>
+                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
+                    <img
+                        src="https://thumbs.dreamstime.com/b/beer-mug-foamy-realistic-glass-cup-handle-alcohol-drink-icon-illustration-153478975.jpg"
+                        alt=""
+                    />
+                </div>
+                <div class="thumbnail" onclick="MenuController.filterMenu(Constants.WATER_filter)">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/c/c0/Red_Wine_Glass.jpg" alt="" />
+                </div>
+            </div>
+
+            <div class="filter-result">
+                <div class="list-item">
+                    <div id="menu-container"></div>
+                    <!--<div class="item">
                     <ul>
                         <li>Allergies</li>
                         <li>Price</li>
@@ -188,9 +202,8 @@
                     <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                         alt="">
                 </div>-->
+                </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>
