@@ -148,7 +148,7 @@
                     <li>${beverage.packaging}</li>
                     <li>${beverage.priceinclvat}</li>
                 </ul>
-                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                <img src="assets/images/placeholder_beer.png"
                     alt="">
             </div>`;
         } else if (
@@ -167,7 +167,7 @@
                     <li>${beverage.packaging}</li>
                     <li>${beverage.priceinclvat}</li>
                 </ul>
-                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                <img src="assets/images/placeholder_wine.png"
                     alt="">
             </div>`;
         } else if (
@@ -184,7 +184,7 @@
                         <li>${beverage.packaging}</li>
                         <li>${beverage.priceinclvat}</li>
                     </ul>
-                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                    <img src="assets/images/placeholder_drink.png"
                         alt="">
                 </div>`;
         } else if (
@@ -199,7 +199,7 @@
                     <li>${beverage.category}</li>
                     <li>${beverage.priceinclvat}</li>
                 </ul>
-                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                <img src="assets/images/placeholder_water.png"
                     alt="">
             </div>`;
         } else if (!filterByType) {
@@ -212,7 +212,7 @@
                     <li>${beverage.alcoholstrength}</li>
                     <li>${beverage.priceinclvat}</li>
                 </ul>
-                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                <img src="assets/images/placeholder_others.png"
                     alt="">
             </div>`;
         }
