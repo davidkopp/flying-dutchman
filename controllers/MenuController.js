@@ -11,16 +11,16 @@
 
 (function ($, exports) {
     const inventoryName = Constants.INVENTORIES.BAR;
+    let lastUsedFilter;
 
     $(document).ready(function () {
-        //filterMenu(Constants.BEER_filter);
         initMenu();
     });
 
     /**
-     * Filtering the item according to type
+     * Filter the beverages according to the type and show them in the menu.
      *
-     * @param {string} byType The name of type
+     * @param {string} byType The name of the filter type.
      */
     function filterMenu(byType) {
         switch (byType) {
@@ -28,17 +28,35 @@
             case Constants.WINE_filter:
             case Constants.DRINK_filter:
             case Constants.WATER_filter:
-                $("#menu-container").empty();
                 initMenu(byType);
                 break;
             default:
-                console.log(`menu ${byType} not known.`);
+                console.log(
+                    `MenuController | Beverage type '${byType}' is unknown.`
+                );
                 break;
         }
     }
 
-    /** Initialize the menu with the information about the available beverages. */
+    /**
+     * Initialize the menu with the information about the available beverages.
+     * With the optional filter argument it's possible to only show one specific type.
+     *
+     * @param {string} filterByType The optional filter.
+     */
     function initMenu(filterByType) {
+        console.log(
+            "MenuController | Start initializing the menu " +
+                (filterByType
+                    ? "with the filter: " + filterByType
+                    : "without a filter.")
+        );
+
+        // At first remove the currently shown menu.
+        $("#menu-container").empty();
+
+        lastUsedFilter = filterByType;
+
         // TODO: Differentiate between bar and vip inventory
         const inventoryItems =
             DatabaseAPI.Inventory.getInventory(inventoryName);
@@ -63,7 +81,7 @@
             }
 
             // Check if we have enough beverages left in the inventory. If not, skip it.
-            let quantity = inventoryItem.quantity;
+            const quantity = inventoryItem.quantity;
             if (!quantity || quantity < 1) {
                 console.log(
                     `MenuController.initMenu | The item in the inventory '${inventoryName}' with the beverage number '${beverageNr}' doesn't have enough quanities left in the inventory (${quantity}). Don't show it in the menu.`
@@ -71,7 +89,7 @@
                 continue;
             }
 
-            let beverage = DatabaseAPI.Beverages.findBeverageByNr(beverageNr);
+            const beverage = DatabaseAPI.Beverages.findBeverageByNr(beverageNr);
             // Check if the beverage exists in the beverage db.
             if (!beverage) {
                 console.log(
@@ -80,11 +98,6 @@
                 continue;
             }
 
-            /*if(typeof filterByType !== "undefined") {
-
-            } else {
-
-            }*/
             displayBeverageInMenu(beverage, quantity, filterByType);
         }
     }
@@ -94,30 +107,29 @@
      *
      * @param {object} beverage The beverage item.
      * @param {number} quantity Number of available beverages left.
+     * @param {string} filterByType The optional type filter.
      */
     function displayBeverageInMenu(beverage, quantity, filterByType) {
         if (!beverage) {
             return;
         }
 
-        let optClassLowInStock;
+        let optHtmlClassLowInStock;
         if (quantity < Constants.LOW_STOCK_NUMBER) {
-            optClassLowInStock = "menu-item-is-low-in-stock";
+            optHtmlClassLowInStock = "menu-item-is-low-in-stock";
         }
 
         var menuItemHTML = "";
 
         // Check type and displays the relevant information depending on the type.
         // If a filter is defined, use the filter and check if the type matches the filter.
-        let type = beverage.category.toUpperCase();
-        console.log("type: " + type);
+        const type = beverage.category.toUpperCase();
         if (
             containsAnyOf(type, Constants.BEER_CATEGORY) &&
             (!filterByType || filterByType === Constants.BEER_filter)
         ) {
-            console.log("BEER");
             // Beer or cider
-            menuItemHTML = `<div class="item  ${optClassLowInStock}">
+            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
                 <ul>
                     <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
                     <li>${beverage.name}</li>
@@ -136,7 +148,7 @@
             (!filterByType || filterByType === Constants.WINE_filter)
         ) {
             // Wine
-            menuItemHTML = `<div class="item  ${optClassLowInStock}">
+            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
                 <ul>
                     <li class="menu-item-property menu-item-id hidden">${
                         beverage.nr
@@ -155,7 +167,7 @@
             (!filterByType || filterByType === Constants.DRINK_filter)
         ) {
             // Cocktails / Drinks / Mixed drinks
-            menuItemHTML = `<div class="item  ${optClassLowInStock}">
+            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
                     <ul>
                         <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
                         <li>${beverage.name}</li>
@@ -172,7 +184,7 @@
             (!filterByType || filterByType === Constants.WATER_filter)
         ) {
             // Water
-            menuItemHTML = `<div class="item  ${optClassLowInStock}">
+            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
                 <ul>
                     <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
                     <li>${beverage.name}</li>
@@ -183,7 +195,8 @@
                     alt="">
             </div>`;
         } else if (!filterByType) {
-            menuItemHTML = `<div class="item  ${optClassLowInStock}">
+            // Unknown type and no filter is set → Show some basic information of the beverage
+            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
                 <ul>
                     <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
                     <li>${beverage.name}</li>
@@ -194,41 +207,22 @@
                 <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
                     alt="">
             </div>`;
-            /*
-            menuItemHTML = `
-            <div class="menu-item menu-item-other ${optClassLowInStock}">
-                <span class="menu-item-property menu-item-id hidden">
-                ${beverage.nr}
-                </span>
-                <span class="menu-item-property menu-item-name">
-                ${beverage.name}
-                </span>
-                <br/>
-                <span class="menu-item-property menu-item-type">
-                ${beverage.category}
-                </span>
-                <br/>
-                <span class="menu-item-property menu-item-alcoholstrength">
-                ${beverage.alcoholstrength}
-                </span>
-                <br/>
-                <span class="menu-item-property menu-item-price">
-                ${beverage.priceinclvat}
-                </span>
-            </div>
-            `;
-            */
+        } else {
+            // Unknown type and a filter is set → should not happen
+            console.log(
+                `MenuController | Unknown type '${type}' given. Not able to match it with the given filter '${filterByType}'.`
+            );
         }
+
         $("#menu-container").append(menuItemHTML);
     }
 
     /**
-     * Refreshes the menu in the view by removing all child notes from the menu
-     * container and reinitializes it.
+     * Refreshes the menu in the view by reinitializes it. It uses the same
+     * filter as before (could be `undefined`).
      */
     function refreshMenu() {
-        $("#menu-container").empty();
-        initMenu();
+        initMenu(lastUsedFilter);
     }
 
     /**
