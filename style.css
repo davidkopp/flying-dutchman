@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -19,48 +19,6 @@
 
 .hidden {
     display: none;
-}
-
-/*=============Language Switcher================*/
-
-.language-button {
-    width: 10px;
-}
-
-/*=============Menu Page================*/
-
-.menu-item {
-    max-width: 300px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.menu-item-beer {
-    border: solid 3px brown;
-}
-
-.menu-item-wine {
-    border: solid 3px violet;
-}
-
-.menu-item-drink {
-    border: solid 3px gold;
-}
-
-.menu-item-water {
-    border: solid 3px aqua;
-}
-
-.menu-item-other {
-    border: solid 3px red;
-}
-
-.menu-item-name {
-    font-weight: bold;
-}
-
-.menu-item-is-low-in-stock {
-    background-color: lightgray;
 }
 
 /*=============Landing Page================*/
@@ -124,21 +82,25 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 }
 */
 
+/*=============Language Switcher================*/
+
 .lang {
     position: absolute;
-    top: 20px;
-    right: 40px;
+    top: 15px;
+    right: 15px;
 }
-#menu_wrapper .lang {
-    top: 70px;
-    right: 20px;
+.lang-flags {
+    display: flex;
+    float: right;
 }
-.lang button,
-.lang-flag button {
-    display: inline-block;
-    padding: 5px 20px;
-    border: none;
+.language-button {
+    width: 35px;
+    margin-left: 10px;
+    cursor: pointer;
 }
+
+/* ??? */
+
 .banner .overlay .content .routes {
     margin: 15px 0;
 }
@@ -227,17 +189,8 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     margin-top: 20px;
 }
 
-/*==============Menu==============*/
-#menu_wrapper {
-    background-color: #033d66;
-}
-#menu_wrapper h1 {
-    padding: 10px 10px;
-}
-#menu_wrapper .filter {
-    justify-content: center;
-    margin-bottom: 20px;
-}
+/*=============Menu Page================*/
+
 #menu-container {
     display: flex;
     flex-wrap: wrap;
@@ -247,31 +200,12 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     justify-content: center;
 }
 
-.menu-item {
-    max-width: 300px;
-    width: 100%;
-    color: #f2f2f2;
+.menu-item-is-low-in-stock {
+    /* TODO: Change the look of menu items that are low in stock */
 }
 
-.order-placement {
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    padding-left: 10px;
-    margin-bottom: 40px;
-}
-.order-container {
-    width: 100%;
-    border: 1px solid #e2e2e2;
-    min-height: 100px;
-}
-.order-action {
-    text-align: right;
-}
-.order-action .material-icons {
-    cursor: pointer;
-}
 /*============VIP_Dashboard=============*/
+
 .sub_header {
     display: flex;
     justify-content: space-between;
@@ -302,19 +236,17 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     justify-content: center;
     align-items: center;
 }
-.items-order-list .item .thumbnail,
-.drag-drop-wrapper .thumbnail,
-.filter-wrapper .thumbnail {
+.items-order-list .item .filter-icon,
+.drag-drop-wrapper .filter-icon,
+.filter-wrapper .filter-icon {
     width: 75px;
     height: 75px;
-    border: 2px solid #e2e2e2;
-    border-radius: 10px;
-    margin: 5px;
+    margin: 5px auto;
     cursor: pointer;
 }
-.items-order-list .item .thumbnail img,
-.drag-drop-wrapper .thumbnail img,
-.filter-wrapper .thumbnail img {
+.items-order-list .item .filter-icon img,
+.drag-drop-wrapper .filter-icon img,
+.filter-wrapper .filter-icon img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -375,11 +307,13 @@ footer .footer-align .logout_btn {
 .drag-drop {
     min-height: 40vh;
 }
+/*
 .drag-drop-area .thumbnail {
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
 }
+*/
 .btn-wrapper {
     display: flex;
     justify-content: space-between;
@@ -396,7 +330,7 @@ footer .footer-align .logout_btn {
     margin: 5px;
     padding: 5px;
 }
-.logout .logout_btn {
+*/ .logout .logout_btn {
     padding: 5px;
 }
 .bg-color {
@@ -404,21 +338,12 @@ footer .footer-align .logout_btn {
 }
 
 /*=======================
-Listing Page
+Menu Page
 ========================*/
-.lang-flags {
-    text-align: right;
-    padding: 10px;
-}
-.flag button {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #f2f2f2;
-}
+
 header {
     background-color: rgba(35, 81, 114, 255);
-    padding: 5px;
+    padding: 60px 15px 15px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -485,7 +410,7 @@ header .available-options button span {
     flex: 0 0 15%;
 }
 .filter-wrapper .filter-result {
-    margin-left: 20px;
+    margin-left: -20px;
     flex: 0 0 85%;
 }
 .filter-wrapper .list-item {
@@ -496,7 +421,7 @@ header .available-options button span {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    padding: 17px;
     border: 2px solid #51cfe6;
     width: 240px;
     height: 150px;
@@ -686,9 +611,6 @@ Staff dashboard
     cursor: pointer;
 }
 
-.overlay-button {
-}
-
 /*=======================
 VIP dashboard
 ========================*/
@@ -726,4 +648,39 @@ body {
 #info-box-message {
     font-size: 22px;
     text-align: center;
+}
+
+/*=======================
+Animations
+========================*/
+
+.language-button:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
+}
+
+.filter-icon > img:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
+}
+
+@-webkit-keyframes shine {
+    from {
+        -webkit-mask-position: 150%;
+    }
+    to {
+        -webkit-mask-position: -50%;
+    }
 }

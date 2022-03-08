@@ -3,22 +3,33 @@ File: menu.html
 
 Menu page of the Flying Dutchman.
 
-Author: David Kopp
+Author: Abdullah Abdullah
 -----
-Last Modified: Sunday, 6th March 2022
+Last Modified: Tuesday, 8th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title data-lang="page-title">Flying Dutchman</title>
 
         <!-- Prevent browser from requesting a favicon -->
         <link rel="icon" href="data:;base64,=" />
+        <!--Stylesheet-->
         <link rel="stylesheet" href="style.css" />
+        <!--Font Awesome-->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+
         <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
 
         <script type="text/javascript" src="database/BeveragesDB.js"></script>
@@ -31,29 +42,93 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/MenuController.js"></script>
     </head>
 
-    <body>
-        <h1 id="caption" data-lang="caption"></h1>
+    <body class="bg-color">
+        <div class="lang">
+            <div class="lang-flags">
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                    <img src="assets/images/icon_england_flag.png" alt="" class="language-button" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="language-button" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="language-button" />
+                </div>
+            </div>
+        </div>
 
-        <button onclick="changeLang('en')">
-            <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-            <span data-lang="language-switcher-text-english">English</span>
-        </button>
-        <button onclick="changeLang('de')">
-            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-            <span data-lang="language-switcher-text-german">German</span>
-        </button>
-        <button onclick="changeLang('pt')">
-            <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-            <span data-lang="language-switcher-text-portuguese">Portuguese</span>
-        </button>
-        <br />
-        <br />
+        <header>
+            <div class="logo">
+                <h1>Flying Dutchman</h1>
+            </div>
+            <div class="available-options">
+                <button>
+                    <i class="fas fa-search bg-blue"></i>
+                </button>
+                <button>
+                    <i class="fas fa-mobile-alt"></i>
+                </button>
+                <button>
+                    <span>120000</span>
+                </button>
+                <button>
+                    <i class="fas fa-dollar-sign bg-blue"></i>
+                </button>
+            </div>
+        </header>
+        <div class="content">
+            <div class="filter-button">
+                <div class="text-right">
+                    <button>Allergies</button>
+                    <button>Price</button>
+                    <button>Tannin</button>
+                    <button>Alcohol%</button>
+                </div>
+            </div>
 
-        <div id="menu-container"></div>
+            <div class="filter-wrapper">
+                <div class="filter-list">
+                    <div class="filter-icon" onclick="MenuController.filterMenu(Constants.BEER_filter)" title="Beer">
+                        <img
+                            src="assets/images/icon_beer.png"
+                            data-src="assets/images/icon_beer.png"
+                            data-hover="assets/images/icon_beer_active.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="filter-icon" title="Wine" onclick="MenuController.filterMenu(Constants.WINE_filter)">
+                        <img
+                            src="assets/images/icon_wine.png"
+                            data-src="assets/images/icon_wine.png"
+                            data-hover="assets/images/icon_wine_active.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="filter-icon" title="Drink" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
+                        <img
+                            src="assets/images/icon_coffee.png"
+                            data-src="assets/images/icon_coffee.png"
+                            data-hover="assets/images/icon_coffee_active.png"
+                            alt=""
+                        />
+                    </div>
+                    <div class="filter-icon" title="Water" onclick="MenuController.filterMenu(Constants.WATER_filter)">
+                        <img
+                            src="assets/images/icon_glass.png"
+                            data-src="assets/images/icon_glass.png"
+                            data-hover="assets/images/icon_glass_active.png"
+                            alt=""
+                        />
+                    </div>
+                </div>
 
-        <br />
-        <br />
-        <a href="login.html" data-lang="link-to-login-page"></a>
+                <div class="filter-result">
+                    <div class="list-item">
+                        <div id="menu-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <footer>
             <div class="footer-align">
                 <div id="logged-in-user-container">

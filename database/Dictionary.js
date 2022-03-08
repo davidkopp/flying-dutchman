@@ -22,6 +22,11 @@ const Constants = {
     PAGE_LOGIN: "login",
     PAGE_MENU: "menu",
 
+    BEER_filter: "beer",
+    WINE_filter: "wine",
+    DRINK_filter: "drink",
+    WATER_filter: "water",
+
     BEER_CATEGORY: ["ÖL", "CIDER"],
     WINE_CATEGORY: ["MOUSSERANDE", "VIN"],
     DRINKS_CATEGORY: [
