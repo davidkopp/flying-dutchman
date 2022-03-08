@@ -483,10 +483,12 @@ header .available-options button span {
 }
 .filter-wrapper .filter-list {
     flex: 0 0 15%;
+    text-align: -webkit-center;
 }
 .filter-wrapper .filter-result {
-    margin-left: 20px;
+    margin-left: 30px;
     flex: 0 0 85%;
+    text-align: -webkit-center;
 }
 .filter-wrapper .list-item {
     display: flex;
@@ -686,8 +688,6 @@ Staff dashboard
     cursor: pointer;
 }
 
-.overlay-button {
-}
 
 /*=======================
 VIP dashboard

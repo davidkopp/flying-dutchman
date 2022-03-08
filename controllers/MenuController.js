@@ -13,13 +13,44 @@
     const inventoryName = Constants.INVENTORIES.BAR;
 
     $(document).ready(function () {
+        //filterMenu(Constants.BEER_filter);
         initMenu();
     });
 
+
+    /**
+     * Filtering the item according to type
+     *
+     * @param {string} byType the name of type
+     */
+    function filterMenu()
+    {
+        var byType = Constants.BEER_filter;
+        switch (byType) {
+            case Constants.BEER_filter:
+            case Constants.WINE_filter:
+            case Constants.DRINK_filter:
+            case Constants.WATER_filter:
+                filterByType(byType);
+                break;
+            default:
+                console.log(`menu ${byType} not known.`);
+                break;
+        }
+
+    }
+
+    function filterByType(byType){
+        $("#menu-container").empty();
+        initMenu(byType);
+    }
+
     /** Initialize the menu with the information about the available beverages. */
-    function initMenu() {
-        const inventoryItems =
-            DatabaseAPI.Inventory.getInventory(inventoryName);
+    function initMenu(byType) {
+        //const inventoryItems = if(byType == null) DatabaseAPI.Inventory.getInventory(inventoryName) else DatabaseAPI.Inventory.getInventory(inventoryName);
+        const inventoryItems = DatabaseAPI.Inventory.getInventory(inventoryName)
+        if(byType != null )
+            console.log(`menu ${byType}`);
         const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
@@ -83,7 +114,21 @@
         let type = beverage.category.toUpperCase();
         if (containsAnyOf(type, Constants.BEER_CATEGORY)) {
             // Beer or cider
-            menuItemHTML = `
+            menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
+                <ul>
+                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
+                    <li>${beverage.name}</li>
+                    <li>${beverage.producer}</li>
+                    <li>${beverage.countryoforiginlandname}</li>
+                    <li>${beverage.category}</li>
+                    <li>${beverage.alcoholstrength}</li>
+                    <li>${beverage.packaging}</li>
+                    <li>${beverage.priceinclvat}</li>
+                </ul>
+                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                    alt="">
+            </div>`;
+            /*menuItemHTML = `
             <div class="menu-item menu-item-beer ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
@@ -116,10 +161,23 @@
                 ${beverage.priceinclvat}
                 </span>
             </div>
-            `;
-        } else if (containsAnyOf(type, Constants.WINE_CATEGORY)) {
+            `;*/
+        } else
+        if (containsAnyOf(type, Constants.WINE_CATEGORY)) {
             // Wine
-            menuItemHTML = `
+            menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
+                <ul>
+                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
+                    <li>${beverage.name}</li>
+                    <li>${extractYearOutOfDate(beverage.introduced)}</li>
+                    <li>${beverage.category}</li>
+                    <li>${beverage.packaging}</li>
+                    <li>${beverage.priceinclvat}</li>
+                </ul>
+                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                    alt="">
+            </div>`;
+            /*menuItemHTML = `
             <div class="menu-item menu-item-wine ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
@@ -152,9 +210,23 @@
                 ${beverage.priceinclvat}
                 </span>
             </div>
-            `;
-        } else if (containsAnyOf(type, Constants.DRINKS_CATEGORY)) {
+            `;*/
+        } else
+        if (containsAnyOf(type, Constants.DRINKS_CATEGORY)) {
             // Cocktails / Drinks / Mixed drinks
+            menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
+                    <ul>
+                        <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
+                        <li>${beverage.name}</li>
+                        <li>${beverage.category}</li>
+                        <li>${beverage.alcoholstrength}</li>
+                        <li>${beverage.packaging}</li>                    
+                        <li>${beverage.priceinclvat}</li>
+                    </ul>
+                    <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                        alt="">
+                </div>`;
+            /*
             menuItemHTML = `
             <div class="menu-item menu-item-drink ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
@@ -184,10 +256,21 @@
                 ${beverage.priceinclvat}
                 </span>
             </div>
-            `;
-        } else if (containsAnyOf(type, Constants.WATER_CATEGORY)) {
+            `; */
+        } else
+        if (containsAnyOf(type, Constants.WATER_CATEGORY)) {
             // Water
-            menuItemHTML = `
+            menuItemHTML = `<div class="item menu-item ${optClassLowInStock}">
+                <ul>
+                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
+                    <li>${beverage.name}</li>
+                    <li>${beverage.category}</li>
+                    <li>${beverage.priceinclvat}</li>
+                </ul>
+                <img src="https://purepng.com/public/uploads/large/purepng.com-alcohol-bottlebottle-food-wine-object-alcohol-beverage-cocktail-liquor-whiskey-drunk-941524624582wlel2.png"
+                    alt="">
+            </div>`;
+            /*menuItemHTML = `
             <div class="menu-item menu-item-water ${optClassLowInStock}">
                 <span class="menu-item-property menu-item-id hidden">
                 ${beverage.nr}
@@ -204,8 +287,9 @@
                 ${beverage.priceinclvat}
                 </span>
             </div>
-            `;
-        } else {
+            `;*/
+        }
+        else {
             console.log(
                 `MenuController.displayBeverageInMenu | Beverage with number '${beverage.nr}' has an unknown type '${beverage.category}'! Display some basic info that could be relevant...`
             );
@@ -287,7 +371,9 @@
         return new Date(dateString).getFullYear();
     }
 
+    
     exports.MenuController = {};
+    exports.MenuController.filterMenu = filterMenu;
     exports.MenuController.initMenu = initMenu;
     exports.MenuController.showBeverageInMenu = showBeverageInMenu;
     exports.MenuController.hideBeverageFromMenu = hideBeverageFromMenu;

@@ -35,6 +35,7 @@ describe("MenuController", function () {
     });
 
     it("should initialize the menu when DOM is ready", function () {
+        MenuController.filterMenu();
         MenuController.initMenu();
 
         const htmlMenuItems = $(".menu-item");
