@@ -76,35 +76,29 @@ const Dictionary = {
     en: {
         // Common text strings (relevant for multiple pages)
         _: {
-            "language-switcher-text-english": "English",
-            "language-switcher-text-german": "German",
-            "language-switcher-text-portuguese": "Portuguese",
-            "link-to-login-page": "Login",
             "logged-in-user-label": "Logged in user:",
         },
         // Text strings for the page 'index'
         index: {
-            "page-title": "Flying Dutchman",
+            "page-title": "Flying Dutchman - Welcome",
             "header-page-title": "Welcome!",
-            "link-to-menu-page": "Menu",
+            "link-to-login-page": "Login",
         },
         // Text strings for the page 'menu'
         menu: {
             "page-title": "Flying Dutchman - Menu",
             "header-page-title": "Menu",
             "caption": "Menu",
-            "order": "Order",
-            "pay": "Pay",
         },
         // Text strings for the page 'login'
         login: {
             "page-title": "Flying Dutchman - Login",
-            "header-page-title": "Login",
             "caption": "Login",
             "username-label": "Username",
             "password-label": "Password",
             "login-form-submit": "Login",
         },
+        // Text strings for the page 'staff dashboard'
         staff_dashboard: {
             "page-title": "Flying Dutchman - Staff Dashboard",
             "header-page-title": "Staff Dashboard",
@@ -148,10 +142,10 @@ const Dictionary = {
             },
             "order-details-notes-label": "Notes:",
         },
+        // Text strings for the page 'vip dashboard'
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
             "header-page-title": "VIP Dashboard",
-            "heading": "Flying Dutchman",
             "table-number-heading": "Table Number",
             "vip-welcome-text": "Welcome",
             "vip-account-balance-text": "Balance =",
@@ -162,6 +156,7 @@ const Dictionary = {
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
         },
+        // Text strings for the page 'manager dashboard'
         manager_dashboard: {
             "page-title": "Flying Dutchman - Manager Dashboard",
             "header-page-title": "Manager Dashboard",
@@ -178,6 +173,7 @@ const Dictionary = {
                 false: "Show",
             },
         },
+        // Text strings for the SpecRunner (unit tests)
         SpecRunner: {
             "unit-test": "english",
         },
@@ -186,23 +182,19 @@ const Dictionary = {
     de: {
         // Common text strings (relevant for multiple pages)
         _: {
-            "language-switcher-text-english": "Englisch",
-            "language-switcher-text-german": "Deutsch",
-            "language-switcher-text-portuguese": "Portugiesisch",
-            "link-to-login-page": "Anmelden",
+            "logged-in-user-label": "Angemeldet als:",
         },
         // Text strings for the page 'index'
         index: {
-            "page-title": "Flying Dutchman - Englisch",
-            "caption": "Willkommen zum Flying Dutchman",
-            "link-to-menu-page": "Menü",
+            "page-title": "Flying Dutchman - Willkommen",
+            "header-page-title": "Willkommen!",
+            "link-to-login-page": "Anmelden",
         },
         // Text strings for the page 'menu'
         menu: {
             "page-title": "Flying Dutchman - Menü",
+            "header-page-title": "Menü",
             "caption": "Menü",
-            "order": "Bestellung",
-            "pay": "Zahlung",
         },
         // Text strings for the page 'login'
         login: {
@@ -212,11 +204,69 @@ const Dictionary = {
             "password-label": "Passwort",
             "login-form-submit": "Anmelden",
         },
+        // Text strings for the page 'staff dashboard'
         staff_dashboard: {
-            "page-title": "Flying Dutchman - Mitarbeitenden Dashboard",
+            "page-title": "Flying Dutchman - Intern",
+            "header-page-title": "Dashboard für Angestellte",
             "orders-overview-title": "Bestellungen",
+            "orders-overview-table-label": "Tisch",
+            "order-details-id-label": "Bestellungnummer:",
+            "order-details-inventory-label": "Lager:",
+            "create-order-button-text": "Neue Bestellung",
+            "inventory-overview-title": "Lager",
+            "restock-button-text": "Auffüllen",
+            "orders-list-total-number-label": "Anzahl an Bestellungen:",
+            "inventory-notifications-total-number-label": "Geringe Anzahl:",
+            "order-details-heading-with-table-number": "Bestellungen für Tisch",
+            "create-order-items-label": "Erstelle eine neue Bestellung:",
+            "order-details-items-label": "Artikel:",
+            "inventory-details-label": "Lager:",
+            "inventory-details-items-running-low-label":
+                "Artikel mit geringem Bestand:",
+            "create-order-title": "Erstelle eine neue Bestellung",
+            "create-order-table-label": "Tisch:",
+            "create-order-add-item-label": "Artikel:",
+            "create-order-notes-label": "Notiz:",
+            "create-order-inventory-label": "Lager:",
+            "create-order-inventory-label-bar": "Bar",
+            "create-order-inventory-label-vip": "VIP",
+            "create-order-form-submit": "Neue Bestellung",
+            "details-overlay-delete-order-button": "Bestellung löschen",
+            "details-overlay-edit-order-button": "Bestellung bearbeiten",
+            "add-more-items-button": "Mehr Artikel",
+            "order-inventory-dynamic": {
+                [Constants.INVENTORIES.BAR]: "Bar",
+                [Constants.INVENTORIES.VIP]: "VIP Kühlschrank",
+            },
+            "order-list-order-number": "Bestellung",
+            "order-list-status": "Status",
+            "order-list-items": "Artikel",
+            "order-list-notes": "Notizen",
+            "order-list-actions": "Aktionen",
+            "order-list-status-dynamic": {
+                true: "erledigt",
+                false: "tbd.",
+            },
+            "order-details-notes-label": "Notizen:",
         },
+        // Text strings for the page 'vip dashboard'
+        vip_dashboard: {
+            "page-title": "Flying Dutchman - VIP Dashboard",
+            "header-page-title": "VIP Dashboard",
+            "table-number-heading": "Tischnummer",
+            "vip-welcome-text": "Willkommen",
+            "vip-account-balance-text": "Kontostand =",
+            "place-order-button": "Bestellen",
+            "menu-heading": "Menü",
+            "specials-heading": "VIP Spezialitäten",
+            "waiter-call-button": "Rufe Kellner*in",
+            "pay-bill-button": "Bezahlen",
+            "info-box-title": "Info",
+        },
+        // Text strings for the page 'manager dashboard'
         manager_dashboard: {
+            "page-title": "Flying Dutchman - Manager Dashboard",
+            "header-page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Kühlschrank",
@@ -227,9 +277,10 @@ const Dictionary = {
             },
             "beverage-status-button-dynamic": {
                 true: "Entfernen",
-                false: "Aktivieren",
+                false: "Anzeigen",
             },
         },
+        // Text strings for the SpecRunner (unit tests)
         SpecRunner: {
             "unit-test": "german",
         },
