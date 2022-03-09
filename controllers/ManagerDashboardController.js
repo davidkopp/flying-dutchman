@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Wednesday, 9th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController */
@@ -135,7 +135,8 @@
 
         collector.forEach((obj) => {
             htmlTable += `<tr>
-                <td>${obj.inventoryName}</td>
+                <td ${Constants.DATA_LANG_DYNAMIC_KEY}="inventory-name-dynamic"
+                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${obj.inventoryName}></td>
                 <td>${obj.quantity}</td>
                 <td>
                     <input type="number" id="refill-beverages-input-${obj.inventoryName}-${obj.beverageNr}" name="refill-beverages-input" class="refill-beverages-input" />
@@ -146,8 +147,10 @@
         });
         htmlTable += "</table>";
 
-        $("#quantity").empty();
-        $("#quantity").append(htmlTable);
+        $("#quantity").html(htmlTable);
+
+        // Refresh all text strings
+        LanguageController.refreshTextStrings();
     }
 
     /**

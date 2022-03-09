@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Wednesday, 9th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
@@ -427,8 +427,17 @@
             return;
         }
 
+        // Inventory
+        // TODO: Duplicated code
+        const orderInventoryHTML = `
+            <span
+                ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
+                ${Constants.DATA_LANG_DYNAMIC_VALUE}=${inventoryName}
+                class="overlay-details-value">
+            </span>`;
+
         // Add inventory name
-        $("#inventory-details-inventory-name").html(inventoryName);
+        $("#inventory-details-inventory-name").html(orderInventoryHTML);
 
         // Add details of items that are running low
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
