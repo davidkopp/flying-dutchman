@@ -23,36 +23,43 @@
 
 /*=============Header================*/
 
-header .toolbar {
+header .header-bar {
     background-color: rgba(35, 81, 114, 255);
     padding: 0 15px;
-    display: flex;
     align-items: center;
-    justify-content: space-between;
     position: relative;
     top: 65px;
-    flex-wrap: wrap;
+    height: 105px;
+}
+header .header-bar:after {
+    clear: both;
+}
+header .header-bar-column {
+    float: left;
+    padding-top: 20px;
 }
 header .logo {
     position: relative;
     left: 30px;
-    margin: 5px 0;
-    min-width: 20vw;
+    width: 25%;
 }
 header .logo img {
-    height: 100px;
-    width: auto;
+    height: 80px;
 }
 header #header-page-title {
     color: #fff;
     font-size: 40px;
     font-weight: 700;
+    width: 50%;
+    text-align: center;
 }
 header .available-options {
-    display: inline-flex;
-    min-width: 20vw;
+    display: flex;
+    justify-content: flex-end;
+    width: 25%;
 }
 header .available-options button {
+    vertical-align: middle;
     border: none;
     background-color: transparent;
     margin: 0 10px;
