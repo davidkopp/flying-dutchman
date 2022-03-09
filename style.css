@@ -816,6 +816,23 @@ VIP dashboard
 }
 
 /*=======================
+Manager Dashboard
+========================*/
+
+#manager-dashboard {
+    color: white;
+}
+
+#manager-dashboard h3 {
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+#manager-dashboard h3:hover {
+    text-decoration: underline;
+}
+
+/*=======================
 Animations
 ========================*/
 
