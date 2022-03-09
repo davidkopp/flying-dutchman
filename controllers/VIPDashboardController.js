@@ -68,7 +68,8 @@
             $("#vip-name").html(
                 userDetails.first_name + " " + userDetails.last_name
             );
-            $("#vip-account-balance").html(userDetails.creditSEK);
+            // TODO: Put the currency somewhere else.
+            $("#vip-account-balance").html(userDetails.creditSEK + " SEK");
         }
     }
 

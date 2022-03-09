@@ -65,7 +65,6 @@ header .available-options button {
     margin: 0 10px;
     font-size: 22px;
     cursor: pointer;
-    margin-left: auto;
     margin-right: 0;
     padding-left: 15px;
 }
@@ -88,6 +87,7 @@ header .available-options button span {
     padding: 10px 15px;
     line-height: 40px;
     font-weight: 500;
+    min-width: 150px;
 }
 header .available-options button img {
     height: 60px;
