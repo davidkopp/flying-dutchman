@@ -86,7 +86,6 @@ const Dictionary = {
         index: {
             "page-title": "Flying Dutchman",
             "header-page-title": "Welcome!",
-            "caption": "Welcome to Flying Dutchman",
             "link-to-menu-page": "Menu",
         },
         // Text strings for the page 'menu'

@@ -96,11 +96,13 @@
             $("#logged-in-user").text(loggedInUserData.username);
             $("#logged-in-user-container").show();
             $("#logout-button").show();
+            $("#login-button").hide();
         } else {
             // No user is currently logged in → don't show info about any user.
             $("#logged-in-user").text("");
             $("#logged-in-user-container").hide();
             $("#logout-button").hide();
+            $("#login-button").show();
         }
     }
 

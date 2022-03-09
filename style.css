@@ -62,7 +62,8 @@ header .available-options button {
     margin-right: 0;
     padding-left: 15px;
 }
-header .available-options button i {
+header .available-options button i,
+header .available-options button a {
     height: 60px;
     width: 60px;
     line-height: 60px;
@@ -110,6 +111,8 @@ header .available-options button img {
     -webkit-mask-size: 200%;
     animation: shine 2s infinite;
 }
+
+/*===================Body================*/
 
 body {
     background-color: #033d66;
@@ -166,7 +169,28 @@ footer .footer-align .logout_btn {
     cursor: pointer;
 }*/
 
-/*=============Landing Page================*/
+/*===================COMMON DEFINITIONS================*/
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 100%;
+}
+
+/*=============Landing Page / Home Page================*/
+
+#home-login-button {
+    cursor: pointer;
+}
+
+#home-login-button img {
+    width: 15vw;
+    height: auto;
+}
+
+/*
+TODO: Are these definitions relevant? They are currently not used in any HTML file.
 .align {
     display: flex;
     justify-content: space-between;
@@ -193,9 +217,6 @@ footer .footer-align .logout_btn {
     color: #000;
     text-decoration: none;
 }
-
-/*
-TODO: Are these definitions relevant? They are currently not used in any HTML file.
 
 .banner {
     background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
@@ -254,14 +275,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     min-width: unset;
 }
 
-/*===================Login================*/
-.login_wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-    width: 100%;
-}
 .login {
     max-width: 400px;
     width: 100%;
