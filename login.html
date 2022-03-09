@@ -5,7 +5,7 @@ Login page for the staff and VIP members.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Tuesday, 8th March 2022
+Last Modified: Wednesday, 9th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -32,51 +32,59 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <title>Log into the Flying Dutchman</title>
     </head>
     <body>
-        <div class="lang-container">
-            <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
-                <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+        <header>
+            <div class="lang-container">
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
+                </div>
             </div>
-            <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
-                <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+            <div class="toolbar">
+                <div class="logo">
+                    <img src="assets/images/img_title.png" alt="" />
+                </div>
             </div>
-            <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
-                <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
-            </div>
-        </div>
+        </header>
+        <article>
+            <div class="login_wrapper">
+                <div class="login">
+                    <h1 class="mb-20 text-center" id="caption" data-lang="caption"></h1>
 
-        <div class="login_wrapper">
-            <div class="login">
-                <h1 class="mb-20 text-center" id="caption" data-lang="caption"></h1>
-
-                <form id="login_form" action="vip_dashboard.html">
-                    <div class="box">
-                        <label for="username" id="username-label" data-lang="username-label">: </label>
-                        <div class="input_box">
-                            <input
-                                type="text"
-                                id="username-input-field"
-                                name="username"
-                                class="login-form-field"
-                                required
-                                autofocus
-                            />
+                    <form id="login_form" action="vip_dashboard.html">
+                        <div class="box">
+                            <label for="username" id="username-label" data-lang="username-label">: </label>
+                            <div class="input_box">
+                                <input
+                                    type="text"
+                                    id="username-input-field"
+                                    name="username"
+                                    class="login-form-field"
+                                    required
+                                    autofocus
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div class="box">
-                        <label for="password" id="password-label" data-lang="password-label">: </label>
-                        <div class="input_box">
-                            <input
-                                type="password"
-                                id="password-input-field"
-                                name="password"
-                                class="login-form-field"
-                                required
-                            />
+                        <div class="box">
+                            <label for="password" id="password-label" data-lang="password-label">: </label>
+                            <div class="input_box">
+                                <input
+                                    type="password"
+                                    id="password-input-field"
+                                    name="password"
+                                    class="login-form-field"
+                                    required
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
-                </form>
+                        <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
+                    </form>
+                </div>
             </div>
-        </div>
+        </article>
     </body>
 </html>

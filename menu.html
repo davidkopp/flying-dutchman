@@ -5,7 +5,7 @@ Menu page of the Flying Dutchman.
 
 Author: Abdullah Abdullah
 -----
-Last Modified: Tuesday, 8th March 2022
+Last Modified: Wednesday, 9th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -42,39 +42,40 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/MenuController.js"></script>
     </head>
 
-    <body class="bg-color">
-        <div class="lang-container">
-            <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
-                <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
-            </div>
-            <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
-                <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
-            </div>
-            <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
-                <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
-            </div>
-        </div>
-
+    <body>
         <header>
-            <div class="logo">
-                <h1>Flying Dutchman</h1>
+            <div class="lang-container">
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
+                </div>
             </div>
-            <div class="available-options">
-                <button>
-                    <i class="fas fa-search bg-blue"></i>
-                </button>
-                <button>
-                    <i class="fas fa-mobile-alt"></i>
-                </button>
-                <button>
-                    <span>120000</span>
-                </button>
-                <button>
-                    <i class="fas fa-dollar-sign bg-blue"></i>
-                </button>
+            <div class="toolbar">
+                <div class="logo">
+                    <img src="assets/images/img_title.png" alt="" />
+                </div>
+                <div class="available-options">
+                    <button>
+                        <i class="fas fa-search bg-blue"></i>
+                    </button>
+                    <button>
+                        <i class="fas fa-mobile-alt"></i>
+                    </button>
+                    <button>
+                        <span>120000</span>
+                    </button>
+                    <button>
+                        <i class="fas fa-dollar-sign bg-blue"></i>
+                    </button>
+                </div>
             </div>
         </header>
-        <div class="content">
+        <article>
             <div class="filter-button">
                 <div class="text-right">
                     <button>Allergies</button>
@@ -126,7 +127,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
         <footer>
             <div class="footer-align">
                 <div id="logged-in-user-container">

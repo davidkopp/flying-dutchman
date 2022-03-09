@@ -5,7 +5,7 @@ The dashboard for staff members like bartenders, waiter, waitress, etc.
 
 Author: David Kopp
 -----
-Last Modified: Tuesday, 8th March 2022
+Last Modified: Wednesday, 9th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -37,7 +37,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
     </head>
 
     <body>
-        <div id="staff-dashboard-container">
+        <header>
             <div class="lang-container">
                 <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
                     <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
@@ -49,7 +49,18 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
                 </div>
             </div>
-
+            <div class="toolbar">
+                <div class="logo">
+                    <img src="assets/images/img_title.png" alt="" />
+                </div>
+                <div class="available-options">
+                    <button>
+                        <img src="assets/images/icon_logout.png" alt="" />
+                    </button>
+                </div>
+            </div>
+        </header>
+        <div>
             <div class="row">
                 <!-- Orders overview -->
                 <div id="orders-overview" class="overview-container col-9 col-s-12">
@@ -227,6 +238,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
             </div>
         </div>
+
         <footer>
             <div class="footer-align">
                 <div id="logged-in-user-container">
