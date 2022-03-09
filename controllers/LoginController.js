@@ -5,12 +5,15 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Sunday, 6th March 2022
+ * Last Modified: Wednesday, 9th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {
-    // When the DOM is ready set the event handlers for the login and logout button
+    /**
+     * When the DOM is ready set the event handlers for the login and logout
+     * button and update the login status.
+     */
     $(document).ready(function () {
         $("#login-form-submit").click(loginEventHandler);
         $("#logout-button").click(logoutEventHandler);
@@ -92,10 +95,12 @@
             // An user is logged in → show the user name.
             $("#logged-in-user").text(loggedInUserData.username);
             $("#logged-in-user-container").show();
+            $("#logout-button").show();
         } else {
             // No user is currently logged in → don't show info about any user.
             $("#logged-in-user").text("");
             $("#logged-in-user-container").hide();
+            $("#logout-button").hide();
         }
     }
 

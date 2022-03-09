@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Wednesday, 9th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -81,17 +81,18 @@ const Dictionary = {
             "language-switcher-text-portuguese": "Portuguese",
             "link-to-login-page": "Login",
             "logged-in-user-label": "Logged in user:",
-            "logout-button": "Logout",
         },
         // Text strings for the page 'index'
         index: {
-            "page-title": "Flying Dutchman - English",
+            "page-title": "Flying Dutchman",
+            "header-page-title": "Welcome!",
             "caption": "Welcome to Flying Dutchman",
             "link-to-menu-page": "Menu",
         },
         // Text strings for the page 'menu'
         menu: {
             "page-title": "Flying Dutchman - Menu",
+            "header-page-title": "Menu",
             "caption": "Menu",
             "order": "Order",
             "pay": "Pay",
@@ -99,6 +100,7 @@ const Dictionary = {
         // Text strings for the page 'login'
         login: {
             "page-title": "Flying Dutchman - Login",
+            "header-page-title": "Login",
             "caption": "Login",
             "username-label": "Username",
             "password-label": "Password",
@@ -106,6 +108,7 @@ const Dictionary = {
         },
         staff_dashboard: {
             "page-title": "Flying Dutchman - Staff Dashboard",
+            "header-page-title": "Staff Dashboard",
             "orders-overview-title": "Orders",
             "orders-overview-table-label": "Table",
             "order-details-id-label": "Order number:",
@@ -148,6 +151,7 @@ const Dictionary = {
         },
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
+            "header-page-title": "VIP Dashboard",
             "heading": "Flying Dutchman",
             "table-number-heading": "Table Number",
             "vip-welcome-text": "Welcome",
@@ -161,6 +165,7 @@ const Dictionary = {
         },
         manager_dashboard: {
             "page-title": "Flying Dutchman - Manager Dashboard",
+            "header-page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Cooler",

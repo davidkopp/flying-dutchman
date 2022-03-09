@@ -47,23 +47,25 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <div class="logo">
                     <img src="assets/images/img_title.png" alt="" />
                 </div>
+                <div id="header-page-title" data-lang="header-page-title"></div>
+                <div class="available-options"></div>
             </div>
         </header>
 
-        <h1 id="caption" data-lang="caption"></h1>
-        <br />
-        <br />
-        <a href="menu.html" data-lang="link-to-menu-page"></a>
-        <br />
-        <br />
-        <a href="login.html" data-lang="link-to-login-page"></a>
+        <article>
+            <h1 id="caption" data-lang="caption"></h1>
+            <br />
+            <br />
+            <a href="menu.html" data-lang="link-to-menu-page"></a>
+            <br />
+            <br />
+            <a href="login.html" data-lang="link-to-login-page"></a>
+        </article>
+
         <footer>
-            <div class="footer-align">
-                <div id="logged-in-user-container">
-                    <span data-lang="logged-in-user-label"></span>
-                    <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">Logout</button>
-                </div>
+            <div id="logged-in-user-container" class="hidden">
+                <span id="logged-in-user-label" data-lang="logged-in-user-label"></span>
+                <span id="logged-in-user"></span>
             </div>
         </footer>
     </body>

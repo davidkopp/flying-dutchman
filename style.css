@@ -31,24 +31,36 @@ header .toolbar {
     justify-content: space-between;
     position: relative;
     top: 65px;
+    flex-wrap: wrap;
 }
 header .logo {
     position: relative;
     left: 30px;
     margin: 5px 0;
+    min-width: 20vw;
 }
 header .logo img {
     height: 100px;
     width: auto;
 }
+header #header-page-title {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+}
 header .available-options {
     display: inline-flex;
+    min-width: 20vw;
 }
 header .available-options button {
     border: none;
     background-color: transparent;
     margin: 0 10px;
     font-size: 22px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 0;
+    padding-left: 15px;
 }
 header .available-options button i {
     height: 60px;
@@ -99,10 +111,59 @@ header .available-options button img {
     animation: shine 2s infinite;
 }
 
+body {
+    min-height: 100vh;
+    position: relative;
+}
+
 article {
     position: relative;
     top: 70px;
 }
+
+body::after {
+    content: "";
+    display: block;
+    height: 100px;
+    margin-top: 30px;
+}
+
+/*=============Footer================*/
+footer {
+    background-color: rgba(35, 81, 114, 255);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    line-height: 50px;
+    color: white;
+    font-size: 18px;
+}
+
+footer #logged-in-user-label {
+    font-weight: 700;
+}
+/*
+footer .footer-align {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+footer .footer-align .details-btn {
+    max-width: 200px;
+    width: 100%;
+}
+footer .footer-align .details-btn button,
+footer .footer-align .logout_btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #f2f2f2;
+    cursor: pointer;
+}*/
 
 /*=============Landing Page================*/
 .align {
@@ -330,25 +391,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     animation: shine 2s infinite;
 }
 
-footer .footer-align {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-}
-footer .footer-align .details-btn {
-    max-width: 200px;
-    width: 100%;
-}
-footer .footer-align .details-btn button,
-footer .footer-align .logout_btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    border: none;
-    background-color: #f2f2f2;
-    cursor: pointer;
-}
 /*=================Drag & Drop==================*/
 .drag-drop-wrapper {
     max-width: 800px;
@@ -409,7 +451,7 @@ footer .footer-align .logout_btn {
     margin: 5px;
     padding: 5px;
 }
-*/ .logout .logout_btn {
+.logout .logout_btn {
     padding: 5px;
 }
 .bg-color {

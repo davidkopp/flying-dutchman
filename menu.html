@@ -59,6 +59,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <div class="logo">
                     <img src="assets/images/img_title.png" alt="" />
                 </div>
+                <div id="header-page-title" data-lang="header-page-title"></div>
                 <div class="available-options">
                     <button>
                         <i class="fas fa-search bg-blue"></i>
@@ -71,6 +72,9 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     </button>
                     <button>
                         <i class="fas fa-dollar-sign bg-blue"></i>
+                    </button>
+                    <button id="logout-button" class="logout_btn hidden">
+                        <img src="assets/images/icon_logout.png" alt="" />
                     </button>
                 </div>
             </div>
@@ -129,12 +133,9 @@ Modified By: David Kopp (mail@davidkopp.de>)
             </div>
         </article>
         <footer>
-            <div class="footer-align">
-                <div id="logged-in-user-container">
-                    <span data-lang="logged-in-user-label"></span>
-                    <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">Logout</button>
-                </div>
+            <div id="logged-in-user-container" class="hidden">
+                <span id="logged-in-user-label" data-lang="logged-in-user-label"></span>
+                <span id="logged-in-user"></span>
             </div>
         </footer>
     </body>
