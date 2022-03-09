@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Wednesday, 9th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LoginController, OrderController */
@@ -116,7 +116,7 @@
         );
         let items = [];
         $("#order")
-            .children()
+            .children("div")
             .each(function () {
                 const beverageID = $(this).data("beverage-id");
                 items.push({
