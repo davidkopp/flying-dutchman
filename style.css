@@ -112,6 +112,7 @@ header .available-options button img {
 }
 
 body {
+    background-color: #033d66;
     min-height: 100vh;
     position: relative;
 }
@@ -260,7 +261,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     align-items: center;
     height: 50vh;
     width: 100%;
-    background-color: #033d66;
 }
 .login {
     max-width: 400px;
@@ -392,6 +392,9 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 }
 
 /*=================Drag & Drop==================*/
+
+/*
+TODO: Delete unnecessary definitions
 .drag-drop-wrapper {
     max-width: 800px;
     margin: 20px auto;
@@ -428,13 +431,13 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 .drag-drop {
     min-height: 40vh;
 }
-/*
+
 .drag-drop-area .thumbnail {
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
 }
-*/
+
 .btn-wrapper {
     display: flex;
     justify-content: space-between;
@@ -457,6 +460,7 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 .bg-color {
     background-color: #0c4068;
 }
+*/
 
 /*=======================
 Menu Page
@@ -737,21 +741,22 @@ img.inventory-has-enough-items {
 VIP dashboard
 ========================*/
 
-body {
-    background-color: #033d66;
+.drag-drop > div {
+    height: 60vh;
 }
 
 .available-items-area {
     float: left;
     background-color: aquamarine;
     width: 50%;
+    overflow-y: scroll;
 }
 
 .order-area {
     float: right;
     background-color: #ffffff;
     width: 50%;
-    height: 500px;
+    position: relative;
 }
 
 .drag-items {
@@ -760,7 +765,14 @@ body {
 
 #place-order {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #2f9af0;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 #info-box-title {
