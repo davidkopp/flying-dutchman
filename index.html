@@ -29,7 +29,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
 
-        <script type="text/javascript" src="controllers/HomeController.js"></script>
+        <script type="text/javascript" src="controllers/EffectsController.js"></script>
     </head>
 
     <body>
@@ -39,16 +39,16 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)"
                     data-lang="[title]language-flag-title-english"
                 >
-                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
                 <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)" data-lang="[title]language-flag-title-german">
-                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
                 <div
                     onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)"
                     data-lang="[title]language-flag-title-portuguese"
                 >
-                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
             </div>
             <div class="header-bar">
@@ -59,11 +59,16 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
                 <div id="header-page-title" class="header-bar-column" data-lang="header-page-title"></div>
                 <div class="available-options header-bar-column">
-                    <button id="login-button" class="logout_btn">
+                    <button id="login-button" class="clickable hover-shine">
                         <a href="login.html" data-lang="link-to-login-page"> </a>
                     </button>
-                    <button id="logout-button" class="logout_btn hidden" data-lang="[title]logout-button-title">
-                        <img src="assets/images/icon_logout.png" alt="" />
+                    <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+                        <img
+                            src="assets/images/icon_logout.png"
+                            data-src="assets/images/icon_logout.png"
+                            data-hover="assets/images/icon_logout_active.png"
+                            alt=""
+                        />
                     </button>
                 </div>
             </div>
@@ -72,7 +77,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <article>
             <div class="center-in-page">
                 <a href="menu.html">
-                    <div id="home-center-button" data-lang="[title]go-to-menu-button-title">
+                    <div id="home-center-button" class="clickable" data-lang="[title]go-to-menu-button-title">
                         <img
                             src="assets/images/icon_login.png"
                             data-src="assets/images/icon_login.png"
