@@ -57,13 +57,13 @@ Modified By: David Kopp (mail@davidkopp.de>)
             </div>
         </header>
         <article>
-            <div class="center">
+            <div class="center-in-page">
                 <div class="login">
                     <h1 class="mb-20 text-center" id="caption" data-lang="caption"></h1>
 
                     <form id="login_form" action="vip_dashboard.html">
                         <div class="box">
-                            <label for="username" id="username-label" data-lang="username-label">: </label>
+                            <label for="username" id="username-label" data-lang="username-label"></label>
                             <div class="input_box">
                                 <input
                                     type="text"
@@ -76,7 +76,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                             </div>
                         </div>
                         <div class="box">
-                            <label for="password" id="password-label" data-lang="password-label">: </label>
+                            <label for="password" id="password-label" data-lang="password-label"></label>
                             <div class="input_box">
                                 <input
                                     type="password"
@@ -86,6 +86,9 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                     required
                                 />
                             </div>
+                        </div>
+                        <div id="message-box-wrong-credentials" class="hidden">
+                            <span data-lang="message-wrong-credentials"></span>
                         </div>
                         <input type="submit" id="login-form-submit" data-lang="[value]login-form-submit" />
                     </form>

@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -17,6 +17,7 @@
     $(document).ready(function () {
         $("#login-form-submit").click(loginEventHandler);
         $("#logout-button").click(logoutEventHandler);
+        $("#message-box-wrong-credentials").hide();
 
         updateLoginStatusOnPage();
     });
@@ -32,13 +33,14 @@
         const username = $("#username-input-field").val().trim();
         const password = $("#password-input-field").val().trim();
 
+        $("#message-box-wrong-credentials").hide();
         // Important: This login handling is not secure and stores the password in plain text in the database!
         var user = DatabaseAPI.Users.getUserDetailsIfCredentialsAreValid(
             username,
             password
         );
         if (!user) {
-            alert("Wrong username or password!");
+            $("#message-box-wrong-credentials").show(500, "swing");
             return;
         }
 

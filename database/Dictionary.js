@@ -107,6 +107,7 @@ const Dictionary = {
             "username-label": "Username",
             "password-label": "Password",
             "login-form-submit": "Login",
+            "message-wrong-credentials": "Wrong user name or password!",
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
@@ -223,6 +224,7 @@ const Dictionary = {
             "username-label": "Benutzername",
             "password-label": "Passwort",
             "login-form-submit": "Anmelden",
+            "message-wrong-credentials": "Falscher Benutzername oder Passwort!",
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
@@ -341,6 +343,7 @@ const Dictionary = {
             "username-label": "Username",
             "password-label": "Password",
             "login-form-submit": "Login",
+            "message-wrong-credentials": "Wrong user name or password!",
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
