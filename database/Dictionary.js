@@ -76,12 +76,13 @@ const Dictionary = {
     en: {
         // Common text strings (relevant for multiple pages)
         _: {
-            "logged-in-user-label": "Logged in user:",
-            "logout-button-title": "Logout",
             "language-flag-title-english": "English",
             "language-flag-title-german": "German",
             "language-flag-title-portuguese": "Portuguese",
+            "logged-in-user-label": "Logged in user:",
+            "logout-button-title": "Logout",
             "logo-title": "To home page",
+            "home-button-title": "To home page",
         },
         // Text strings for the page 'index'
         index: {
@@ -197,12 +198,13 @@ const Dictionary = {
     de: {
         // Common text strings (relevant for multiple pages)
         _: {
-            "logged-in-user-label": "Angemeldet als:",
-            "logout-button-title": "Ausloggen",
             "language-flag-title-english": "Englisch",
             "language-flag-title-german": "Deutsch",
             "language-flag-title-portuguese": "Portugiesisch",
+            "logged-in-user-label": "Angemeldet als:",
+            "logout-button-title": "Ausloggen",
             "logo-title": "Zur Startseite",
+            "home-button-title": "Zur Startseite",
         },
         // Text strings for the page 'index'
         index: {
@@ -320,12 +322,13 @@ const Dictionary = {
         // TODO: Translate the english text strings into portuguese
         // Common text strings (relevant for multiple pages)
         _: {
-            "logged-in-user-label": "Logged in usuario:",
-            "logout-button-title": "Logout",
             "language-flag-title-english": "English",
             "language-flag-title-german": "German",
             "language-flag-title-portuguese": "Portuguese",
+            "logged-in-user-label": "Logged in usuario:",
+            "logout-button-title": "Logout",
             "logo-title": "To home page",
+            "home-button-title": "To home page",
         },
         // Text strings for the page 'index'
         index: {
