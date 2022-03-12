@@ -77,12 +77,18 @@ const Dictionary = {
         // Common text strings (relevant for multiple pages)
         _: {
             "logged-in-user-label": "Logged in user:",
+            "logout-button-title": "Logout",
+            "language-flag-title-english": "English",
+            "language-flag-title-german": "German",
+            "language-flag-title-portuguese": "Portuguese",
+            "logo-title": "To home page",
         },
         // Text strings for the page 'index'
         index: {
             "page-title": "Flying Dutchman - Welcome",
             "header-page-title": "Welcome!",
             "link-to-login-page": "Login",
+            "go-to-menu-button-title": "Go to menu",
         },
         // Text strings for the page 'menu'
         menu: {
@@ -187,12 +193,18 @@ const Dictionary = {
         // Common text strings (relevant for multiple pages)
         _: {
             "logged-in-user-label": "Angemeldet als:",
+            "logout-button-title": "Ausloggen",
+            "language-flag-title-english": "Englisch",
+            "language-flag-title-german": "Deutsch",
+            "language-flag-title-portuguese": "Portugiesisch",
+            "logo-title": "Zur Startseite",
         },
         // Text strings for the page 'index'
         index: {
             "page-title": "Flying Dutchman - Willkommen",
             "header-page-title": "Willkommen!",
             "link-to-login-page": "Anmelden",
+            "go-to-menu-button-title": "Gehe zum Menü",
         },
         // Text strings for the page 'menu'
         menu: {
@@ -295,27 +307,32 @@ const Dictionary = {
     },
     // Portuguese
     pt: {
+        // TODO: Translate the english text strings into portuguese
         // Common text strings (relevant for multiple pages)
         _: {
-            "language-switcher-text-english": "English",
-            "language-switcher-text-german": "German",
-            "language-switcher-text-portuguese": "Portuguese",
-            "link-to-login-page": "Login",
             "logged-in-user-label": "Logged in usuario:",
-            "logout-button": "Logout",
+            "logout-button-title": "Logout",
+            "language-flag-title-english": "English",
+            "language-flag-title-german": "German",
+            "language-flag-title-portuguese": "Portuguese",
+            "logo-title": "To home page",
         },
         // Text strings for the page 'index'
         index: {
-            "page-title": "Flying Dutchman - English",
-            "caption": "Welcome to Flying Dutchman",
-            "link-to-menu-page": "Menu",
+            "page-title": "Flying Dutchman - Welcome",
+            "header-page-title": "Welcome!",
+            "link-to-login-page": "Login",
+            "go-to-menu-button-title": "Go to menu",
         },
         // Text strings for the page 'menu'
         menu: {
             "page-title": "Flying Dutchman - Menu",
+            "header-page-title": "Menu",
             "caption": "Menu",
-            "order": "Order",
-            "pay": "Pay",
+            "filter-icon-title-beer": "Beer",
+            "filter-icon-title-wine": "Wine",
+            "filter-icon-title-drink": "Drink",
+            "filter-icon-title-water": "Water",
         },
         // Text strings for the page 'login'
         login: {
@@ -325,13 +342,15 @@ const Dictionary = {
             "password-label": "Password",
             "login-form-submit": "Login",
         },
+        // Text strings for the page 'staff dashboard'
         staff_dashboard: {
             "page-title": "Flying Dutchman - Staff Dashboard",
+            "header-page-title": "Staff Dashboard",
             "orders-overview-title": "Orders",
             "orders-overview-table-label": "Table",
             "order-details-id-label": "Order number:",
             "order-details-inventory-label": "Inventory:",
-            "create-order-button-text": "Create",
+            "create-order-button-text": "Create new order",
             "inventory-overview-title": "Inventory",
             "restock-button-text": "Restock",
             "orders-list-total-number-label": "Number of orders:",
@@ -350,15 +369,27 @@ const Dictionary = {
             "create-order-inventory-label-vip": "VIP",
             "create-order-form-submit": "Create Order",
             "details-overlay-delete-order-button": "Delete Order",
+            "details-overlay-edit-order-button": "Edit Order",
             "add-more-items-button": "Add more items",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Cooler",
             },
+            "order-list-order-number": "Order",
+            "order-list-status": "Status",
+            "order-list-items": "Items",
+            "order-list-notes": "Notes",
+            "order-list-actions": "Actions",
+            "order-list-status-dynamic": {
+                true: "done",
+                false: "tbd.",
+            },
+            "order-details-notes-label": "Notes:",
         },
+        // Text strings for the page 'vip dashboard'
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
-            "heading": "Flying Dutchman",
+            "header-page-title": "VIP Dashboard",
             "table-number-heading": "Table Number",
             "vip-welcome-text": "Welcome",
             "vip-account-balance-text": "Balance =",
@@ -369,8 +400,10 @@ const Dictionary = {
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
         },
+        // Text strings for the page 'manager dashboard'
         manager_dashboard: {
             "page-title": "Flying Dutchman - Manager Dashboard",
+            "header-page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Cooler",

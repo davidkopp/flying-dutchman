@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -187,11 +187,11 @@ footer .footer-align .logout_btn {
 
 /*=============Landing Page / Home Page================*/
 
-#home-login-button {
+#home-center-button {
     cursor: pointer;
 }
 
-#home-login-button img {
+#home-center-button img {
     width: 15vw;
     height: auto;
 }

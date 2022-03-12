@@ -5,7 +5,7 @@ Home page of the Flying Dutchman.
 
 Author: David Kopp
 -----
-Last Modified: Wednesday, 9th March 2022
+Last Modified: Saturday, 12th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -35,18 +35,24 @@ Modified By: David Kopp (mail@davidkopp.de>)
     <body>
         <header>
             <div class="lang-container">
-                <div onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
+                <div
+                    onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)"
+                    data-lang="[title]language-flag-title-english"
+                >
                     <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
                 </div>
-                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)" data-lang="[title]language-flag-title-german">
                     <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
                 </div>
-                <div onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
+                <div
+                    onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)"
+                    data-lang="[title]language-flag-title-portuguese"
+                >
                     <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
                 </div>
             </div>
             <div class="header-bar">
-                <div class="logo header-bar-column">
+                <div class="logo header-bar-column" data-lang="[title]logo-title">
                     <a href="/">
                         <img src="assets/images/img_title.png" alt="" />
                     </a>
@@ -56,7 +62,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     <button id="login-button" class="logout_btn">
                         <a href="login.html" data-lang="link-to-login-page"> </a>
                     </button>
-                    <button id="logout-button" class="logout_btn hidden">
+                    <button id="logout-button" class="logout_btn hidden" data-lang="[title]logout-button-title">
                         <img src="assets/images/icon_logout.png" alt="" />
                     </button>
                 </div>
@@ -66,7 +72,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <article>
             <div class="center">
                 <a href="menu.html">
-                    <div id="home-login-button">
+                    <div id="home-center-button" data-lang="[title]go-to-menu-button-title">
                         <img
                             src="assets/images/icon_login.png"
                             data-src="assets/images/icon_login.png"

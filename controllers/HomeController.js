@@ -5,14 +5,14 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($) {
     $(document).ready(function () {
         // Add hover effect to the login button.
-        $("#home-login-button img")
+        $("#home-center-button img")
             .mouseover(function () {
                 $(this).attr("src", $(this).data("hover"));
             })
@@ -20,6 +20,6 @@
                 $(this).attr("src", $(this).data("src"));
             });
 
-        $("#home-login-button").click(function () {});
+        $("#home-center-button").click(function () {});
     });
 })(jQuery);
