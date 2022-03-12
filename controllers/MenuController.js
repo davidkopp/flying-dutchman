@@ -8,7 +8,7 @@
  * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals LanguageController */
+/* globals LanguageController, EffectsController */
 
 (function ($, exports) {
     /**
@@ -105,7 +105,7 @@
             displayBeverageInMenu(beverage, quantity, filterByType);
         }
 
-        updateFilterIconsInView();
+        EffectsController.updateFilterIconsInView(lastUsedFilter);
 
         // Refresh all text strings
         LanguageController.refreshTextStrings();
@@ -324,37 +324,6 @@
         `;
 
         $("#menu-container").append(menuItemHTML);
-    }
-
-    /**
-     * Changes the filter icons accordingly to the currently used filter (normal
-     * / active).
-     */
-    function updateFilterIconsInView() {
-        $(".filter-icon").each(function () {
-            const $img = $(this).find("img");
-            $img.attr("src", $($img).data("src"));
-        });
-        let $img;
-        switch (lastUsedFilter) {
-            case Constants.BEER_filter:
-                $img = $("#filter-icon-beer").find("img");
-                break;
-            case Constants.WINE_filter:
-                $img = $("#filter-icon-wine").find("img");
-                break;
-            case Constants.DRINK_filter:
-                $img = $("#filter-icon-drink").find("img");
-                break;
-            case Constants.WATER_filter:
-                $img = $("#filter-icon-water").find("img");
-                break;
-            default:
-                break;
-        }
-        if ($img) {
-            $img.attr("src", $($img).data("active"));
-        }
     }
 
     /**

@@ -40,6 +40,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
         <script type="text/javascript" src="controllers/MenuController.js"></script>
+        <script type="text/javascript" src="controllers/EffectsController.js"></script>
     </head>
 
     <body>
@@ -49,16 +50,16 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)"
                     data-lang="[title]language-flag-title-english"
                 >
-                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag" />
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
                 <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)" data-lang="[title]language-flag-title-german">
-                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag" />
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
                 <div
                     onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)"
                     data-lang="[title]language-flag-title-portuguese"
                 >
-                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag" />
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
             </div>
             <div class="header-bar">
@@ -81,8 +82,13 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     <button>
                         <i class="fas fa-dollar-sign bg-blue"></i>
                     </button>-->
-                    <button id="logout-button" class="logout_btn hidden" data-lang="[title]logout-button-title">
-                        <img src="assets/images/icon_logout.png" alt="" />
+                    <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+                        <img
+                            src="assets/images/icon_logout.png"
+                            data-src="assets/images/icon_logout.png"
+                            data-hover="assets/images/icon_logout_active.png"
+                            alt=""
+                        />
                     </button>
                 </div>
             </div>

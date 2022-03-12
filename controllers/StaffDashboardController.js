@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
@@ -88,6 +88,24 @@
                 $(".overlay").hide();
             }
         });
+
+        $("#notify-security-button").click(function () {
+            $("#overlay-security-notifier").show();
+        });
+
+        $("#security-notifier-form").submit(function (event) {
+            event.preventDefault();
+            const data = getFormData("security-notifier-form");
+
+            const optMessage = data.message;
+            console.log(
+                "Notify security!" +
+                    (optMessage ? ` Message: '${optMessage}'` : "")
+            );
+
+            $("#overlay-security-notifier").hide();
+            $("#security-notifier-form").find("textarea").val("");
+        });
     }
 
     /** Initializes the order list in the view. */
@@ -146,8 +164,8 @@
                                 <span class="order-list-column-heading" data-lang="order-list-actions"></span>
                                 <br/>
                                 <div>
-                                    <span class="order-list-pay-order-button order-action-button">💳</span>
-                                    <span class="order-list-edit-order-button order-action-button">📝</span>
+                                    <span class="clickable order-list-pay-order-button order-action-button hover-shine">💳</span>
+                                    <span class="clickable order-list-edit-order-button order-action-button hover-shine">📝</span>
                                 </div>
                             </div>
                         </div>
@@ -255,15 +273,6 @@
             const inventoryName = $(this).data("inventory-name");
             showInventoryDetails(inventoryName);
         });
-
-        // Add hover effect to the inventory images.
-        $(".inventory-element-image")
-            .mouseover(function () {
-                $(this).attr("src", $(this).data("hover"));
-            })
-            .mouseout(function () {
-                $(this).attr("src", $(this).data("src"));
-            });
 
         // Add info about number of notifications
         const barItemsRunningLow =
@@ -377,10 +386,10 @@
                     <span class="overlay-details-label" data-lang="order-details-notes-label"></span>
                     <span class="overlay-details-value">${order.notes}</span>
                 </div>
-                <button type="button" class="overlay-button details-overlay-edit-order-button" data-order-id="${order.id}">
+                <button type="clickable" class="overlay-button details-overlay-edit-order-button hover-shine" data-order-id="${order.id}">
                     <span data-lang="details-overlay-edit-order-button"></span>
                 </button>
-                <button type="button" class="overlay-button details-overlay-delete-order-button" data-order-id="${order.id}">
+                <button type="clickable" class="overlay-button details-overlay-delete-order-button hover-shine" data-order-id="${order.id}">
                     <span data-lang="details-overlay-delete-order-button"></span>
                 </button>
             </div>
