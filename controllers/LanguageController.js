@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -91,6 +91,12 @@
             if (langKey.startsWith("[value]")) {
                 langKey = langKey.slice(7, langKey.length);
                 $(element).val(getValueFromDictionary(langKey, currentPath));
+            } else if (langKey.startsWith("[title]")) {
+                langKey = langKey.slice(7, langKey.length);
+                $(element).prop(
+                    "title",
+                    getValueFromDictionary(langKey, currentPath)
+                );
             } else {
                 $(element).text(getValueFromDictionary(langKey, currentPath));
             }

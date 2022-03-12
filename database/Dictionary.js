@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -89,6 +89,10 @@ const Dictionary = {
             "page-title": "Flying Dutchman - Menu",
             "header-page-title": "Menu",
             "caption": "Menu",
+            "filter-icon-title-beer": "Beer",
+            "filter-icon-title-wine": "Wine",
+            "filter-icon-title-drink": "Drink",
+            "filter-icon-title-water": "Water",
         },
         // Text strings for the page 'login'
         login: {
@@ -195,6 +199,10 @@ const Dictionary = {
             "page-title": "Flying Dutchman - Menü",
             "header-page-title": "Menü",
             "caption": "Menü",
+            "filter-icon-title-beer": "Bier",
+            "filter-icon-title-wine": "Wein",
+            "filter-icon-title-drink": "Drink",
+            "filter-icon-title-water": "Wasser",
         },
         // Text strings for the page 'login'
         login: {
