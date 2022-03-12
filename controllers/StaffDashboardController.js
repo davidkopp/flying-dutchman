@@ -263,8 +263,8 @@
         // Add list of inventories
         const inventoryListHTML = `
         <div id="inventory-list">
-        ${createHTMLForInventoryElement(barInventoryController)}
-        ${createHTMLForInventoryElement(vipInventoryController)}
+        ${createHTMLForInventoryElementForOverview(barInventoryController)}
+        ${createHTMLForInventoryElementForOverview(vipInventoryController)}
         </div>`;
         $("#inventory-list-container").html(inventoryListHTML);
 
@@ -294,7 +294,7 @@
      * @param {object} inventoryController The inventory controller.
      * @returns {string} The HTML.
      */
-    function createHTMLForInventoryElement(inventoryController) {
+    function createHTMLForInventoryElementForOverview(inventoryController) {
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
 
         const classRunningLow =
@@ -348,18 +348,6 @@
                 <span class="overlay-details-value">${order.id}</span>
             </div>`;
 
-            // Inventory
-            const orderInventoryHTML = `
-            <div>
-                <span class="overlay-details-label" data-lang="order-details-inventory-label"></span>
-                <span
-                    ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
-                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}
-                    class="overlay-details-value">
-                    ...
-                </span>
-            </div>`;
-
             // Create HTML for order items
             let orderItemsHTML = "<ul>";
             order.items.forEach((item) => {
@@ -398,7 +386,7 @@
             ordersListHTML += `
             <div class="order-details-order-element">
             ${orderNrHTML}
-            ${orderInventoryHTML}
+            ${createHtmlForInventoryNameInfo(order.inventory)}
             ${orderItemsContainerHTML}
             </div>`;
         });
@@ -426,6 +414,25 @@
     }
 
     /**
+     * Creates a html div to display the inventory name.
+     *
+     * @param {string} inventoryName The inventory name.
+     * @returns {string} The html string.
+     */
+    function createHtmlForInventoryNameInfo(inventoryName) {
+        return `
+            <div>
+            <span class="overlay-details-label" data-lang="order-details-inventory-label"></span>
+                <span
+                    ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
+                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${inventoryName}
+                    class="overlay-details-value">
+                    ...
+                </span>
+            </div>`;
+    }
+
+    /**
      * Event handler for showing the details for an inventory.
      *
      * @param {string} inventoryName The inventory name.
@@ -436,17 +443,10 @@
             return;
         }
 
-        // Inventory
-        // TODO: Duplicated code
-        const orderInventoryHTML = `
-            <span
-                ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
-                ${Constants.DATA_LANG_DYNAMIC_VALUE}=${inventoryName}
-                class="overlay-details-value">
-            </span>`;
-
         // Add inventory name
-        $("#inventory-details-inventory-name").html(orderInventoryHTML);
+        const orderInventoryHTML =
+            createHtmlForInventoryNameInfo(inventoryName);
+        $("#inventory-details-inventory-container").html(orderInventoryHTML);
 
         // Add details of items that are running low
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();

@@ -157,6 +157,7 @@ const Dictionary = {
             "security-notifier-title": "Notify Security",
             "security-notifier-message-box-label": "Message (optional):",
             "security-notifier-form-submit": "Send",
+            "inventory-details-title": "Inventory",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -280,6 +281,7 @@ const Dictionary = {
             "security-notifier-title": "Sicherheitsdienst benachrichtigen",
             "security-notifier-message-box-label": "Nachricht (optional):",
             "security-notifier-form-submit": "Senden",
+            "inventory-details-title": "Lager",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -403,6 +405,7 @@ const Dictionary = {
             "security-notifier-title": "Notify Security",
             "security-notifier-message-box-label": "Message (optional):",
             "security-notifier-form-submit": "Send",
+            "inventory-details-title": "Inventory",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
