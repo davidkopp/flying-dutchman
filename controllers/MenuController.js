@@ -8,9 +8,13 @@
  * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
+/* globals LanguageController */
 
 (function ($, exports) {
-    const inventoryName = Constants.INVENTORIES.BAR;
+    /**
+     * The variable `lastUsedFilter` stores the current used filter to be able
+     * to reset the filter and changing the icon of the filters.
+     */
     let lastUsedFilter;
 
     $(document).ready(function () {
@@ -44,17 +48,19 @@
     }
 
     /**
-     * Initialize the menu with the information about the available beverages.
-     * With the optional filter argument it's possible to only show one specific type.
+     * Initialize the menu with the information about the available beverages in
+     * the bar inventory. With the optional filter argument it's possible to
+     * only show one specific type.
      *
      * @param {string} filterByType The optional filter.
      */
     function initMenu(filterByType) {
+        const inventoryName = Constants.INVENTORIES.BAR;
         console.log(
-            "MenuController | Start initializing the menu " +
+            `MenuController | Start initializing the menu with items from the '${inventoryName}' ` +
                 (filterByType
-                    ? "with a filter: " + filterByType
-                    : "without a filter.")
+                    ? `with the filter '${filterByType}'.`
+                    : `without a filter.`)
         );
 
         // At first remove the currently shown menu.
@@ -62,7 +68,6 @@
 
         lastUsedFilter = filterByType;
 
-        // TODO: Differentiate between bar and vip inventory
         const inventoryItems =
             DatabaseAPI.Inventory.getInventory(inventoryName);
         const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
@@ -72,16 +77,10 @@
 
             // Check if the beverage number is marked as "hide from menu". If so, skip it.
             if (hideFromMenuList.includes(beverageNr)) {
-                console.log(
-                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' is included in the "hideFromMenu" list. Don't show it in the menu.`
-                );
                 continue;
             }
             // Check if the inventory item is set to `active`. If not, skip it.
             if (inventoryItem.active === false) {
-                console.log(
-                    `MenuController.initMenu | The inventory item with the beverage number '${beverageNr}' has the "active" property set to '${inventoryItem.active}'. Don't show it in the menu.`
-                );
                 continue;
             }
 
@@ -89,7 +88,7 @@
             const quantity = inventoryItem.quantity;
             if (!quantity || quantity < 1) {
                 console.log(
-                    `MenuController.initMenu | The item in the inventory '${inventoryName}' with the beverage number '${beverageNr}' doesn't have enough quanities left in the inventory (${quantity}). Don't show it in the menu.`
+                    `MenuController.initMenu | The item in the inventory '${inventoryName}' with the beverage number '${beverageNr}' doesn't have enough quantities left in the inventory (${quantity}). Don't show it in the menu.`
                 );
                 continue;
             }
@@ -107,6 +106,9 @@
         }
 
         updateFilterIconsInView();
+
+        // Refresh all text strings
+        LanguageController.refreshTextStrings();
     }
 
     /**
@@ -121,100 +123,205 @@
             return;
         }
 
-        let optHtmlClassLowInStock;
-        if (quantity < Constants.LOW_STOCK_NUMBER) {
-            optHtmlClassLowInStock = "menu-item-is-low-in-stock";
-        }
-
-        var menuItemHTML = "";
-
         // Check type and displays the relevant information depending on the type.
         // If a filter is defined, use the filter and check if the type matches the filter.
         const type = beverage.category.toUpperCase();
+        let relevantInfoToDisplay;
+        let imageSource = "";
         if (
             containsAnyOf(type, Constants.BEER_CATEGORY) &&
             (!filterByType || filterByType === Constants.BEER_filter)
         ) {
             // Beer or cider
-            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
-                <ul>
-                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
-                    <li>${beverage.name}</li>
-                    <li>${beverage.producer}</li>
-                    <li>${beverage.countryoforiginlandname}</li>
-                    <li>${beverage.category}</li>
-                    <li>${beverage.alcoholstrength}</li>
-                    <li>${beverage.packaging}</li>
-                    <li>${beverage.priceinclvat}</li>
-                </ul>
-                <img src="assets/images/placeholder_beer.png"
-                    alt="">
-            </div>`;
+            relevantInfoToDisplay = {
+                name: {
+                    value: beverage.name,
+                    dataLangKeyForLabel: "",
+                    classToAdd: "menu-item-title",
+                },
+                category: {
+                    value: beverage.category,
+                    dataLangKeyForLabel: "menu-item-label-category",
+                    classToAdd: "menu-item-category",
+                },
+                producer: {
+                    value: beverage.producer,
+                    dataLangKeyForLabel: "menu-item-label-producer",
+                    classToAdd: "",
+                },
+                country: {
+                    value: beverage.countryoforiginlandname,
+                    dataLangKeyForLabel: "menu-item-label-origin",
+                    classToAdd: "",
+                },
+                alcoholstrength: {
+                    value: beverage.alcoholstrength,
+                    dataLangKeyForLabel: "menu-item-label-alcoholstrength",
+                    classToAdd: "",
+                },
+                packaging: {
+                    value: beverage.packaging,
+                    dataLangKeyForLabel: "menu-item-label-packaging",
+                    classToAdd: "",
+                },
+                price: {
+                    value: beverage.priceinclvat,
+                    dataLangKeyForLabel: "menu-item-label-price",
+                    classToAdd: "menu-item-info-with-margin",
+                    suffix: "SEK",
+                },
+            };
+            imageSource = "assets/images/placeholder_beer.png";
         } else if (
             containsAnyOf(type, Constants.WINE_CATEGORY) &&
             (!filterByType || filterByType === Constants.WINE_filter)
         ) {
             // Wine
-            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
-                <ul>
-                    <li class="menu-item-property menu-item-id hidden">${
-                        beverage.nr
-                    }</li>
-                    <li>${beverage.name}</li>
-                    <li>${extractYearOutOfDate(beverage.introduced)}</li>
-                    <li>${beverage.category}</li>
-                    <li>${beverage.packaging}</li>
-                    <li>${beverage.priceinclvat}</li>
-                </ul>
-                <img src="assets/images/placeholder_wine.png"
-                    alt="">
-            </div>`;
+            relevantInfoToDisplay = {
+                name: {
+                    value: beverage.name,
+                    dataLangKeyForLabel: "",
+                    classToAdd: "menu-item-title",
+                },
+                category: {
+                    value: beverage.category,
+                    dataLangKeyForLabel: "menu-item-label-category",
+                    classToAdd: "menu-item-category",
+                },
+                year: {
+                    value: extractYearOutOfDate(beverage.introduced),
+                    dataLangKeyForLabel: "menu-item-label-year",
+                    classToAdd: "",
+                },
+                packaging: {
+                    value: beverage.packaging,
+                    dataLangKeyForLabel: "menu-item-label-packaging",
+                    classToAdd: "",
+                },
+                price: {
+                    value: beverage.priceinclvat,
+                    dataLangKeyForLabel: "menu-item-label-price",
+                    classToAdd: "menu-item-info-with-margin",
+                    suffix: "SEK",
+                },
+            };
+            imageSource = "assets/images/placeholder_wine.png";
         } else if (
             containsAnyOf(type, Constants.DRINKS_CATEGORY) &&
             (!filterByType || filterByType === Constants.DRINK_filter)
         ) {
             // Cocktails / Drinks / Mixed drinks
-            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
-                    <ul>
-                        <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
-                        <li>${beverage.name}</li>
-                        <li>${beverage.category}</li>
-                        <li>${beverage.alcoholstrength}</li>
-                        <li>${beverage.packaging}</li>
-                        <li>${beverage.priceinclvat}</li>
-                    </ul>
-                    <img src="assets/images/placeholder_drink.png"
-                        alt="">
-                </div>`;
+            relevantInfoToDisplay = {
+                name: {
+                    value: beverage.name,
+                    dataLangKeyForLabel: "",
+                    classToAdd: "menu-item-title",
+                },
+                category: {
+                    value: beverage.category,
+                    dataLangKeyForLabel: "menu-item-label-category",
+                    classToAdd: "menu-item-category",
+                },
+                alcoholstrength: {
+                    value: beverage.alcoholstrength,
+                    dataLangKeyForLabel: "menu-item-label-alcoholstrength",
+                    classToAdd: "",
+                },
+                packaging: {
+                    value: beverage.packaging,
+                    dataLangKeyForLabel: "menu-item-label-packaging",
+                    classToAdd: "",
+                },
+                price: {
+                    value: beverage.priceinclvat,
+                    dataLangKeyForLabel: "menu-item-label-price",
+                    classToAdd: "menu-item-info-with-margin",
+                    suffix: "SEK",
+                },
+            };
+            imageSource = "assets/images/placeholder_drink.png";
         } else if (
             containsAnyOf(type, Constants.WATER_CATEGORY) &&
             (!filterByType || filterByType === Constants.WATER_filter)
         ) {
             // Water
-            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
-                <ul>
-                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
-                    <li>${beverage.name}</li>
-                    <li>${beverage.category}</li>
-                    <li>${beverage.priceinclvat}</li>
-                </ul>
-                <img src="assets/images/placeholder_water.png"
-                    alt="">
-            </div>`;
+            relevantInfoToDisplay = {
+                name: {
+                    value: beverage.name,
+                    dataLangKeyForLabel: "",
+                    classToAdd: "menu-item-title",
+                },
+                category: {
+                    value: beverage.category,
+                    dataLangKeyForLabel: "menu-item-label-category",
+                    classToAdd: "menu-item-category",
+                },
+                price: {
+                    value: beverage.priceinclvat,
+                    dataLangKeyForLabel: "menu-item-label-price",
+                    classToAdd: "menu-item-info-with-margin",
+                    suffix: "SEK",
+                },
+            };
+            imageSource = "assets/images/placeholder_water.png";
         } else if (!filterByType) {
             // Unknown type and no filter is set → Show some basic information of the beverage
-            menuItemHTML = `<div class="item  ${optHtmlClassLowInStock}">
-                <ul>
-                    <li class="menu-item-property menu-item-id hidden">${beverage.nr}</li>
-                    <li>${beverage.name}</li>
-                    <li>${beverage.category}</li>
-                    <li>${beverage.alcoholstrength}</li>
-                    <li>${beverage.priceinclvat}</li>
-                </ul>
-                <img src="assets/images/placeholder_others.png"
-                    alt="">
-            </div>`;
+            relevantInfoToDisplay = {
+                name: {
+                    value: beverage.name,
+                    dataLangKeyForLabel: "",
+                    classToAdd: "menu-item-title",
+                },
+                category: {
+                    value: beverage.category,
+                    dataLangKeyForLabel: "menu-item-label-category",
+                    classToAdd: "menu-item-category",
+                },
+                alcoholstrength: {
+                    value: beverage.alcoholstrength,
+                    dataLangKeyForLabel: "menu-item-label-alcoholstrength",
+                    classToAdd: "",
+                },
+                price: {
+                    value: beverage.priceinclvat,
+                    dataLangKeyForLabel: "menu-item-label-price",
+                    classToAdd: "menu-item-info-with-margin",
+                    suffix: "SEK",
+                },
+            };
+            imageSource = "assets/images/placeholder_others.png";
         }
+
+        // E.g. when a filter is set, don't display anything for this beverage.
+        if (!relevantInfoToDisplay) {
+            return;
+        }
+
+        let menuItemInfoHTML = "";
+        for (const key in relevantInfoToDisplay) {
+            if (Object.hasOwnProperty.call(relevantInfoToDisplay, key)) {
+                const infoObject = relevantInfoToDisplay[key];
+                menuItemInfoHTML += `
+                <div class="menu-item-info ${infoObject.classToAdd}">
+                    <span class="menu-item-info-label" data-lang="${
+                        infoObject.dataLangKeyForLabel
+                    }"></span>
+                    <span>${infoObject.value} ${
+                    infoObject.suffix ? infoObject.suffix : ""
+                }</span>
+                </div>
+                `;
+            }
+        }
+
+        const menuItemHTML = `
+        <div data-beverage-nr="${beverage.nr}" class="item">
+            <div>
+                ${menuItemInfoHTML}
+            </div>
+            <img src="${imageSource}" alt="">
+        </div>
+        `;
 
         $("#menu-container").append(menuItemHTML);
     }

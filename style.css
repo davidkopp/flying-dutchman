@@ -342,21 +342,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     margin-top: 20px;
 }
 
-/*=============Menu Page================*/
-
-#menu-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    max-width: 100%;
-    margin: 0 auto;
-    justify-content: center;
-}
-
-.menu-item-is-low-in-stock {
-    /* TODO: Change the look of menu items that are low in stock */
-}
-
 /*============VIP_Dashboard=============*/
 
 .sub_header {
@@ -491,6 +476,15 @@ TODO: Delete unnecessary definitions
 Menu Page
 ========================*/
 
+#menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
 .bg-blue {
     background-color: #2f9af0;
 }
@@ -531,22 +525,41 @@ Menu Page
 }
 .filter-wrapper .list-item .item {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 17px;
+    justify-content: space-between;
+    align-items: top;
+    padding: 20px;
     border: 2px solid #51cfe6;
-    width: 240px;
-    height: 150px;
+    width: 300px;
+    height: 240px;
     border-radius: 40px;
     margin: 0 10px 10px 0;
     background-color: #6bb2e8;
 }
-.filter-wrapper .list-item .item ul {
-    list-style: none;
-}
+
 .filter-wrapper .list-item .item img {
     width: 70px;
     align-self: center;
+}
+
+.menu-item-info {
+    padding-top: 3px;
+}
+
+.menu-item-info-label {
+    font-style: italic;
+}
+
+.menu-item-info-with-margin {
+    margin-top: 10px;
+}
+
+.menu-item-title {
+    font-weight: 600;
+}
+
+.menu-item-category {
+    font-style: italic;
+    margin-bottom: 10px;
 }
 
 /*=======================

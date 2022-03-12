@@ -99,6 +99,17 @@ const Dictionary = {
             "filter-icon-title-wine": "Wine",
             "filter-icon-title-drink": "Drink",
             "filter-icon-title-water": "Water",
+            "button-label-allergies": "Allergies",
+            "button-label-price": "Price",
+            "button-label-tannin": "Tannin",
+            "button-label-alcohol": "Alcohol %",
+            "menu-item-label-origin": "Origin:",
+            "menu-item-label-producer": "Producer:",
+
+            "menu-item-label-alcoholstrength": "Alcohol:",
+            "menu-item-label-packaging": "Packaging:",
+            "menu-item-label-price": "Price:",
+            "menu-item-label-year": "Year:",
         },
         // Text strings for the page 'login'
         login: {
@@ -216,6 +227,17 @@ const Dictionary = {
             "filter-icon-title-wine": "Wein",
             "filter-icon-title-drink": "Drink",
             "filter-icon-title-water": "Wasser",
+            "button-label-allergies": "Allergene",
+            "button-label-price": "Preis",
+            "button-label-tannin": "Tannin",
+            "button-label-alcohol": "Alkohol %",
+            "menu-item-label-origin": "Herkunft:",
+            "menu-item-label-producer": "Hersteller:",
+
+            "menu-item-label-alcoholstrength": "Alkohol:",
+            "menu-item-label-packaging": "Verpackung:",
+            "menu-item-label-price": "Preis:",
+            "menu-item-label-year": "Jahr:",
         },
         // Text strings for the page 'login'
         login: {
@@ -335,6 +357,16 @@ const Dictionary = {
             "filter-icon-title-wine": "Wine",
             "filter-icon-title-drink": "Drink",
             "filter-icon-title-water": "Water",
+            "button-label-allergies": "Allergies",
+            "button-label-price": "Price",
+            "button-label-tannin": "Tannin",
+            "button-label-alcohol": "Alcohol %",
+            "menu-item-label-origin": "Origin:",
+            "menu-item-label-producer": "Producer:",
+            "menu-item-label-alcoholstrength": "Alcohol:",
+            "menu-item-label-packaging": "Packaging:",
+            "menu-item-label-price": "Price:",
+            "menu-item-label-year": "Year:",
         },
         // Text strings for the page 'login'
         login: {
