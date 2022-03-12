@@ -5,7 +5,7 @@ Menu page of the Flying Dutchman.
 
 Author: Abdullah Abdullah
 -----
-Last Modified: Wednesday, 9th March 2022
+Last Modified: Saturday, 12th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -93,35 +93,55 @@ Modified By: David Kopp (mail@davidkopp.de>)
 
             <div class="filter-wrapper">
                 <div class="filter-list">
-                    <div class="filter-icon" onclick="MenuController.filterMenu(Constants.BEER_filter)" title="Beer">
+                    <div
+                        id="filter-icon-beer"
+                        class="filter-icon"
+                        title="Beer"
+                        onclick="MenuController.filterMenu(Constants.BEER_filter)"
+                    >
                         <img
                             src="assets/images/icon_beer.png"
                             data-src="assets/images/icon_beer.png"
-                            data-hover="assets/images/icon_beer_active.png"
+                            data-active="assets/images/icon_beer_active.png"
                             alt=""
                         />
                     </div>
-                    <div class="filter-icon" title="Wine" onclick="MenuController.filterMenu(Constants.WINE_filter)">
+                    <div
+                        id="filter-icon-wine"
+                        class="filter-icon"
+                        title="Wine"
+                        onclick="MenuController.filterMenu(Constants.WINE_filter)"
+                    >
                         <img
                             src="assets/images/icon_wine.png"
                             data-src="assets/images/icon_wine.png"
-                            data-hover="assets/images/icon_wine_active.png"
+                            data-active="assets/images/icon_wine_active.png"
                             alt=""
                         />
                     </div>
-                    <div class="filter-icon" title="Drink" onclick="MenuController.filterMenu(Constants.DRINK_filter)">
+                    <div
+                        id="filter-icon-drink"
+                        class="filter-icon"
+                        title="Drink"
+                        onclick="MenuController.filterMenu(Constants.DRINK_filter)"
+                    >
                         <img
                             src="assets/images/icon_coffee.png"
                             data-src="assets/images/icon_coffee.png"
-                            data-hover="assets/images/icon_coffee_active.png"
+                            data-active="assets/images/icon_coffee_active.png"
                             alt=""
                         />
                     </div>
-                    <div class="filter-icon" title="Water" onclick="MenuController.filterMenu(Constants.WATER_filter)">
+                    <div
+                        id="filter-icon-water"
+                        class="filter-icon"
+                        title="Water"
+                        onclick="MenuController.filterMenu(Constants.WATER_filter)"
+                    >
                         <img
                             src="assets/images/icon_glass.png"
                             data-src="assets/images/icon_glass.png"
-                            data-hover="assets/images/icon_glass_active.png"
+                            data-active="assets/images/icon_glass_active.png"
                             alt=""
                         />
                     </div>

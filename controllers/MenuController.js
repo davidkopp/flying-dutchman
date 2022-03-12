@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -14,14 +14,6 @@
     let lastUsedFilter;
 
     $(document).ready(function () {
-        // Add hover effect and focus change to the filter icons.
-        $(".filter-icon > img").click(function () {
-            $(".filter-icon > img").each(function () {
-                $(this).attr("src", $(this).data("src"));
-            });
-            $(this).attr("src", $(this).data("hover"));
-        });
-
         initMenu();
     });
 
@@ -31,18 +23,23 @@
      * @param {string} byType The name of the filter type.
      */
     function filterMenu(byType) {
-        switch (byType) {
-            case Constants.BEER_filter:
-            case Constants.WINE_filter:
-            case Constants.DRINK_filter:
-            case Constants.WATER_filter:
-                initMenu(byType);
-                break;
-            default:
-                console.log(
-                    `MenuController | Beverage type '${byType}' is unknown.`
-                );
-                break;
+        if (byType === lastUsedFilter) {
+            // Reset the filter
+            initMenu();
+        } else {
+            switch (byType) {
+                case Constants.BEER_filter:
+                case Constants.WINE_filter:
+                case Constants.DRINK_filter:
+                case Constants.WATER_filter:
+                    initMenu(byType);
+                    break;
+                default:
+                    console.log(
+                        `MenuController | Beverage type '${byType}' is unknown.`
+                    );
+                    break;
+            }
         }
     }
 
@@ -108,6 +105,8 @@
 
             displayBeverageInMenu(beverage, quantity, filterByType);
         }
+
+        updateFilterIconsInView();
     }
 
     /**
@@ -218,6 +217,37 @@
         }
 
         $("#menu-container").append(menuItemHTML);
+    }
+
+    /**
+     * Changes the filter icons accordingly to the currently used filter (normal
+     * / active).
+     */
+    function updateFilterIconsInView() {
+        $(".filter-icon").each(function () {
+            const $img = $(this).find("img");
+            $img.attr("src", $($img).data("src"));
+        });
+        let $img;
+        switch (lastUsedFilter) {
+            case Constants.BEER_filter:
+                $img = $("#filter-icon-beer").find("img");
+                break;
+            case Constants.WINE_filter:
+                $img = $("#filter-icon-wine").find("img");
+                break;
+            case Constants.DRINK_filter:
+                $img = $("#filter-icon-drink").find("img");
+                break;
+            case Constants.WATER_filter:
+                $img = $("#filter-icon-water").find("img");
+                break;
+            default:
+                break;
+        }
+        if ($img) {
+            $img.attr("src", $($img).data("active"));
+        }
     }
 
     /**
