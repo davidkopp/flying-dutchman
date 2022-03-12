@@ -63,6 +63,14 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
                 <div id="header-page-title" class="header-bar-column" data-lang="header-page-title"></div>
                 <div class="available-options header-bar-column">
+                    <button id="notify-security-button" data-lang="[title]notify-security-button-title">
+                        <img
+                            src="assets/images/icon_panic.png"
+                            data-src="assets/images/icon_panic.png"
+                            data-hover="assets/images/icon_panic_active.png"
+                            alt=""
+                        />
+                    </button>
                     <button id="logout-button" class="logout_btn hidden" data-lang="[title]logout-button-title">
                         <img src="assets/images/icon_logout.png" alt="" />
                     </button>
@@ -244,6 +252,27 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         <img src="assets/images/icon_close.svg" />
                     </div>
                     <span>NOT IMPLEMENTED YET</span>
+                </div>
+            </div>
+
+            <!-- Overlay for security notifier -->
+            <div id="overlay-security-notifier" class="overlay hidden">
+                <div class="overlay-content">
+                    <div class="overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <span class="overlay-details-heading" data-lang="security-notifier-title"></span>
+                    <form id="security-notifier-form">
+                        <label
+                            for="message"
+                            class="overlay-details-label"
+                            data-lang="security-notifier-message-box-label"
+                        ></label>
+                        <div class="input_box">
+                            <textarea rows="2" cols="50" name="message"></textarea>
+                        </div>
+                        <input type="submit" class="overlay-button" data-lang="[value]security-notifier-form-submit" />
+                    </form>
                 </div>
             </div>
         </div>

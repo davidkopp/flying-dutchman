@@ -152,6 +152,10 @@ const Dictionary = {
                 false: "tbd.",
             },
             "order-details-notes-label": "Notes:",
+            "notify-security-button-title": "Notify Security",
+            "security-notifier-title": "Notify Security",
+            "security-notifier-message-box-label": "Message (optional):",
+            "security-notifier-form-submit": "Send",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -270,6 +274,10 @@ const Dictionary = {
                 false: "tbd.",
             },
             "order-details-notes-label": "Notizen:",
+            "notify-security-button-title": "Sicherheitsdienst benachrichtigen",
+            "security-notifier-title": "Sicherheitsdienst benachrichtigen",
+            "security-notifier-message-box-label": "Nachricht (optional):",
+            "security-notifier-form-submit": "Senden",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -388,6 +396,10 @@ const Dictionary = {
                 false: "tbd.",
             },
             "order-details-notes-label": "Notes:",
+            "notify-security-button-title": "Notify Security",
+            "security-notifier-title": "Notify Security",
+            "security-notifier-message-box-label": "Message (optional):",
+            "security-notifier-form-submit": "Send",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {

@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
@@ -87,6 +87,24 @@
             ) {
                 $(".overlay").hide();
             }
+        });
+
+        $("#notify-security-button").click(function () {
+            $("#overlay-security-notifier").show();
+        });
+
+        $("#security-notifier-form").submit(function (event) {
+            event.preventDefault();
+            const data = getFormData("security-notifier-form");
+
+            const optMessage = data.message;
+            console.log(
+                "Notify security!" +
+                    (optMessage ? ` Message: '${optMessage}'` : "")
+            );
+
+            $("#overlay-security-notifier").hide();
+            $("#security-notifier-form").find("textarea").val("");
         });
     }
 
