@@ -86,27 +86,26 @@ Modified By: David Kopp (mail@davidkopp.de>)
         </header>
         <article>
             <div id="manager-dashboard">
-                <!-- TODO: Translate text strings -->
-                <h1>Manage Stocks</h1>
-                <h3 id="revise-amounts-label">Revise Amount of Beverages</h3>
+                <h1 data-lang="manage-stock-heading"></h1>
+                <h3 id="revise-amounts-label" data-lang="revise-abounts-heading"></h3>
                 <div id="revise-amounts">
                     <label for="price-serial-number" id="serial-number-label"></label>
                     <input type="text" name="price-serial-number" id="price-serial-number" />
-                    <button id="get-price-button">Get Price</button>
+                    <button id="get-price-button" data-lang="get-price-button"></button>
                     <div id="price"></div>
                     <input type="number" name="revise-price-figure" id="revise-price-figure" />
-                    <button id="revise-price-button">Change Price</button>
+                    <button id="revise-price-button" data-lang="revise-price-button"></button>
                 </div>
 
-                <h3 id="refil-beverages-label">Order Refil of Beverages</h3>
-                <div id="refil-beverages">
-                    <label for="refil-serial-number" id="serial-number-label"></label>
-                    <input type="text" name="refil-serial-number" id="refil-serial-number" />
-                    <button id="get-quantity-button">Get Quantity</button>
+                <h3 id="refill-beverages-label" data-lang="refill-beverages-label"></h3>
+                <div id="refill-beverages">
+                    <label for="refill-serial-number" id="serial-number-label"></label>
+                    <input type="text" name="refill-serial-number" id="refill-serial-number" />
+                    <button id="get-quantity-button" data-lang="get-quantity-button"></button>
                     <div id="quantity"></div>
                 </div>
 
-                <h3 id="add-remove-beverages-label">Add/Remove Beverages</h3>
+                <h3 id="add-remove-beverages-label" data-lang="add-remove-beverages-label"></h3>
                 <div id="add-remove-beverages"></div>
             </div>
         </article>
