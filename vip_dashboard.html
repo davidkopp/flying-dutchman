@@ -5,7 +5,7 @@ VIP Dashboard of the Flying Dutchman.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Saturday, 12th March 2022
+Last Modified: Sunday, 13th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -71,33 +71,44 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
                 <div id="header-page-title" class="header-bar-column" data-lang="header-page-title"></div>
                 <div class="available-options header-bar-column">
-                    <a href="index.html">
-                        <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                    <div>
+                        <a href="index.html">
+                            <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                                <img
+                                    src="assets/images/icon_home.png"
+                                    data-src="assets/images/icon_home.png"
+                                    data-hover="assets/images/icon_home_active.png"
+                                    alt=""
+                                />
+                            </button>
+                        </a>
+                    </div>
+                    <!-- <div>
+                        <button>
+                            <i class="fas fa-search bg-blue"></i>
+                        </button>
+                    </div> -->
+                    <div id="vip-account-balance-box">
+                        <div>
+                            <span id="vip-account-balance"></span>
+                        </div>
+                    </div>
+                    <div id="table-number-box">
+                        <div>
+                            <span data-lang="table-number-label"></span>
+                            <span id="table-number"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
                             <img
-                                src="assets/images/icon_home.png"
-                                data-src="assets/images/icon_home.png"
-                                data-hover="assets/images/icon_home_active.png"
+                                src="assets/images/icon_logout.png"
+                                data-src="assets/images/icon_logout.png"
+                                data-hover="assets/images/icon_logout_active.png"
                                 alt=""
                             />
                         </button>
-                    </a>
-                    <!-- <button>
-                        <i class="fas fa-search bg-blue"></i>
-                    </button> -->
-                    <!-- <button>
-                        <i class="fas fa-mobile-alt"></i>
-                    </button> -->
-                    <button>
-                        <span id="vip-account-balance"></span>
-                    </button>
-                    <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
-                        <img
-                            src="assets/images/icon_logout.png"
-                            data-src="assets/images/icon_logout.png"
-                            data-hover="assets/images/icon_logout_active.png"
-                            alt=""
-                        />
-                    </button>
+                    </div>
                 </div>
             </div>
             <!-- TODO: Integrate sub header in normal header

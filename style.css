@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Saturday, 12th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -19,6 +19,17 @@
 
 /*=============Header================*/
 
+header .lang-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    float: right;
+}
+header .lang-flag {
+    width: 40px;
+    margin-left: 20px;
+}
 header .header-bar {
     background-color: rgba(35, 81, 114, 255);
     padding: 0 15px;
@@ -33,6 +44,7 @@ header .header-bar:after {
 header .header-bar-column {
     float: left;
     padding-top: 20px;
+    height: 60px;
 }
 header .logo {
     position: relative;
@@ -55,52 +67,70 @@ header .available-options {
     justify-content: flex-end;
     width: 25%;
 }
+header .available-options * {
+    height: inherit;
+}
+header .available-options div {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 60px; /* same height as 'header-bar-column' */
+    white-space: nowrap;
+    margin: 0 10px;
+}
+header .available-options i,
+header .available-options a {
+    color: #fff;
+    font-size: inherit;
+    line-height: inherit;
+    padding: inherit;
+}
 header .available-options button {
-    vertical-align: middle;
     border: none;
     background-color: transparent;
-    margin: 0 10px;
-    font-size: 22px;
-    margin-right: 0;
-    padding-left: 15px;
+    font-size: inherit;
+    line-height: inherit;
 }
-header .available-options button i,
-header .available-options button a {
-    height: 60px;
-    width: 60px;
-    line-height: 60px;
-    color: #fff;
+header .available-options span {
+    cursor: default;
 }
-header .available-options button .fa-mobile-alt {
-    border-radius: 50%;
-    background-color: #fff;
-    border: 1px solid #2f9af0;
-    color: #000;
+header .available-options i {
+    width: 60px; /* same as height */
+    text-align: center;
 }
-header .available-options button span {
-    display: inline-block;
+header .available-options div > div {
+    padding: 0 10px;
+}
+header .available-options #vip-account-balance-box {
     background-color: #f0d420;
-    padding: 10px 15px;
-    line-height: 40px;
-    font-weight: 500;
-    min-width: 150px;
 }
-header .available-options button img {
-    height: 60px;
-    width: auto;
-    line-height: 60px;
+header .available-options #table-number-box {
+    background-color: #8fd14f;
 }
 
-.lang-container {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
-    float: right;
-}
-.lang-flag {
-    width: 40px;
-    margin-left: 20px;
+/* Responsive design for the header */
+@media screen and (max-width: 1200px) {
+    header .header-bar {
+        align-items: center;
+        height: 270px;
+    }
+    header .header-bar-column {
+        float: none;
+        margin: 15px 0;
+        text-align: center;
+    }
+    header .logo {
+        width: unset;
+        margin-bottom: 40px;
+    }
+    header #header-page-title {
+        width: unset;
+    }
+    header .available-options {
+        display: flex;
+        justify-content: center;
+        width: unset;
+    }
 }
 
 /*===================Body================*/

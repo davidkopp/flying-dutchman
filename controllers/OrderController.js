@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -241,7 +241,6 @@
      */
     function createOrder(order) {
         if (!validateOrder(order)) {
-            // TODO: Error Handling
             console.log(
                 "OrderController.createOrder | Invalid order:\n" +
                     JSON.stringify(order)
@@ -480,7 +479,6 @@
      */
     function editOrder(order) {
         if (!validateOrder(order)) {
-            // TODO: Error Handling
             return null;
         }
         if (typeof order.id != "number") {
@@ -495,7 +493,6 @@
         let orderToEdit = DatabaseAPI.Orders.getOrderById(order.id);
 
         if (order.inventory !== orderToEdit.inventory) {
-            // TODO: Error Handling
             console.log(
                 "OrderController.editOrder | Change of the inventory is not possible! Order:\n" +
                     JSON.stringify(order)
@@ -529,7 +526,6 @@
      */
     function addItemToOrder(orderId, item) {
         if (!validateItem(item)) {
-            // TODO: Error Handling
             return null;
         }
 
@@ -587,7 +583,6 @@
      */
     function removeItemFromOrder(orderId, item) {
         if (!validateItem(item)) {
-            // TODO: Error Handling
             return null;
         }
 

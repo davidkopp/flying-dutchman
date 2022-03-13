@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Wednesday, 9th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LoginController, OrderController */
@@ -65,11 +65,16 @@
             const userDetails = DatabaseAPI.Users.getUserDetailsByUserName(
                 loggedInUserData.username
             );
+
             $("#vip-name").html(
                 userDetails.first_name + " " + userDetails.last_name
             );
-            // TODO: Put the currency somewhere else.
-            $("#vip-account-balance").html(userDetails.creditSEK + " SEK");
+            $("#vip-account-balance").html(
+                userDetails.creditSEK + " " + Constants.CURRENCY_IN_VIEW
+            );
+            $("#vip-account-balance").show();
+        } else {
+            $("#vip-account-balance").hide();
         }
     }
 

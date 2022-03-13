@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 12th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -69,6 +69,8 @@ const Constants = {
 
     DATA_LANG_DYNAMIC_KEY: "data-lang-dynamic-key",
     DATA_LANG_DYNAMIC_VALUE: "data-lang-dynamic-value",
+
+    CURRENCY_IN_VIEW: "SEK",
 };
 
 const Dictionary = {
@@ -163,7 +165,7 @@ const Dictionary = {
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
             "header-page-title": "VIP Dashboard",
-            "table-number-heading": "Table Number",
+            "table-number-label": "Table",
             "vip-welcome-text": "Welcome",
             "vip-account-balance-text": "Balance =",
             "place-order-button": "Place Order",
@@ -287,7 +289,7 @@ const Dictionary = {
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
             "header-page-title": "VIP Dashboard",
-            "table-number-heading": "Tischnummer",
+            "table-number-label": "Tisch",
             "vip-welcome-text": "Willkommen",
             "vip-account-balance-text": "Kontostand =",
             "place-order-button": "Bestellen",
@@ -411,7 +413,7 @@ const Dictionary = {
         vip_dashboard: {
             "page-title": "Flying Dutchman - VIP Dashboard",
             "header-page-title": "VIP Dashboard",
-            "table-number-heading": "Table Number",
+            "table-number-label": "Table",
             "vip-welcome-text": "Welcome",
             "vip-account-balance-text": "Balance =",
             "place-order-button": "Place Order",

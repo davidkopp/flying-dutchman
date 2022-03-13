@@ -5,7 +5,7 @@ The dashboard for staff members like bartenders, waiter, waitress, etc.
 
 Author: David Kopp
 -----
-Last Modified: Saturday, 12th March 2022
+Last Modified: Sunday, 13th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -64,32 +64,38 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
                 <div id="header-page-title" class="header-bar-column" data-lang="header-page-title"></div>
                 <div class="available-options header-bar-column">
-                    <a href="index.html">
-                        <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                    <div>
+                        <a href="index.html">
+                            <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                                <img
+                                    src="assets/images/icon_home.png"
+                                    data-src="assets/images/icon_home.png"
+                                    data-hover="assets/images/icon_home_active.png"
+                                    alt=""
+                                />
+                            </button>
+                        </a>
+                    </div>
+                    <div>
+                        <button id="notify-security-button" data-lang="[title]notify-security-button-title">
                             <img
-                                src="assets/images/icon_home.png"
-                                data-src="assets/images/icon_home.png"
-                                data-hover="assets/images/icon_home_active.png"
+                                src="assets/images/icon_panic.png"
+                                data-src="assets/images/icon_panic.png"
+                                data-hover="assets/images/icon_panic_active.png"
                                 alt=""
                             />
                         </button>
-                    </a>
-                    <button id="notify-security-button" data-lang="[title]notify-security-button-title">
-                        <img
-                            src="assets/images/icon_panic.png"
-                            data-src="assets/images/icon_panic.png"
-                            data-hover="assets/images/icon_panic_active.png"
-                            alt=""
-                        />
-                    </button>
-                    <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
-                        <img
-                            src="assets/images/icon_logout.png"
-                            data-src="assets/images/icon_logout.png"
-                            data-hover="assets/images/icon_logout_active.png"
-                            alt=""
-                        />
-                    </button>
+                    </div>
+                    <div>
+                        <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+                            <img
+                                src="assets/images/icon_logout.png"
+                                data-src="assets/images/icon_logout.png"
+                                data-hover="assets/images/icon_logout_active.png"
+                                alt=""
+                            />
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>

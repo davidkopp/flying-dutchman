@@ -5,7 +5,7 @@ Menu page of the Flying Dutchman.
 
 Author: Abdullah Abdullah
 -----
-Last Modified: Saturday, 12th March 2022
+Last Modified: Sunday, 13th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -70,36 +70,44 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
                 <div class="header-bar-column" id="header-page-title" data-lang="header-page-title"></div>
                 <div class="available-options header-bar-column">
-                    <a href="index.html">
-                        <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                    <div>
+                        <a href="index.html">
+                            <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                                <img
+                                    src="assets/images/icon_home.png"
+                                    data-src="assets/images/icon_home.png"
+                                    data-hover="assets/images/icon_home_active.png"
+                                    alt=""
+                                />
+                            </button>
+                        </a>
+                    </div>
+                    <!-- TODO: Use or remove search button, account balance info and dollar sign -->
+                    <!-- <div>
+                        <a class="clickable">
+                            <i class="fas fa-search bg-blue"></i>
+                        </a>
+                    </div> -->
+                    <!-- <div>
+                        <button>
+                            <span id="vip-account-balance"></span>
+                        </button>
+                    </div> -->
+                    <!-- <div>
+                        <a class="clickable">
+                            <i class="fas fa-dollar-sign bg-blue"></i>
+                        </a>
+                    </div> -->
+                    <div>
+                        <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
                             <img
-                                src="assets/images/icon_home.png"
-                                data-src="assets/images/icon_home.png"
-                                data-hover="assets/images/icon_home_active.png"
+                                src="assets/images/icon_logout.png"
+                                data-src="assets/images/icon_logout.png"
+                                data-hover="assets/images/icon_logout_active.png"
                                 alt=""
                             />
                         </button>
-                    </a>
-                    <!-- <button>
-                        <i class="fas fa-search bg-blue"></i>
-                    </button> -->
-                    <!-- <button>
-                        <i class="fas fa-mobile-alt"></i>
-                    </button>
-                     <button>
-                        <span id="vip-account-balance"></span>
-                    </button>
-                    <button>
-                        <i class="fas fa-dollar-sign bg-blue"></i>
-                    </button>-->
-                    <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
-                        <img
-                            src="assets/images/icon_logout.png"
-                            data-src="assets/images/icon_logout.png"
-                            data-hover="assets/images/icon_logout_active.png"
-                            alt=""
-                        />
-                    </button>
+                    </div>
                 </div>
             </div>
         </header>
