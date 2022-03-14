@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 13th March 2022
+ * Last Modified: Monday, 14th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -353,9 +353,9 @@ const Dictionary = {
     },
     // Portuguese
     pt: {
-        // TODO: Translate the english text strings into portuguese
         // Common text strings (relevant for multiple pages)
         _: {
+            // TODO: Translate the following text strings into portuguese
             "language-flag-title-english": "English",
             "language-flag-title-german": "German",
             "language-flag-title-portuguese": "Portuguese",
@@ -366,6 +366,7 @@ const Dictionary = {
         },
         // Text strings for the page 'index'
         index: {
+            // TODO: Translate the following text strings into portuguese
             "page-title": "Flying Dutchman - Welcome",
             "header-page-title": "Welcome!",
             "link-to-login-page": "Login",
@@ -373,9 +374,10 @@ const Dictionary = {
         },
         // Text strings for the page 'menu'
         menu: {
-            "page-title": "Flying Dutchman - Menu",
-            "header-page-title": "Menu",
-            "caption": "Menu",
+            "page-title": "Flying Dutchman - Cardápio",
+            "header-page-title": "Cardápio",
+            "caption": "Cardápio",
+            // TODO: Translate the following text strings into portuguese
             "filter-icon-title-beer": "Beer",
             "filter-icon-title-wine": "Wine",
             "filter-icon-title-drink": "Drink",
@@ -383,46 +385,52 @@ const Dictionary = {
         },
         // Text strings for the page 'login'
         login: {
-            "page-title": "Flying Dutchman - Login",
-            "caption": "Login",
-            "username-label": "Username",
-            "password-label": "Password",
-            "login-form-submit": "Login",
+            "page-title": "Flying Dutchman - Entrar",
+            "caption": "Entrar",
+            "username-label": "Usuário",
+            "password-label": "Senha",
+            "login-form-submit": "Entrar",
+            // TODO: Translate the following text strings into portuguese
             "message-wrong-credentials": "Wrong user name or password!",
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
-            "page-title": "Flying Dutchman - Staff Dashboard",
-            "header-page-title": "Staff Dashboard",
-            "orders-overview-title": "Orders",
-            "orders-overview-table-label": "Table",
-            "order-details-id-label": "Order number:",
-            "order-details-inventory-label": "Inventory:",
-            "create-order-button-text": "Create new order",
-            "inventory-overview-title": "Inventory",
+            "page-title":
+                "Flying Dutchman - Painel de Controle dos Funcionários",
+            "header-page-title":
+                "Flying Dutchman - Painel de Controle dos Funcionários",
+            "orders-overview-title": "Pedidos",
+            "orders-overview-table-label": "Mesa",
+            "order-details-id-label": "Pedido Numero:",
+            "order-details-inventory-label": "Inventário:",
+            "create-order-button-text": "Ordenar",
+            "inventory-overview-title": "Inventário",
             "restock-button-text": "Restock",
-            "orders-list-total-number-label": "Number of orders:",
-            "inventory-notifications-total-number-label": "Items running out:",
-            "order-details-heading-with-table-number": "Orders for table",
-            "create-order-items-label": "Items:",
-            "order-details-items-label": "Items:",
-            "inventory-details-label": "Inventory:",
-            "inventory-details-items-running-low-label": "Items running low:",
-            "create-order-title": "Create a new order",
-            "create-order-table-label": "Table:",
+            "orders-list-total-number-label": "Numero de Pedidos:",
+            "inventory-notifications-total-number-label":
+                "Itens com pouca quantidade:",
+            "order-details-heading-with-table-number": "Pedidos para a Mesa",
+            "create-order-items-label": "Itens:",
+            "order-details-items-label": "Itens:",
+            "inventory-details-label": "Inventário:",
+            "inventory-details-items-running-low-label":
+                "Itens com pouca quantidade:",
+            "create-order-title": "Ordenar",
+            "create-order-table-label": "Mesa:",
             "create-order-add-item-label": "Item:",
-            "create-order-notes-label": "Notes:",
-            "create-order-inventory-label": "Inventory:",
+            "create-order-notes-label": "Notas:",
+            "create-order-inventory-label": "Inventário:",
             "create-order-inventory-label-bar": "Bar",
             "create-order-inventory-label-vip": "VIP",
-            "create-order-form-submit": "Create Order",
-            "details-overlay-delete-order-button": "Delete Order",
-            "details-overlay-edit-order-button": "Edit Order",
-            "add-more-items-button": "Add more items",
+            "create-order-form-submit": "Ordenar",
+            "details-overlay-delete-order-button": "Cancelar Pedido",
+            "details-overlay-edit-order-button": "Edit Order", // TODO: Translate into portuguese
+            "add-more-items-button": "Adicionar mais itens",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
-                [Constants.INVENTORIES.VIP]: "VIP Cooler",
+                [Constants.INVENTORIES.VIP]: "VIP Frigobar",
             },
+            // TODO: Translate the following text strings into portuguese
             "order-list-order-number": "Order",
             "order-list-status": "Status",
             "order-list-items": "Items",
@@ -441,20 +449,21 @@ const Dictionary = {
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
-            "page-title": "Flying Dutchman - VIP Dashboard",
-            "header-page-title": "VIP Dashboard",
-            "table-number-label": "Table",
-            "vip-welcome-text": "Welcome",
-            "vip-account-balance-text": "Balance =",
-            "place-order-button": "Place Order",
+            "page-title": "Flying Dutchman - VIP Painel de Controle",
+            "header-page-title": "VIP Painel de Controle",
+            "table-number-label": "Mesa Número",
+            "vip-welcome-text": "Bem-vindo",
+            "vip-account-balance-text": "Saldo =",
+            "place-order-button": "Ordenar",
             "menu-heading": "Menu",
-            "specials-heading": "Specials",
-            "waiter-call-button": "Waiter Call",
-            "pay-bill-button": "Pay Bill",
-            "info-box-title": "Info",
+            "specials-heading": "Especiais",
+            "waiter-call-button": "Chamar o Garçon",
+            "pay-bill-button": "Pagar a Conta",
+            "info-box-title": "Informaçao",
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
+            // TODO: Translate the following text strings into portuguese
             "page-title": "Flying Dutchman - Manager Dashboard",
             "header-page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
@@ -486,7 +495,7 @@ const Dictionary = {
             "manage-beverages-header-status-label": "Status",
         },
         SpecRunner: {
-            "unit-test": "english",
+            "unit-test": "portuguese",
         },
     },
 };
