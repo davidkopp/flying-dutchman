@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -17,53 +17,207 @@
     font-family: "Raleway", sans-serif;
 }
 
+/*=============Header================*/
+
+header .lang-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    float: right;
+}
+header .lang-flag {
+    width: 40px;
+    margin-left: 20px;
+}
+header .header-bar {
+    background-color: rgba(35, 81, 114, 255);
+    padding: 0 15px;
+    align-items: center;
+    position: relative;
+    top: 65px;
+    height: 105px;
+}
+header .header-bar:after {
+    clear: both;
+}
+header .header-bar-column {
+    float: left;
+    padding-top: 20px;
+    height: 60px;
+}
+header .logo {
+    position: relative;
+    left: 30px;
+    width: 25%;
+}
+header .logo img {
+    height: 80px;
+}
+header #header-page-title {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    width: 50%;
+    text-align: center;
+    cursor: default;
+}
+header .available-options {
+    display: flex;
+    justify-content: flex-end;
+    width: 25%;
+}
+header .available-options * {
+    height: inherit;
+}
+header .available-options div {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 60px; /* same height as 'header-bar-column' */
+    white-space: nowrap;
+    margin: 0 10px;
+}
+header .available-options i,
+header .available-options a {
+    color: #fff;
+    font-size: inherit;
+    line-height: inherit;
+    padding: inherit;
+}
+header .available-options button {
+    border: none;
+    background-color: transparent;
+    font-size: inherit;
+    line-height: inherit;
+}
+header .available-options span {
+    cursor: default;
+}
+header .available-options i {
+    width: 60px; /* same as height */
+    text-align: center;
+}
+header .available-options div > div {
+    padding: 0 10px;
+}
+header .available-options #vip-account-balance-box {
+    background-color: #f0d420;
+}
+header .available-options #table-number-box {
+    background-color: #8fd14f;
+}
+
+/* Responsive design for the header */
+@media screen and (max-width: 1200px) {
+    header .header-bar {
+        align-items: center;
+        height: 270px;
+    }
+    header .header-bar-column {
+        float: none;
+        margin: 15px 0;
+        text-align: center;
+    }
+    header .logo {
+        width: unset;
+        margin-bottom: 40px;
+    }
+    header #header-page-title {
+        width: unset;
+    }
+    header .available-options {
+        display: flex;
+        justify-content: center;
+        width: unset;
+    }
+}
+
+/*===================Body================*/
+
+body {
+    background-color: #033d66;
+    min-height: 100vh;
+    position: relative;
+}
+
+article {
+    position: relative;
+    top: 70px;
+}
+
+body::after {
+    content: "";
+    display: block;
+    height: 100px;
+    margin-top: 30px;
+}
+
+/*=============Footer================*/
+footer {
+    background-color: rgba(35, 81, 114, 255);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    line-height: 50px;
+    color: white;
+    font-size: 18px;
+}
+
+footer #logged-in-user-label {
+    font-weight: 700;
+}
+/*
+footer .footer-align {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+footer .footer-align .details-btn {
+    max-width: 200px;
+    width: 100%;
+}
+footer .footer-align .details-btn button,
+footer .footer-align .logout_btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #f2f2f2;
+    cursor: pointer;
+}*/
+
+/*===================COMMON DEFINITIONS================*/
+.center-in-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 100%;
+}
+
+button,
+input[type="submit"],
+.clickable {
+    cursor: pointer;
+}
+
 .hidden {
     display: none;
 }
 
-/*=============Language Switcher================*/
+/*=============Landing Page / Home Page================*/
 
-.language-button {
-    width: 10px;
+#home-center-button img {
+    width: 15vw;
+    height: auto;
 }
 
-/*=============Menu Page================*/
-
-.menu-item {
-    max-width: 300px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.menu-item-beer {
-    border: solid 3px brown;
-}
-
-.menu-item-wine {
-    border: solid 3px violet;
-}
-
-.menu-item-drink {
-    border: solid 3px gold;
-}
-
-.menu-item-water {
-    border: solid 3px aqua;
-}
-
-.menu-item-other {
-    border: solid 3px red;
-}
-
-.menu-item-name {
-    font-weight: bold;
-}
-
-.menu-item-is-low-in-stock {
-    background-color: lightgray;
-}
-
-/*=============Landing Page================*/
+/*
+TODO: Are these definitions relevant? They are currently not used in any HTML file.
 .align {
     display: flex;
     justify-content: space-between;
@@ -90,9 +244,6 @@
     color: #000;
     text-decoration: none;
 }
-
-/*
-TODO: Are these definitions relevant? They are currently not used in any HTML file.
 
 .banner {
     background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
@@ -124,21 +275,8 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 }
 */
 
-.lang {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-}
-#menu_wrapper .lang {
-    top: 70px;
-    right: 20px;
-}
-.lang button,
-.lang-flag button {
-    display: inline-block;
-    padding: 5px 20px;
-    border: none;
-}
+/* ??? */
+
 .banner .overlay .content .routes {
     margin: 15px 0;
 }
@@ -164,15 +302,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     min-width: unset;
 }
 
-/*===================Login================*/
-.login_wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    background-color: #033d66;
-}
 .login {
     max-width: 400px;
     width: 100%;
@@ -186,7 +315,7 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 }
 .box label {
     margin-bottom: 0;
-    min-width: 80px;
+    min-width: 100px;
     margin-bottom: 0;
 }
 .box .input_box {
@@ -207,11 +336,16 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     display: block;
     padding: 10px;
     font-weight: 500;
+    font-size: 18px;
     border: none;
     background-color: #3458eb;
     color: #fff;
     margin-top: 20px;
-    cursor: pointer;
+}
+
+#message-box-wrong-credentials {
+    color: red;
+    text-align: center;
 }
 
 .mb-20 {
@@ -227,17 +361,8 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     margin-top: 20px;
 }
 
-/*==============Menu==============*/
-#menu_wrapper {
-    background-color: #033d66;
-}
-#menu_wrapper h1 {
-    padding: 10px 10px;
-}
-#menu_wrapper .filter {
-    justify-content: center;
-    margin-bottom: 20px;
-}
+/*=============Menu Page================*/
+
 #menu-container {
     display: flex;
     flex-wrap: wrap;
@@ -247,35 +372,16 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     justify-content: center;
 }
 
-.menu-item {
-    max-width: 300px;
-    width: 100%;
-    color: #f2f2f2;
+.menu-item-is-low-in-stock {
+    /* TODO: Change the look of menu items that are low in stock */
 }
 
-.order-placement {
-    position: relative;
-    max-width: 500px;
-    width: 100%;
-    padding-left: 10px;
-    margin-bottom: 40px;
-}
-.order-container {
-    width: 100%;
-    border: 1px solid #e2e2e2;
-    min-height: 100px;
-}
-.order-action {
-    text-align: right;
-}
-.order-action .material-icons {
-    cursor: pointer;
-}
 /*============VIP_Dashboard=============*/
+
 .sub_header {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 80px;
     align-items: center;
     color: #fff;
 }
@@ -302,43 +408,37 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     justify-content: center;
     align-items: center;
 }
-.items-order-list .item .thumbnail,
-.drag-drop-wrapper .thumbnail,
-.filter-wrapper .thumbnail {
+.items-order-list .item .filter-icon,
+.drag-drop-wrapper .filter-icon,
+.filter-wrapper .filter-icon {
     width: 75px;
     height: 75px;
-    border: 2px solid #e2e2e2;
-    border-radius: 10px;
-    margin: 5px;
+    margin: 5px auto;
     cursor: pointer;
 }
-.items-order-list .item .thumbnail img,
-.drag-drop-wrapper .thumbnail img,
-.filter-wrapper .thumbnail img {
+.items-order-list .item .filter-icon img,
+.drag-drop-wrapper .filter-icon img,
+.filter-wrapper .filter-icon img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
-footer .footer-align {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+
+.filter-icon > img:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
 }
-footer .footer-align .details-btn {
-    max-width: 200px;
-    width: 100%;
-}
-footer .footer-align .details-btn button,
-footer .footer-align .logout_btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    border: none;
-    background-color: #f2f2f2;
-    cursor: pointer;
-}
+
 /*=================Drag & Drop==================*/
+
+/*
+TODO: Delete unnecessary definitions
 .drag-drop-wrapper {
     max-width: 800px;
     margin: 20px auto;
@@ -375,11 +475,13 @@ footer .footer-align .logout_btn {
 .drag-drop {
     min-height: 40vh;
 }
+
 .drag-drop-area .thumbnail {
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
 }
+
 .btn-wrapper {
     display: flex;
     justify-content: space-between;
@@ -402,58 +504,12 @@ footer .footer-align .logout_btn {
 .bg-color {
     background-color: #0c4068;
 }
+*/
 
 /*=======================
-Listing Page
+Menu Page
 ========================*/
-.lang-flags {
-    text-align: right;
-    padding: 10px;
-}
-.flag button {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #f2f2f2;
-}
-header {
-    background-color: rgba(35, 81, 114, 255);
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-header .logo h1 {
-    margin-bottom: 0;
-    font-size: 40px;
-    font-weight: 500;
-    color: #fff;
-    padding-left: 60px;
-}
-header .available-options button {
-    border: none;
-    background-color: transparent;
-    margin: 0 4px;
-}
-header .available-options button i {
-    font-size: 18px;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    color: #fff;
-}
-header .available-options button .fa-mobile-alt {
-    border-radius: 50%;
-    background-color: #fff;
-    border: 1px solid #2f9af0;
-    color: #000;
-}
-header .available-options button span {
-    display: inline-block;
-    background-color: #f0d420;
-    padding: 10px;
-    font-weight: 500;
-}
+
 .bg-blue {
     background-color: #2f9af0;
 }
@@ -485,7 +541,7 @@ header .available-options button span {
     flex: 0 0 15%;
 }
 .filter-wrapper .filter-result {
-    margin-left: 20px;
+    margin-left: -20px;
     flex: 0 0 85%;
 }
 .filter-wrapper .list-item {
@@ -496,7 +552,7 @@ header .available-options button span {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    padding: 17px;
     border: 2px solid #51cfe6;
     width: 240px;
     height: 150px;
@@ -517,52 +573,23 @@ Staff dashboard
 ========================*/
 
 .order-table-number {
-    font-size: 50px;
-    font-weight: 900;
-    color: white;
+    font-size: 32px;
+    font-weight: 700;
     cursor: pointer;
 }
 
 .order-table-number:hover {
-    -webkit-mask-image: linear-gradient(
-        -75deg,
-        rgba(0, 0, 0, 0.6) 30%,
-        #000 50%,
-        rgba(0, 0, 0, 0.6) 70%
-    );
-    -webkit-mask-size: 200%;
-    animation: shine 2s infinite;
-}
-
-@-webkit-keyframes shine {
-    from {
-        -webkit-mask-position: 150%;
-    }
-
-    to {
-        -webkit-mask-position: -50%;
-    }
-}
-
-#staff-dashboard-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    background-color: #033d66;
+    color: #0c4068;
 }
 
 .overview-container {
-    margin: 30px;
+    padding: 30px;
 }
 
 .overview-list-container {
     text-align: center;
     position: relative;
-    height: 50vh;
-    width: 320px;
-    padding: 20px;
+    /* min-width: 320px; */
     overflow: auto;
 }
 
@@ -572,13 +599,15 @@ Staff dashboard
     color: white;
     display: flex;
     justify-content: space-between;
-    font-size: 24px;
+    font-size: 32px;
     line-height: 50px;
     text-align: center;
 }
 
 #orders-list-container {
     background-color: #8fd14f;
+    font-size: 24px;
+    height: 70vh;
 }
 
 #inventory-list-container {
@@ -591,25 +620,90 @@ Staff dashboard
     padding: 10px;
 }
 
+.table-element {
+    margin: 20px;
+}
+
+.order-element {
+    background-color: #b4e286;
+    padding: 20px;
+    margin: 10px;
+    text-align: left;
+}
+
+.order-element-number {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.order-element-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.order-element-row > div {
+    flex: 1 1 auto;
+}
+
+.order-list-column-heading {
+    font-weight: 600;
+}
+
 #order-details-list ul {
     margin-left: 30px;
 }
 
+.order-notes-text-field {
+    background: transparent;
+    border: none;
+    font-size: inherit;
+}
+
+.order-notes-text-field:hover {
+    background-color: lightgray;
+}
+
+.order-element ul {
+    margin-left: 30px;
+}
+
+.order-action-button {
+    font-size: 35px;
+    margin-right: 20px;
+}
+
 .inventory-element {
+    /* margin: 40px 0px; */
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin: 30px auto;
+}
+
+img.inventory-element-image {
+    display: block;
+    width: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
     cursor: pointer;
-    margin: 40px 0px;
 }
 
-.inventory-element img {
-    min-width: 100px;
+img.inventory-has-items-running-low {
+    display: block;
+    height: auto;
+    width: 40px;
+    position: absolute;
+    top: 0;
+    left: 70px;
+    z-index: 2;
 }
 
-.inventory-has-items-running-low {
-    border: 3px solid red;
-}
-
-.table-element {
-    margin: 40px;
+img.inventory-has-enough-items {
+    display: none;
 }
 
 .overview-container-footer {
@@ -621,13 +715,12 @@ Staff dashboard
     font-size: 24px;
 }
 
-.overview-buttons {
+.overview-button {
     background-color: #385871;
     padding: 5px;
     color: white;
     font-size: 24px;
     border: none;
-    cursor: pointer;
 }
 
 .overlay-button {
@@ -636,7 +729,6 @@ Staff dashboard
     color: white;
     font-size: 20px;
     border: none;
-    cursor: pointer;
 }
 
 .overlay-details-label {
@@ -683,40 +775,54 @@ Staff dashboard
     width: 1em;
     float: right;
     border: orange;
-    cursor: pointer;
-}
-
-.overlay-button {
 }
 
 /*=======================
 VIP dashboard
 ========================*/
 
-body {
-    background-color: #033d66;
+.drag-drop > div {
+    height: 60vh;
 }
 
 .available-items-area {
     float: left;
     background-color: aquamarine;
     width: 50%;
+    overflow-y: scroll;
 }
 
 .order-area {
     float: right;
     background-color: #ffffff;
     width: 50%;
-    height: 500px;
+    position: relative;
 }
 
 .drag-items {
     cursor: pointer;
 }
 
+#inventory-buttons button {
+    border: 2px solid #6cafe5;
+    background-color: #2d9bf1;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+    margin: 20px;
+}
+
 #place-order {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #2f9af0;
+    color: white;
+    font-size: 20px;
 }
 
 #info-box-title {
@@ -726,4 +832,148 @@ body {
 #info-box-message {
     font-size: 22px;
     text-align: center;
+}
+
+/*=======================
+Manager Dashboard
+========================*/
+
+#manager-dashboard {
+    color: white;
+}
+
+#manager-dashboard h3 {
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+#manager-dashboard h3:hover {
+    text-decoration: underline;
+}
+
+/*=======================
+Animations
+========================*/
+
+@-webkit-keyframes shine {
+    from {
+        -webkit-mask-position: 150%;
+    }
+    to {
+        -webkit-mask-position: -50%;
+    }
+}
+
+.hover-shine:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
+}
+
+/*=======================
+Responsive Design
+========================*/
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+[class*="col-"] {
+    float: left;
+}
+
+/* For mobile phones */
+[class*="col-"] {
+    width: 100%;
+}
+
+/* For tablets */
+@media only screen and (min-width: 600px) {
+    .col-s-1 {
+        width: 8.33%;
+    }
+    .col-s-2 {
+        width: 16.66%;
+    }
+    .col-s-3 {
+        width: 25%;
+    }
+    .col-s-4 {
+        width: 33.33%;
+    }
+    .col-s-5 {
+        width: 41.66%;
+    }
+    .col-s-6 {
+        width: 50%;
+    }
+    .col-s-7 {
+        width: 58.33%;
+    }
+    .col-s-8 {
+        width: 66.66%;
+    }
+    .col-s-9 {
+        width: 75%;
+    }
+    .col-s-10 {
+        width: 83.33%;
+    }
+    .col-s-11 {
+        width: 91.66%;
+    }
+    .col-s-12 {
+        width: 100%;
+    }
+}
+
+/* For desktop in landscape mode */
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+    .row {
+        margin: 30px 50px;
+    }
+
+    .col-1 {
+        width: 8.33%;
+    }
+    .col-2 {
+        width: 16.66%;
+    }
+    .col-3 {
+        width: 25%;
+    }
+    .col-4 {
+        width: 33.33%;
+    }
+    .col-5 {
+        width: 41.66%;
+    }
+    .col-6 {
+        width: 50%;
+    }
+    .col-7 {
+        width: 58.33%;
+    }
+    .col-8 {
+        width: 66.66%;
+    }
+    .col-9 {
+        width: 75%;
+    }
+    .col-10 {
+        width: 83.33%;
+    }
+    .col-11 {
+        width: 91.66%;
+    }
+    .col-12 {
+        width: 100%;
+    }
 }

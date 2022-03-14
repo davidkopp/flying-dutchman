@@ -3,7 +3,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Tuesday, 8th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals OrderController, UNDOmanager */
@@ -273,8 +273,8 @@ describe("OrderController", function () {
         );
 
         expect(updatedOrder).toBeTruthy();
-        expect(updatedOrder.note).toBeTruthy();
-        expect(updatedOrder.note).toBe(updatedNote);
+        expect(updatedOrder.notes).toBeTruthy();
+        expect(updatedOrder.notes).toBe(updatedNote);
     });
 
     it("should be able to declare an item from an order as a product on the house", function () {

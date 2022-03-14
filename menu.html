@@ -3,22 +3,33 @@ File: menu.html
 
 Menu page of the Flying Dutchman.
 
-Author: David Kopp
+Author: Abdullah Abdullah
 -----
-Last Modified: Sunday, 6th March 2022
+Last Modified: Sunday, 13th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title data-lang="page-title">Flying Dutchman</title>
 
         <!-- Prevent browser from requesting a favicon -->
         <link rel="icon" href="data:;base64,=" />
+        <!--Stylesheet-->
         <link rel="stylesheet" href="style.css" />
+        <!--Font Awesome-->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+
         <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
 
         <script type="text/javascript" src="database/BeveragesDB.js"></script>
@@ -29,38 +40,154 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/LanguageController.js"></script>
         <script type="text/javascript" src="controllers/LoginController.js"></script>
         <script type="text/javascript" src="controllers/MenuController.js"></script>
+        <script type="text/javascript" src="controllers/EffectsController.js"></script>
     </head>
 
     <body>
-        <h1 id="caption" data-lang="caption"></h1>
-
-        <button onclick="changeLang('en')">
-            <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-            <span data-lang="language-switcher-text-english">English</span>
-        </button>
-        <button onclick="changeLang('de')">
-            <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-            <span data-lang="language-switcher-text-german">German</span>
-        </button>
-        <button onclick="changeLang('pt')">
-            <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-            <span data-lang="language-switcher-text-portuguese">Portuguese</span>
-        </button>
-        <br />
-        <br />
-
-        <div id="menu-container"></div>
-
-        <br />
-        <br />
-        <a href="login.html" data-lang="link-to-login-page"></a>
-        <footer>
-            <div class="footer-align">
-                <div id="logged-in-user-container">
-                    <span data-lang="logged-in-user-label"></span>
-                    <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">Logout</button>
+        <header>
+            <div class="lang-container">
+                <div
+                    onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)"
+                    data-lang="[title]language-flag-title-english"
+                >
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag hover-shine clickable" />
                 </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)" data-lang="[title]language-flag-title-german">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                </div>
+                <div
+                    onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)"
+                    data-lang="[title]language-flag-title-portuguese"
+                >
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                </div>
+            </div>
+            <div class="header-bar">
+                <div class="logo header-bar-column" data-lang="[title]logo-title">
+                    <a href="/">
+                        <img src="assets/images/img_title.png" alt="" />
+                    </a>
+                </div>
+                <div class="header-bar-column" id="header-page-title" data-lang="header-page-title"></div>
+                <div class="available-options header-bar-column">
+                    <div>
+                        <a href="index.html">
+                            <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                                <img
+                                    src="assets/images/icon_home.png"
+                                    data-src="assets/images/icon_home.png"
+                                    data-hover="assets/images/icon_home_active.png"
+                                    alt=""
+                                />
+                            </button>
+                        </a>
+                    </div>
+                    <!-- TODO: Use or remove search button, account balance info and dollar sign -->
+                    <!-- <div>
+                        <a class="clickable">
+                            <i class="fas fa-search bg-blue"></i>
+                        </a>
+                    </div> -->
+                    <!-- <div>
+                        <button>
+                            <span id="vip-account-balance"></span>
+                        </button>
+                    </div> -->
+                    <!-- <div>
+                        <a class="clickable">
+                            <i class="fas fa-dollar-sign bg-blue"></i>
+                        </a>
+                    </div> -->
+                    <div>
+                        <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+                            <img
+                                src="assets/images/icon_logout.png"
+                                data-src="assets/images/icon_logout.png"
+                                data-hover="assets/images/icon_logout_active.png"
+                                alt=""
+                            />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <article>
+            <div class="filter-button">
+                <div class="text-right">
+                    <button>Allergies</button>
+                    <button>Price</button>
+                    <button>Tannin</button>
+                    <button>Alcohol%</button>
+                </div>
+            </div>
+
+            <div class="filter-wrapper">
+                <div class="filter-list">
+                    <div
+                        id="filter-icon-beer"
+                        class="filter-icon"
+                        data-lang="[title]filter-icon-title-beer"
+                        onclick="MenuController.filterMenu(Constants.BEER_filter)"
+                    >
+                        <img
+                            src="assets/images/icon_beer.png"
+                            data-src="assets/images/icon_beer.png"
+                            data-active="assets/images/icon_beer_active.png"
+                            alt=""
+                        />
+                    </div>
+                    <div
+                        id="filter-icon-wine"
+                        class="filter-icon"
+                        data-lang="[title]filter-icon-title-wine"
+                        onclick="MenuController.filterMenu(Constants.WINE_filter)"
+                    >
+                        <img
+                            src="assets/images/icon_wine.png"
+                            data-src="assets/images/icon_wine.png"
+                            data-active="assets/images/icon_wine_active.png"
+                            alt=""
+                        />
+                    </div>
+                    <div
+                        id="filter-icon-drink"
+                        class="filter-icon"
+                        data-lang="[title]filter-icon-title-drink"
+                        onclick="MenuController.filterMenu(Constants.DRINK_filter)"
+                    >
+                        <img
+                            src="assets/images/icon_coffee.png"
+                            data-src="assets/images/icon_coffee.png"
+                            data-active="assets/images/icon_coffee_active.png"
+                            alt=""
+                        />
+                    </div>
+                    <div
+                        id="filter-icon-water"
+                        class="filter-icon"
+                        data-lang="[title]filter-icon-title-water"
+                        onclick="MenuController.filterMenu(Constants.WATER_filter)"
+                    >
+                        <img
+                            src="assets/images/icon_glass.png"
+                            data-src="assets/images/icon_glass.png"
+                            data-active="assets/images/icon_glass_active.png"
+                            alt=""
+                        />
+                    </div>
+                </div>
+
+                <div class="filter-result">
+                    <div class="list-item">
+                        <div id="menu-container"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <footer>
+            <div id="logged-in-user-container" class="hidden">
+                <span id="logged-in-user-label" data-lang="logged-in-user-label"></span>
+                <span id="logged-in-user"></span>
             </div>
         </footer>
     </body>

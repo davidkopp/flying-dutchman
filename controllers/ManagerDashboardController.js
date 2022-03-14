@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController */
@@ -14,7 +14,7 @@
     $(document).ready(function () {
         // Hide the divs at the beginning
         $("#revise-amounts").hide();
-        $("#refil-beverages").hide();
+        $("#refill-beverages").hide();
         $("#add-remove-beverages").hide();
 
         // Add event handlers
@@ -22,9 +22,9 @@
             // Show / Hide div "revise amounts"
             $("#revise-amounts").toggle();
         });
-        $("#refil-beverages-label").click(function () {
+        $("#refill-beverages-label").click(function () {
             // Show / Hide div "refill beverages"
-            $("#refil-beverages").toggle();
+            $("#refill-beverages").toggle();
         });
         $("#add-remove-beverages-label").click(function () {
             // Show / Hide div "add / remove beverages"
@@ -92,7 +92,7 @@
 
     /** Event handler to show the quantity of a given beverage. */
     function showQuantity() {
-        const inputSerialNumber = $("#refil-serial-number").val();
+        const inputSerialNumber = $("#refill-serial-number").val();
         if (!inputSerialNumber) {
             return;
         }
@@ -126,28 +126,31 @@
 
         let htmlTable = `<table>
             <tr>
-                <th>Inventory</th>
-                <th>Quantity</th>
-                <th>Order Stocks</th>
+                <th data-lang="order-refill-header-inventory-label"></th>
+                <th data-lang="order-refill-header-quantity-label"></th>
+                <th data-lang="order-refill-header-stocks-label"></th>
                 <th></th>
             </tr>
         `;
 
         collector.forEach((obj) => {
             htmlTable += `<tr>
-                <td>${obj.inventoryName}</td>
+                <td ${Constants.DATA_LANG_DYNAMIC_KEY}="inventory-name-dynamic"
+                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${obj.inventoryName}></td>
                 <td>${obj.quantity}</td>
                 <td>
                     <input type="number" id="refill-beverages-input-${obj.inventoryName}-${obj.beverageNr}" name="refill-beverages-input" class="refill-beverages-input" />
 
                 </td>
-                <td><button class="refil-beverages-button" onclick="refillBeverages('${obj.inventoryName}', '${obj.beverageNr}', ${obj.quantity})">Confirm</button></td>
+                <td><button class="refill-beverages-button" onclick="refillBeverages('${obj.inventoryName}', '${obj.beverageNr}', ${obj.quantity})" data-lang="order-refill-confirm-button"></button></td>
             </tr>`;
         });
         htmlTable += "</table>";
 
-        $("#quantity").empty();
-        $("#quantity").append(htmlTable);
+        $("#quantity").html(htmlTable);
+
+        // Refresh all text strings
+        LanguageController.refreshTextStrings();
     }
 
     /**
@@ -198,10 +201,10 @@
     function showMenuWithStatus() {
         let htmlTable = `<table>
             <tr>
-                <th>Inventory</th>
-                <th>Beverage number</th>
-                <th>Name</th>
-                <th>Status</th>
+                <th data-lang="manage-beverages-header-inventory-label"></th>
+                <th data-lang="manage-beverages-header-beverage-number-label"></th>
+                <th data-lang="manage-beverages-header-beverage-name-label"></th>
+                <th data-lang="manage-beverages-header-status-label"></th>
                 <th></th>
             </tr>
         `;

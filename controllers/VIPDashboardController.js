@@ -5,7 +5,7 @@
  *
  * Author: Paarth Sanhotra
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Sunday, 13th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LoginController, OrderController */
@@ -65,10 +65,16 @@
             const userDetails = DatabaseAPI.Users.getUserDetailsByUserName(
                 loggedInUserData.username
             );
+
             $("#vip-name").html(
                 userDetails.first_name + " " + userDetails.last_name
             );
-            $("#vip-account-balance").html(userDetails.creditSEK);
+            $("#vip-account-balance").html(
+                userDetails.creditSEK + " " + Constants.CURRENCY_IN_VIEW
+            );
+            $("#vip-account-balance").show();
+        } else {
+            $("#vip-account-balance").hide();
         }
     }
 
@@ -116,7 +122,7 @@
         );
         let items = [];
         $("#order")
-            .children()
+            .children("div")
             .each(function () {
                 const beverageID = $(this).data("beverage-id");
                 items.push({

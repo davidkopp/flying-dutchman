@@ -5,7 +5,7 @@ VIP Dashboard of the Flying Dutchman.
 
 Author: Paarth Sanhotra
 -----
-Last Modified: Monday, 7th March 2022
+Last Modified: Sunday, 13th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -20,6 +20,14 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <link rel="icon" href="data:;base64,=" />
         <link rel="stylesheet" href="style.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <!--Font Awesome-->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
         <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
 
         <script type="text/javascript" src="database/BeveragesDB.js"></script>
@@ -33,47 +41,104 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/VIPDashboardController.js"></script>
         <script type="text/javascript" src="controllers/InventoryController.js"></script>
         <script type="text/javascript" src="controllers/OrderController.js"></script>
+        <script type="text/javascript" src="controllers/EffectsController.js"></script>
     </head>
 
     <body>
         <header>
-            <div class="lang-flag mb-20 text-center mt-20">
-                <button onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)">
-                    <img class="language-button" id="english-flag" src="assets/images/flag_en.jpg" alt="" />
-                    <span data-lang="language-switcher-text-english">English</span>
-                </button>
-                <button onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)">
-                    <img class="language-button" id="german-flag" src="assets/images/flag_de.jpg" alt="" />
-                    <span data-lang="language-switcher-text-german">German</span>
-                </button>
-                <button onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)">
-                    <img class="language-button" id="portuguese-flag" src="assets/images/flag_pt.jpg" alt="" />
-                    <span data-lang="language-switcher-text-portuguese">Portuguese</span>
-                </button>
+            <div class="lang-container">
+                <div
+                    onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)"
+                    data-lang="[title]language-flag-title-english"
+                >
+                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                </div>
+                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)" data-lang="[title]language-flag-title-german">
+                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                </div>
+                <div
+                    onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)"
+                    data-lang="[title]language-flag-title-portuguese"
+                >
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                </div>
             </div>
+            <div class="header-bar">
+                <div class="logo header-bar-column" data-lang="[title]logo-title">
+                    <a href="/">
+                        <img src="assets/images/img_title.png" alt="" />
+                    </a>
+                </div>
+                <div id="header-page-title" class="header-bar-column" data-lang="header-page-title"></div>
+                <div class="available-options header-bar-column">
+                    <div>
+                        <a href="index.html">
+                            <button id="home-button" class="clickable" data-lang="[title]home-button-title">
+                                <img
+                                    src="assets/images/icon_home.png"
+                                    data-src="assets/images/icon_home.png"
+                                    data-hover="assets/images/icon_home_active.png"
+                                    alt=""
+                                />
+                            </button>
+                        </a>
+                    </div>
+                    <!-- <div>
+                        <button>
+                            <i class="fas fa-search bg-blue"></i>
+                        </button>
+                    </div> -->
+                    <div id="vip-account-balance-box">
+                        <div>
+                            <span id="vip-account-balance"></span>
+                        </div>
+                    </div>
+                    <div id="table-number-box">
+                        <div>
+                            <span data-lang="table-number-label"></span>
+                            <span id="table-number"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+                            <img
+                                src="assets/images/icon_logout.png"
+                                data-src="assets/images/icon_logout.png"
+                                data-hover="assets/images/icon_logout_active.png"
+                                alt=""
+                            />
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- TODO: Integrate sub header in normal header
+            <div class="sub_header">
+                <h1 data-lang="heading"></h1>
+                <h3>
+                    <span data-lang="vip-welcome-text"></span>
+                    <span id="vip-name"></span>
+                </h3>
+                <h3>
+                    <span data-lang="vip-account-balance-text"></span>
+                    <span id="vip-account-balance"></span>
+                </h3>
+                <h3>
+                    <span data-lang="table-number-heading"></span>
+                    <span id="table-number"></span>
+                </h3>
+                <div>
+                    <button class="btn btn-waiter" data-lang="waiter-call-button"></button>
+                    <button class="btn btn-bill" data-lang="pay-bill-button"></button>
+                </div>
+            </div>
+            -->
         </header>
-        <div class="sub_header">
-            <h1 data-lang="heading"></h1>
-            <h3>
-                <span data-lang="vip-welcome-text"></span>
-                <span id="vip-name"></span>
-            </h3>
-            <h3>
-                <span data-lang="vip-account-balance-text"></span>
-                <span id="vip-account-balance"></span>
-            </h3>
-            <h3>
-                <span data-lang="table-number-heading"></span>
-                <span id="table-number"></span>
-            </h3>
-            <div class="btn-actions">
-                <button class="btn btn-waiter" data-lang="waiter-call-button"></button>
-                <button class="btn btn-bill" data-lang="pay-bill-button"></button>
+
+        <article>
+            <div id="inventory-buttons">
+                <button type="clickable" id="main-tab" data-lang="menu-heading"></button>
+                <button type="clickable" id="vip-tab" data-lang="specials-heading"></button>
             </div>
-        </div>
-        <main>
-            <h2 id="main-tab" data-lang="menu-heading"></h2>
-            <h2 id="vip-tab" data-lang="specials-heading"></h2>
             <div class="drag-drop">
                 <div
                     id="main-menu"
@@ -87,14 +152,15 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     ondrop="dropItem(event)"
                     ondragover="allowDropOnItem(event)"
                 ></div>
-                <div id="order" class="order-area" ondrop="dropItem(event)" ondragover="allowDropOnItem(event)"></div>
-                <button id="place-order" data-lang="place-order-button"></button>
+                <div id="order" class="order-area" ondrop="dropItem(event)" ondragover="allowDropOnItem(event)">
+                    <button id="place-order" data-lang="place-order-button"></button>
+                </div>
             </div>
-        </main>
+        </article>
 
         <div id="overlay-message-box" class="overlay hidden">
             <div class="overlay-content">
-                <div class="overlay-close-button">
+                <div class="clickable overlay-close-button">
                     <img src="assets/images/icon_close.svg" />
                 </div>
                 <span id="info-box-title" data-lang="info-box-title"></span>
@@ -104,14 +170,9 @@ Modified By: David Kopp (mail@davidkopp.de>)
         </div>
 
         <footer>
-            <div class="footer-align">
-                <div id="logged-in-user-container">
-                    <span data-lang="logged-in-user-label"></span>
-                    <span id="logged-in-user"></span>
-                    <button id="logout-button" class="logout_btn">
-                        <span data-lang="logout-button"></span>
-                    </button>
-                </div>
+            <div id="logged-in-user-container" class="hidden">
+                <span id="logged-in-user-label" data-lang="logged-in-user-label"></span>
+                <span id="logged-in-user"></span>
             </div>
         </footer>
     </body>

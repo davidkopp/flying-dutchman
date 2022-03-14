@@ -5,10 +5,10 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Saturday, 12th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals LanguageController, OrderController, InventoryController */
+/* globals LanguageController, OrderController, InventoryController, UNDOmanager */
 
 (function ($, exports) {
     let barInventoryController = new InventoryController(
@@ -17,6 +17,7 @@
     let vipInventoryController = new InventoryController(
         Constants.INVENTORIES.VIP
     );
+    let undoManager = new UNDOmanager();
 
     $(document).ready(function () {
         initOrdersList();
@@ -87,6 +88,24 @@
                 $(".overlay").hide();
             }
         });
+
+        $("#notify-security-button").click(function () {
+            $("#overlay-security-notifier").show();
+        });
+
+        $("#security-notifier-form").submit(function (event) {
+            event.preventDefault();
+            const data = getFormData("security-notifier-form");
+
+            const optMessage = data.message;
+            console.log(
+                "Notify security!" +
+                    (optMessage ? ` Message: '${optMessage}'` : "")
+            );
+
+            $("#overlay-security-notifier").hide();
+            $("#security-notifier-form").find("textarea").val("");
+        });
     }
 
     /** Initializes the order list in the view. */
@@ -101,13 +120,67 @@
             if (Object.hasOwnProperty.call(ordersSortedByTable, table)) {
                 const orders = ordersSortedByTable[table];
 
-                // TODO: Add user picture (normal / vip)
+                const ordersHtmlList = [];
+                orders.forEach((order) => {
+                    let orderItemsHTML = "<ul>";
+                    order.items.forEach((item) => {
+                        const beverageNr = item.beverageNr;
+                        const beverage =
+                            DatabaseAPI.Beverages.findBeverageByNr(beverageNr);
+
+                        orderItemsHTML += `
+                        <li>
+                            <span>${beverage.name}</span>
+                        </li>
+                        `;
+                    });
+                    orderItemsHTML += "</ul>";
+
+                    // TODO: Status value ("tbd." / "done") makes not real sense at the moment...
+
+                    ordersHtmlList.push(`
+                    <div class="order-element">
+                        <div class="order-element-number">
+                            <span class="" data-lang="order-list-order-number"></span>
+                            <span>${order.id}</span>
+                        </div>
+                        <div class="order-element-row" data-order-id="${order.id}">
+                            <div class="order-element-row-items">
+                                <span class="order-list-column-heading" data-lang="order-list-items"></span>
+                                <br/>
+                                <span>${orderItemsHTML}</span>
+                            </div>
+                            <div>
+                                <span class="order-list-column-heading" data-lang="order-list-notes"></span>
+                                <br/>
+                                <textarea class="order-notes-text-field" rows="2" >${order.notes}</textarea>
+                            </div>
+                            <div>
+                                <span class="order-list-column-heading" data-lang="order-list-status"></span>
+                                <br/>
+                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-list-status-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.done}>...</span>
+                            </div>
+                            <div>
+                                <span class="order-list-column-heading" data-lang="order-list-actions"></span>
+                                <br/>
+                                <div>
+                                    <span class="clickable order-list-pay-order-button order-action-button hover-shine">💳</span>
+                                    <span class="clickable order-list-edit-order-button order-action-button hover-shine">📝</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+                });
+
                 tableOrdersListHTML += `
-                <div class="table-element" data-table-nr="${table}">
-                    <div class="order-user-picture-container"></div>
-                    <div class="order-table-number">
+                <div class="table-element">
+                    <div class="order-table-number" data-table-nr="${table}">
                         <span data-lang="orders-overview-table-label"></span>
                         <span>${table}</span>
+                        </div>
+                    <div class="orders-container">
+                        ${ordersHtmlList.join("\n")}
                     </div>
                 </div>`;
                 numberOfOrders += orders.length;
@@ -115,10 +188,49 @@
         }
         $("#orders-list").html(tableOrdersListHTML);
 
-        // Add event handlers
-        $(".table-element").click(function () {
+        // Add event handler for the table number: Show details of all orders of a table.
+        $(".order-table-number").click(function () {
             const table = $(this).data("table-nr");
             showOrderDetailsForTable(table);
+        });
+
+        // Add event handler for the notes input fields to be able to edit the value directly in the overview.
+        $(".order-notes-text-field").blur(function (event) {
+            saveInputAsNotesToOrder(event);
+        });
+        $(".order-notes-text-field").keypress(function (event) {
+            // When the user has currently the focus on the input field and presses enter, it should lose the focus.
+            if (event.which == 13) {
+                $(this).blur();
+            }
+        });
+
+        // Add event hander for the pay buttons for the orders
+        $(".order-list-pay-order-button").click(function () {
+            const orderId = $(this)
+                .closest(".order-element-row")
+                .data("order-id");
+
+            // TODO: Splitting type + vip account
+
+            const createdBill = OrderController.createBillForOrder(orderId);
+            const updatedOrder = OrderController.completeOrder(
+                orderId,
+                createdBill.id
+            );
+            if (updatedOrder) {
+                // Order was successfully marked as done → we can remove it.
+                initOrdersList();
+            }
+        });
+
+        // Add event hander for the edit buttons for the orders
+        $(".order-list-edit-order-button").click(function () {
+            const orderId = $(this)
+                .closest(".order-element-row")
+                .data("order-id");
+
+            editOrder(orderId);
         });
 
         // Add number of current orders to the footer of the overview
@@ -127,13 +239,32 @@
         LanguageController.refreshTextStrings();
     }
 
+    /**
+     * Saves the value from the input field to the 'notes' field of the order.
+     *
+     * @param {object} event The event object.
+     */
+    function saveInputAsNotesToOrder(event) {
+        // Save the changed value
+        const inputElement = event.target;
+        const orderId = $(inputElement)
+            .closest(".order-element-row")
+            .data("order-id");
+        const newValue = $(inputElement).val().trim();
+        const changeNoteOfOrderFunc = OrderController.changeNoteOfOrderUNDOFunc(
+            orderId,
+            newValue
+        );
+        undoManager.doit(changeNoteOfOrderFunc);
+    }
+
     /** Initializes the inventory overview in the view. */
     function initInventoryOverview() {
         // Add list of inventories
         const inventoryListHTML = `
         <div id="inventory-list">
-        ${createHTMLForInventoryElement(barInventoryController)}
-        ${createHTMLForInventoryElement(vipInventoryController)}
+        ${createHTMLForInventoryElementForOverview(barInventoryController)}
+        ${createHTMLForInventoryElementForOverview(vipInventoryController)}
         </div>`;
         $("#inventory-list-container").html(inventoryListHTML);
 
@@ -142,15 +273,6 @@
             const inventoryName = $(this).data("inventory-name");
             showInventoryDetails(inventoryName);
         });
-
-        // Add hover effect to the inventory images.
-        $(".inventory-element-image")
-            .mouseover(function () {
-                $(this).attr("src", $(this).data("hover"));
-            })
-            .mouseout(function () {
-                $(this).attr("src", $(this).data("src"));
-            });
 
         // Add info about number of notifications
         const barItemsRunningLow =
@@ -172,11 +294,13 @@
      * @param {object} inventoryController The inventory controller.
      * @returns {string} The HTML.
      */
-    function createHTMLForInventoryElement(inventoryController) {
+    function createHTMLForInventoryElementForOverview(inventoryController) {
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
 
         const classRunningLow =
-            itemsRunningLow.length > 0 ? "inventory-has-items-running-low" : "";
+            itemsRunningLow.length > 0
+                ? "inventory-has-items-running-low"
+                : "inventory-has-enough-items";
         let imageSource, imageSourceHover, alt;
         switch (inventoryController.getName()) {
             case Constants.INVENTORIES.BAR:
@@ -195,7 +319,8 @@
         }
         const html = `
         <div class="inventory-element" data-inventory-name="${inventoryController.getName()}">
-            <img src="${imageSource}" data-src="${imageSource}" data-hover="${imageSourceHover}" alt="${alt}" class="inventory-element-image ${classRunningLow}">
+            <img src="${imageSource}" data-src="${imageSource}" data-hover="${imageSourceHover}" alt="${alt}" class="inventory-element-image">
+            <img src="assets/images/icon_alert.png" class="${classRunningLow}">
         </div>`;
         return html;
     }
@@ -223,18 +348,6 @@
                 <span class="overlay-details-value">${order.id}</span>
             </div>`;
 
-            // Inventory
-            const orderInventoryHTML = `
-            <div>
-                <span class="overlay-details-label" data-lang="order-details-inventory-label"></span>
-                <span
-                    ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
-                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}
-                    class="overlay-details-value">
-                    ...
-                </span>
-            </div>`;
-
             // Create HTML for order items
             let orderItemsHTML = "<ul>";
             order.items.forEach((item) => {
@@ -250,15 +363,22 @@
             });
             orderItemsHTML += "</ul>";
 
-            // Order items and delete button
+            // Order items, notes and buttons for editing and deleting
             const orderItemsContainerHTML = `
             <div>
                 <span class="overlay-details-label" data-lang="order-details-items-label"></span>
                 <div>
                     ${orderItemsHTML}
                 </div>
-                <button type="button" class="overlay-button delete-order-button" data-order-id="${order.id}">
-                    <span data-lang="delete-order-button"></span>
+                <div>
+                    <span class="overlay-details-label" data-lang="order-details-notes-label"></span>
+                    <span class="overlay-details-value">${order.notes}</span>
+                </div>
+                <button type="clickable" class="overlay-button details-overlay-edit-order-button hover-shine" data-order-id="${order.id}">
+                    <span data-lang="details-overlay-edit-order-button"></span>
+                </button>
+                <button type="clickable" class="overlay-button details-overlay-delete-order-button hover-shine" data-order-id="${order.id}">
+                    <span data-lang="details-overlay-delete-order-button"></span>
                 </button>
             </div>
             `;
@@ -266,7 +386,7 @@
             ordersListHTML += `
             <div class="order-details-order-element">
             ${orderNrHTML}
-            ${orderInventoryHTML}
+            ${createHtmlForInventoryNameInfo(order.inventory)}
             ${orderItemsContainerHTML}
             </div>`;
         });
@@ -274,14 +394,42 @@
         // Add the html to the DOM
         $("#order-details-list").html(ordersListHTML);
 
-        // Add an event handler to the delete button
-        $(".delete-order-button").click(handleDeleteOrder);
+        // Add an event handler to the buttons
+        $(".details-overlay-edit-order-button").click(function (event) {
+            event.preventDefault();
+            const orderId = parseInt($(this).data("order-id"));
+            editOrder(orderId);
+        });
+        $(".details-overlay-delete-order-button").click(function (event) {
+            event.preventDefault();
+            const orderId = parseInt($(this).data("order-id"));
+            deleteOrder(orderId);
+        });
 
         // Refresh all text strings
         LanguageController.refreshTextStrings();
 
         // Finally show the overlay
         $("#overlay-orders-details").show();
+    }
+
+    /**
+     * Creates a html div to display the inventory name.
+     *
+     * @param {string} inventoryName The inventory name.
+     * @returns {string} The html string.
+     */
+    function createHtmlForInventoryNameInfo(inventoryName) {
+        return `
+            <div>
+            <span class="overlay-details-label" data-lang="order-details-inventory-label"></span>
+                <span
+                    ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic"
+                    ${Constants.DATA_LANG_DYNAMIC_VALUE}=${inventoryName}
+                    class="overlay-details-value">
+                    ...
+                </span>
+            </div>`;
     }
 
     /**
@@ -296,7 +444,9 @@
         }
 
         // Add inventory name
-        $("#inventory-details-inventory-name").html(inventoryName);
+        const orderInventoryHTML =
+            createHtmlForInventoryNameInfo(inventoryName);
+        $("#inventory-details-inventory-container").html(orderInventoryHTML);
 
         // Add details of items that are running low
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
@@ -388,14 +538,11 @@
     }
 
     /**
-     * Event handler for deleting an order.
+     * Delete the order and updates the view.
      *
-     * @param {object} event The event object.
+     * @param {string} orderId The order id.
      */
-    function handleDeleteOrder(event) {
-        event.preventDefault();
-
-        const orderId = parseInt($(this).data("order-id"));
+    function deleteOrder(orderId) {
         OrderController.removeOrderById(orderId);
 
         // Update order list
@@ -403,6 +550,18 @@
 
         // Hide overlay
         $("#overlay-orders-details").hide();
+    }
+
+    /**
+     * Edit an order and update the view.
+     *
+     * @param {string} orderId The order id.
+     */
+    function editOrder(orderId) {
+        // TODO: Implement editing of an order
+
+        alert("NOT IMPLEMENTED YET");
+        //OrderController.editOrder(order);
     }
 
     /**
