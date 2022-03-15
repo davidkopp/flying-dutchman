@@ -5,8 +5,8 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Wednesday, 15th March 2022
- * Modified By: Paarth Sanhtora (paarthsanhotra@gmail.com)
+ * Last Modified: Tuesday, 15th March 2022
+ * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
 
@@ -208,27 +208,22 @@
 
         // Add event hander for the pay buttons for the orders
         $(".order-list-pay-order-button").click(function () {
-            orderId = $(this)
-                .closest(".order-element-row")
-                .data("order-id");
+            orderId = $(this).closest(".order-element-row").data("order-id");
 
             // TODO: Splitting type + vip account
 
             $("#overlay-payment").show();
-            $("#bill-type-single").click(function ()
-            {
+            $("#bill-type-single").click(function () {
                 $("#single-payment").show();
                 $("#split-payment").hide();
             });
 
-            $("#bill-type-split").click(function ()
-            {
+            $("#bill-type-split").click(function () {
                 $("#single-payment").hide();
                 $("#split-payment").show();
             });
 
-            $("#finalize-split-number").click(function()
-            {
+            $("#finalize-split-number").click(function () {
                 var split_number = $("#payment-split-value").val();
                 let split_payments = ``;
 
@@ -238,53 +233,49 @@
                     createdBill.id
                 );
 
-            for (let i = 1; i <= split_number; i++)
-            {
-                split_payments = split_payments +
-                `<button class="split-payment-buttons">Pay #${i}</button>`;
-            }
-            $("#payments").empty();
-            $("#payments").append(split_payments);
-
-            $(".split-payment-buttons").click(function ()
-            {
-                $(this).remove();
-
-                if($("#payments").children().length == 0)
-                {
-                    alert("All payments have been made. Thank you.");
-
-                    if (updatedOrder) {
-                        // Order was successfully marked as done → we can remove it.
-                        initOrdersList();
-                    }
-                    $("#overlay-payment").hide();
+                for (let i = 1; i <= split_number; i++) {
+                    split_payments =
+                        split_payments +
+                        `<button class="split-payment-buttons">Pay #${i}</button>`;
                 }
+                $("#payments").empty();
+                $("#payments").append(split_payments);
+
+                $(".split-payment-buttons").click(function () {
+                    $(this).remove();
+
+                    if ($("#payments").children().length == 0) {
+                        alert("All payments have been made. Thank you.");
+
+                        if (updatedOrder) {
+                            // Order was successfully marked as done → we can remove it.
+                            initOrdersList();
+                        }
+                        $("#overlay-payment").hide();
+                    }
+                });
+            });
+
+            $("#single-payment-button").click(function () {
+                const createdBill = OrderController.createBillForOrder(orderId);
+                const updatedOrder = OrderController.completeOrder(
+                    orderId,
+                    createdBill.id
+                );
+
+                $("#payments").empty();
+                alert("All payments have been made. Thank you.");
+
+                if (updatedOrder) {
+                    // Order was successfully marked as done → we can remove it.
+                    initOrdersList();
+                }
+
+                $("#overlay-payment").hide();
             });
         });
 
-        $("#single-payment-button").click(function()
-        {
-            const createdBill = OrderController.createBillForOrder(orderId);
-            const updatedOrder = OrderController.completeOrder(
-                orderId,
-                createdBill.id
-            );
-
-            $("#payments").empty();
-            alert("All payments have been made. Thank you.");
-
-            if (updatedOrder) {
-                // Order was successfully marked as done → we can remove it.
-                initOrdersList();
-            }
-
-            $("#overlay-payment").hide();
-        });
-        });
-
-        $("#finalize-split-number").click(function()
-        {
+        $("#finalize-split-number").click(function () {
             var split_number = $("#payment-split-value").val();
             let split_payments = ``;
 
@@ -294,19 +285,17 @@
                 createdBill.id
             );
 
-            for (let i = 1; i <= split_number; i++)
-            {
-                split_payments = split_payments +
-                `<button class="split-payment-buttons">Pay #${i}</button>`;
+            for (let i = 1; i <= split_number; i++) {
+                split_payments =
+                    split_payments +
+                    `<button class="split-payment-buttons">Pay #${i}</button>`;
             }
             $("#payments").empty();
             $("#payments").append(split_payments);
-            $(".split-payment-buttons").click(function ()
-            {
+            $(".split-payment-buttons").click(function () {
                 $(this).remove();
 
-                if($("#payments").children().length == 0)
-                {
+                if ($("#payments").children().length == 0) {
                     alert("All payments have been made. Thank you.");
 
                     if (updatedOrder) {
@@ -316,12 +305,9 @@
                     $("#overlay-payment").hide();
                 }
             });
-
-
         });
 
-        $("#single-payment-button").click(function()
-        {
+        $("#single-payment-button").click(function () {
             const createdBill = OrderController.createBillForOrder(orderId);
             const updatedOrder = OrderController.completeOrder(
                 orderId,
