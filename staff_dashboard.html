@@ -5,8 +5,8 @@ The dashboard for staff members like bartenders, waiter, waitress, etc.
 
 Author: David Kopp
 -----
-Last Modified: Sunday, 13th March 2022
-Modified By: David Kopp (mail@davidkopp.de>)
+Last Modified: Saturday, 15th March 2022
+Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
 -->
 
 <!DOCTYPE html>
@@ -303,6 +303,29 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 </div>
             </div>
         </article>
+
+            <!-- Overlay for Payment  -->
+            <div id="overlay-payment" style="display: none;" class="overlay-content">
+                <div class="overlay-close-button">
+                    <img src="assets/images/icon_close.svg" />
+                </div>
+                <div id="payment">
+                    <input type="radio" name="billing-type" id="bill-type-single" value="Single" checked>
+                    <label for="bill-type-single">Single</label>
+                    <input type="radio" name="billing-type" id="bill-type-split" value="Split">
+                    <label for="bill-type-single">Split</label>
+                    <div id="single-payment">
+                        <button id="single-payment-button" class="overview-buttons">Pay</button>
+                    </div>
+                    <div id="split-payment" style="display: none;">
+                        <label for="payment-split-value" id="payment-split-value-label">Number: </label>
+                        <input id="payment-split-value" name="payment-split-value" type="number" max="20" min="1" maxlength="2">
+                        <button id="finalize-split-number" class="overview-buttons">Go</button>
+                        <div id="payments"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <footer>
             <div id="logged-in-user-container" class="hidden">
