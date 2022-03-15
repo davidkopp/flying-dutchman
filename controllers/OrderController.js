@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 13th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -309,12 +309,14 @@
      * Creates a bill for an order.
      *
      * @param {number} orderId The order id.
-     * @param {string} splittingType 'single' or 'group'. If omitted, 'single' is used.
-     * @param {boolean} vipAccount 'true' if account balance of an VIP should be
-     *   used for the bill. If omitted, 'false' is used.
+     * @param {number} splitBy Optional number of persons among whom the invoice
+     *   should be split evenly. If omitted or the number is below 2, the bill
+     *   is considered to be a single bill and will be paid by one.
+     * @param {number} vipAccountId Optional user id of a vip account. If given,
+     *   the bill will be paid with the account of the vip.
      * @returns {object} The bill object stored in the database.
      */
-    function createBillForOrder(orderId, splittingType, vipAccount) {
+    function createBillForOrder(orderId, splitBy, vipAccountId) {
         let order = DatabaseAPI.Orders.getOrderById(orderId);
         if (!order) {
             console.log(
@@ -324,14 +326,33 @@
         }
 
         const totalAmountForOrder = calculateTotalAmount(order.items);
+        if (vipAccountId) {
+            const accountBalance =
+                DatabaseAPI.Users.getBalanceByUserId(vipAccountId);
+            if (typeof accountBalance !== "number") {
+                console.log(
+                    `OrderController.createBillForOrder | Order with id '${orderId}' should be paid with a VIP account, however their is no account balance for vip account '${vipAccountId}'!`
+                );
+                return null;
+            }
 
-        if (vipAccount) {
-            // TODO: Check if the account balance is high enough for the order
+            if (accountBalance < totalAmountForOrder) {
+                console.log(
+                    `OrderController.createBillForOrder | Order with id '${orderId}' has a total amount of '${totalAmountForOrder}', however the account balance of the vip account '${vipAccountId}' only has '${accountBalance}'! Bill will be created, but to complete the order the account balance has to be increased first.`
+                );
+            }
         }
 
+        var splitObj = undefined;
+        if (splitBy && typeof splitBy === "number" && splitBy > 1) {
+            splitObj = {
+                splitBy: splitBy,
+                paid: [],
+            };
+        }
         const newBill = {
-            type: splittingType ? splittingType : "single",
-            vipAccount: vipAccount ? vipAccount : false,
+            split: splitObj,
+            vipAccountId: vipAccountId,
             timestamp: new Date().toString(),
             amountSEK: totalAmountForOrder,
         };

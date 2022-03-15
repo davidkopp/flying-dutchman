@@ -3,7 +3,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals OrderController, UNDOmanager */
@@ -776,7 +776,8 @@ describe("OrderController", function () {
 
             expect(createdBill).toBeTruthy();
             expect(createdBill.id).toBeTruthy();
-            expect(createdBill.vipAccount).toBe(false);
+            expect(createdBill.split).toBe(undefined);
+            expect(createdBill.vipAccountId).toBe(undefined);
             expect(Date.parse(createdBill.timestamp)).not.toBeNaN();
             expect(createdBill.amountSEK).toBe(expectedTotalAmount);
         });
@@ -795,12 +796,12 @@ describe("OrderController", function () {
             const createdOrder = OrderController.createOrder(order);
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id,
-                "single",
-                true
+                1,
+                102
             );
 
             expect(createdBill).toBeTruthy();
-            expect(createdBill.vipAccount).toBe(true);
+            expect(createdBill.vipAccountId).toBe(102);
         });
 
         it("should be able to create a new bill for an order with group splitting", function () {
@@ -820,11 +821,16 @@ describe("OrderController", function () {
             const createdOrder = OrderController.createOrder(order);
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id,
-                "group"
+                2
             );
 
+            const expectedSplitObj = {
+                splitBy: 2,
+                paid: [],
+            };
+
             expect(createdBill).toBeTruthy();
-            expect(createdBill.type).toBe("group");
+            expect(createdBill.split).toEqual(expectedSplitObj);
         });
 
         it("should be able to complete an order", function () {

@@ -7,7 +7,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -175,6 +175,25 @@ DatabaseAPI = (function () {
     //=========================================================================
 
     /**
+     * Get the credit amount in the user's account.
+     *
+     * @param {number} userId The user id.
+     * @returns {number} The credit amount.
+     */
+    function getBalanceByUserId(userId) {
+        const accounts = getObject(Constants.STORAGE_DB_ACCOUNT_KEY);
+
+        let creditSEK;
+        for (let i = 0; i < accounts.length; i++) {
+            if (accounts[i].user_id === userId) {
+                creditSEK = accounts[i].creditSEK;
+                break;
+            }
+        }
+        return creditSEK;
+    }
+
+    /**
      * Change the credit amount in the user's account. Note that the amount
      * given as argument is the new balance and not the changed amount (± balance).
      *
@@ -194,7 +213,7 @@ DatabaseAPI = (function () {
             }
         }
 
-        // Then we match the userID with the account list. and change the
+        // Then we match the userID with the account list and change the
         // account balance.
         for (let i = 0; i < accounts.length; i++) {
             if (accounts[i].user_id === userID) {
@@ -866,6 +885,7 @@ DatabaseAPI = (function () {
             getUserDetailsIfCredentialsAreValid:
                 getUserDetailsIfCredentialsAreValid,
             changeBalance: changeBalance,
+            getBalanceByUserId: getBalanceByUserId,
         },
         Beverages: {
             findBeverageByNr: findBeverageByNr,
