@@ -40,6 +40,15 @@ DatabaseAPI = (function () {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
+    /**
+     * Removes the object with the given key from the storage.
+     *
+     * @param {string} key The key.
+     */
+    function removeObject(key) {
+        localStorage.removeItem(key);
+    }
+
     /** Load all databases into local storage when they don't exist yet. */
     function loadDatabases() {
         if (!getObject(Constants.STORAGE_DB_USERS_KEY)) {
@@ -80,6 +89,20 @@ DatabaseAPI = (function () {
         }
     }
     loadDatabases();
+
+    /** Cleans up the databases by removing everything. */
+    function cleanup() {
+        removeObject(Constants.STORAGE_DB_USERS_KEY);
+        removeObject(Constants.STORAGE_DB_ACCOUNT_KEY);
+        removeObject(Constants.STORAGE_DB_ORDERS_KEY);
+        removeObject(Constants.STORAGE_DB_BILLS_KEY);
+        removeObject(Constants.STORAGE_DB_TANNINS_KEY);
+        removeObject(Constants.STORAGE_DB_ALLERGIES_KEY);
+        removeObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY);
+        removeObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY);
+        removeObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY);
+        removeObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+    }
 
     //=========================================================================
     // USERS
@@ -821,7 +844,6 @@ DatabaseAPI = (function () {
             bills.push(bill);
         } else {
             // Replace the existing bill object in the database.
-            // Replace the existing order object in the database.
             const indexOf = bills.indexOf(existingBill);
             bills[indexOf] = bill;
         }
@@ -879,6 +901,7 @@ DatabaseAPI = (function () {
      * `DatabaseAPI.Users.getAllUserUserNames();`
      */
     return {
+        cleanup: cleanup,
         Users: {
             getAllUserNames: allUserNames,
             getUserDetailsByUserName: userDetailsByUserName,

@@ -792,16 +792,17 @@ describe("OrderController", function () {
                 ],
                 inventory: Constants.INVENTORIES.VIP,
             };
-
+            const split = false;
+            const vipAccountId = 102;
             const createdOrder = OrderController.createOrder(order);
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id,
-                1,
-                102
+                split,
+                vipAccountId
             );
 
             expect(createdBill).toBeTruthy();
-            expect(createdBill.vipAccountId).toBe(102);
+            expect(createdBill.vipAccountId).toBe(vipAccountId);
         });
 
         it("should be able to create a new bill for an order with group splitting", function () {
@@ -818,15 +819,25 @@ describe("OrderController", function () {
                 inventory: Constants.INVENTORIES.BAR,
             };
 
+            const split = {
+                1: {},
+                2: {},
+            };
             const createdOrder = OrderController.createOrder(order);
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id,
-                2
+                split
             );
 
             const expectedSplitObj = {
-                splitBy: 2,
-                paid: [],
+                1: {
+                    amountSEK: createdBill.amountSEK / 2,
+                    paid: false,
+                },
+                2: {
+                    amountSEK: createdBill.amountSEK / 2,
+                    paid: false,
+                },
             };
 
             expect(createdBill).toBeTruthy();

@@ -368,8 +368,22 @@ var DB = {
         {
             id: 2,
             split: {
-                splitBy: 4,
-                paid: [],
+                1: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+                2: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+                3: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+                4: {
+                    amountSEK: 40,
+                    paid: false,
+                },
             },
             timestamp: "2022-02-18T12:46:13Z",
             amountSEK: 160,

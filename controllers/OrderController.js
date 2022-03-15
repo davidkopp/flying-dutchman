@@ -308,15 +308,27 @@
     /**
      * Creates a bill for an order.
      *
+     * @example <caption>Optional argument `split`</caption>
+     *     {
+     *         "1": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         },
+     *         "2": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         }
+     *     }
+     *
      * @param {number} orderId The order id.
-     * @param {number} splitBy Optional number of persons among whom the invoice
-     *   should be split evenly. If omitted or the number is below 2, the bill
-     *   is considered to be a single bill and will be paid by one.
+     * @param {object} split Optional object with information about splitting
+     *   the bill. If omitted or null, the bill is considered to be a single
+     *   bill without a split. As an example see the description.
      * @param {number} vipAccountId Optional user id of a vip account. If given,
      *   the bill will be paid with the account of the vip.
      * @returns {object} The bill object stored in the database.
      */
-    function createBillForOrder(orderId, splitBy, vipAccountId) {
+    function createBillForOrder(orderId, split, vipAccountId) {
         let order = DatabaseAPI.Orders.getOrderById(orderId);
         if (!order) {
             console.log(
@@ -343,21 +355,76 @@
             }
         }
 
-        var splitObj = undefined;
-        if (splitBy && typeof splitBy === "number" && splitBy > 1) {
-            splitObj = {
-                splitBy: splitBy,
-                paid: [],
-            };
-        }
         const newBill = {
-            split: splitObj,
+            split: harmonizeBillSplitObject(split, totalAmountForOrder),
             vipAccountId: vipAccountId,
             timestamp: new Date().toString(),
             amountSEK: totalAmountForOrder,
         };
 
         return DatabaseAPI.Bills.saveBill(newBill);
+    }
+
+    /**
+     * Edits the split object that is part of a bill.
+     *
+     * @example <caption>Argument `split`</caption>
+     *     {
+     *         "1": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         },
+     *         "2": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         }
+     *     }
+     *
+     * @param {number} billId The bill id.
+     * @param {object} split Edited split object.
+     * @returns {object} The bill object stored in the database.
+     */
+    function editBillSplit(billId, split) {
+        let bill = DatabaseAPI.Bills.getBillById(billId);
+        if (!bill) {
+            console.log(
+                `OrderController.editBillSplit | Bill with id '${billId}' does not exist!`
+            );
+            return null;
+        }
+
+        bill.split = harmonizeBillSplitObject(split, bill.amountSEK);
+
+        return DatabaseAPI.Bills.saveBill(bill);
+    }
+
+    /**
+     * Harmonizes the split object of a bill, e.g. adding the properties
+     * `amountSEK` and `paid` if they don't exist).
+     *
+     * @param {object} splitObj The split object.
+     * @param {number} totalAmount The total amount of the bill.
+     * @returns {object} The harmonized split object.
+     */
+    function harmonizeBillSplitObject(splitObj, totalAmount) {
+        if (!splitObj) {
+            return undefined;
+        }
+
+        const splitBy = Object.keys(splitObj).length;
+        // By default split the bill equally
+        const equalAmountPerPerson = totalAmount / splitBy;
+        for (const splitId in splitObj) {
+            if (Object.hasOwnProperty.call(splitObj, splitId)) {
+                const splitInfo = splitObj[splitId];
+                splitObj[splitId].amountSEK = splitInfo.amountSEK
+                    ? splitInfo.amountSEK
+                    : equalAmountPerPerson;
+                splitObj[splitId].paid =
+                    splitInfo.paid === true ? splitInfo.paid : false;
+            }
+        }
+        return splitObj;
     }
 
     /**
@@ -841,6 +908,7 @@
     exports.OrderController.undeclareItemAsProductOnTheHouse =
         undeclareItemAsProductOnTheHouse;
     exports.OrderController.createBillForOrder = createBillForOrder;
+    exports.OrderController.editBillSplit = editBillSplit;
     exports.OrderController.completeOrder = completeOrder;
 
     // Public functions with UNDO capabilities
