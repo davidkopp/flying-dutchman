@@ -311,14 +311,22 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     </div>
                     <div id="payment">
                         <input type="radio" name="billing-type" id="bill-type-single" value="Single" checked />
-                        <label for="bill-type-single">Single</label>
+                        <label for="bill-type-single" data-lang="payment-split-label-single"></label>
                         <input type="radio" name="billing-type" id="bill-type-split" value="Split" />
-                        <label for="bill-type-single">Split</label>
+                        <label for="bill-type-single" data-lang="payment-split-label-split"></label>
                         <div id="single-payment">
-                            <button id="single-payment-button" class="overview-buttons">Pay</button>
+                            <button
+                                id="single-payment-button"
+                                class="overview-buttons"
+                                data-lang="payment-pay-button"
+                            ></button>
                         </div>
                         <div id="split-payment" style="display: none">
-                            <label for="payment-split-value" id="payment-split-value-label">Number: </label>
+                            <label
+                                for="payment-split-value"
+                                id="payment-split-value-label"
+                                data-lang="payment-split-value-label"
+                            ></label>
                             <input
                                 id="payment-split-value"
                                 name="payment-split-value"
@@ -327,7 +335,11 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                 min="1"
                                 maxlength="2"
                             />
-                            <button id="finalize-split-number" class="overview-buttons">Go</button>
+                            <button
+                                id="finalize-split-number"
+                                class="overview-buttons"
+                                data-lang="payment-split-finalize-label"
+                            ></button>
                             <div id="payments"></div>
                         </div>
                     </div>

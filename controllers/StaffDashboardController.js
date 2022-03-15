@@ -236,10 +236,15 @@
                 for (let i = 1; i <= split_number; i++) {
                     split_payments =
                         split_payments +
-                        `<button class="split-payment-buttons">Pay #${i}</button>`;
+                        `<button class="split-payment-buttons">
+                            <span data-lang="payment-split-pay-button"></span>
+                            <span>#${i}</span>
+                        </button>`;
                 }
                 $("#payments").empty();
                 $("#payments").append(split_payments);
+
+                LanguageController.refreshTextStrings();
 
                 $(".split-payment-buttons").click(function () {
                     $(this).remove();
@@ -288,10 +293,16 @@
             for (let i = 1; i <= split_number; i++) {
                 split_payments =
                     split_payments +
-                    `<button class="split-payment-buttons">Pay #${i}</button>`;
+                    `<button class="split-payment-buttons">
+                        <span data-lang="payment-split-pay-button"></span>
+                        <span>#${i}</span>
+                    </button>`;
             }
             $("#payments").empty();
             $("#payments").append(split_payments);
+
+            LanguageController.refreshTextStrings();
+
             $(".split-payment-buttons").click(function () {
                 $(this).remove();
 
