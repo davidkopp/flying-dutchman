@@ -770,6 +770,9 @@ describe("OrderController", function () {
             const expectedTotalAmount = 13.9 + 62.0 + 0;
 
             const createdOrder = OrderController.createOrder(order);
+
+            expect(typeof createdOrder.billId).not.toBe("number");
+
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id
             );
@@ -780,6 +783,11 @@ describe("OrderController", function () {
             expect(createdBill.vipAccountId).toBe(undefined);
             expect(Date.parse(createdBill.timestamp)).not.toBeNaN();
             expect(createdBill.amountSEK).toBe(expectedTotalAmount);
+
+            const updatedOrder = OrderController.getOrderById(createdOrder.id);
+
+            expect(typeof updatedOrder.billId).toBe("number");
+            expect(updatedOrder.billId).toBe(createdBill.id);
         });
 
         it("should be able to create a new bill for an order of a VIP member", function () {
@@ -865,8 +873,7 @@ describe("OrderController", function () {
             );
 
             const completedOrder = OrderController.completeOrder(
-                createdOrder.id,
-                createdBill.id
+                createdOrder.id
             );
 
             expect(completedOrder).toBeTruthy();

@@ -306,10 +306,10 @@ Modified By: David Kopp (mail@davidkopp.de>)
             <!-- Overlay for Payment  -->
             <div id="overlay-payment" class="overlay hidden">
                 <div class="overlay-content">
-                    <div class="overlay-close-button">
+                    <div class="clickable overlay-close-button">
                         <img src="assets/images/icon_close.svg" />
                     </div>
-                    <div id="payment">
+                    <div id="payment" data-order-id="">
                         <input type="radio" name="billing-type" id="bill-type-single" value="Single" checked />
                         <label for="bill-type-single" data-lang="payment-split-label-single"></label>
                         <input type="radio" name="billing-type" id="bill-type-split" value="Split" />
@@ -321,7 +321,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                 data-lang="payment-pay-button"
                             ></button>
                         </div>
-                        <div id="split-payment" style="display: none">
+                        <div id="split-payment" class="hidden">
                             <label
                                 for="payment-split-value"
                                 id="payment-split-value-label"

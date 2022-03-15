@@ -306,6 +306,16 @@
     }
 
     /**
+     * Returns the bill with the given bill id.
+     *
+     * @param {number} billId The bill id.
+     * @returns {object} The bill object.
+     */
+    function getBillById(billId) {
+        return DatabaseAPI.Bills.getBillById(billId);
+    }
+
+    /**
      * Creates a bill for an order.
      *
      * @example <caption>Optional argument `split`</caption>
@@ -337,6 +347,13 @@
             return null;
         }
 
+        if (order.billId) {
+            console.log(
+                `OrderController.createBillForOrder | A bill already exists for the order '${orderId}'! BillId: ${order.billId}`
+            );
+            return getBillById(order.billId);
+        }
+
         const totalAmountForOrder = calculateTotalAmount(order.items);
         if (vipAccountId) {
             const accountBalance =
@@ -358,11 +375,17 @@
         const newBill = {
             split: harmonizeBillSplitObject(split, totalAmountForOrder),
             vipAccountId: vipAccountId,
-            timestamp: new Date().toString(),
+            timestamp: new Date().toISOString(),
             amountSEK: totalAmountForOrder,
         };
 
-        return DatabaseAPI.Bills.saveBill(newBill);
+        const createdBill = DatabaseAPI.Bills.saveBill(newBill);
+
+        // Save bill id to the order
+        order.billId = createdBill.id;
+        DatabaseAPI.Orders.saveOrder(order);
+
+        return createdBill;
     }
 
     /**
@@ -399,43 +422,13 @@
     }
 
     /**
-     * Harmonizes the split object of a bill, e.g. adding the properties
-     * `amountSEK` and `paid` if they don't exist).
-     *
-     * @param {object} splitObj The split object.
-     * @param {number} totalAmount The total amount of the bill.
-     * @returns {object} The harmonized split object.
-     */
-    function harmonizeBillSplitObject(splitObj, totalAmount) {
-        if (!splitObj) {
-            return undefined;
-        }
-
-        const splitBy = Object.keys(splitObj).length;
-        // By default split the bill equally
-        const equalAmountPerPerson = totalAmount / splitBy;
-        for (const splitId in splitObj) {
-            if (Object.hasOwnProperty.call(splitObj, splitId)) {
-                const splitInfo = splitObj[splitId];
-                splitObj[splitId].amountSEK = splitInfo.amountSEK
-                    ? splitInfo.amountSEK
-                    : equalAmountPerPerson;
-                splitObj[splitId].paid =
-                    splitInfo.paid === true ? splitInfo.paid : false;
-            }
-        }
-        return splitObj;
-    }
-
-    /**
-     * Completes an order: Add bill to an order, set order to done and reduce
-     * account balance of VIP if the bill is for an VIP member.
+     * Completes an order: Set order to done and reduce account balance of VIP
+     * if the bill is for an VIP member.
      *
      * @param {number} orderId The order id.
-     * @param {number} billId The bill id.
      * @returns {object} The updated order object.
      */
-    function completeOrder(orderId, billId) {
+    function completeOrder(orderId) {
         let order = DatabaseAPI.Orders.getOrderById(orderId);
         if (!order) {
             console.log(
@@ -444,6 +437,7 @@
             return null;
         }
 
+        const billId = order.billId;
         const bill = DatabaseAPI.Bills.getBillById(billId);
         if (!bill) {
             console.log(
@@ -452,12 +446,29 @@
             return null;
         }
 
-        order.billId = billId;
-        order.done = true;
-
-        if (bill.vipAccount) {
+        if (bill.vipAccountId) {
             // TODO: Reduce account balance for VIP
         }
+
+        if (bill.split) {
+            let allPaid = true;
+            for (const splitIt in bill.split) {
+                if (Object.hasOwnProperty.call(bill.split, splitIt)) {
+                    const splitInfo = bill.split[splitIt];
+                    if (splitInfo.paid != true) {
+                        allPaid = false;
+                    }
+                }
+            }
+            if (allPaid != true) {
+                console.log(
+                    `OrderController.completeOrder | Bill with id '${billId}' is not yet fully paid! Can't complete order`
+                );
+                return null;
+            }
+        }
+
+        order.done = true;
 
         return DatabaseAPI.Orders.saveOrder(order);
     }
@@ -557,6 +568,35 @@
     //=========================================================================
     // PRIVATE FUNCTIONS FOR HANDLING THE ACTUAL LOGIC
     //=========================================================================
+
+    /**
+     * Harmonizes the split object of a bill, e.g. adding the properties
+     * `amountSEK` and `paid` if they don't exist).
+     *
+     * @param {object} splitObj The split object.
+     * @param {number} totalAmount The total amount of the bill.
+     * @returns {object} The harmonized split object.
+     */
+    function harmonizeBillSplitObject(splitObj, totalAmount) {
+        if (!splitObj) {
+            return undefined;
+        }
+
+        const splitBy = Object.keys(splitObj).length;
+        // By default split the bill equally
+        const equalAmountPerPerson = totalAmount / splitBy;
+        for (const splitId in splitObj) {
+            if (Object.hasOwnProperty.call(splitObj, splitId)) {
+                const splitInfo = splitObj[splitId];
+                splitObj[splitId].amountSEK = splitInfo.amountSEK
+                    ? splitInfo.amountSEK
+                    : equalAmountPerPerson;
+                splitObj[splitId].paid =
+                    splitInfo.paid === true ? splitInfo.paid : false;
+            }
+        }
+        return splitObj;
+    }
 
     /**
      * Edits an order. It does not change the items of an order. To change the
@@ -907,6 +947,7 @@
         declareItemAsProductOnTheHouse;
     exports.OrderController.undeclareItemAsProductOnTheHouse =
         undeclareItemAsProductOnTheHouse;
+    exports.OrderController.getBillById = getBillById;
     exports.OrderController.createBillForOrder = createBillForOrder;
     exports.OrderController.editBillSplit = editBillSplit;
     exports.OrderController.completeOrder = completeOrder;
