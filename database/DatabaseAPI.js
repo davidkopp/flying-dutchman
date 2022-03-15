@@ -555,16 +555,19 @@ DatabaseAPI = (function () {
         }
 
         let orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
-        let existingOrder = orders.find((o) => o.id === order.id);
-        if (!existingOrder) {
+        const indexOf = orders.findIndex((o) => o.id === order.id);
+        if (indexOf < 0) {
             // Create new order object in database
+            let lastOrderId = 0;
             const lastOrder = getLastOrder();
-            const newId = lastOrder.id + 1;
+            if (lastOrder) {
+                lastOrderId = lastOrder.id;
+            }
+            const newId = lastOrderId + 1;
             order.id = newId;
             orders.push(order);
         } else {
             // Replace the existing order object in the database.
-            const indexOf = orders.indexOf(existingOrder);
             orders[indexOf] = order;
         }
         saveOrders(orders);
@@ -834,17 +837,19 @@ DatabaseAPI = (function () {
             return undefined;
         }
         let bills = getObject(Constants.STORAGE_DB_BILLS_KEY);
-
-        let existingBill = getBillById(bill.id);
-        if (!existingBill) {
+        const indexOf = bills.findIndex((b) => b.id === bill.id);
+        if (indexOf < 0) {
             // Create new bill object in database
+            let lastBillId = 0;
             const lastBill = getLastBill();
-            const newId = lastBill.id + 1;
+            if (lastBill) {
+                lastBillId = lastBill.id;
+            }
+            const newId = lastBillId + 1;
             bill.id = newId;
             bills.push(bill);
         } else {
             // Replace the existing bill object in the database.
-            const indexOf = bills.indexOf(existingBill);
             bills[indexOf] = bill;
         }
         saveBills(bills);
