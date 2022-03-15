@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 13th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -306,15 +306,39 @@
     }
 
     /**
+     * Returns the bill with the given bill id.
+     *
+     * @param {number} billId The bill id.
+     * @returns {object} The bill object.
+     */
+    function getBillById(billId) {
+        return DatabaseAPI.Bills.getBillById(billId);
+    }
+
+    /**
      * Creates a bill for an order.
      *
+     * @example <caption>Optional argument `split`</caption>
+     *     {
+     *         "1": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         },
+     *         "2": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         }
+     *     }
+     *
      * @param {number} orderId The order id.
-     * @param {string} splittingType 'single' or 'group'. If omitted, 'single' is used.
-     * @param {boolean} vipAccount 'true' if account balance of an VIP should be
-     *   used for the bill. If omitted, 'false' is used.
+     * @param {object} split Optional object with information about splitting
+     *   the bill. If omitted or null, the bill is considered to be a single
+     *   bill without a split. As an example see the description.
+     * @param {number} vipAccountId Optional user id of a vip account. If given,
+     *   the bill will be paid with the account of the vip.
      * @returns {object} The bill object stored in the database.
      */
-    function createBillForOrder(orderId, splittingType, vipAccount) {
+    function createBillForOrder(orderId, split, vipAccountId) {
         let order = DatabaseAPI.Orders.getOrderById(orderId);
         if (!order) {
             console.log(
@@ -323,31 +347,88 @@
             return null;
         }
 
-        const totalAmountForOrder = calculateTotalAmount(order.items);
+        if (order.billId) {
+            console.log(
+                `OrderController.createBillForOrder | A bill already exists for the order '${orderId}'! BillId: ${order.billId}`
+            );
+            return getBillById(order.billId);
+        }
 
-        if (vipAccount) {
-            // TODO: Check if the account balance is high enough for the order
+        const totalAmountForOrder = calculateTotalAmount(order.items);
+        if (vipAccountId) {
+            const accountBalance =
+                DatabaseAPI.Users.getBalanceByUserId(vipAccountId);
+            if (typeof accountBalance !== "number") {
+                console.log(
+                    `OrderController.createBillForOrder | Order with id '${orderId}' should be paid with a VIP account, however their is no account balance for vip account '${vipAccountId}'!`
+                );
+                return null;
+            }
+
+            if (accountBalance < totalAmountForOrder) {
+                console.log(
+                    `OrderController.createBillForOrder | Order with id '${orderId}' has a total amount of '${totalAmountForOrder}', however the account balance of the vip account '${vipAccountId}' only has '${accountBalance}'! Bill will be created, but to complete the order the account balance has to be increased first.`
+                );
+            }
         }
 
         const newBill = {
-            type: splittingType ? splittingType : "single",
-            vipAccount: vipAccount ? vipAccount : false,
-            timestamp: new Date().toString(),
+            split: harmonizeBillSplitObject(split, totalAmountForOrder),
+            vipAccountId: vipAccountId,
+            timestamp: new Date().toISOString(),
             amountSEK: totalAmountForOrder,
         };
 
-        return DatabaseAPI.Bills.saveBill(newBill);
+        const createdBill = DatabaseAPI.Bills.saveBill(newBill);
+
+        // Save bill id to the order
+        order.billId = createdBill.id;
+        DatabaseAPI.Orders.saveOrder(order);
+
+        return createdBill;
     }
 
     /**
-     * Completes an order: Add bill to an order, set order to done and reduce
-     * account balance of VIP if the bill is for an VIP member.
+     * Edits the split object that is part of a bill.
+     *
+     * @example <caption>Argument `split`</caption>
+     *     {
+     *         "1": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         },
+     *         "2": {
+     *             "amountSEK": 40,
+     *             "paid": false
+     *         }
+     *     }
+     *
+     * @param {number} billId The bill id.
+     * @param {object} split Edited split object.
+     * @returns {object} The bill object stored in the database.
+     */
+    function editBillSplit(billId, split) {
+        let bill = DatabaseAPI.Bills.getBillById(billId);
+        if (!bill) {
+            console.log(
+                `OrderController.editBillSplit | Bill with id '${billId}' does not exist!`
+            );
+            return null;
+        }
+
+        bill.split = harmonizeBillSplitObject(split, bill.amountSEK);
+
+        return DatabaseAPI.Bills.saveBill(bill);
+    }
+
+    /**
+     * Completes an order: Set order to done and reduce account balance of VIP
+     * if the bill is for an VIP member.
      *
      * @param {number} orderId The order id.
-     * @param {number} billId The bill id.
      * @returns {object} The updated order object.
      */
-    function completeOrder(orderId, billId) {
+    function completeOrder(orderId) {
         let order = DatabaseAPI.Orders.getOrderById(orderId);
         if (!order) {
             console.log(
@@ -356,6 +437,7 @@
             return null;
         }
 
+        const billId = order.billId;
         const bill = DatabaseAPI.Bills.getBillById(billId);
         if (!bill) {
             console.log(
@@ -364,12 +446,29 @@
             return null;
         }
 
-        order.billId = billId;
-        order.done = true;
-
-        if (bill.vipAccount) {
+        if (bill.vipAccountId) {
             // TODO: Reduce account balance for VIP
         }
+
+        if (bill.split) {
+            let allPaid = true;
+            for (const splitIt in bill.split) {
+                if (Object.hasOwnProperty.call(bill.split, splitIt)) {
+                    const splitInfo = bill.split[splitIt];
+                    if (splitInfo.paid != true) {
+                        allPaid = false;
+                    }
+                }
+            }
+            if (allPaid != true) {
+                console.log(
+                    `OrderController.completeOrder | Bill with id '${billId}' is not yet fully paid! Can't complete order`
+                );
+                return null;
+            }
+        }
+
+        order.done = true;
 
         return DatabaseAPI.Orders.saveOrder(order);
     }
@@ -469,6 +568,35 @@
     //=========================================================================
     // PRIVATE FUNCTIONS FOR HANDLING THE ACTUAL LOGIC
     //=========================================================================
+
+    /**
+     * Harmonizes the split object of a bill, e.g. adding the properties
+     * `amountSEK` and `paid` if they don't exist).
+     *
+     * @param {object} splitObj The split object.
+     * @param {number} totalAmount The total amount of the bill.
+     * @returns {object} The harmonized split object.
+     */
+    function harmonizeBillSplitObject(splitObj, totalAmount) {
+        if (!splitObj) {
+            return undefined;
+        }
+
+        const splitBy = Object.keys(splitObj).length;
+        // By default split the bill equally
+        const equalAmountPerPerson = totalAmount / splitBy;
+        for (const splitId in splitObj) {
+            if (Object.hasOwnProperty.call(splitObj, splitId)) {
+                const splitInfo = splitObj[splitId];
+                splitObj[splitId].amountSEK = splitInfo.amountSEK
+                    ? splitInfo.amountSEK
+                    : equalAmountPerPerson;
+                splitObj[splitId].paid =
+                    splitInfo.paid === true ? splitInfo.paid : false;
+            }
+        }
+        return splitObj;
+    }
 
     /**
      * Edits an order. It does not change the items of an order. To change the
@@ -819,7 +947,9 @@
         declareItemAsProductOnTheHouse;
     exports.OrderController.undeclareItemAsProductOnTheHouse =
         undeclareItemAsProductOnTheHouse;
+    exports.OrderController.getBillById = getBillById;
     exports.OrderController.createBillForOrder = createBillForOrder;
+    exports.OrderController.editBillSplit = editBillSplit;
     exports.OrderController.completeOrder = completeOrder;
 
     // Public functions with UNDO capabilities

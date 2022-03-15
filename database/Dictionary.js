@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 14th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -160,6 +160,12 @@ const Dictionary = {
             "security-notifier-message-box-label": "Message (optional):",
             "security-notifier-form-submit": "Send",
             "inventory-details-title": "Inventory",
+            "payment-split-label-single": "Single",
+            "payment-split-label-split": "Split",
+            "payment-pay-button": "Pay",
+            "payment-split-value-label": "Number: ",
+            "payment-split-finalize-label": "Go",
+            "payment-split-pay-button": "Pay",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -299,6 +305,12 @@ const Dictionary = {
             "security-notifier-message-box-label": "Nachricht (optional):",
             "security-notifier-form-submit": "Senden",
             "inventory-details-title": "Lager",
+            "payment-split-label-single": "Gesamt",
+            "payment-split-label-split": "Aufteilen",
+            "payment-pay-button": "Bezahlen",
+            "payment-split-value-label": "Anzahl: ",
+            "payment-split-finalize-label": "Bestätigen",
+            "payment-split-pay-button": "Bezahlen",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -446,6 +458,12 @@ const Dictionary = {
             "security-notifier-message-box-label": "Message (optional):",
             "security-notifier-form-submit": "Send",
             "inventory-details-title": "Inventory",
+            "payment-split-label-single": "Single",
+            "payment-split-label-split": "Split",
+            "payment-pay-button": "Pay",
+            "payment-split-value-label": "Number: ",
+            "payment-split-finalize-label": "Go",
+            "payment-split-pay-button": "Pay",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {

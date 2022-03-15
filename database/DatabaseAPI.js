@@ -7,7 +7,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Monday, 7th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -38,6 +38,15 @@ DatabaseAPI = (function () {
      */
     function saveObject(key, value) {
         localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    /**
+     * Removes the object with the given key from the storage.
+     *
+     * @param {string} key The key.
+     */
+    function removeObject(key) {
+        localStorage.removeItem(key);
     }
 
     /** Load all databases into local storage when they don't exist yet. */
@@ -80,6 +89,20 @@ DatabaseAPI = (function () {
         }
     }
     loadDatabases();
+
+    /** Cleans up the databases by removing everything. */
+    function cleanup() {
+        removeObject(Constants.STORAGE_DB_USERS_KEY);
+        removeObject(Constants.STORAGE_DB_ACCOUNT_KEY);
+        removeObject(Constants.STORAGE_DB_ORDERS_KEY);
+        removeObject(Constants.STORAGE_DB_BILLS_KEY);
+        removeObject(Constants.STORAGE_DB_TANNINS_KEY);
+        removeObject(Constants.STORAGE_DB_ALLERGIES_KEY);
+        removeObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY);
+        removeObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY);
+        removeObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY);
+        removeObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+    }
 
     //=========================================================================
     // USERS
@@ -175,6 +198,25 @@ DatabaseAPI = (function () {
     //=========================================================================
 
     /**
+     * Get the credit amount in the user's account.
+     *
+     * @param {number} userId The user id.
+     * @returns {number} The credit amount.
+     */
+    function getBalanceByUserId(userId) {
+        const accounts = getObject(Constants.STORAGE_DB_ACCOUNT_KEY);
+
+        let creditSEK;
+        for (let i = 0; i < accounts.length; i++) {
+            if (accounts[i].user_id === userId) {
+                creditSEK = accounts[i].creditSEK;
+                break;
+            }
+        }
+        return creditSEK;
+    }
+
+    /**
      * Change the credit amount in the user's account. Note that the amount
      * given as argument is the new balance and not the changed amount (± balance).
      *
@@ -194,7 +236,7 @@ DatabaseAPI = (function () {
             }
         }
 
-        // Then we match the userID with the account list. and change the
+        // Then we match the userID with the account list and change the
         // account balance.
         for (let i = 0; i < accounts.length; i++) {
             if (accounts[i].user_id === userID) {
@@ -513,16 +555,19 @@ DatabaseAPI = (function () {
         }
 
         let orders = getObject(Constants.STORAGE_DB_ORDERS_KEY);
-        let existingOrder = orders.find((o) => o.id === order.id);
-        if (!existingOrder) {
+        const indexOf = orders.findIndex((o) => o.id === order.id);
+        if (indexOf < 0) {
             // Create new order object in database
+            let lastOrderId = 0;
             const lastOrder = getLastOrder();
-            const newId = lastOrder.id + 1;
+            if (lastOrder) {
+                lastOrderId = lastOrder.id;
+            }
+            const newId = lastOrderId + 1;
             order.id = newId;
             orders.push(order);
         } else {
             // Replace the existing order object in the database.
-            const indexOf = orders.indexOf(existingOrder);
             orders[indexOf] = order;
         }
         saveOrders(orders);
@@ -792,18 +837,19 @@ DatabaseAPI = (function () {
             return undefined;
         }
         let bills = getObject(Constants.STORAGE_DB_BILLS_KEY);
-
-        let existingBill = getBillById(bill.id);
-        if (!existingBill) {
+        const indexOf = bills.findIndex((b) => b.id === bill.id);
+        if (indexOf < 0) {
             // Create new bill object in database
+            let lastBillId = 0;
             const lastBill = getLastBill();
-            const newId = lastBill.id + 1;
+            if (lastBill) {
+                lastBillId = lastBill.id;
+            }
+            const newId = lastBillId + 1;
             bill.id = newId;
             bills.push(bill);
         } else {
             // Replace the existing bill object in the database.
-            // Replace the existing order object in the database.
-            const indexOf = bills.indexOf(existingBill);
             bills[indexOf] = bill;
         }
         saveBills(bills);
@@ -860,12 +906,14 @@ DatabaseAPI = (function () {
      * `DatabaseAPI.Users.getAllUserUserNames();`
      */
     return {
+        cleanup: cleanup,
         Users: {
             getAllUserNames: allUserNames,
             getUserDetailsByUserName: userDetailsByUserName,
             getUserDetailsIfCredentialsAreValid:
                 getUserDetailsIfCredentialsAreValid,
             changeBalance: changeBalance,
+            getBalanceByUserId: getBalanceByUserId,
         },
         Beverages: {
             findBeverageByNr: findBeverageByNr,

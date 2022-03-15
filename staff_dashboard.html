@@ -5,7 +5,7 @@ The dashboard for staff members like bartenders, waiter, waitress, etc.
 
 Author: David Kopp
 -----
-Last Modified: Sunday, 13th March 2022
+Last Modified: Tuesday, 15th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -299,6 +299,49 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                 data-lang="[value]security-notifier-form-submit"
                             />
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay for Payment  -->
+            <div id="overlay-payment" class="overlay hidden">
+                <div class="overlay-content">
+                    <div class="clickable overlay-close-button">
+                        <img src="assets/images/icon_close.svg" />
+                    </div>
+                    <div id="payment" data-order-id="">
+                        <input type="radio" name="billing-type" id="bill-type-single" value="Single" checked />
+                        <label for="bill-type-single" data-lang="payment-split-label-single"></label>
+                        <input type="radio" name="billing-type" id="bill-type-split" value="Split" />
+                        <label for="bill-type-single" data-lang="payment-split-label-split"></label>
+                        <div id="single-payment">
+                            <button
+                                id="single-payment-button"
+                                class="overview-buttons"
+                                data-lang="payment-pay-button"
+                            ></button>
+                        </div>
+                        <div id="split-payment" class="hidden">
+                            <label
+                                for="payment-split-value"
+                                id="payment-split-value-label"
+                                data-lang="payment-split-value-label"
+                            ></label>
+                            <input
+                                id="payment-split-value"
+                                name="payment-split-value"
+                                type="number"
+                                max="20"
+                                min="1"
+                                maxlength="2"
+                            />
+                            <button
+                                id="finalize-split-number"
+                                class="overview-buttons"
+                                data-lang="payment-split-finalize-label"
+                            ></button>
+                            <div id="payments"></div>
+                        </div>
                     </div>
                 </div>
             </div>

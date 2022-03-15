@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 12th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
@@ -106,6 +106,18 @@
             $("#overlay-security-notifier").hide();
             $("#security-notifier-form").find("textarea").val("");
         });
+
+        // Event handlers for the single and split bill buttons
+        $("#bill-type-single").click(function () {
+            $("#single-payment").show();
+            $("#split-payment").hide();
+        });
+        $("#bill-type-split").click(function () {
+            $("#single-payment").hide();
+            $("#split-payment").show();
+        });
+        $("#finalize-split-number").click(handleInitSplitBill);
+        $("#single-payment-button").click(handleSinglePayment);
     }
 
     /** Initializes the order list in the view. */
@@ -205,26 +217,40 @@
             }
         });
 
-        // Add event hander for the pay buttons for the orders
+        // Add an event handler for the pay buttons for the orders
         $(".order-list-pay-order-button").click(function () {
+            // First save the order id in the payment overlay so other functions will be be able to execute operations for this order.
             const orderId = $(this)
                 .closest(".order-element-row")
                 .data("order-id");
+            $("#payment").data("order-id", orderId);
 
-            // TODO: Splitting type + vip account
+            // Clear form values.
+            $("#payment-split-value").val("");
 
-            const createdBill = OrderController.createBillForOrder(orderId);
-            const updatedOrder = OrderController.completeOrder(
-                orderId,
-                createdBill.id
-            );
-            if (updatedOrder) {
-                // Order was successfully marked as done → we can remove it.
-                initOrdersList();
+            // The split single radio box should be set to checked as the default.
+            $("#payment").find("input[value=Single]").prop("checked", true);
+
+            // Finally show the overlay
+            $("#overlay-payment").show();
+
+            // Check if a bill already exists... If so, use the info.
+            const order = OrderController.getOrderById(orderId);
+            if (order.billId) {
+                // There is already a bill! Use it...
+                const bill = OrderController.getBillById(order.billId);
+                if (bill.split) {
+                    $("#payment")
+                        .find("input[value=Split]")
+                        .prop("checked", true);
+                    handleInitSplitBill();
+                } else {
+                    handleSinglePayment();
+                }
             }
         });
 
-        // Add event hander for the edit buttons for the orders
+        // Add event handler for the edit buttons for the orders
         $(".order-list-edit-order-button").click(function () {
             const orderId = $(this)
                 .closest(".order-element-row")
@@ -237,6 +263,149 @@
         $("#orders-list-total-number").html(numberOfOrders);
 
         LanguageController.refreshTextStrings();
+    }
+
+    /** Handles a single payment and markes an order as done. */
+    function handleSinglePayment() {
+        const orderId = $("#payment").data("order-id");
+
+        const createdBill = OrderController.createBillForOrder(orderId);
+        const completedOrder = OrderController.completeOrder(orderId);
+
+        console.log(
+            `StaffDashboardController | Payment for order '${orderId}' received.`
+        );
+
+        if (completedOrder) {
+            paymentDone();
+        }
+    }
+
+    /** Handles the initializing of the split of a bill. */
+    function handleInitSplitBill() {
+        const orderId = $("#payment").data("order-id");
+        const order = OrderController.getOrderById(orderId);
+
+        let bill;
+        let splitNumber;
+        // When there is already a bill for the order... Use it!
+        if (order.billId) {
+            bill = OrderController.getBillById(order.billId);
+        }
+
+        // When there is no bill or the existing bill has no info about the split, get the info from the view.
+        let splitObj;
+        if (!bill || !bill.split) {
+            const splitNumberInput = $("#payment-split-value").val();
+            if (!splitNumberInput) {
+                return;
+            }
+            splitNumber = parseInt(splitNumberInput.trim());
+            if (isNaN(splitNumber)) {
+                console.log(
+                    `Provided value '${splitNumberInput}' is not a valid number!`
+                );
+                return;
+            }
+
+            splitObj = {};
+            for (let i = 1; i <= splitNumber; i++) {
+                const splitId = i.toString();
+                splitObj[splitId] = {
+                    paid: false,
+                };
+            }
+
+            if (!bill) {
+                // When there is no bill, create it now!
+                bill = OrderController.createBillForOrder(orderId, splitObj);
+            } else {
+                // When there is already a bill, update the info about the split.
+                bill = OrderController.editBillSplit(bill.id, splitObj);
+            }
+        }
+
+        // When the splitting number is not set yet, use the info from the bill object.
+        if (!splitNumber) {
+            splitNumber = Object.keys(bill.split).length;
+        }
+
+        // Update the view.
+        let splitPaymentButtonsHTML = "";
+        for (const splitId in bill.split) {
+            if (Object.hasOwnProperty.call(bill.split, splitId)) {
+                const splitInfo = bill.split[splitId];
+                if (splitInfo.paid != true) {
+                    splitPaymentButtonsHTML += `
+                <button class="split-payment-buttons overlay-button hover-shine" data-split-id="${splitId}">
+                    <span data-lang="payment-split-pay-button"></span>
+                    <span>#${splitId}</span>
+                </button>`;
+                }
+            }
+        }
+        $("#payments").html(`
+                <div id="split-payment-buttons-container">
+                    ${splitPaymentButtonsHTML}
+                </div>
+            `);
+
+        // Add event handlers for the buttons
+        $(".split-payment-buttons").click(function () {
+            const splitId = $(this).data("split-id");
+            handleSplitPayment(orderId, bill.id, splitId);
+            $(this).remove();
+        });
+
+        LanguageController.refreshTextStrings();
+    }
+
+    /**
+     * Handles a split payment by setting the individual payments as paid and
+     * checking if all have paid.
+     *
+     * @param {number} orderId The order id.
+     * @param {number} billId The bill id.
+     * @param {string} splitId The split id.
+     */
+    function handleSplitPayment(orderId, billId, splitId) {
+        const bill = OrderController.getBillById(billId);
+        if (!bill) {
+            console.log(
+                `handleSplitPayment | Bill with id '${billId}' does not exist!`
+            );
+            return;
+        }
+        bill.split[splitId].paid = true;
+
+        const updatedBill = OrderController.editBillSplit(billId, bill.split);
+
+        let allPaid = true;
+        for (const splitId in updatedBill.split) {
+            if (Object.hasOwnProperty.call(updatedBill.split, splitId)) {
+                const splitInfo = updatedBill.split[splitId];
+                if (splitInfo.paid != true) {
+                    allPaid = false;
+                }
+            }
+        }
+        if (allPaid) {
+            console.log(
+                `StaffDashboardController | All payments for order '${orderId}' received.`
+            );
+            const updatedOrder = OrderController.completeOrder(orderId);
+
+            if (updatedOrder) {
+                paymentDone();
+            }
+        }
+    }
+
+    /** Handles everything that should be done after a successful payment. */
+    function paymentDone() {
+        initOrdersList();
+        $("#payment").data("order-id", "");
+        $("#overlay-payment").hide();
     }
 
     /**

@@ -343,22 +343,56 @@ var DB = {
             done: false,
             billId: 2,
         },
+        {
+            id: 3,
+            table: 42,
+            items: [
+                {
+                    id: 1,
+                    beverageNr: "1101402",
+                    productOnTheHouse: false,
+                },
+            ],
+            notes: "",
+            inventory: "vipInventory",
+            done: false,
+            billId: 3,
+        },
     ],
     bills: [
         {
             id: 1,
-            type: "single",
-            vipAccount: false,
             timestamp: "2022-02-18T12:46:13Z",
             amountSEK: 40,
         },
         {
             id: 2,
-            type: "split",
-            split: 4,
-            vipAccount: false,
+            split: {
+                1: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+                2: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+                3: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+                4: {
+                    amountSEK: 40,
+                    paid: false,
+                },
+            },
             timestamp: "2022-02-18T12:46:13Z",
             amountSEK: 160,
+        },
+        {
+            id: 3,
+            vipAccountId: 102,
+            timestamp: "2022-02-28T12:47:13Z",
+            amountSEK: 15.9,
         },
     ],
     tannins: ["291702", "2231601", "1217401", "1202501"],

@@ -3,7 +3,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Tuesday, 15th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals OrderController, UNDOmanager */
@@ -770,15 +770,24 @@ describe("OrderController", function () {
             const expectedTotalAmount = 13.9 + 62.0 + 0;
 
             const createdOrder = OrderController.createOrder(order);
+
+            expect(typeof createdOrder.billId).not.toBe("number");
+
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id
             );
 
             expect(createdBill).toBeTruthy();
             expect(createdBill.id).toBeTruthy();
-            expect(createdBill.vipAccount).toBe(false);
+            expect(createdBill.split).toBe(undefined);
+            expect(createdBill.vipAccountId).toBe(undefined);
             expect(Date.parse(createdBill.timestamp)).not.toBeNaN();
             expect(createdBill.amountSEK).toBe(expectedTotalAmount);
+
+            const updatedOrder = OrderController.getOrderById(createdOrder.id);
+
+            expect(typeof updatedOrder.billId).toBe("number");
+            expect(updatedOrder.billId).toBe(createdBill.id);
         });
 
         it("should be able to create a new bill for an order of a VIP member", function () {
@@ -791,16 +800,17 @@ describe("OrderController", function () {
                 ],
                 inventory: Constants.INVENTORIES.VIP,
             };
-
+            const split = false;
+            const vipAccountId = 102;
             const createdOrder = OrderController.createOrder(order);
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id,
-                "single",
-                true
+                split,
+                vipAccountId
             );
 
             expect(createdBill).toBeTruthy();
-            expect(createdBill.vipAccount).toBe(true);
+            expect(createdBill.vipAccountId).toBe(vipAccountId);
         });
 
         it("should be able to create a new bill for an order with group splitting", function () {
@@ -817,14 +827,29 @@ describe("OrderController", function () {
                 inventory: Constants.INVENTORIES.BAR,
             };
 
+            const split = {
+                1: {},
+                2: {},
+            };
             const createdOrder = OrderController.createOrder(order);
             const createdBill = OrderController.createBillForOrder(
                 createdOrder.id,
-                "group"
+                split
             );
 
+            const expectedSplitObj = {
+                1: {
+                    amountSEK: createdBill.amountSEK / 2,
+                    paid: false,
+                },
+                2: {
+                    amountSEK: createdBill.amountSEK / 2,
+                    paid: false,
+                },
+            };
+
             expect(createdBill).toBeTruthy();
-            expect(createdBill.type).toBe("group");
+            expect(createdBill.split).toEqual(expectedSplitObj);
         });
 
         it("should be able to complete an order", function () {
@@ -848,8 +873,7 @@ describe("OrderController", function () {
             );
 
             const completedOrder = OrderController.completeOrder(
-                createdOrder.id,
-                createdBill.id
+                createdOrder.id
             );
 
             expect(completedOrder).toBeTruthy();
