@@ -64,18 +64,10 @@ header .logo {
 header .logo img {
     height: 80px;
 }
-header #header-page-title {
-    color: #fff;
-    font-size: 40px;
-    font-weight: 700;
-    width: 50%;
-    text-align: center;
-    cursor: default;
-}
 header .available-options {
     display: flex;
     justify-content: flex-end;
-    width: 25%;
+    width: 75%;
 }
 header .available-options * {
     height: inherit;
@@ -122,7 +114,7 @@ header .available-options #table-number-box {
 @media screen and (max-width: 1200px) {
     header .header-bar {
         align-items: center;
-        height: 270px;
+        height: 200px;
     }
     header .header-bar-column {
         float: none;
@@ -132,9 +124,6 @@ header .available-options #table-number-box {
     header .logo {
         width: unset;
         margin-bottom: 40px;
-    }
-    header #header-page-title {
-        width: unset;
     }
     header .available-options {
         display: flex;
@@ -161,6 +150,15 @@ body::after {
     display: block;
     height: 100px;
     margin-top: 30px;
+}
+
+#page-title {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    cursor: default;
+    margin: 10px auto;
 }
 
 /*=============Footer================*/
