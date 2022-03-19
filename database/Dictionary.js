@@ -88,15 +88,15 @@ const Dictionary = {
         },
         // Text strings for the page 'index'
         index: {
-            "page-title": "Flying Dutchman - Welcome",
-            "header-page-title": "Welcome!",
+            "head-page-title": "Flying Dutchman - Welcome",
+            "page-title": "Welcome!",
             "link-to-login-page": "Login",
             "go-to-menu-button-title": "Go to menu",
         },
         // Text strings for the page 'menu'
         menu: {
-            "page-title": "Flying Dutchman - Menu",
-            "header-page-title": "Menu",
+            "head-page-title": "Flying Dutchman - Menu",
+            "page-title": "Menu",
             "caption": "Menu",
             "filter-icon-title-beer": "Beer",
             "filter-icon-title-wine": "Wine",
@@ -116,7 +116,7 @@ const Dictionary = {
         },
         // Text strings for the page 'login'
         login: {
-            "page-title": "Flying Dutchman - Login",
+            "head-page-title": "Flying Dutchman - Login",
             "caption": "Login",
             "username-label": "Username",
             "password-label": "Password",
@@ -125,8 +125,8 @@ const Dictionary = {
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
-            "page-title": "Flying Dutchman - Staff Dashboard",
-            "header-page-title": "Staff Dashboard",
+            "head-page-title": "Flying Dutchman - Staff Dashboard",
+            "page-title": "Staff Dashboard",
             "orders-overview-title": "Orders",
             "orders-overview-table-label": "Table",
             "order-details-id-label": "Order number:",
@@ -180,8 +180,8 @@ const Dictionary = {
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
-            "page-title": "Flying Dutchman - VIP Dashboard",
-            "header-page-title": "VIP Dashboard",
+            "head-page-title": "Flying Dutchman - VIP Dashboard",
+            "page-title": "VIP Dashboard",
             "table-number-label": "Table",
             "vip-welcome-text": "Welcome",
             "vip-account-balance-text": "Balance =",
@@ -194,8 +194,8 @@ const Dictionary = {
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
-            "page-title": "Flying Dutchman - Manager Dashboard",
-            "header-page-title": "Manager Dashboard",
+            "head-page-title": "Flying Dutchman - Manager Dashboard",
+            "page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Cooler",
@@ -243,15 +243,15 @@ const Dictionary = {
         },
         // Text strings for the page 'index'
         index: {
-            "page-title": "Flying Dutchman - Willkommen",
-            "header-page-title": "Willkommen!",
+            "head-page-title": "Flying Dutchman - Willkommen",
+            "page-title": "Willkommen!",
             "link-to-login-page": "Anmelden",
             "go-to-menu-button-title": "Gehe zum Menü",
         },
         // Text strings for the page 'menu'
         menu: {
-            "page-title": "Flying Dutchman - Menü",
-            "header-page-title": "Menü",
+            "head-page-title": "Flying Dutchman - Menü",
+            "page-title": "Menü",
             "caption": "Menü",
             "filter-icon-title-beer": "Bier",
             "filter-icon-title-wine": "Wein",
@@ -271,7 +271,7 @@ const Dictionary = {
         },
         // Text strings for the page 'login'
         login: {
-            "page-title": "Flying Dutchman - Anmeldung",
+            "head-page-title": "Flying Dutchman - Anmeldung",
             "caption": "Anmeldung",
             "username-label": "Benutzername",
             "password-label": "Passwort",
@@ -280,8 +280,8 @@ const Dictionary = {
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
-            "page-title": "Flying Dutchman - Intern",
-            "header-page-title": "Dashboard für Angestellte",
+            "head-page-title": "Flying Dutchman - Intern",
+            "page-title": "Dashboard für Angestellte",
             "orders-overview-title": "Bestellungen",
             "orders-overview-table-label": "Tisch",
             "order-details-id-label": "Bestellungnummer:",
@@ -336,8 +336,8 @@ const Dictionary = {
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
-            "page-title": "Flying Dutchman - VIP Dashboard",
-            "header-page-title": "VIP Dashboard",
+            "head-page-title": "Flying Dutchman - VIP Dashboard",
+            "page-title": "VIP Dashboard",
             "table-number-label": "Tisch",
             "vip-welcome-text": "Willkommen",
             "vip-account-balance-text": "Kontostand =",
@@ -350,8 +350,8 @@ const Dictionary = {
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
-            "page-title": "Flying Dutchman - Manager Dashboard",
-            "header-page-title": "Manager Dashboard",
+            "head-page-title": "Flying Dutchman - Manager Dashboard",
+            "page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Kühlschrank",
@@ -401,15 +401,15 @@ const Dictionary = {
         // Text strings for the page 'index'
         index: {
             // TODO: Translate the following text strings into portuguese
-            "page-title": "Flying Dutchman - Welcome",
-            "header-page-title": "Welcome!",
+            "head-page-title": "Flying Dutchman - Welcome",
+            "page-title": "Welcome!",
             "link-to-login-page": "Login",
             "go-to-menu-button-title": "Go to menu",
         },
         // Text strings for the page 'menu'
         menu: {
-            "page-title": "Flying Dutchman - Cardápio",
-            "header-page-title": "Cardápio",
+            "head-page-title": "Flying Dutchman - Cardápio",
+            "page-title": "Cardápio",
             "caption": "Cardápio",
             // TODO: Translate the following text strings into portuguese
             "filter-icon-title-beer": "Beer",
@@ -429,7 +429,7 @@ const Dictionary = {
         },
         // Text strings for the page 'login'
         login: {
-            "page-title": "Flying Dutchman - Entrar",
+            "head-page-title": "Flying Dutchman - Entrar",
             "caption": "Entrar",
             "username-label": "Usuário",
             "password-label": "Senha",
@@ -439,9 +439,9 @@ const Dictionary = {
         },
         // Text strings for the page 'staff dashboard'
         staff_dashboard: {
-            "page-title":
+            "head-page-title":
                 "Flying Dutchman - Painel de Controle dos Funcionários",
-            "header-page-title":
+            "page-title":
                 "Flying Dutchman - Painel de Controle dos Funcionários",
             "orders-overview-title": "Pedidos",
             "orders-overview-table-label": "Mesa",
@@ -499,8 +499,8 @@ const Dictionary = {
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
-            "page-title": "Flying Dutchman - VIP Painel de Controle",
-            "header-page-title": "VIP Painel de Controle",
+            "head-page-title": "Flying Dutchman - VIP Painel de Controle",
+            "page-title": "VIP Painel de Controle",
             "table-number-label": "Mesa Número",
             "vip-welcome-text": "Bem-vindo",
             "vip-account-balance-text": "Saldo =",
@@ -514,8 +514,8 @@ const Dictionary = {
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
             // TODO: Translate the following text strings into portuguese
-            "page-title": "Flying Dutchman - Manager Dashboard",
-            "header-page-title": "Manager Dashboard",
+            "head-page-title": "Flying Dutchman - Manager Dashboard",
+            "page-title": "Manager Dashboard",
             "inventory-name-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
                 [Constants.INVENTORIES.VIP]: "VIP Cooler",
