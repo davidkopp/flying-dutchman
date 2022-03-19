@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 12th March 2022
+ * Last Modified: Saturday, 19th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -60,13 +60,34 @@
         return currentPath;
     }
 
-    /** Initializes the language. If their is no language set, use the default language. */
+    /**
+     * Initializes the language and the language flags. If their is no language
+     * set, use the default language.
+     */
     function init() {
         if (!getCurrentLanguage()) {
             console.log(
                 `LanguageController.init | There is no language definied yet. Use the default language '${Constants.DEFAULT_LANGUAGE}'.`
             );
             setLanguage(Constants.DEFAULT_LANGUAGE);
+        }
+
+        // Add event handler to the language flags
+        $(".lang-flag").click(function () {
+            const countryCode = $(this).data("country-code");
+            changeLang(countryCode);
+
+            $(".lang-flag").removeClass("active-language");
+            $(this).addClass("active-language");
+        });
+
+        // Get flag element for current language and change it's appearance.
+        const countryCode = getCurrentLanguage();
+        const $flag = $("div[data-country-code='" + countryCode + "']");
+        if ($flag) {
+            $flag.addClass("active-language");
+        } else {
+            `LanguageController.init | There is no language flag known for the country code '${countryCode}'!.`;
         }
     }
 
@@ -85,6 +106,7 @@
      */
     function refreshStaticTextStrings() {
         const currentPath = getCurrentPath();
+
         // Update the text strings with static contents
         $("[data-lang]").each(function (index, element) {
             let langKey = $(element).data("lang").trim();
@@ -193,7 +215,7 @@
                     // The key does not exist for the given page.
                     // Check if the key is known as a common key.
                     result = Dictionary[currentLanguage]["_"][key];
-                    if (!result) {
+                    if (!result && page != "SpecRunner") {
                         console.log(
                             `LanguageController.getValueFromDictionary | Language key '${key}' is not set for language '${currentLanguage}' and page '${page}'.`
                         );
@@ -206,7 +228,7 @@
             }
         }
 
-        if (!result) {
+        if (!result && page != "SpecRunner") {
             // Try to get the value for the common key.
             result = Dictionary[currentLanguage]["_"][key];
             if (!result) {
@@ -218,8 +240,8 @@
         return result;
     }
 
-    exports.changeLang = changeLang;
     exports.LanguageController = {};
+    exports.LanguageController.changeLang = changeLang;
     exports.LanguageController.refreshTextStrings = refreshTextStrings;
     exports.LanguageController.refreshStaticTextStrings =
         refreshStaticTextStrings;

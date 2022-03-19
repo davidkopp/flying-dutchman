@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 15th March 2022
+ * Last Modified: Saturday, 19th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -78,9 +78,9 @@ const Dictionary = {
     en: {
         // Common text strings (relevant for multiple pages)
         _: {
-            "language-flag-title-english": "English",
-            "language-flag-title-german": "German",
-            "language-flag-title-portuguese": "Portuguese",
+            "lang-flag-title-english": "English",
+            "lang-flag-title-german": "German",
+            "lang-flag-title-portuguese": "Portuguese",
             "logged-in-user-label": "Logged in user:",
             "logout-button-title": "Logout",
             "logo-title": "To home page",
@@ -233,9 +233,9 @@ const Dictionary = {
     de: {
         // Common text strings (relevant for multiple pages)
         _: {
-            "language-flag-title-english": "Englisch",
-            "language-flag-title-german": "Deutsch",
-            "language-flag-title-portuguese": "Portugiesisch",
+            "lang-flag-title-english": "Englisch",
+            "lang-flag-title-german": "Deutsch",
+            "lang-flag-title-portuguese": "Portugiesisch",
             "logged-in-user-label": "Angemeldet als:",
             "logout-button-title": "Ausloggen",
             "logo-title": "Zur Startseite",
@@ -390,9 +390,9 @@ const Dictionary = {
         // Common text strings (relevant for multiple pages)
         _: {
             // TODO: Translate the following text strings into portuguese
-            "language-flag-title-english": "English",
-            "language-flag-title-german": "German",
-            "language-flag-title-portuguese": "Portuguese",
+            "lang-flag-title-english": "English",
+            "lang-flag-title-german": "German",
+            "lang-flag-title-portuguese": "Portuguese",
             "logged-in-user-label": "Logged in usuario:",
             "logout-button-title": "Logout",
             "logo-title": "To home page",

@@ -5,7 +5,7 @@ The dashboard for staff members like bartenders, waiter, waitress, etc.
 
 Author: David Kopp
 -----
-Last Modified: Tuesday, 15th March 2022
+Last Modified: Saturday, 19th March 2022
 Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
@@ -40,20 +40,14 @@ Modified By: David Kopp (mail@davidkopp.de>)
     <body>
         <header>
             <div class="lang-container">
-                <div
-                    onclick="changeLang(Constants.LANGUAGE_CODE_ENGLISH)"
-                    data-lang="[title]language-flag-title-english"
-                >
-                    <img src="assets/images/icon_england_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                <div class="lang-flag clickable" data-country-code="en" data-lang="[title]lang-flag-title-english">
+                    <img src="assets/images/icon_england_flag.png" alt="" />
                 </div>
-                <div onclick="changeLang(Constants.LANGUAGE_CODE_GERMAN)" data-lang="[title]language-flag-title-german">
-                    <img src="assets/images/icon_german_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                <div class="lang-flag clickable" data-country-code="de" data-lang="[title]lang-flag-title-german">
+                    <img src="assets/images/icon_german_flag.png" alt="" />
                 </div>
-                <div
-                    onclick="changeLang(Constants.LANGUAGE_CODE_PORTUGUESE)"
-                    data-lang="[title]language-flag-title-portuguese"
-                >
-                    <img src="assets/images/icon_brazilian_flag.png" alt="" class="lang-flag hover-shine clickable" />
+                <div class="lang-flag clickable" data-country-code="pt" data-lang="[title]lang-flag-title-portuguese">
+                    <img src="assets/images/icon_brazilian_flag.png" alt="" />
                 </div>
             </div>
             <div class="header-bar">
