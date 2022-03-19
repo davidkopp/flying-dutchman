@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 15th March 2022
+ * Last Modified: Saturday, 19th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
@@ -74,6 +74,7 @@
         $(".overlay-close-button").click(function () {
             // Hide the overlay div this close button belongs to.
             $(this).parent().closest(".overlay").hide();
+            deactivateOverlayEventHandlers();
         });
 
         // Enable closing an overlay by clicking somewhere outside of the centered overlay content.
@@ -86,10 +87,19 @@
                 container.has(e.target).length === 0
             ) {
                 $(".overlay").hide();
+                deactivateOverlayEventHandlers();
             }
         });
 
         $("#notify-security-button").click(function () {
+            // When enter is pressed (not together with shift key), send out the notification
+            $(document).on("keypress", function (e) {
+                if (e.which == 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    $("#security-notifier-form").submit();
+                }
+            });
+
             $("#overlay-security-notifier").show();
         });
 
@@ -105,6 +115,7 @@
 
             $("#overlay-security-notifier").hide();
             $("#security-notifier-form").find("textarea").val("");
+            deactivateOverlayEventHandlers();
         });
 
         // Event handlers for the single and split bill buttons
@@ -118,6 +129,11 @@
         });
         $("#finalize-split-number").click(handleInitSplitBill);
         $("#single-payment-button").click(handleSinglePayment);
+    }
+
+    /** Deactivate specific event handlers that were set while the overlay was opened... */
+    function deactivateOverlayEventHandlers() {
+        $(document).unbind("keypress");
     }
 
     /** Initializes the order list in the view. */

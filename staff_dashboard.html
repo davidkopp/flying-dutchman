@@ -95,6 +95,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
         </header>
         <article>
             <div>
+                <!-- Visible containers -->
                 <div class="row">
                     <!-- Orders overview -->
                     <div id="orders-overview" class="overview-container col-9 col-s-12">
@@ -267,6 +268,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         <div class="clickable overlay-close-button">
                             <img src="assets/images/icon_close.svg" />
                         </div>
+                        <-- TODO: Implement restock dialog -->
                         <span>NOT IMPLEMENTED YET</span>
                     </div>
                 </div>
@@ -277,7 +279,8 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         <div class="clickable overlay-close-button">
                             <img src="assets/images/icon_close.svg" />
                         </div>
-                        <span class="overlay-details-heading" data-lang="security-notifier-title"></span>
+                        <div class="overlay-details-heading" data-lang="security-notifier-title"></div>
+                        <div class="overlay-details-info-text" data-lang="security-notifier-description"></div>
                         <form id="security-notifier-form">
                             <label
                                 for="message"

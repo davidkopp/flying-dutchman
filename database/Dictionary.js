@@ -168,6 +168,8 @@ const Dictionary = {
             "order-details-notes-label": "Notes:",
             "notify-security-button-title": "Notify Security",
             "security-notifier-title": "Notify Security",
+            "security-notifier-description":
+                "Click 'Send' or press ENTER to send out the notification.",
             "security-notifier-message-box-label": "Message (optional):",
             "security-notifier-form-submit": "Send",
             "inventory-details-title": "Inventory",
@@ -324,6 +326,8 @@ const Dictionary = {
             "order-details-notes-label": "Notizen:",
             "notify-security-button-title": "Sicherheitsdienst benachrichtigen",
             "security-notifier-title": "Sicherheitsdienst benachrichtigen",
+            "security-notifier-description":
+                "Klicke auf 'Senden' oder drücke ENTER zum Verschicken der Nachricht.",
             "security-notifier-message-box-label": "Nachricht (optional):",
             "security-notifier-form-submit": "Senden",
             "inventory-details-title": "Lager",
@@ -487,6 +491,8 @@ const Dictionary = {
             "order-details-notes-label": "Notes:",
             "notify-security-button-title": "Notify Security",
             "security-notifier-title": "Notify Security",
+            "security-notifier-description":
+                "Click 'Send' or press ENTER to send out the notification.",
             "security-notifier-message-box-label": "Message (optional):",
             "security-notifier-form-submit": "Send",
             "inventory-details-title": "Inventory",

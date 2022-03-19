@@ -765,6 +765,11 @@ img.inventory-has-enough-items {
 
 .overlay-details-heading {
     font-size: 32px;
+    margin-bottom: 10px;
+}
+.overlay-details-info-text {
+    font-size: 18px;
+    font-style: italic;
 }
 
 .overlay {
