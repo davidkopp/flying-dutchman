@@ -3,22 +3,12 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 8th March 2022
+ * Last Modified: Saturday, 19th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals MenuController */
 
 describe("MenuController", function () {
-    /**
-     * Checks if the string is somehow part of the menu container in the DOM.
-     *
-     * @param {string} string The string.
-     * @returns {boolean} `true` if string is contained in menu container, `false` if not.
-     */
-    function checkIfMenuInDOMContains(string) {
-        return $(`#menu-container:contains(${string})`).length >= 1;
-    }
-
     beforeAll(function (done) {
         $(document).ready(function () {
             // Wait until the DOM is ready before executing the unit tests.
@@ -55,25 +45,26 @@ describe("MenuController", function () {
 
         it("should be able to hide a beverage from the menu", function () {
             const beverageNr = "76901";
-            MenuController.showBeverageInMenu(beverageNr);
 
+            // First show the beverage in menu
+            MenuController.showBeverageInMenu(beverageNr);
             const listContainsBeverageAfterShowOperation =
                 DatabaseAPI.HideFromMenu.getList().includes(beverageNr);
             const menuContainsBeverageAfterShowOperation =
-                checkIfMenuInDOMContains(beverageNr);
+                $(`div[data-beverage-nr='${beverageNr}']`).length > 0;
 
             expect(listContainsBeverageAfterShowOperation).toBe(false);
             expect(menuContainsBeverageAfterShowOperation).toBe(true);
 
-            // MenuController.hideBeverageFromMenu(beverageNr);
+            // Now hide the beverage from the menu
+            MenuController.hideBeverageFromMenu(beverageNr);
+            const listContainsBeverageAfterHideOperation =
+                DatabaseAPI.HideFromMenu.getList().includes(beverageNr);
+            const menuContainsBeverageAfterHideOperation =
+                $(`div[data-beverage-nr='${beverageNr}']`).length > 0;
 
-            // const listContainsBeverageAfterHideOperation =
-            //     DatabaseAPI.HideFromMenu.getList().includes(beverageNr);
-            // const menuContainsBeverageAfterHideOperation =
-            //     checkIfMenuInDOMContains(beverageNr);
-
-            // expect(listContainsBeverageAfterHideOperation).toBe(true);
-            // expect(menuContainsBeverageAfterHideOperation).toBe(false);
+            expect(listContainsBeverageAfterHideOperation).toBe(true);
+            expect(menuContainsBeverageAfterHideOperation).toBe(false);
         });
     });
 });
