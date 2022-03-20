@@ -109,8 +109,7 @@
                  draggable = true
                  ondragstart = "dragItem(event)">
                 ${beverage.name} ${beverage.alcoholstrength} ${beverage.priceinclvat}
-            </div>
-        `;
+            </div>`;
         });
         return result;
     }

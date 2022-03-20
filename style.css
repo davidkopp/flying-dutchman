@@ -523,12 +523,25 @@ Menu Page
     background-color: #2f9af0;
 }
 .filter-button {
-    padding: 10px;
-    max-width: 1500px;
-    margin: 10px auto;
+    padding-left: 100px;
+    padding-right: 100px;
+    display: table;
+    width: 100%;
+    margin-bottom: 50px;
 }
 .text-right {
+    position: absolute;
+    right: 0px;
+    width: 50%;
     text-align: right;
+    margin-right: 50px;
+}
+.text-left{
+    position: absolute;
+    left: 0px;
+    width: 50%;
+    text-align: left;
+    margin-left: 50px;
 }
 .filter-button button {
     border: 2px solid #6cafe5;
