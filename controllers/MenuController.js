@@ -378,7 +378,7 @@
                 <div>
                     ${menuItemInfoHTML}
                 </div>
-                <img src="${imageSource}" alt="">
+                <img draggable="false" src="${imageSource}" alt="">
             </div>
             `;
         }
