@@ -213,7 +213,7 @@ const Dictionary = {
             "waiter-call-button": "Waiter Call",
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
-
+            "placement-successful": "Placement of order was successful!",
 
             "filter-icon-title-beer": "Beer",
             "filter-icon-title-wine": "Wine",
@@ -230,7 +230,6 @@ const Dictionary = {
             "menu-item-label-packaging": "Packaging:",
             "menu-item-label-price": "Price:",
             "menu-item-label-year": "Year:",
-
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
@@ -410,7 +409,7 @@ const Dictionary = {
             "waiter-call-button": "Rufe Kellner*in",
             "pay-bill-button": "Bezahlen",
             "info-box-title": "Info",
-
+            "placement-successful": "Bestellung war erfolgreich!",
 
             "filter-icon-title-beer": "Bier",
             "filter-icon-title-wine": "Wein",
@@ -609,7 +608,7 @@ const Dictionary = {
             "waiter-call-button": "Chamar o Garçon",
             "pay-bill-button": "Pagar a Conta",
             "info-box-title": "Informação",
-
+            "placement-successful": "Colocação de encomenda foi bem sucedida!",
 
             "filter-icon-title-beer": "Cerveja",
             "filter-icon-title-wine": "Vinhos",
@@ -625,8 +624,6 @@ const Dictionary = {
             "menu-item-label-packaging": "Pacote:",
             "menu-item-label-price": "Preço:",
             "menu-item-label-year": "Ano:",
-
-
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {

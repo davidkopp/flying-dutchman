@@ -25,7 +25,11 @@ describe("MenuController", function () {
     });
 
     it("should be able to initialize the menu without a filter", function () {
-        MenuController.initMenu();
+        const menuConfig = {
+            viewElementId: "menu-container",
+            inventory: Constants.INVENTORIES.BAR,
+        };
+        MenuController.initMenu(menuConfig);
 
         const htmlMenuItems = $(".item");
 

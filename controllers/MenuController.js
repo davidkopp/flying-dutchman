@@ -18,7 +18,7 @@
     let lastUsedFilter;
 
     $(document).ready(function () {
-        initMenu();
+        initDefaultMenu();
     });
 
     /**
@@ -29,14 +29,14 @@
     function filterMenu(byType) {
         if (byType === lastUsedFilter) {
             // Reset the filter
-            initMenu();
+            initDefaultMenu();
         } else {
             switch (byType) {
                 case Constants.BEER_filter:
                 case Constants.WINE_filter:
                 case Constants.DRINK_filter:
                 case Constants.WATER_filter:
-                    initMenu(byType);
+                    initDefaultMenu(byType);
                     break;
                 default:
                     console.log(
@@ -48,28 +48,58 @@
     }
 
     /**
-     * Initialize the menu with the information about the available beverages in
-     * the bar inventory. With the optional filter argument it's possible to
-     * only show one specific type.
+     * Initializes the menu with the default config for normal customers.
      *
      * @param {string} filterByType The optional filter.
      */
-    function initMenu(filterByType) {
-        const inventoryName = Constants.INVENTORIES.BAR;
+    function initDefaultMenu(filterByType) {
+        const menuConfig = {
+            viewElementId: "menu-container",
+            inventory: Constants.INVENTORIES.BAR,
+        };
+        initMenu(menuConfig, filterByType);
+    }
+
+    /**
+     * Initialize the menu with the information about the available beverages.
+     * The config object is used to know which inventory should be used and
+     * where in the view the menu items should be placed. With the optional
+     * filter argument it's possible to only show one specific type.
+     *
+     * @param {object} config The config object for the initialization.
+     * @param {string} filterByType The optional filter.
+     */
+    function initMenu(config, filterByType) {
+        if (!config || !config.viewElementId || !config.inventory) {
+            console.log(
+                "MenuController | Invalid config for initializing the menu! Required properties are `viewElementId` and `inventory`."
+            );
+        }
         console.log(
-            `MenuController | Start initializing the menu with items from the '${inventoryName}' ` +
+            `MenuController | Start initializing the menu with items from the '${config.inventory}' ` +
                 (filterByType
                     ? `with the filter '${filterByType}'.`
-                    : `without a filter.`)
+                    : `without a filter.`) +
+                " Config: " +
+                JSON.stringify(config)
         );
 
+        const $viewMenuContainer = $(`#${config.viewElementId}`);
+        if ($viewMenuContainer.length == 0) {
+            console.log(
+                `MenuController | View element with id '${config.viewElementId}' does not exist! Can't initialize menu.`
+            );
+            return;
+        }
+
         // At first remove the currently shown menu.
-        $("#menu-container").empty();
+        $viewMenuContainer.empty();
 
         lastUsedFilter = filterByType;
 
-        const inventoryItems =
-            DatabaseAPI.Inventory.getInventory(inventoryName);
+        const inventoryItems = DatabaseAPI.Inventory.getInventory(
+            config.inventory
+        );
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
             const beverageNr = inventoryItem.beverageNr;
@@ -87,7 +117,7 @@
             const quantity = inventoryItem.quantity;
             if (!quantity || quantity < 1) {
                 console.log(
-                    `MenuController.initMenu | The item in the inventory '${inventoryName}' with the beverage number '${beverageNr}' doesn't have enough quantities left in the inventory (${quantity}). Don't show it in the menu.`
+                    `MenuController.initMenu | The item in the inventory '${config.inventory}' with the beverage number '${beverageNr}' doesn't have enough quantities left in the inventory (${quantity}). Don't show it in the menu.`
                 );
                 continue;
             }
@@ -96,12 +126,17 @@
             // Check if the beverage exists in the beverage db.
             if (!beverage) {
                 console.log(
-                    `MenuController.initMenu | The inventory '${inventoryName}' includes a beverage with the number '${beverageNr}' that is unknown!`
+                    `MenuController.initMenu | The inventory '${config.inventory}' includes a beverage with the number '${beverageNr}' that is unknown!`
                 );
                 continue;
             }
 
-            displayBeverageInMenu(beverage, quantity, filterByType);
+            const beverageInfoHtml = getHtmlForMenuItem(
+                beverage,
+                filterByType,
+                config.allowDragItems
+            );
+            $viewMenuContainer.append(beverageInfoHtml);
         }
 
         EffectsController.updateFilterIconsInView(lastUsedFilter);
@@ -111,13 +146,15 @@
     }
 
     /**
-     * Displays the information about a beverage in the menu.
+     * Creates the html string to display the information about a beverage in the menu.
      *
      * @param {object} beverage The beverage item.
-     * @param {number} quantity Number of available beverages left.
      * @param {string} filterByType The optional type filter.
+     * @param {boolean} allowDragItems The optional boolean value for allowing
+     *   dragging of the items.
+     * @returns {string} The html to display the menu item.
      */
-    function displayBeverageInMenu(beverage, quantity, filterByType) {
+    function getHtmlForMenuItem(beverage, filterByType, allowDragItems) {
         if (!beverage) {
             return;
         }
@@ -140,7 +177,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 producer: {
@@ -184,7 +221,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 year: {
@@ -218,7 +255,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 alcoholstrength: {
@@ -252,7 +289,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 price: {
@@ -273,7 +310,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 alcoholstrength: {
@@ -291,20 +328,23 @@
             imageSource = "assets/images/placeholder_others.png";
         }
 
-        // E.g. when a filter is set, don't display anything for this beverage.
+        // E.g. when a filter is set, there is nothing to display → do nothing.
         if (!relevantInfoToDisplay) {
             return;
         }
 
+        // Finally create the html for the menu item.
         let menuItemInfoHTML = "";
         for (const key in relevantInfoToDisplay) {
             if (Object.hasOwnProperty.call(relevantInfoToDisplay, key)) {
                 const infoObject = relevantInfoToDisplay[key];
+                const optDataLangHtml = infoObject.dataLangKeyForLabel
+                    ? `data-lang="${infoObject.dataLangKeyForLabel}"`
+                    : "";
+
                 menuItemInfoHTML += `
                 <div class="menu-item-info ${infoObject.classToAdd}">
-                    <span class="menu-item-info-label" data-lang="${
-                        infoObject.dataLangKeyForLabel
-                    }"></span>
+                    <span class="menu-item-info-label" ${optDataLangHtml}></span>
                     <span>${infoObject.value} ${
                     infoObject.suffix ? infoObject.suffix : ""
                 }</span>
@@ -313,16 +353,36 @@
             }
         }
 
-        const menuItemHTML = `
-        <div data-beverage-nr="${beverage.nr}" class="item">
-            <div>
-                ${menuItemInfoHTML}
+        let menuItemHTML = "";
+        if (!allowDragItems) {
+            menuItemHTML = `
+            <div
+                id="item-${beverage.nr}"
+                data-beverage-nr="${beverage.nr}"
+                class="item">
+                <div>
+                    ${menuItemInfoHTML}
+                </div>
+                <img src="${imageSource}" alt="">
             </div>
-            <img src="${imageSource}" alt="">
-        </div>
-        `;
-
-        $("#menu-container").append(menuItemHTML);
+            `;
+        } else {
+            // Item should be draggable: Add respective info to the menu item so it will be draggable
+            menuItemHTML = `
+            <div
+                id="item-${beverage.nr}"
+                data-beverage-nr="${beverage.nr}"
+                class="item drag-items"
+                draggable=true
+                ondragstart="dragItem(event)">
+                <div>
+                    ${menuItemInfoHTML}
+                </div>
+                <img draggable="false" src="${imageSource}" alt="">
+            </div>
+            `;
+        }
+        return menuItemHTML;
     }
 
     /**
@@ -330,7 +390,7 @@
      * filter as before (could be `undefined`).
      */
     function refreshMenu() {
-        initMenu(lastUsedFilter);
+        initDefaultMenu(lastUsedFilter);
     }
 
     /**
