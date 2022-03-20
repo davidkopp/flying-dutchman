@@ -316,8 +316,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
 .mt-20 {
     margin-top: 20px;
 }
-
-<<<<<<< Updated upstream
 /*=============Menu Page================*/
 
 #menu-container {
@@ -391,8 +389,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     -webkit-mask-size: 200%;
     animation: shine 2s infinite;
 }
-=======
->>>>>>> Stashed changes
 
 /*=================Drag & Drop==================*/
 
@@ -917,9 +913,6 @@ Responsive Design
         width: 100%;
     }
 }
-<<<<<<< Updated upstream
-=======
-
 
 
 
@@ -1098,4 +1091,3 @@ border-radius: 15px;
     -webkit-mask-size: 200%;
     animation: shine 2s infinite;
 }
->>>>>>> Stashed changes
