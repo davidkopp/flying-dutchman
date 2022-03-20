@@ -564,16 +564,18 @@
         $(".item-hide-visible-button").click(function () {
             const beverageNr = $(this).data("beverage-nr");
             const inventoryName = $(this).data("inventory-name");
-            const currentStatus = $(this).data("hide-status");
+            const currentStatus = $(this).data("visible-status");
             const newStatus = !currentStatus;
 
-            // true means, the item will be hidden in the menu
+            // true means, the item will be visible in the menu
             if (newStatus == true) {
-                DatabaseAPI.HideFromMenu.addBeverageNrToList(
+                DatabaseAPI.VisibleInMenu.setBeverageToVisible(
+                    inventoryName,
                     beverageNr.toString()
                 );
             } else {
-                DatabaseAPI.HideFromMenu.removeBeverageNrFromList(
+                DatabaseAPI.VisibleInMenu.setBeverageToHidden(
+                    inventoryName,
                     beverageNr.toString()
                 );
             }
@@ -582,13 +584,13 @@
                 `#item-hide-visible-button-text-${inventoryName}-${beverageNr}`
             ).attr(Constants.DATA_LANG_DYNAMIC_VALUE, newStatus);
 
-            $(this).data("hide-status", newStatus);
+            $(this).data("visible-status", newStatus);
             if (newStatus == true) {
-                $(this).removeClass("item-visible");
-                $(this).addClass("item-hidden");
-            } else {
                 $(this).addClass("item-visible");
                 $(this).removeClass("item-hidden");
+            } else {
+                $(this).removeClass("item-visible");
+                $(this).addClass("item-hidden");
             }
 
             // Refresh the dynamic text strings so the true / false values will be replaced with adaquate text strings.
@@ -620,7 +622,6 @@
         const inventoryItems = inventoryController.getInventory();
         const inventoryName = inventoryController.getName();
         const itemsHtmlList = [];
-        const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
 
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
@@ -628,17 +629,16 @@
             const beverage = DatabaseAPI.Beverages.findBeverageByNr(
                 inventoryItem.beverageNr
             );
-            // if true, the beverage is currently hidden in the menu
-            const hideStatus = hideFromMenuList.includes(beverage.nr);
+            const menuVisibilityStatus = inventoryItem.visibleInMenu;
 
             const visibleHtmlClass =
-                hideStatus == true ? "item-hidden" : "item-visible";
+                menuVisibilityStatus == true ? "item-visible" : "item-hidden";
 
             const buttonShowHideHTML = `
-            <div class="item-hide-visible-button clickable hover-shine ${visibleHtmlClass}" data-beverage-nr="${beverage.nr}" data-inventory-name="${inventoryName}" data-hide-status="${hideStatus}">
+            <div class="item-hide-visible-button clickable hover-shine ${visibleHtmlClass}" data-beverage-nr="${beverage.nr}" data-inventory-name="${inventoryName}" data-visible-status="${menuVisibilityStatus}">
                 <span id="item-hide-visible-button-text-${inventoryName}-${inventoryItem.beverageNr}"
                 ${Constants.DATA_LANG_DYNAMIC_KEY}="item-hide-visible-button-dynamic"
-                ${Constants.DATA_LANG_DYNAMIC_VALUE}=${hideStatus}>
+                ${Constants.DATA_LANG_DYNAMIC_VALUE}=${menuVisibilityStatus}>
                     ...
                 </span>
             </div>`;

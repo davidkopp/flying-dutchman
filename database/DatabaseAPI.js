@@ -7,7 +7,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 19th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -75,12 +75,6 @@ DatabaseAPI = (function () {
         if (!getObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY)) {
             saveObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY, DB.vipInventory);
         }
-        if (!getObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY)) {
-            saveObject(
-                Constants.STORAGE_DB_HIDE_FROM_MENU_KEY,
-                DB.hideFromMenu
-            );
-        }
         if (!getObject(Constants.STORAGE_DB_BEVERAGES_KEY)) {
             saveObject(
                 Constants.STORAGE_DB_BEVERAGES_KEY,
@@ -100,7 +94,6 @@ DatabaseAPI = (function () {
         removeObject(Constants.STORAGE_DB_ALLERGIES_KEY);
         removeObject(Constants.STORAGE_DB_INVENTORY_BAR_KEY);
         removeObject(Constants.STORAGE_DB_INVENTORY_VIP_KEY);
-        removeObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY);
         removeObject(Constants.STORAGE_DB_BEVERAGES_KEY);
     }
 
@@ -734,59 +727,52 @@ DatabaseAPI = (function () {
     }
 
     //=========================================================================
-    // HIDE FROM MENU
+    // VISIBILITY IN MENU
     //=========================================================================
 
     /**
-     * Returns the list of beverages that should be hidden in the menu.
+     * Gets the menu visibility status of a beverage from a specific inventory.
      *
-     * @returns {Array} The array with beverages numbers
+     * @param {string} inventoryName The inventory name.
+     * @param {string} beverageNr The beverage number.
+     * @returns {boolean} Visibility status of the beverage (visible: true/false).
      */
-    function getHideFromMenuList() {
-        return getObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY);
+    function getVisibilityStatusOfBeverage(inventoryName, beverageNr) {
+        const inventoryItem = getInventoryItemByBeverageNr(
+            inventoryName,
+            beverageNr
+        );
+        return inventoryItem.visibleInMenu;
     }
 
     /**
-     * Saves a list of beverages that should be hidden in the menu.
+     * Mark a beverage from a specific inventory as visible in the menu.
      *
-     * @param {Array} list The array with beverages numbers
-     */
-    function saveHideFromMenuList(list) {
-        saveObject(Constants.STORAGE_DB_HIDE_FROM_MENU_KEY, list);
-    }
-
-    /**
-     * Adds a beverage number to the "hideFromMenu" list.
-     *
+     * @param {string} inventoryName The inventory name.
      * @param {string} beverageNr The beverage number.
      */
-    function addBeverageNrToList(beverageNr) {
-        if (!beverageNr) {
-            return;
-        }
-        let hideFromMenuList = getObject(
-            Constants.STORAGE_DB_HIDE_FROM_MENU_KEY
+    function setBeverageToVisible(inventoryName, beverageNr) {
+        let inventory = getInventory(inventoryName);
+        let inventoryItem = inventory.find(
+            (item) => item.beverageNr === beverageNr
         );
-
-        hideFromMenuList = addToSet(hideFromMenuList, beverageNr);
-        saveHideFromMenuList(hideFromMenuList);
+        inventoryItem.visibleInMenu = true;
+        saveInventory(inventoryName, inventory);
     }
 
     /**
-     * Removes a beverage number from the "hideFromMenu" list.
+     * Mark a beverage from a specific inventory as hidden in the menu.
      *
+     * @param {string} inventoryName The inventory name.
      * @param {string} beverageNr The beverage number.
      */
-    function removeBeverageNrFromList(beverageNr) {
-        if (!beverageNr) {
-            return;
-        }
-
-        let hideFromMenuList = getObject(
-            Constants.STORAGE_DB_HIDE_FROM_MENU_KEY
+    function setBeverageToHidden(inventoryName, beverageNr) {
+        let inventory = getInventory(inventoryName);
+        let inventoryItem = inventory.find(
+            (item) => item.beverageNr === beverageNr
         );
-        hideFromMenuList = removeFromArray(hideFromMenuList, beverageNr);
-        saveHideFromMenuList(hideFromMenuList);
+        inventoryItem.visibleInMenu = false;
+        saveInventory(inventoryName, inventory);
     }
 
     //=========================================================================
@@ -927,21 +913,6 @@ DatabaseAPI = (function () {
     }
 
     /**
-     * Removes an item from an array (or set).
-     *
-     * @param {Array} array The array.
-     * @param {object} item The item.
-     * @returns {Array} Array without the item.
-     */
-    function removeFromArray(array, item) {
-        const index = array.indexOf(item);
-        if (index > -1) {
-            array.splice(index, 1); // 2nd parameter means remove one item only
-        }
-        return array;
-    }
-
-    /**
      * Convenience function to change "xx%" into the percentage in whole numbers
      * (non-strings).
      *
@@ -999,11 +970,10 @@ DatabaseAPI = (function () {
             updateNumberInStockForBeverage: updateNumberInStockForBeverage,
             saveInventory: saveInventory,
         },
-        HideFromMenu: {
-            getList: getHideFromMenuList,
-            saveList: saveHideFromMenuList,
-            addBeverageNrToList: addBeverageNrToList,
-            removeBeverageNrFromList: removeBeverageNrFromList,
+        VisibleInMenu: {
+            getVisibilityStatusOfBeverage: getVisibilityStatusOfBeverage,
+            setBeverageToVisible: setBeverageToVisible,
+            setBeverageToHidden: setBeverageToHidden,
         },
         ActiveCheck: {
             getStatusOfBeverage: getStatusOfBeverage,

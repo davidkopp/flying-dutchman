@@ -58,7 +58,6 @@ const Constants = {
     STORAGE_DB_ALLERGIES_KEY: "db_allergies",
     STORAGE_DB_INVENTORY_BAR_KEY: "db_inventory_bar",
     STORAGE_DB_INVENTORY_VIP_KEY: "db_inventory_vip",
-    STORAGE_DB_HIDE_FROM_MENU_KEY: "db_hideFromMenu",
     STORAGE_DB_BEVERAGES_KEY: "db_beverages",
 
     ACCESS_LEVEL_MANAGER: 0,
@@ -184,8 +183,8 @@ const Dictionary = {
             "item-quantity-label": "Quantity",
             "item-hidden-status-label": "Visibility in Menu",
             "item-hide-visible-button-dynamic": {
-                true: "Hidden",
-                false: "Visible",
+                true: "Visible",
+                false: "Hidden",
             },
             "vip-account-balance-button": "VIP Accounts",
             "vip-account-balances-title": "VIP Account Balances",
@@ -363,8 +362,8 @@ const Dictionary = {
             "item-quantity-label": "Anzahl",
             "item-hidden-status-label": "Sichtbarkeit",
             "item-hide-visible-button-dynamic": {
-                true: "Versteckt",
-                false: "Sichtbar",
+                true: "Sichtbar",
+                false: "Versteckt",
             },
             "vip-account-balance-button": "VIP Konten",
             "vip-account-balances-title": "VIP Kontostände",
@@ -549,8 +548,8 @@ const Dictionary = {
             "item-quantity-label": "Quantity",
             "item-hidden-status-label": "Visibility in Menu",
             "item-hide-visible-button-dynamic": {
-                true: "Hidden",
-                false: "Visible",
+                true: "Visible",
+                false: "Hidden",
             },
             "vip-account-balance-button": "VIP Accounts",
             "vip-account-balances-title": "VIP Account Balances",

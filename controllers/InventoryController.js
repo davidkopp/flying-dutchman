@@ -1,12 +1,12 @@
 /*
  * File: InventoryController.js
  *
- * Controller that is responsible for everything around managing the inventory: getting inventory items, set items to hide from menu, etc.
+ * Controller that is responsible for everything around managing the inventory: getting inventory items, update number of items in stock, etc.
  * An object has to be created first with the information, which inventory the controller should use as the database (`barInventory` or `vipInventory`).
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 5th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 

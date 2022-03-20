@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 12th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, EffectsController */
@@ -70,13 +70,12 @@
 
         const inventoryItems =
             DatabaseAPI.Inventory.getInventory(inventoryName);
-        const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
             const beverageNr = inventoryItem.beverageNr;
 
-            // Check if the beverage number is marked as "hide from menu". If so, skip it.
-            if (hideFromMenuList.includes(beverageNr)) {
+            // Check if the inventory item is marked as "visible in menu". If not, skip it.
+            if (inventoryItem.visibleInMenu !== true) {
                 continue;
             }
             // Check if the inventory item is set to `active`. If not, skip it.
@@ -335,26 +334,6 @@
     }
 
     /**
-     * Removes a beverage from the list "hideFromMenu" and refreshes the menu in the view.
-     *
-     * @param {string} beverageNr The beverage number.
-     */
-    function showBeverageInMenu(beverageNr) {
-        DatabaseAPI.HideFromMenu.removeBeverageNrFromList(beverageNr);
-        refreshMenu();
-    }
-
-    /**
-     * Adds a beverage to the list "hideFromMenu" and refreshes the menu in the view.
-     *
-     * @param {string} beverageNr The beverage number.
-     */
-    function hideBeverageFromMenu(beverageNr) {
-        DatabaseAPI.HideFromMenu.addBeverageNrToList(beverageNr);
-        refreshMenu();
-    }
-
-    /**
      * Checks if a text includes substrings given by an array.
      *
      * @param {string} text The text to check
@@ -379,6 +358,4 @@
     exports.MenuController = {};
     exports.MenuController.filterMenu = filterMenu;
     exports.MenuController.initMenu = initMenu;
-    exports.MenuController.showBeverageInMenu = showBeverageInMenu;
-    exports.MenuController.hideBeverageFromMenu = hideBeverageFromMenu;
 })(jQuery, window);
