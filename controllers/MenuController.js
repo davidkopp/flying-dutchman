@@ -174,7 +174,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 producer: {
@@ -218,7 +218,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 year: {
@@ -252,7 +252,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 alcoholstrength: {
@@ -286,7 +286,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 price: {
@@ -307,7 +307,7 @@
                 },
                 category: {
                     value: beverage.category,
-                    dataLangKeyForLabel: "menu-item-label-category",
+                    dataLangKeyForLabel: "",
                     classToAdd: "menu-item-category",
                 },
                 alcoholstrength: {
@@ -334,11 +334,15 @@
         for (const key in relevantInfoToDisplay) {
             if (Object.hasOwnProperty.call(relevantInfoToDisplay, key)) {
                 const infoObject = relevantInfoToDisplay[key];
+                const optDataLangHtml = infoObject.dataLangKeyForLabel
+                    ? `data-lang="${infoObject.dataLangKeyForLabel}"`
+                    : "";
+
                 menuItemInfoHTML += `
-                <div class="menu-item-info ${infoObject.classToAdd}">
-                    <span class="menu-item-info-label" data-lang="${
-                        infoObject.dataLangKeyForLabel
-                    }"></span>
+                <div class="menu-item-info ${
+                    infoObject.classToAdd
+                }" ${optDataLangHtml}>
+                    <span class="menu-item-info-label" ></span>
                     <span>${infoObject.value} ${
                     infoObject.suffix ? infoObject.suffix : ""
                 }</span>
