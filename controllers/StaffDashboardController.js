@@ -172,24 +172,24 @@
                             <span class="" data-lang="order-list-order-number"></span>
                             <span>${order.id}</span>
                         </div>
-                        <div class="order-element-row" data-order-id="${order.id}">
-                            <div class="order-element-row-items">
-                                <span class="order-list-column-heading" data-lang="order-list-items"></span>
+                        <div class="overview-element-row" data-order-id="${order.id}">
+                            <div class="overview-element-row-items">
+                                <span class="overview-list-column-heading" data-lang="order-list-items"></span>
                                 <br/>
                                 <span>${orderItemsHTML}</span>
                             </div>
                             <div>
-                                <span class="order-list-column-heading" data-lang="order-list-notes"></span>
+                                <span class="overview-list-column-heading" data-lang="order-list-notes"></span>
                                 <br/>
                                 <textarea class="order-notes-text-field" rows="2" >${order.notes}</textarea>
                             </div>
                             <div>
-                                <span class="order-list-column-heading" data-lang="order-list-status"></span>
+                                <span class="overview-list-column-heading" data-lang="order-list-status"></span>
                                 <br/>
                                 <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-list-status-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.done}>...</span>
                             </div>
                             <div>
-                                <span class="order-list-column-heading" data-lang="order-list-actions"></span>
+                                <span class="overview-list-column-heading" data-lang="order-list-actions"></span>
                                 <br/>
                                 <div>
                                     <span class="clickable order-list-pay-order-button order-action-button hover-shine">💳</span>
@@ -237,7 +237,7 @@
         $(".order-list-pay-order-button").click(function () {
             // First save the order id in the payment overlay so other functions will be be able to execute operations for this order.
             const orderId = $(this)
-                .closest(".order-element-row")
+                .closest(".overview-element-row")
                 .data("order-id");
             $("#payment").data("order-id", orderId);
 
@@ -269,7 +269,7 @@
         // Add event handler for the edit buttons for the orders
         $(".order-list-edit-order-button").click(function () {
             const orderId = $(this)
-                .closest(".order-element-row")
+                .closest(".overview-element-row")
                 .data("order-id");
 
             editOrder(orderId);
@@ -433,7 +433,7 @@
         // Save the changed value
         const inputElement = event.target;
         const orderId = $(inputElement)
-            .closest(".order-element-row")
+            .closest(".overview-element-row")
             .data("order-id");
         const newValue = $(inputElement).val().trim();
         const changeNoteOfOrderFunc = OrderController.changeNoteOfOrderUNDOFunc(
@@ -445,18 +445,51 @@
 
     /** Initializes the inventory overview in the view. */
     function initInventoryOverview() {
-        // Add list of inventories
-        const inventoryListHTML = `
-        <div id="inventory-list">
-        ${createHTMLForInventoryElementForOverview(barInventoryController)}
-        ${createHTMLForInventoryElementForOverview(vipInventoryController)}
-        </div>`;
-        $("#inventory-list-container").html(inventoryListHTML);
+        const inventoryBarListHtml = createHTMLForInventoryItemListForOverview(
+            barInventoryController
+        );
+        const inventoryVipListHtml = createHTMLForInventoryItemListForOverview(
+            vipInventoryController
+        );
+        $("#inventory-bar-overview .inventory-list-content").html(
+            inventoryBarListHtml
+        );
+        $("#inventory-vip-overview .inventory-list-content").html(
+            inventoryVipListHtml
+        );
 
-        // Add event handlers
-        $(".inventory-element").click(function () {
+        $(".item-hide-visible-button").click(function () {
+            const beverageNr = $(this).data("beverage-nr");
             const inventoryName = $(this).data("inventory-name");
-            showInventoryDetails(inventoryName);
+            const currentStatus = $(this).data("hide-status");
+            const newStatus = !currentStatus;
+
+            // true means, the item will be hidden in the menu
+            if (newStatus == true) {
+                DatabaseAPI.HideFromMenu.addBeverageNrToList(
+                    beverageNr.toString()
+                );
+            } else {
+                DatabaseAPI.HideFromMenu.removeBeverageNrFromList(
+                    beverageNr.toString()
+                );
+            }
+
+            $(
+                `#item-hide-visible-button-text-${inventoryName}-${beverageNr}`
+            ).attr(Constants.DATA_LANG_DYNAMIC_VALUE, newStatus);
+
+            $(this).data("hide-status", newStatus);
+            if (newStatus == true) {
+                $(this).removeClass("item-visible");
+                $(this).addClass("item-hidden");
+            } else {
+                $(this).addClass("item-visible");
+                $(this).removeClass("item-hidden");
+            }
+
+            // Refresh the dynamic text strings so the true / false values will be replaced with adaquate text strings.
+            LanguageController.refreshDynamicTextStrings();
         });
 
         // Add info about number of notifications
@@ -464,11 +497,12 @@
             barInventoryController.getItemsThatRunOutOfStock();
         const vipItemsRunningLow =
             vipInventoryController.getItemsThatRunOutOfStock();
-        const sumOfItemsRunningLow =
-            barItemsRunningLow.length + vipItemsRunningLow.length;
-        $("#inventory-notifications-total-number")
-            .empty()
-            .append(sumOfItemsRunningLow);
+        $("#inventory-bar-overview .inventory-notifications-total-number").html(
+            barItemsRunningLow.length
+        );
+        $("#inventory-vip-overview .inventory-notifications-total-number").html(
+            vipItemsRunningLow.length
+        );
 
         LanguageController.refreshTextStrings();
     }
@@ -479,40 +513,62 @@
      * @param {object} inventoryController The inventory controller.
      * @returns {string} The HTML.
      */
-    function createHTMLForInventoryElementForOverview(inventoryController) {
-        const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
+    function createHTMLForInventoryItemListForOverview(inventoryController) {
+        const inventoryItems = inventoryController.getInventory();
+        const inventoryName = inventoryController.getName();
+        const itemsHtmlList = [];
+        const hideFromMenuList = DatabaseAPI.HideFromMenu.getList();
 
-        const classRunningLow =
-            itemsRunningLow.length > 0
-                ? "inventory-has-items-running-low"
-                : "inventory-has-enough-items";
-        let imageSource, imageSourceHover, alt;
-        switch (inventoryController.getName()) {
-            case Constants.INVENTORIES.BAR:
-                imageSource = "assets/images/icon_beer.png";
-                imageSourceHover = "assets/images/icon_beer_active.png";
-                alt = "Bar Inventory";
-                break;
-            case Constants.INVENTORIES.VIP:
-                imageSource = "assets/images/icon_cooler.png";
-                imageSourceHover = "assets/images/icon_cooler_active.png";
-                alt = "VIP Inventory";
-                break;
-            default:
-                imageSource = "assets/images/icon_placeholder.png";
-                break;
+        for (let i = 0; i < inventoryItems.length; i++) {
+            const inventoryItem = inventoryItems[i];
+            const quantity = inventoryItem.quantity;
+            const beverage = DatabaseAPI.Beverages.findBeverageByNr(
+                inventoryItem.beverageNr
+            );
+            // if true, the beverage is currently hidden in the menu
+            const hideStatus = hideFromMenuList.includes(beverage.nr);
+
+            const visibleHtmlClass =
+                hideStatus == true ? "item-hidden" : "item-visible";
+
+            const buttonShowHideHTML = `
+            <div class="item-hide-visible-button clickable hover-shine ${visibleHtmlClass}" data-beverage-nr="${beverage.nr}" data-inventory-name="${inventoryName}" data-hide-status="${hideStatus}">
+                <span id="item-hide-visible-button-text-${inventoryName}-${inventoryItem.beverageNr}"
+                ${Constants.DATA_LANG_DYNAMIC_KEY}="item-hide-visible-button-dynamic"
+                ${Constants.DATA_LANG_DYNAMIC_VALUE}=${hideStatus}>
+                    ...
+                </span>
+            </div>`;
+
+            const classRunningLow =
+                quantity < Constants.LOW_STOCK_NUMBER
+                    ? "inventory-has-items-running-low"
+                    : "inventory-has-enough-items";
+
+            itemsHtmlList.push(`
+            <div class="inventory-item-row">
+                <div class="column-item column-item-nr">
+                    <span>${beverage.nr}</span>
+                </div>
+                <div class="column-item column-item-name">
+                    <span>${beverage.name}</span>
+                </div>
+                <div class="column-item column-item-quantity">
+                    <span>${quantity}</span>
+                    <img src="assets/images/icon_alert.png" class="${classRunningLow}">
+                </div>
+                <div class="column-item column-item-hidden-status">
+                    ${buttonShowHideHTML}
+                </div>
+            </div>
+            `);
         }
-        const html = `
-        <div class="inventory-element" data-inventory-name="${inventoryController.getName()}"
-            ${
-                Constants.DATA_LANG_DYNAMIC_KEY
-            } = "[title]order-inventory-dynamic"
-            ${
-                Constants.DATA_LANG_DYNAMIC_VALUE
-            } = ${inventoryController.getName()} >
-            <img src="${imageSource}" data-src="${imageSource}" data-hover="${imageSourceHover}" alt="${alt}" class="inventory-element-image">
-            <img src="assets/images/icon_alert.png" class="${classRunningLow}">
-        </div>`;
+
+        let html = "<div>";
+        itemsHtmlList.forEach((itemHtml) => {
+            html += itemHtml;
+        });
+        html += "</>";
         return html;
     }
 
@@ -624,49 +680,6 @@
     }
 
     /**
-     * Event handler for showing the details for an inventory.
-     *
-     * @param {string} inventoryName The inventory name.
-     */
-    function showInventoryDetails(inventoryName) {
-        let inventoryController = getInventoryController(inventoryName);
-        if (!inventoryController) {
-            return;
-        }
-
-        // Add inventory name
-        const orderInventoryHTML =
-            createHtmlForInventoryNameInfo(inventoryName);
-        $("#inventory-details-inventory-container").html(orderInventoryHTML);
-
-        // Add details of items that are running low
-        const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
-        let itemsRunningLowHtmlTableRows = "";
-        itemsRunningLow.forEach((item) => {
-            const beverage = DatabaseAPI.Beverages.findBeverageByNr(
-                item.beverageNr
-            );
-            itemsRunningLowHtmlTableRows += `
-            <tr class="item-running-low-row">
-                <td>${beverage.nr}</td>
-                <td>${beverage.name}</td>
-                <td>${item.quantity}</td>
-            </tr>`;
-        });
-
-        $(".item-running-low-row").remove();
-        $("#inventory-details-items-running-low-table").append(
-            itemsRunningLowHtmlTableRows
-        );
-
-        // Refresh all text strings
-        LanguageController.refreshTextStrings();
-
-        // Finally show the overlay
-        $("#overlay-inventory-details").show();
-    }
-
-    /**
      * Returns the inventory controller for the given inventory name.
      *
      * @param {string} inventoryName The inventory name.
@@ -774,5 +787,4 @@
     }
 
     exports.showOrderDetailsForTable = showOrderDetailsForTable;
-    exports.showInventoryDetails = showInventoryDetails;
 })(jQuery, window);

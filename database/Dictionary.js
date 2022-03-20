@@ -132,8 +132,8 @@ const Dictionary = {
             "order-details-id-label": "Order number:",
             "order-details-inventory-label": "Inventory:",
             "create-order-button-text": "Create new order",
-            "inventory-overview-title": "Inventory",
-            "restock-button-text": "Restock",
+            "inventory-bar-overview-title": "Inventory Bar",
+            "inventory-vip-overview-title": "Inventory Specials",
             "orders-list-total-number-label": "Number of orders:",
             "inventory-notifications-total-number-label": "Items running out:",
             "order-details-heading-with-table-number": "Orders for table",
@@ -182,6 +182,14 @@ const Dictionary = {
             "inventory-details-beverage-nr-label": "Number",
             "inventory-details-beverage-name-label": "Name",
             "inventory-details-amount-label": "Amount",
+            "item-beverage-nr-label": "Item Number",
+            "item-beverage-name-label": "Item Name",
+            "item-quantity-label": "Quantity",
+            "item-hidden-status-label": "Visibility in Menu",
+            "item-hide-visible-button-dynamic": {
+                true: "Hidden",
+                false: "Visible",
+            },
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -292,8 +300,8 @@ const Dictionary = {
             "order-details-id-label": "Bestellungnummer:",
             "order-details-inventory-label": "Lager:",
             "create-order-button-text": "Neue Bestellung",
-            "inventory-overview-title": "Lager",
-            "restock-button-text": "Auffüllen",
+            "inventory-bar-overview-title": "Bestand Bar",
+            "inventory-vip-overview-title": "Bestand Specials",
             "orders-list-total-number-label": "Anzahl an Bestellungen:",
             "inventory-notifications-total-number-label": "Geringe Anzahl:",
             "order-details-heading-with-table-number": "Bestellungen für Tisch",
@@ -458,8 +466,8 @@ const Dictionary = {
             "order-details-id-label": "Pedido Numero:",
             "order-details-inventory-label": "Inventário:",
             "create-order-button-text": "Ordenar",
-            "inventory-overview-title": "Inventário",
-            "restock-button-text": "Restock",
+            "inventory-bar-overview-title": "Inventory Bar", // TODO: Translate into portuguese
+            "inventory-vip-overview-title": "Inventory Specials", // TODO: Translate into portuguese
             "orders-list-total-number-label": "Numero de Pedidos:",
             "inventory-notifications-total-number-label":
                 "Itens com pouca quantidade:",

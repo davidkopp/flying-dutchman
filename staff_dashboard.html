@@ -98,7 +98,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                 <!-- Visible containers -->
                 <div class="row">
                     <!-- Orders overview -->
-                    <div id="orders-overview" class="overview-container col-9 col-s-12">
+                    <div id="orders-overview" class="overview-container col-12 col-s-12">
                         <div class="overview-header">
                             <span id="orders-overview-title" data-lang="orders-overview-title"></span>
                             <button type="clickable" id="create-order-button" class="overview-button hover-shine">
@@ -121,26 +121,62 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         </div>
                     </div>
 
-                    <!-- Inventory overview -->
-                    <div id="inventory-overview" class="overview-container col-3 col-s-6">
+                    <!-- Bar inventory items overview -->
+                    <div id="inventory-bar-overview" class="overview-container col-6 col-s-12">
                         <div class="overview-header">
-                            <span id="inventory-overview-title" data-lang="inventory-overview-title"></span>
-                            <button type="clickable" id="restock-button" class="overview-button hover-shine">
-                                <span data-lang="restock-button-text"></span>
-                            </button>
+                            <span data-lang="inventory-bar-overview-title"></span>
                         </div>
-                        <div id="inventory-list-container" class="overview-list-container">
-                            <div id="inventory-list">
-                                <div class="inventory-element">
-                                    <div class="inventory-picture"></div>
-                                    <div class="inventory-name"></div>
+                        <div class="inventory-list-container">
+                            <div class="inventory-list-head">
+                                <div class="column-item column-item-nr">
+                                    <span data-lang="item-beverage-nr-label"></span>
+                                </div>
+                                <div class="column-item column-item-name">
+                                    <span data-lang="item-beverage-name-label"></span>
+                                </div>
+                                <div class="column-item column-item-quantity">
+                                    <span data-lang="item-quantity-label"></span>
+                                </div>
+                                <div class="column-item column-item-hidden-status">
+                                    <span data-lang="item-hidden-status-label"></span>
                                 </div>
                             </div>
+                            <div class="inventory-list-content overview-list-container"></div>
                         </div>
-                        <div id="inventory-overview-footer" class="overview-container-footer">
+                        <div class="overview-container-footer">
                             <div>
                                 <span data-lang="inventory-notifications-total-number-label"></span>
-                                <span id="inventory-notifications-total-number"></span>
+                                <span class="inventory-notifications-total-number"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIP inventory items overview -->
+                    <div id="inventory-vip-overview" class="overview-container col-6 col-s-12">
+                        <div class="overview-header">
+                            <span data-lang="inventory-vip-overview-title"></span>
+                        </div>
+                        <div class="inventory-list-container">
+                            <div class="inventory-list-head">
+                                <div class="column-item column-item-nr">
+                                    <span data-lang="item-beverage-nr-label"></span>
+                                </div>
+                                <div class="column-item column-item-name">
+                                    <span data-lang="item-beverage-name-label"></span>
+                                </div>
+                                <div class="column-item column-item-quantity">
+                                    <span data-lang="item-quantity-label"></span>
+                                </div>
+                                <div class="column-item column-item-hidden-status">
+                                    <span data-lang="item-hidden-status-label"></span>
+                                </div>
+                            </div>
+                            <div class="inventory-list-content overview-list-container"></div>
+                        </div>
+                        <div class="overview-container-footer">
+                            <div>
+                                <span data-lang="inventory-notifications-total-number-label"></span>
+                                <span class="inventory-notifications-total-number"></span>
                             </div>
                         </div>
                     </div>
@@ -184,33 +220,6 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                         <span data-lang="details-overlay-delete-order-button"></span>
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Overlay for the inventory details -->
-                <div id="overlay-inventory-details" class="overlay hidden">
-                    <div class="overlay-content">
-                        <div class="clickable overlay-close-button">
-                            <img src="assets/images/icon_close.svg" />
-                        </div>
-                        <span class="overlay-details-heading" data-lang="inventory-details-title"></span>
-                        <div id="inventory-details-inventory-container">
-                            <span class="overlay-details-label" data-lang="inventory-details-label"></span>
-                            <span class="overlay-details-value" id="inventory-details-inventory-name"></span>
-                        </div>
-                        <div id="inventory-details-items-running-low-container">
-                            <span class="overlay-details-label" data-lang="inventory-details-items-running-low-label">
-                            </span>
-                            <div>
-                                <table id="inventory-details-items-running-low-table">
-                                    <tr>
-                                        <th data-lang="inventory-details-beverage-nr-label"></th>
-                                        <th data-lang="inventory-details-beverage-name-label"></th>
-                                        <th data-lang="inventory-details-amount-label"></th>
-                                    </tr>
-                                </table>
                             </div>
                         </div>
                     </div>
