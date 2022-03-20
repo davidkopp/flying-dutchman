@@ -177,9 +177,13 @@
      */
     function drop(ev) {
         ev.preventDefault();
-        const data = ev.dataTransfer.getData("text");
-        if (data !== ev.target.id) {
-            ev.target.appendChild(document.getElementById(data));
+        const idOfMenuItem = ev.dataTransfer.getData("text");
+        const $menuItemElement = $(`#${idOfMenuItem}`);
+        const $targetElement = $(ev.target);
+        if ($targetElement.hasClass(".droppable-area")) {
+            $targetElement.append($menuItemElement);
+        } else {
+            $targetElement.closest(".droppable-area").append($menuItemElement);
         }
     }
 

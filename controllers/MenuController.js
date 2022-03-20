@@ -367,7 +367,7 @@
             </div>
             `;
         } else {
-            // Add info to the menu item so it will be draggable
+            // Item should be draggable: Add respective info to the menu item so it will be draggable
             menuItemHTML = `
             <div
                 id="item-${beverage.nr}"
