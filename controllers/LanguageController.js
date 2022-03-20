@@ -134,7 +134,8 @@
         const elements = $(`[${Constants.DATA_LANG_DYNAMIC_KEY}]`);
         for (let i = 0; i < elements.length; i++) {
             const element = elements[i];
-            const langDynamicKey = $(element).attr(
+            let typeOfInsertion = "text";
+            let langDynamicKey = $(element).attr(
                 Constants.DATA_LANG_DYNAMIC_KEY
             );
             const langDynamicValue = $(element).attr(
@@ -145,6 +146,10 @@
                     `LanguageController | Dynamic content can't be replaced for the key '${langDynamicKey}'. There is no value given.`
                 );
                 continue;
+            }
+            if (langDynamicKey.startsWith("[title]")) {
+                langDynamicKey = langDynamicKey.slice(7, langDynamicKey.length);
+                typeOfInsertion = "title";
             }
             const langObjectFromDict = getValueFromDictionary(
                 langDynamicKey,
@@ -167,7 +172,21 @@
                     langDynamicValue
                 )
             ) {
-                $(element).text(langObjectFromDict[langDynamicValue]);
+                const value = langObjectFromDict[langDynamicValue];
+                switch (typeOfInsertion) {
+                    case "text":
+                        $(element).text(value);
+
+                        break;
+                    case "title":
+                        $(element).prop("title", value);
+                        break;
+                    default:
+                        console.log(
+                            `LanguageController | Type of insertion '${typeOfInsertion}' unknown!`
+                        );
+                        break;
+                }
             } else {
                 console.log(
                     `LanguageController | Dynamic content '${langDynamicValue}' is not known for the key '${langDynamicValue}'.`

@@ -503,7 +503,13 @@
                 break;
         }
         const html = `
-        <div class="inventory-element" data-inventory-name="${inventoryController.getName()}">
+        <div class="inventory-element" data-inventory-name="${inventoryController.getName()}"
+            ${
+                Constants.DATA_LANG_DYNAMIC_KEY
+            } = "[title]order-inventory-dynamic"
+            ${
+                Constants.DATA_LANG_DYNAMIC_VALUE
+            } = ${inventoryController.getName()} >
             <img src="${imageSource}" data-src="${imageSource}" data-hover="${imageSourceHover}" alt="${alt}" class="inventory-element-image">
             <img src="assets/images/icon_alert.png" class="${classRunningLow}">
         </div>`;
