@@ -8,7 +8,7 @@
  * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
-/* globals LoginController, OrderController */
+/* globals LoginController, MenuController, OrderController */
 
 (function ($, exports) {
     let table_number;
@@ -80,39 +80,25 @@
 
     /** Initialize the menus with the items from the bar and vip inventory. */
     function initMenus() {
-        const bar_inventory = DatabaseAPI.Inventory.getInventory(
-            Constants.INVENTORIES.BAR
-        );
-        const vip_inventory = DatabaseAPI.Inventory.getInventory(
-            Constants.INVENTORIES.VIP
-        );
-        $("#main-menu").html(createHTMLForInventoryList(bar_inventory));
-        $("#vip-menu").html(createHTMLForInventoryList(vip_inventory));
-    }
-
-    /**
-     * Creates a HTML string for displaying the inventory items.
-     *
-     * @param {Array} inventory The inventory.
-     * @returns {string} The HTML
-     */
-    function createHTMLForInventoryList(inventory) {
-        let result = "";
-        inventory.forEach((inventoryItem) => {
-            const beverage = DatabaseAPI.Beverages.findBeverageByNr(
-                inventoryItem.beverageNr
+        if (!MenuController) {
+            console.log(
+                "MenuController is not available! Initializing of the menu not possible!"
             );
-            result += `
-            <div data-beverage-id = "${inventoryItem.beverageNr}"
-                 class = "item drag-items"
-                 id = "item-${inventoryItem.beverageNr}"
-                 draggable = true
-                 ondragstart = "dragItem(event)">
-                ${beverage.name} ${beverage.alcoholstrength} ${beverage.priceinclvat}
-            </div>
-        `;
-        });
-        return result;
+            return;
+        }
+
+        const mainMenuConfig = {
+            viewElementId: "main-menu",
+            inventory: Constants.INVENTORIES.BAR,
+            allowDragItems: true,
+        };
+        const vipMenuConfig = {
+            viewElementId: "vip-menu",
+            inventory: Constants.INVENTORIES.VIP,
+            allowDragItems: true,
+        };
+        MenuController.initMenu(mainMenuConfig);
+        MenuController.initMenu(vipMenuConfig);
     }
 
     /** Event handler for the place order button → create the order. */

@@ -79,7 +79,9 @@
             `MenuController | Start initializing the menu with items from the '${config.inventory}' ` +
                 (filterByType
                     ? `with the filter '${filterByType}'.`
-                    : `without a filter.`)
+                    : `without a filter.`) +
+                " Config: " +
+                JSON.stringify(config)
         );
 
         const $viewMenuContainer = $(`#${config.viewElementId}`);
@@ -131,8 +133,8 @@
 
             const beverageInfoHtml = getHtmlForMenuItem(
                 beverage,
-                quantity,
-                filterByType
+                filterByType,
+                config.allowDragItems
             );
             $viewMenuContainer.append(beverageInfoHtml);
         }
@@ -147,11 +149,12 @@
      * Creates the html string to display the information about a beverage in the menu.
      *
      * @param {object} beverage The beverage item.
-     * @param {number} quantity Number of available beverages left.
      * @param {string} filterByType The optional type filter.
+     * @param {boolean} allowDragItems The optional boolean value for allowing
+     *   dragging of the items.
      * @returns {string} The html to display the menu item.
      */
-    function getHtmlForMenuItem(beverage, quantity, filterByType) {
+    function getHtmlForMenuItem(beverage, filterByType, allowDragItems) {
         if (!beverage) {
             return;
         }
@@ -325,11 +328,12 @@
             imageSource = "assets/images/placeholder_others.png";
         }
 
-        // E.g. when a filter is set, don't display anything for this beverage.
+        // E.g. when a filter is set, there is nothing to display → do nothing.
         if (!relevantInfoToDisplay) {
             return;
         }
 
+        // Finally create the html for the menu item.
         let menuItemInfoHTML = "";
         for (const key in relevantInfoToDisplay) {
             if (Object.hasOwnProperty.call(relevantInfoToDisplay, key)) {
@@ -339,10 +343,8 @@
                     : "";
 
                 menuItemInfoHTML += `
-                <div class="menu-item-info ${
-                    infoObject.classToAdd
-                }" ${optDataLangHtml}>
-                    <span class="menu-item-info-label" ></span>
+                <div class="menu-item-info ${infoObject.classToAdd}">
+                    <span class="menu-item-info-label" ${optDataLangHtml}></span>
                     <span>${infoObject.value} ${
                     infoObject.suffix ? infoObject.suffix : ""
                 }</span>
@@ -351,15 +353,35 @@
             }
         }
 
-        const menuItemHTML = `
-        <div data-beverage-nr="${beverage.nr}" class="item">
-            <div>
-                ${menuItemInfoHTML}
+        let menuItemHTML = "";
+        if (!allowDragItems) {
+            menuItemHTML = `
+            <div
+                id="item-${beverage.nr}"
+                data-beverage-nr="${beverage.nr}"
+                class="item">
+                <div>
+                    ${menuItemInfoHTML}
+                </div>
+                <img src="${imageSource}" alt="">
             </div>
-            <img src="${imageSource}" alt="">
-        </div>
-        `;
-
+            `;
+        } else {
+            // Add info to the menu item so it will be draggable
+            menuItemHTML = `
+            <div
+                id="item-${beverage.nr}"
+                data-beverage-nr="${beverage.nr}"
+                class="item drag-items"
+                draggable=true
+                ondragstart="dragItem(event)">
+                <div>
+                    ${menuItemInfoHTML}
+                </div>
+                <img src="${imageSource}" alt="">
+            </div>
+            `;
+        }
         return menuItemHTML;
     }
 
