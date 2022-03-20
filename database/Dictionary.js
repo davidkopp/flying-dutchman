@@ -107,7 +107,6 @@ const Dictionary = {
             "button-label-alcohol": "Alcohol %",
             "menu-item-label-origin": "Origin:",
             "menu-item-label-producer": "Producer:",
-
             "menu-item-label-alcoholstrength": "Alcohol:",
             "menu-item-label-packaging": "Packaging:",
             "menu-item-label-price": "Price:",
@@ -148,8 +147,9 @@ const Dictionary = {
             "create-order-inventory-label-bar": "Bar",
             "create-order-inventory-label-vip": "VIP",
             "create-order-form-submit": "Create Order",
-            "details-overlay-delete-order-button": "Delete Order",
-            "details-overlay-edit-order-button": "Edit Order",
+            "delete-order-button": "Delete Order",
+            "edit-order-button": "Edit Order",
+            "order-paid-button": "Order paid",
             "add-more-items-button": "Add more items",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
@@ -327,8 +327,9 @@ const Dictionary = {
             "create-order-inventory-label-bar": "Bar",
             "create-order-inventory-label-vip": "VIP",
             "create-order-form-submit": "Neue Bestellung",
-            "details-overlay-delete-order-button": "Bestellung löschen",
-            "details-overlay-edit-order-button": "Bestellung bearbeiten",
+            "delete-order-button": "Bestellung löschen",
+            "edit-order-button": "Bestellung bearbeiten",
+            "order-paid-button": "Bestellung bezahlt",
             "add-more-items-button": "Mehr Artikel",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
@@ -508,8 +509,9 @@ const Dictionary = {
             "create-order-inventory-label-bar": "Bar",
             "create-order-inventory-label-vip": "VIP",
             "create-order-form-submit": "Ordenar",
-            "details-overlay-delete-order-button": "Cancelar Pedido",
-            "details-overlay-edit-order-button": "Abrir Pedido",
+            "delete-order-button": "Cancelar Pedido",
+            "edit-order-button": "Abrir Pedido",
+            "order-paid-button": "Order paid", // TODO: Translate into portuguese
             "add-more-items-button": "Adicionar mais itens",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
