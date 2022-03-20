@@ -2,9 +2,6 @@
  * File: InventoryControllerSpec.js
  *
  * Author: David Kopp
- * -----
- * Last Modified: Saturday, 5th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals InventoryController */
 

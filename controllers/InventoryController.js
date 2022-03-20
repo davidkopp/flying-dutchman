@@ -5,9 +5,6 @@
  * An object has to be created first with the information, which inventory the controller should use as the database (`barInventory` or `vipInventory`).
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {

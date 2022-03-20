@@ -4,9 +4,6 @@
  * The Manager's Dashboard Controller.
  *
  * Author: Paarth Sanhotra
- * -----
- * Last Modified: Sunday, 13th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController */
 

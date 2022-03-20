@@ -3,10 +3,7 @@
  *
  * The VIP's Dashboard Controller.
  *
- * Author: Paarth Sanhotra
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
+ * Author: Paarth Sanhotra, Abdullah Abdullah
  */
 /* globals LoginController, MenuController, OrderController */
 

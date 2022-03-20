@@ -3,10 +3,7 @@
  *
  * Controller that is responsible for displaying and updating the menu for customers.
  *
- * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
+ * Author: David Kopp, Abdullah Abdullah
  */
 /* globals LanguageController, EffectsController */
 

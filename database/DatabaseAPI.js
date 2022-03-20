@@ -6,9 +6,6 @@
  * Returned values of the "public" functions never have a direct reference to the database, so others aren't able to manipulate the database.
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
 

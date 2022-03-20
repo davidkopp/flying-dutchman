@@ -4,9 +4,6 @@
  * Controller that is responsible for changing the language and updating the view accordingly.
  *
  * Author: David Kopp
- * -----
- * Last Modified: Saturday, 19th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {

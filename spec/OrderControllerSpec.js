@@ -2,9 +2,6 @@
  * File: OrderControllerSpec.js
  *
  * Author: David Kopp
- * -----
- * Last Modified: Tuesday, 15th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals OrderController, UNDOmanager */
 

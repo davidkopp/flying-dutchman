@@ -5,9 +5,6 @@
  * The manager requires that the functions are stored as objects with three functions each: execute, unexecute and reexecute. Since the model is very small here, the functions are also necessarily simple.
  *
  * Author: Lars Oestreicher
- * -----
- * Last Modified: Thursday, 3rd March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /*eslint no-unused-vars: ["error", { "vars": "local" }]*/
 

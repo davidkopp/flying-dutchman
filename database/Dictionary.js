@@ -4,9 +4,6 @@
  * This file includes some global constants and the dictionary for the localization of the application.
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */

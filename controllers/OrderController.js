@@ -4,9 +4,6 @@
  * Extends the OrderController by operations with undo / redo functionalities...
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {

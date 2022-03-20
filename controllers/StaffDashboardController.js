@@ -4,9 +4,6 @@
  * The controller for the staff dashboard.
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
 
