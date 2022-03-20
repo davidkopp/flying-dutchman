@@ -65,10 +65,6 @@
                 .val("");
         });
 
-        $("#restock-button").click(function () {
-            $("#overlay-restock").show();
-        });
-
         $("#create-order-form").on("submit", handleCreateOrder);
 
         $(".overlay-close-button").click(function () {
@@ -267,8 +263,6 @@
                     });
                     orderItemsHTML += "</ul>";
 
-                    // TODO: Status value ("tbd." / "done") makes not real sense at the moment...
-
                     ordersHtmlList.push(`
                     <div class="order-element">
                         <div class="order-element-number">
@@ -276,7 +270,7 @@
                             <span>${order.id}</span>
                         </div>
                         <div class="overview-element-row" data-order-id="${order.id}">
-                            <div class="overview-element-row-items">
+                            <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-items"></span>
                                 <br/>
                                 <span>${orderItemsHTML}</span>
@@ -287,16 +281,20 @@
                                 <textarea class="order-notes-text-field" rows="2" >${order.notes}</textarea>
                             </div>
                             <div>
-                                <span class="overview-list-column-heading" data-lang="order-list-status"></span>
+                                <span class="overview-list-column-heading" data-lang="order-list-inventory"></span>
                                 <br/>
-                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-list-status-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.done}>...</span>
+                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}>...</span>
                             </div>
                             <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-actions"></span>
                                 <br/>
                                 <div>
-                                    <span class="clickable order-list-pay-order-button order-action-button hover-shine">💳</span>
-                                    <span class="clickable order-list-edit-order-button order-action-button hover-shine">📝</span>
+                                    <span class="clickable order-list-pay-order-button order-action-button hover-shine"
+                                        data-lang="[title]order-paid-button">💳</span>
+                                    <span class="clickable order-list-edit-order-button order-action-button hover-shine"
+                                        data-lang="[title]edit-order-button">📝</span>
+                                    <span class="clickable order-list-delete-order-button order-action-button hover-shine"
+                                        data-lang="[title]delete-order-button">❌</span>
                                 </div>
                             </div>
                         </div>
@@ -376,6 +374,15 @@
                 .data("order-id");
 
             editOrder(orderId);
+        });
+
+        // Add event handler for the delete buttons for the orders
+        $(".order-list-delete-order-button").click(function () {
+            const orderId = $(this)
+                .closest(".overview-element-row")
+                .data("order-id");
+
+            deleteOrder(orderId);
         });
 
         // Add number of current orders to the footer of the overview
@@ -728,10 +735,10 @@
                     <span class="overlay-details-value">${order.notes}</span>
                 </div>
                 <button type="clickable" class="overlay-button details-overlay-edit-order-button hover-shine" data-order-id="${order.id}">
-                    <span data-lang="details-overlay-edit-order-button"></span>
+                    <span data-lang="edit-order-button"></span>
                 </button>
                 <button type="clickable" class="overlay-button details-overlay-delete-order-button hover-shine" data-order-id="${order.id}">
-                    <span data-lang="details-overlay-delete-order-button"></span>
+                    <span data-lang="delete-order-button"></span>
                 </button>
             </div>
             `;
@@ -757,6 +764,9 @@
             event.preventDefault();
             const orderId = parseInt($(this).data("order-id"));
             deleteOrder(orderId);
+
+            // Hide overlay
+            $("#overlay-orders-details").hide();
         });
 
         // Refresh all text strings
@@ -860,9 +870,6 @@
 
         // Update order list
         initOrdersList();
-
-        // Hide overlay
-        $("#overlay-orders-details").hide();
     }
 
     /**
@@ -873,7 +880,7 @@
     function editOrder(orderId) {
         // TODO: Implement editing of an order
 
-        alert("NOT IMPLEMENTED YET");
+        $("#overlay-edit-order").show();
         //OrderController.editOrder(order);
     }
 
