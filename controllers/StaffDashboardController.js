@@ -65,10 +65,6 @@
                 .val("");
         });
 
-        $("#restock-button").click(function () {
-            $("#overlay-restock").show();
-        });
-
         $("#create-order-form").on("submit", handleCreateOrder);
 
         $(".overlay-close-button").click(function () {
@@ -891,7 +887,7 @@
     function editOrder(orderId) {
         // TODO: Implement editing of an order
 
-        alert("NOT IMPLEMENTED YET");
+        $("#overlay-edit-order").show();
         //OrderController.editOrder(order);
     }
 

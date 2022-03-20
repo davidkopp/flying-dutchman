@@ -355,6 +355,52 @@ DatabaseAPI = (function () {
     }
 
     /**
+     * Searches for beverages by checking multiple properties: nr, name,
+     * category and producer. Returns all users that have something in common
+     * with the search text.
+     *
+     * @param {string} searchText Text to search for.
+     * @returns {Array} Array with beverages objects.
+     */
+    function searchForBeverage(searchText) {
+        if (!searchText || typeof searchText != "string") {
+            return;
+        }
+        const beverages = getObject(Constants.STORAGE_DB_BEVERAGES_KEY);
+
+        let foundBeverages = [];
+        for (let i = 0; i < beverages.length; i++) {
+            const beverage = beverages[i];
+            let foundBeverage;
+            if (beverage.nr.toLowerCase().includes(searchText.toLowerCase())) {
+                foundBeverage = beverage;
+            } else if (
+                beverage.name.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+                foundBeverage = beverage;
+            } else if (
+                beverage.category
+                    .toLowerCase()
+                    .includes(searchText.toLowerCase())
+            ) {
+                foundBeverage = beverage;
+            } else if (
+                beverage.producer
+                    .toLowerCase()
+                    .includes(searchText.toLowerCase())
+            ) {
+                foundBeverage = beverage;
+            }
+
+            if (foundBeverage) {
+                foundBeverages.push(foundBeverage);
+            }
+        }
+
+        return foundBeverages;
+    }
+
+    /**
      * Get the beverages sorted by popularity in descending order. It uses the
      * past orders to check how many times they have been bought.
      *
@@ -949,6 +995,7 @@ DatabaseAPI = (function () {
             getBeverageTypesSortedByAlphabet: beverageTypesSortedByAlphabet,
             getBeverageTypesSortedByPopularity: beverageTypesSortedByPopularity,
             setPriceOfBeverage: setPriceOfBeverage,
+            searchForBeverage: searchForBeverage,
         },
         Orders: {
             getOrders: getOrders,

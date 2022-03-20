@@ -200,6 +200,9 @@ const Dictionary = {
             "found-users-header-email-label": "Email",
             "found-users-header-credit-current-label": "Current Credit",
             "found-users-header-credit-add-label": "Add amount",
+            "edit-order-overlay-title": "Edit Order",
+            "create-new-order-description":
+                "Here you can add a new order (Hint: This view is not supposed to be like that).",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -381,6 +384,9 @@ const Dictionary = {
             "found-users-header-email-label": "E-Mail-Adresse",
             "found-users-header-credit-current-label": "Aktueller Kontostand",
             "found-users-header-credit-add-label": "Betrag hinzufügen",
+            "edit-order-overlay-title": "Bestellung bearbeiten",
+            "create-new-order-description":
+                "Hier kannst du eine neue Bestellung anlegen",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -564,6 +570,8 @@ const Dictionary = {
             "found-users-header-email-label": "Email",
             "found-users-header-credit-current-label": "Saldo",
             "found-users-header-credit-add-label": "Adicionar Valor",
+            "edit-order-overlay-title": "Edit Order", // TODO: Translate into portuguese
+            "create-new-order-description": "Here you can add a new order",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
