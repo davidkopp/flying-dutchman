@@ -213,6 +213,24 @@ const Dictionary = {
             "waiter-call-button": "Waiter Call",
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
+
+
+            "filter-icon-title-beer": "Beer",
+            "filter-icon-title-wine": "Wine",
+            "filter-icon-title-drink": "Drink",
+            "filter-icon-title-water": "Water",
+            "button-label-allergies": "Allergies",
+            "button-label-price": "Price",
+            "button-label-tannin": "Tannin",
+            "button-label-alcohol": "Alcohol %",
+            "menu-item-label-origin": "Origin:",
+            "menu-item-label-producer": "Producer:",
+
+            "menu-item-label-alcoholstrength": "Alcohol:",
+            "menu-item-label-packaging": "Packaging:",
+            "menu-item-label-price": "Price:",
+            "menu-item-label-year": "Year:",
+
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
@@ -392,6 +410,23 @@ const Dictionary = {
             "waiter-call-button": "Rufe Kellner*in",
             "pay-bill-button": "Bezahlen",
             "info-box-title": "Info",
+
+
+            "filter-icon-title-beer": "Bier",
+            "filter-icon-title-wine": "Wein",
+            "filter-icon-title-drink": "Drink",
+            "filter-icon-title-water": "Wasser",
+            "button-label-allergies": "Allergene",
+            "button-label-price": "Preis",
+            "button-label-tannin": "Tannin",
+            "button-label-alcohol": "Alkohol %",
+            "menu-item-label-origin": "Herkunft:",
+            "menu-item-label-producer": "Hersteller:",
+
+            "menu-item-label-alcoholstrength": "Alkohol:",
+            "menu-item-label-packaging": "Verpackung:",
+            "menu-item-label-price": "Preis:",
+            "menu-item-label-year": "Jahr:",
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
@@ -574,6 +609,24 @@ const Dictionary = {
             "waiter-call-button": "Chamar o Garçon",
             "pay-bill-button": "Pagar a Conta",
             "info-box-title": "Informação",
+
+
+            "filter-icon-title-beer": "Cerveja",
+            "filter-icon-title-wine": "Vinhos",
+            "filter-icon-title-drink": "Bebidas",
+            "filter-icon-title-water": "Garçon",
+            "button-label-allergies": "Alergias",
+            "button-label-price": "Preço",
+            "button-label-tannin": "Tanino",
+            "button-label-alcohol": "Rôtulo",
+            "menu-item-label-origin": "Região de Origem:",
+            "menu-item-label-producer": "Produtor:",
+            "menu-item-label-alcoholstrength": "Teor de Alcool:",
+            "menu-item-label-packaging": "Pacote:",
+            "menu-item-label-price": "Preço:",
+            "menu-item-label-year": "Ano:",
+
+
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
