@@ -5,7 +5,7 @@
  *
  * Author: Rosemary Lima
  * -----
- * Last Modified: Saturday, 19th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -154,8 +154,8 @@ body::after {
 
 #page-title {
     color: #fff;
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 500;
     text-align: center;
     cursor: default;
     margin: 10px auto;
@@ -594,8 +594,8 @@ Staff dashboard
 ========================*/
 
 .order-table-number {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
     cursor: pointer;
 }
 
@@ -608,14 +608,14 @@ Staff dashboard
 }
 
 .overview-list-container {
-    text-align: center;
+    /* text-align: center; */
     position: relative;
     overflow: auto;
 }
 
 .overview-header {
     padding: 10px 0px;
-    font-weight: 700;
+    /* font-weight: 700; */
     color: white;
     display: flex;
     justify-content: space-between;
@@ -632,8 +632,12 @@ Staff dashboard
 
 .order-details-order-element {
     margin: 10px;
-    background-color: #ec9898;
-    padding: 10px;
+    background-color: #79a1c6;
+    padding: 20px;
+}
+
+.order-details-order-element > div {
+    margin: 10px 0;
 }
 
 .table-element {
@@ -666,6 +670,9 @@ Staff dashboard
 .overview-list-column-heading {
     font-weight: 600;
 }
+#order-details-list {
+    color: black;
+}
 
 #order-details-list ul {
     margin-left: 30px;
@@ -693,13 +700,13 @@ Staff dashboard
 .inventory-list-container {
     background-color: #79a1c6;
     font-size: 18px;
+    padding: 20px 0 20px 20px;
 }
 
 .inventory-list-head {
-    text-align: center;
     font-weight: 700;
-    height: 30px;
     font-size: 20px;
+    overflow: hidden;
 }
 
 .inventory-list-head::after {
@@ -720,19 +727,23 @@ Staff dashboard
 
 .column-item-nr {
     width: 20%;
+    text-align: left;
 }
 
 .column-item-name {
     width: 40%;
+    text-align: left;
 }
 
 .column-item-quantity {
     width: 15%;
     position: relative;
+    text-align: center;
 }
 
 .column-item-hidden-status {
     width: 25%;
+    text-align: center;
 }
 
 .inventory-item-row {
@@ -748,7 +759,7 @@ Staff dashboard
 
 .item-hide-visible-button.item-visible > span {
     background-color: #8fd14f;
-    color: white;
+    color: black;
 }
 
 .item-hide-visible-button.item-hidden > span {
@@ -772,38 +783,39 @@ img.inventory-has-enough-items {
     width: 100%;
     height: 50px;
     line-height: 50px;
-    text-align: center;
+    text-align: left;
     font-size: 24px;
+    text-align: center;
 }
 
 .overview-button {
-    background-color: #385871;
-    padding: 5px;
-    color: white;
-    font-size: 24px;
-    border: none;
-}
-
-.overlay-button {
-    background-color: #79a1c6;
-    padding: 5px;
-    color: white;
+    background-color: #2b99ed;
+    padding: 5px 20px;
+    color: black;
     font-size: 20px;
     border: none;
 }
 
+.overlay-button {
+    background-color: #2b99ed;
+    padding: 5px 30px;
+    color: black;
+    font-size: 20px;
+    border: none;
+    margin: 10px 0;
+}
+
 .overlay-details-label {
-    font-weight: 600;
-    font-size: 24px;
+    /* font-weight: 600; */
+    font-size: 20px;
 }
 
 .overlay-details-value {
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .overlay-details-heading {
     font-size: 32px;
-    margin-bottom: 10px;
 }
 .overlay-details-info-text {
     font-size: 18px;
@@ -831,7 +843,7 @@ img.inventory-has-enough-items {
     color: white;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    background-color: lightcoral;
+    background-color: #033d66;
     padding: 30px;
     min-width: 16em;
 }
@@ -856,6 +868,10 @@ img.inventory-has-enough-items {
 }
 .split-payment-buttons {
     margin: 10px;
+}
+
+#security-notifier-form {
+    margin-top: 20px;
 }
 
 /*=======================
@@ -960,6 +976,25 @@ Animations
 Responsive Design
 ========================*/
 
+@media (min-width: 320px) {
+    /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (min-width: 481px) {
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (min-width: 641px) {
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (min-width: 961px) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+@media (min-width: 1025px) {
+    /* big landscape tablets, laptops, and desktops */
+}
+@media (min-width: 1281px) {
+    /* hi-res laptops and desktops */
+}
+
 .row::after {
     content: "";
     clear: both;
@@ -970,117 +1005,162 @@ Responsive Design
     float: left;
 }
 
-/* For mobile phones */
+/* mobile phones */
 [class*="col-"] {
     width: 100%;
 }
 
-/* For tablets */
-@media only screen and (min-width: 600px) {
-    .col-s-1 {
+/* portrait tablets, portrait iPad, or big phones */
+@media only screen and (min-width: 641px) {
+    .col-m-1 {
         width: 8.33%;
     }
-    .col-s-2 {
+    .col-m-2 {
         width: 16.66%;
     }
-    .col-s-3 {
+    .col-m-3 {
         width: 25%;
     }
-    .col-s-4 {
+    .col-m-4 {
         width: 33.33%;
     }
-    .col-s-5 {
+    .col-m-5 {
         width: 41.66%;
     }
-    .col-s-6 {
+    .col-m-6 {
         width: 50%;
     }
-    .col-s-7 {
+    .col-m-7 {
         width: 58.33%;
     }
-    .col-s-8 {
+    .col-m-8 {
         width: 66.66%;
     }
-    .col-s-9 {
+    .col-m-9 {
         width: 75%;
     }
-    .col-s-10 {
+    .col-m-10 {
         width: 83.33%;
     }
-    .col-s-11 {
+    .col-m-11 {
         width: 91.66%;
     }
-    .col-s-12 {
+    .col-m-12 {
         width: 100%;
     }
 }
 
-/* For desktop in landscape mode */
-@media only screen and (min-width: 768px) and (orientation: landscape) {
+/* tablet, landscape iPad, lo-res laptops ands desktops */
+@media only screen and (min-width: 961px) {
     .row {
         margin: 30px 50px;
     }
 
-    .col-1 {
+    .col-lg-1 {
         width: 8.33%;
     }
-    .col-2 {
+    .col-lg-2 {
         width: 16.66%;
     }
-    .col-3 {
+    .col-lg-3 {
         width: 25%;
     }
-    .col-4 {
+    .col-lg-4 {
         width: 33.33%;
     }
-    .col-5 {
+    .col-lg-5 {
         width: 41.66%;
     }
-    .col-6 {
+    .col-lg-6 {
         width: 50%;
     }
-    .col-7 {
+    .col-lg-7 {
         width: 58.33%;
     }
-    .col-8 {
+    .col-lg-8 {
         width: 66.66%;
     }
-    .col-9 {
+    .col-lg-9 {
         width: 75%;
     }
-    .col-10 {
+    .col-lg-10 {
         width: 83.33%;
     }
-    .col-11 {
+    .col-lg-11 {
         width: 91.66%;
     }
-    .col-12 {
+    .col-lg-12 {
         width: 100%;
     }
 }
 
+/* hi-res laptops and desktops*/
+@media only screen and (min-width: 1281px) {
+    .row {
+        margin: 30px 50px;
+    }
 
-
+    .col-xl-1 {
+        width: 8.33%;
+    }
+    .col-xl-2 {
+        width: 16.66%;
+    }
+    .col-xl-3 {
+        width: 25%;
+    }
+    .col-xl-4 {
+        width: 33.33%;
+    }
+    .col-xl-5 {
+        width: 41.66%;
+    }
+    .col-xl-6 {
+        width: 50%;
+    }
+    .col-xl-7 {
+        width: 58.33%;
+    }
+    .col-xl-8 {
+        width: 66.66%;
+    }
+    .col-xl-9 {
+        width: 75%;
+    }
+    .col-xl-10 {
+        width: 83.33%;
+    }
+    .col-xl-11 {
+        width: 91.66%;
+    }
+    .col-xl-12 {
+        width: 100%;
+    }
+}
 
 /*========================
 Menu Dropdown
 =========================*/
-.price, .alcohol, .allergies{
+.price,
+.alcohol,
+.allergies {
     position: relative;
 }
-.price-list,.alcohol-list,.allergies-list{
+.price-list,
+.alcohol-list,
+.allergies-list {
     display: none;
 }
-.allergies:hover .allergies-list{
+.allergies:hover .allergies-list {
     display: block;
 }
-.price:hover .price-list{
+.price:hover .price-list {
     display: block;
 }
-.alcohol:hover .alcohol-list{
+.alcohol:hover .alcohol-list {
     display: block;
 }
-.price_range{
+.price_range {
     position: absolute;
     min-width: 100px;
     background-color: #fff;
@@ -1090,9 +1170,8 @@ Menu Dropdown
     left: 0;
     top: 33px;
 }
-.price_range .range{
+.price_range .range {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-   
 }

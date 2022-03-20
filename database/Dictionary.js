@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 19th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -179,11 +179,8 @@ const Dictionary = {
             "payment-split-value-label": "Number: ",
             "payment-split-finalize-label": "Go",
             "payment-split-pay-button": "Pay",
-            "inventory-details-beverage-nr-label": "Number",
-            "inventory-details-beverage-name-label": "Name",
-            "inventory-details-amount-label": "Amount",
-            "item-beverage-nr-label": "Item Number",
-            "item-beverage-name-label": "Item Name",
+            "item-beverage-nr-label": "Number",
+            "item-beverage-name-label": "Name",
             "item-quantity-label": "Quantity",
             "item-hidden-status-label": "Visibility in Menu",
             "item-hide-visible-button-dynamic": {
@@ -348,9 +345,14 @@ const Dictionary = {
             "payment-split-value-label": "Anzahl: ",
             "payment-split-finalize-label": "Bestätigen",
             "payment-split-pay-button": "Bezahlen",
-            "inventory-details-beverage-nr-label": "Nummer",
-            "inventory-details-beverage-name-label": "Name",
-            "inventory-details-amount-label": "Anzahl",
+            "item-beverage-nr-label": "Nummer",
+            "item-beverage-name-label": "Name",
+            "item-quantity-label": "Anzahl",
+            "item-hidden-status-label": "Sichtbarkeit",
+            "item-hide-visible-button-dynamic": {
+                true: "Versteckt",
+                false: "Sichtbar",
+            },
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -516,9 +518,14 @@ const Dictionary = {
             "payment-split-value-label": "Number: ",
             "payment-split-finalize-label": "Go",
             "payment-split-pay-button": "Pay",
-            "inventory-details-beverage-nr-label": "Number",
-            "inventory-details-beverage-name-label": "Name",
-            "inventory-details-amount-label": "Amount",
+            "item-beverage-nr-label": "Number",
+            "item-beverage-name-label": "Name",
+            "item-quantity-label": "Quantity",
+            "item-hidden-status-label": "Visibility in Menu",
+            "item-hide-visible-button-dynamic": {
+                true: "Hidden",
+                false: "Visible",
+            },
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
