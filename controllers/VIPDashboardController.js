@@ -188,7 +188,6 @@
             }
 
             // Show success
-            $("#info-box-message").html("Placement of order was successful!");
             $("#overlay-message-box").show();
         }
     }
