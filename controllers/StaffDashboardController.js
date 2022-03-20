@@ -625,6 +625,9 @@
 
         for (let i = 0; i < inventoryItems.length; i++) {
             const inventoryItem = inventoryItems[i];
+            if (inventoryItem.active != true) {
+                continue;
+            }
             const quantity = inventoryItem.quantity;
             const beverage = DatabaseAPI.Beverages.findBeverageByNr(
                 inventoryItem.beverageNr
