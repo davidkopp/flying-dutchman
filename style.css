@@ -106,6 +106,13 @@ header .available-options div > div {
 header .available-options #vip-account-balance-box {
     background-color: #f0d420;
 }
+header .available-options .vip-accounts-button {
+    background-color: #f0d420;
+    padding: 0 10px;
+}
+header .available-options .vip-accounts-button span {
+    cursor: pointer;
+}
 header .available-options #table-number-box {
     background-color: #8fd14f;
 }
@@ -788,7 +795,6 @@ img.inventory-has-enough-items {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 40px;
     color: white;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -808,6 +814,14 @@ img.inventory-has-enough-items {
 }
 .split-payment-buttons {
     margin: 10px;
+}
+
+#found-vip-accounts-list td,
+#found-vip-accounts-list th {
+    padding: 0 10px;
+}
+.change-balance-amount {
+    width: 100px;
 }
 
 /*=======================

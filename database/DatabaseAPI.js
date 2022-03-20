@@ -7,7 +7,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 15th March 2022
+ * Last Modified: Saturday, 19th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* global DB, BeveragesDB */
@@ -163,6 +163,57 @@ DatabaseAPI = (function () {
             email: users[userIndex].email,
             creditSEK: userAccount,
         };
+    }
+
+    /**
+     * Searches for users by checking multiple properties: username, first name,
+     * last name and email address. Returns all users that have something in
+     * common with the search text.
+     *
+     * @param {string} searchText Text to search for.
+     * @returns {Array} Array with users objects.
+     */
+    function searchForUsers(searchText) {
+        if (!searchText || typeof searchText != "string") {
+            return;
+        }
+        const users = getObject(Constants.STORAGE_DB_USERS_KEY);
+
+        let foundUsers = [];
+        for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+            let foundUser;
+            if (
+                user.username.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+                foundUser = user;
+            } else if (
+                user.first_name.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+                foundUser = user;
+            } else if (
+                user.last_name.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+                foundUser = user;
+            } else if (
+                user.email.toLowerCase().includes(searchText.toLowerCase())
+            ) {
+                foundUser = user;
+            }
+
+            if (foundUser) {
+                foundUsers.push({
+                    user_id: foundUser.user_id,
+                    username: foundUser.username,
+                    first_name: foundUser.first_name,
+                    last_name: foundUser.last_name,
+                    email: foundUser.email,
+                    credentials: foundUser.credentials,
+                });
+            }
+        }
+
+        return foundUsers;
     }
 
     /**
@@ -914,6 +965,7 @@ DatabaseAPI = (function () {
                 getUserDetailsIfCredentialsAreValid,
             changeBalance: changeBalance,
             getBalanceByUserId: getBalanceByUserId,
+            searchForUsers: searchForUsers,
         },
         Beverages: {
             findBeverageByNr: findBeverageByNr,
