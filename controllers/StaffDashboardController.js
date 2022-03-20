@@ -696,8 +696,6 @@
         // Add table number
         $("#order-details-table").html(table);
 
-        // TODO: Filter out the VIP orders, because only the orders for the bar are relevant in this view.
-
         // Add order details for each table
         let ordersListHTML = "";
         ordersForTable.forEach((order) => {

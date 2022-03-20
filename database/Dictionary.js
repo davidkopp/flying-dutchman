@@ -90,6 +90,7 @@ const Dictionary = {
             "head-page-title": "Flying Dutchman - Welcome",
             "page-title": "Welcome!",
             "link-to-login-page": "Login",
+            "menu-button-label": "Menu",
             "go-to-menu-button-title": "Go to menu",
         },
         // Text strings for the page 'menu'
@@ -277,6 +278,7 @@ const Dictionary = {
             "logged-in-user-label": "Angemeldet als:",
             "logout-button-title": "Ausloggen",
             "logo-title": "Zur Startseite",
+            "menu-button-label": "Menü",
             "home-button-title": "Zur Startseite",
         },
         // Text strings for the page 'index'
@@ -480,6 +482,7 @@ const Dictionary = {
             "head-page-title": "Flying Dutchman - Bem-vindo",
             "page-title": "Bem-vindo!",
             "link-to-login-page": "Entrar",
+            "menu-button-label": "Cardápio",
             "go-to-menu-button-title": "Cardâpio",
         },
         // Text strings for the page 'menu'
@@ -543,7 +546,7 @@ const Dictionary = {
             "create-order-form-submit": "Ordenar",
             "delete-order-button": "Cancelar Pedido",
             "edit-order-button": "Abrir Pedido",
-            "order-paid-button": "Order paid", // TODO: Translate into portuguese
+            "order-paid-button": "Ordem paga",
             "add-more-items-button": "Adicionar mais itens",
             "order-inventory-dynamic": {
                 [Constants.INVENTORIES.BAR]: "Bar",
@@ -573,8 +576,8 @@ const Dictionary = {
             "item-quantity-label": "Quantidade",
             "item-hidden-status-label": "Disponível no Cardápio",
             "item-hide-visible-button-dynamic": {
-                true: "Visible", // TODO: Translate into portuguese
-                false: "Hidden", // TODO: Translate into portuguese
+                true: "Visível",
+                false: "Escondido",
             },
             "vip-account-balance-button": "VIP Contas",
             "vip-account-balances-title": "VIP Saldo de Contas",
@@ -589,7 +592,7 @@ const Dictionary = {
             "found-users-header-email-label": "Email",
             "found-users-header-credit-current-label": "Saldo",
             "found-users-header-credit-add-label": "Adicionar Valor",
-            "edit-order-overlay-title": "Edit Order", // TODO: Translate into portuguese
+            "edit-order-overlay-title": "Editar Ordem",
             "create-new-order-description": "Here you can add a new order",
         },
         // Text strings for the page 'vip dashboard'

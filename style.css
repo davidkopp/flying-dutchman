@@ -184,26 +184,6 @@ footer {
 footer #logged-in-user-label {
     font-weight: 700;
 }
-/*
-footer .footer-align {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-}
-footer .footer-align .details-btn {
-    max-width: 200px;
-    width: 100%;
-}
-footer .footer-align .details-btn button,
-footer .footer-align .logout_btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    border: none;
-    background-color: #f2f2f2;
-    cursor: pointer;
-}*/
 
 /*===================COMMON DEFINITIONS================*/
 .center-in-page {
@@ -226,71 +206,15 @@ input[type="submit"],
 
 /*=============Landing Page / Home Page================*/
 
-#home-center-button img {
-    width: 15vw;
-    height: auto;
-}
-
-/*
-TODO: Are these definitions relevant? They are currently not used in any HTML file.
-.align {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    background-color: #f2f2f2;
-    align-items: center;
-}
-.align .left h1 {
-    margin-bottom: 0;
-    font-size: 20px;
-    font-weight: 500;
-}
-.align .right {
-    padding-right: 20px;
-}
-.align .right ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-}
-.align .right ul li a {
-    display: inline-block;
-    padding: 0 10px;
-    color: #000;
+#home-center-button {
+    font-size: 70px;
+    color: white;
     text-decoration: none;
 }
 
-.banner {
-    background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: calc(100vh - 54px);
-    position: relative;
+.center-in-page > a {
+    text-decoration: none;
 }
-.banner .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-.banner .overlay .content {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-}
-.banner .overlay .content h1 {
-    text-align: center;
-    font-size: 50px;
-    font-weight: 500;
-    color: #fff;
-}
-*/
-
-/* ??? */
 
 .banner .overlay .content .routes {
     margin: 15px 0;
@@ -434,77 +358,6 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     -webkit-mask-size: 200%;
     animation: shine 2s infinite;
 }
-
-/*=================Drag & Drop==================*/
-
-/*
-TODO: Delete unnecessary definitions
-.drag-drop-wrapper {
-    max-width: 800px;
-    margin: 20px auto;
-}
-.drag-drop-wrapper .search-box {
-    display: flex;
-}
-.wrapper {
-    max-width: 685px;
-    width: 100%;
-    border: 2px solid #eee;
-    margin: 0 auto;
-    padding: 20px;
-}
-.wrapper .input-search-box {
-    max-width: 100%;
-    position: relative;
-    margin-bottom: 10px;
-}
-.wrapper .input-search-box input {
-    height: 46px;
-    padding-left: 10px;
-    width: 100%;
-}
-.wrapper .input-search-box .btn-search {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    background-color: #3458eb;
-    color: #fff;
-    cursor: pointer;
-}
-
-.drag-drop {
-    min-height: 40vh;
-}
-
-.drag-drop-area .thumbnail {
-    display: inline-block;
-    margin-right: 5px;
-    margin-bottom: 5px;
-}
-
-.btn-wrapper {
-    display: flex;
-    justify-content: space-between;
-    margin: 15px 0;
-    align-items: center;
-}
-.btn-wrapper .details-btn {
-    max-width: 200px;
-    width: 100%;
-}
-.btn-wrapper .details-btn button {
-    max-width: 60px;
-    width: 100%;
-    margin: 5px;
-    padding: 5px;
-}
-.logout .logout_btn {
-    padding: 5px;
-}
-.bg-color {
-    background-color: #0c4068;
-}
-*/
 
 /*=======================
 Menu Page

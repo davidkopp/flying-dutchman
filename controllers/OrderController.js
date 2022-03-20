@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Tuesday, 15th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
@@ -610,7 +610,6 @@
             return null;
         }
         if (typeof order.id != "number") {
-            // TODO: Error Handling
             console.log(
                 "OrderController.editOrder | Order is not valid! ID is missing or invalid. Order:\n" +
                     JSON.stringify(order)

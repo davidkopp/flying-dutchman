@@ -61,7 +61,6 @@
 
     /** Initializes the table number in the view. */
     function initTableNumber() {
-        // TODO: Remove random value.
         table_number = Math.floor(Math.random() * 10 + 1);
         $("#table-number").html(table_number);
     }
@@ -146,7 +145,6 @@
             return;
         }
 
-        // TODO: better approach would be to disallow the mix of the both inventories in the first place.
         let inventoryName;
         switch (currentMenu) {
             case "main":
