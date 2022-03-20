@@ -635,20 +635,23 @@
 
         // Add details of items that are running low
         const itemsRunningLow = inventoryController.getItemsThatRunOutOfStock();
-        let itemsRunningLowHTML = "";
+        let itemsRunningLowHtmlTableRows = "";
         itemsRunningLow.forEach((item) => {
-            itemsRunningLowHTML += `
-            <span class="inventory-item-running-low-beverage-nr">
-                ${item.beverageNr}
-            </span>
-            <span class="inventory-item-running-low-quantity">
-                ${item.quantity}
-            </span>
-            <br/>`;
+            const beverage = DatabaseAPI.Beverages.findBeverageByNr(
+                item.beverageNr
+            );
+            itemsRunningLowHtmlTableRows += `
+            <tr class="item-running-low-row">
+                <td>${beverage.nr}</td>
+                <td>${beverage.name}</td>
+                <td>${item.quantity}</td>
+            </tr>`;
         });
-        $("#inventory-details-items-running-low")
-            .empty()
-            .append(itemsRunningLowHTML);
+
+        $(".item-running-low-row").remove();
+        $("#inventory-details-items-running-low-table").append(
+            itemsRunningLowHtmlTableRows
+        );
 
         // Refresh all text strings
         LanguageController.refreshTextStrings();

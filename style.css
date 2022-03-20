@@ -788,13 +788,21 @@ img.inventory-has-enough-items {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 40px;
     color: white;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     background-color: lightcoral;
     padding: 30px;
     min-width: 16em;
+}
+
+.overlay-content > div {
+    padding: 10px 0;
+}
+
+.overlay-content table {
+    border-spacing: 10px;
+    border-collapse: separate;
 }
 
 .overlay-close-button {

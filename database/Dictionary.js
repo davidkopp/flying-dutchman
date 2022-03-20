@@ -179,6 +179,9 @@ const Dictionary = {
             "payment-split-value-label": "Number: ",
             "payment-split-finalize-label": "Go",
             "payment-split-pay-button": "Pay",
+            "inventory-details-beverage-nr-label": "Number",
+            "inventory-details-beverage-name-label": "Name",
+            "inventory-details-amount-label": "Amount",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -337,6 +340,9 @@ const Dictionary = {
             "payment-split-value-label": "Anzahl: ",
             "payment-split-finalize-label": "Bestätigen",
             "payment-split-pay-button": "Bezahlen",
+            "inventory-details-beverage-nr-label": "Nummer",
+            "inventory-details-beverage-name-label": "Name",
+            "inventory-details-amount-label": "Anzahl",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -502,6 +508,9 @@ const Dictionary = {
             "payment-split-value-label": "Number: ",
             "payment-split-finalize-label": "Go",
             "payment-split-pay-button": "Pay",
+            "inventory-details-beverage-nr-label": "Number",
+            "inventory-details-beverage-name-label": "Name",
+            "inventory-details-amount-label": "Amount",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
