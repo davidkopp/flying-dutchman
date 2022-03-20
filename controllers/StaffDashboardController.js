@@ -276,7 +276,7 @@
                             <span>${order.id}</span>
                         </div>
                         <div class="overview-element-row" data-order-id="${order.id}">
-                            <div class="overview-element-row-items">
+                            <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-items"></span>
                                 <br/>
                                 <span>${orderItemsHTML}</span>
@@ -285,6 +285,11 @@
                                 <span class="overview-list-column-heading" data-lang="order-list-notes"></span>
                                 <br/>
                                 <textarea class="order-notes-text-field" rows="2" >${order.notes}</textarea>
+                            </div>
+                            <div>
+                                <span class="overview-list-column-heading" data-lang="order-list-inventory"></span>
+                                <br/>
+                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}>...</span>
                             </div>
                             <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-status"></span>

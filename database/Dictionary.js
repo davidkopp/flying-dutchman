@@ -159,6 +159,7 @@ const Dictionary = {
             "order-list-status": "Status",
             "order-list-items": "Items",
             "order-list-notes": "Notes",
+            "order-list-inventory": "Inventory",
             "order-list-actions": "Actions",
             "order-list-status-dynamic": {
                 true: "done",
@@ -339,6 +340,7 @@ const Dictionary = {
             "order-list-status": "Status",
             "order-list-items": "Artikel",
             "order-list-notes": "Notizen",
+            "order-list-inventory": "Lager",
             "order-list-actions": "Aktionen",
             "order-list-status-dynamic": {
                 true: "erledigt",
@@ -521,6 +523,7 @@ const Dictionary = {
             "order-list-status": "Status",
             "order-list-items": "Itens",
             "order-list-notes": "Informações",
+            "order-list-inventory": "Inventário",
             "order-list-actions": "Editar ações",
             "order-list-status-dynamic": {
                 true: "Pedido Completo",
