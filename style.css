@@ -524,7 +524,6 @@ Menu Page
 }
 .filter-button {
     padding: 10px;
-    max-width: 1500px;
     margin: 10px auto;
     padding-left: 100px;
     padding-right: 100px;
@@ -558,7 +557,7 @@ Menu Page
     background-color: #fff;
 }
 .filter-wrapper {
-    max-width: 1500px;
+    max-width: 1800px;
     margin: 20px auto;
     display: flex;
 }
@@ -907,52 +906,6 @@ img.inventory-has-enough-items {
 }
 
 /*=======================
-VIP dashboard
-========================*/
-
-.drag-drop > div {
-    height: 60vh;
-}
-
-.available-items-area {
-    float: left;
-    width: 100%;
-    height: 100%;
-}
-
-.order-area {
-    float: right;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow-y: auto;
-}
-
-.drag-items {
-    cursor: pointer;
-}
-
-#inventory-buttons button {
-    border: 2px solid #6cafe5;
-    background-color: #2d9bf1;
-    padding: 8px 16px;
-    border-radius: 5px;
-    font-weight: bold;
-    color: white;
-    font-size: 20px;
-    margin: 20px;
-}
-
-#info-box-title {
-    text-decoration: underline;
-}
-
-#info-box-message {
-    font-size: 22px;
-    text-align: center;
-}
-
-/*=======================
 Manager Dashboard
 ========================*/
 
@@ -1200,6 +1153,17 @@ Menu Dropdown
 /*===================
 Vip Dashboard Details
 ====================*/
+
+.order-area {
+    float: right;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+}
+.drag-items {
+    cursor: pointer;
+}
 .order-drag-drop {
     display: flex;
     flex: 0 0 85%;
@@ -1226,9 +1190,6 @@ Vip Dashboard Details
     justify-content: space-between;
     padding: 20px;
 }
-.prod_list .list-item .item {
-    width: 48%;
-}
 .my_selection_list {
     flex: 0 0 45%;
     background-color: #a1cdf0;
@@ -1240,9 +1201,6 @@ Vip Dashboard Details
 .my_selection_list .list-item {
     padding: 20px;
     /* justify-content: space-between; */
-}
-.my_selection_list .list-item .item {
-    width: 35%;
 }
 .my_selection_list .item {
     width: 175px;
