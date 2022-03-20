@@ -1010,3 +1010,41 @@ Responsive Design
         width: 100%;
     }
 }
+
+
+
+
+/*========================
+Menu Dropdown
+=========================*/
+.price, .alcohol, .allergies{
+    position: relative;
+}
+.price-list,.alcohol-list,.allergies-list{
+    display: none;
+}
+.allergies:hover .allergies-list{
+    display: block;
+}
+.price:hover .price-list{
+    display: block;
+}
+.alcohol:hover .alcohol-list{
+    display: block;
+}
+.price_range{
+    position: absolute;
+    min-width: 100px;
+    background-color: #fff;
+    padding: 15px;
+    text-align: left;
+    z-index: 10;
+    left: 0;
+    top: 33px;
+}
+.price_range .range{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+   
+}
