@@ -539,7 +539,7 @@ Menu Page
     text-align: right;
     margin-right: 50px;
 }
-.text-left{
+.text-left {
     position: absolute;
     left: 0px;
     width: 50%;
@@ -917,13 +917,13 @@ VIP dashboard
 .available-items-area {
     float: left;
     width: 100%;
-    height: 100%;   
+    height: 100%;
 }
 
 .order-area {
     float: right;
     width: 100%;
-    height: 100%;   
+    height: 100%;
     position: relative;
 }
 
@@ -1207,43 +1207,39 @@ Menu Dropdown
     margin-bottom: 15px;
 }
 
-
-
-
 /*===================
 Vip Dashboard Details
 ====================*/
-.order-drag-drop{
+.order-drag-drop {
     display: flex;
-    flex: 0 0 85%; 
+    flex: 0 0 85%;
     max-width: 1650px;
 }
-.order-drag-drop h2{
-    padding:20px;
+.order-drag-drop h2 {
+    padding: 20px;
 }
-.option-list{
+.option-list {
     flex: 0 0 8%;
 }
-.drag_drop_wrapper{
+.drag_drop_wrapper {
     display: flex;
-    flex: 0 0 100%; 
+    flex: 0 0 100%;
     height: 600px;
 }
-.prod_list{
-flex: 0 0 50%;
-background-color: aquamarine;
-height: 100%;
-overflow-y: auto;
+.prod_list {
+    flex: 0 0 50%;
+    background-color: aquamarine;
+    height: 100%;
+    overflow-y: auto;
 }
-.prod_list .list-item{
+.prod_list .list-item {
     justify-content: space-between;
     padding: 20px;
 }
-.prod_list .list-item .item{
+.prod_list .list-item .item {
     width: 48%;
 }
-.my_selection_list{
-
+.my_selection_list {
     flex: 0 0 45%;
     background-color: #a1cdf0;
     /* padding: 25px; */
@@ -1252,24 +1248,24 @@ overflow-y: auto;
     overflow-y: auto;
     position: relative;
 }
-.my_selection_list .list-item{
+.my_selection_list .list-item {
     padding: 20px;
     /* justify-content: space-between; */
 }
-.my_selection_list .list-item .item{
+.my_selection_list .list-item .item {
     width: 35%;
 }
-.my_selection_list .item{
-width: 175px;
-height: 100px;
-border-radius: 15px;
+.my_selection_list .item {
+    width: 175px;
+    height: 100px;
+    border-radius: 15px;
 }
-.orders-btn{
+.orders-btn {
     position: absolute;
     bottom: 0;
     width: 100%;
 }
-.btn-order{
+.btn-order {
     display: block;
     width: 100%;
     padding: 15px;
@@ -1277,12 +1273,12 @@ border-radius: 15px;
     font-weight: bold;
     font-size: 16px;
 }
-.btn-send-order{
+.btn-send-order {
     background-color: #2d9bf0;
     color: #fff;
     margin-bottom: 10px;
 }
-.btn-complete-order{
+.btn-complete-order {
     background-color: #2ce8e9;
 }
 
