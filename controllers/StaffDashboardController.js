@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 19th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
@@ -155,16 +155,17 @@
      * functionality to change the account balance.
      */
     function handleSearchForUserAndDisplayInfo() {
+        // First remove the lastest search results.
+        $(".added-row-for-search").remove();
+
         const search = $("#vip-account-name").val().trim();
         if (!search) {
             return;
         }
 
         let foundUsers = DatabaseAPI.Users.searchForUsers(search);
-        console.log("foundusers:" + JSON.stringify(foundUsers));
         if (foundUsers.length == 0) {
             console.log(`No user found for search '${search}'.`);
-            $(".added-row-for-search").remove();
             return;
         }
 
