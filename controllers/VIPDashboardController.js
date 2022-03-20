@@ -98,7 +98,7 @@
             );
             result += `
             <div data-beverage-id = "${inventoryItem.beverageNr}"
-                 class = "drag-items"
+                 class = "item drag-items"
                  id = "item-${inventoryItem.beverageNr}"
                  draggable = true
                  ondragstart = "dragItem(event)">

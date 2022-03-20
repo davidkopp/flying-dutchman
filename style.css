@@ -317,6 +317,7 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     margin-top: 20px;
 }
 
+<<<<<<< Updated upstream
 /*=============Menu Page================*/
 
 #menu-container {
@@ -390,6 +391,8 @@ TODO: Are these definitions relevant? They are currently not used in any HTML fi
     -webkit-mask-size: 200%;
     animation: shine 2s infinite;
 }
+=======
+>>>>>>> Stashed changes
 
 /*=================Drag & Drop==================*/
 
@@ -476,6 +479,9 @@ Menu Page
 }
 .text-right {
     text-align: right;
+}
+.text-left{
+    text-align: left;
 }
 .filter-button button {
     border: 2px solid #6cafe5;
@@ -743,20 +749,20 @@ VIP dashboard
 
 .drag-drop > div {
     height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 100px;
 }
 
 .available-items-area {
     float: left;
-    background-color: aquamarine;
-    width: 50%;
-    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
 }
 
 .order-area {
     float: right;
-    background-color: #ffffff;
-    width: 50%;
-    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .drag-items {
@@ -764,9 +770,10 @@ VIP dashboard
 }
 
 #place-order {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    /* position: absolute; */
+    position: fixed;
+    bottom: 39px;
+    width: 50%;
     padding: 10px;
     border: none;
     background-color: #2f9af0;
@@ -910,3 +917,185 @@ Responsive Design
         width: 100%;
     }
 }
+<<<<<<< Updated upstream
+=======
+
+
+
+
+/*========================
+Menu Dropdown
+=========================*/
+.price, .alcohol, .allergies{
+    position: relative;
+}
+.price-list,.alcohol-list,.allergies-list{
+    display: none;
+}
+.allergies:hover .allergies-list{
+    display: block;
+}
+.price:hover .price-list{
+    display: block;
+}
+.alcohol:hover .alcohol-list{
+    display: block;
+}
+.price_range{
+    position: absolute;
+    min-width: 100px;
+    background-color: #fff;
+    padding: 15px;
+    text-align: left;
+    z-index: 10;
+    left: 0;
+    top: 33px;
+}
+.price_range .range{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+   
+}
+
+
+
+
+
+/*===================
+Vip Dashboard Details
+====================*/
+.order-drag-drop{
+    display: flex;
+    flex: 0 0 85%; 
+    max-width: 1650px;
+}
+.order-drag-drop h2{
+    padding:20px;
+}
+.option-list{
+    flex: 0 0 8%;
+}
+.drag_drop_wrapper{
+    display: flex;
+    flex: 0 0 100%; 
+    height: 600px;
+}
+.prod_list{
+flex: 0 0 50%;
+background-color: aquamarine;
+height: 100%;
+overflow-y: auto;
+}
+.prod_list .list-item{
+    justify-content: space-between;
+    padding: 20px;
+}
+.prod_list .list-item .item{
+    width: 48%;
+}
+.my_selection_list{
+
+    flex: 0 0 45%;
+    background-color: #a1cdf0;
+    /* padding: 25px; */
+    margin-left: 20px;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+}
+.my_selection_list .list-item{
+    padding: 20px;
+    /* justify-content: space-between; */
+}
+.my_selection_list .list-item .item{
+    width: 35%;
+}
+.my_selection_list .item{
+width: 175px;
+height: 100px;
+border-radius: 15px;
+}
+.orders-btn{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.btn-order{
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+.btn-send-order{
+    background-color: #2d9bf0;
+    color: #fff;
+    margin-bottom: 10px;
+}
+.btn-complete-order{
+    background-color: #2ce8e9;
+}
+
+/*======================
+    VIP Dashboard
+=======================*/
+
+.sub_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 80px;
+    align-items: center;
+    color: #fff;
+}
+.sub_header h1 {
+    font-size: 40px;
+    font-weight: 500;
+}
+.sub_header .btn_vip {
+    border: none;
+    display: inline;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 14px;
+}
+.items-order-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.items-order-list .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.items-order-list .item .filter-icon,
+.drag-drop-wrapper .filter-icon,
+.filter-wrapper .filter-icon {
+    width: 75px;
+    height: 75px;
+    margin: 5px auto;
+    cursor: pointer;
+}
+.items-order-list .item .filter-icon img,
+.drag-drop-wrapper .filter-icon img,
+.filter-wrapper .filter-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.filter-icon > img:hover {
+    -webkit-mask-image: linear-gradient(
+        -75deg,
+        rgba(0, 0, 0, 0.6) 30%,
+        #000 50%,
+        rgba(0, 0, 0, 0.6) 70%
+    );
+    -webkit-mask-size: 200%;
+    animation: shine 2s infinite;
+}
+>>>>>>> Stashed changes
