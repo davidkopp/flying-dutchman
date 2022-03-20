@@ -263,8 +263,6 @@
                     });
                     orderItemsHTML += "</ul>";
 
-                    // TODO: Status value ("tbd." / "done") makes not real sense at the moment...
-
                     ordersHtmlList.push(`
                     <div class="order-element">
                         <div class="order-element-number">
@@ -286,11 +284,6 @@
                                 <span class="overview-list-column-heading" data-lang="order-list-inventory"></span>
                                 <br/>
                                 <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}>...</span>
-                            </div>
-                            <div>
-                                <span class="overview-list-column-heading" data-lang="order-list-status"></span>
-                                <br/>
-                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-list-status-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.done}>...</span>
                             </div>
                             <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-actions"></span>
