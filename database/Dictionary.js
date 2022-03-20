@@ -5,7 +5,7 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Saturday, 19th March 2022
+ * Last Modified: Sunday, 20th March 2022
  * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* eslint-disable no-redeclare */
@@ -58,7 +58,6 @@ const Constants = {
     STORAGE_DB_ALLERGIES_KEY: "db_allergies",
     STORAGE_DB_INVENTORY_BAR_KEY: "db_inventory_bar",
     STORAGE_DB_INVENTORY_VIP_KEY: "db_inventory_vip",
-    STORAGE_DB_HIDE_FROM_MENU_KEY: "db_hideFromMenu",
     STORAGE_DB_BEVERAGES_KEY: "db_beverages",
 
     ACCESS_LEVEL_MANAGER: 0,
@@ -132,8 +131,8 @@ const Dictionary = {
             "order-details-id-label": "Order number:",
             "order-details-inventory-label": "Inventory:",
             "create-order-button-text": "Create new order",
-            "inventory-overview-title": "Inventory",
-            "restock-button-text": "Restock",
+            "inventory-bar-overview-title": "Inventory Bar",
+            "inventory-vip-overview-title": "Inventory Specials",
             "orders-list-total-number-label": "Number of orders:",
             "inventory-notifications-total-number-label": "Items running out:",
             "order-details-heading-with-table-number": "Orders for table",
@@ -179,6 +178,14 @@ const Dictionary = {
             "payment-split-value-label": "Number: ",
             "payment-split-finalize-label": "Go",
             "payment-split-pay-button": "Pay",
+            "item-beverage-nr-label": "Number",
+            "item-beverage-name-label": "Name",
+            "item-quantity-label": "Quantity",
+            "item-hidden-status-label": "Visibility in Menu",
+            "item-hide-visible-button-dynamic": {
+                true: "Visible",
+                false: "Hidden",
+            },
             "vip-account-balance-button": "VIP Accounts",
             "vip-account-balances-title": "VIP Account Balances",
             "vip-account-balances-description":
@@ -302,8 +309,8 @@ const Dictionary = {
             "order-details-id-label": "Bestellungnummer:",
             "order-details-inventory-label": "Lager:",
             "create-order-button-text": "Neue Bestellung",
-            "inventory-overview-title": "Lager",
-            "restock-button-text": "Auffüllen",
+            "inventory-bar-overview-title": "Bestand Bar",
+            "inventory-vip-overview-title": "Bestand Specials",
             "orders-list-total-number-label": "Anzahl an Bestellungen:",
             "inventory-notifications-total-number-label": "Geringe Anzahl:",
             "order-details-heading-with-table-number": "Bestellungen für Tisch",
@@ -350,6 +357,14 @@ const Dictionary = {
             "payment-split-value-label": "Anzahl: ",
             "payment-split-finalize-label": "Bestätigen",
             "payment-split-pay-button": "Bezahlen",
+            "item-beverage-nr-label": "Nummer",
+            "item-beverage-name-label": "Name",
+            "item-quantity-label": "Anzahl",
+            "item-hidden-status-label": "Sichtbarkeit",
+            "item-hide-visible-button-dynamic": {
+                true: "Sichtbar",
+                false: "Versteckt",
+            },
             "vip-account-balance-button": "VIP Konten",
             "vip-account-balances-title": "VIP Kontostände",
             "vip-account-balances-description":
@@ -478,8 +493,8 @@ const Dictionary = {
             "order-details-id-label": "Pedido Numero:",
             "order-details-inventory-label": "Inventário:",
             "create-order-button-text": "Ordenar",
-            "inventory-overview-title": "Inventário",
-            "restock-button-text": "Restock",
+            "inventory-bar-overview-title": "Inventory Bar", // TODO: Translate into portuguese
+            "inventory-vip-overview-title": "Inventory Specials", // TODO: Translate into portuguese
             "orders-list-total-number-label": "Numero de Pedidos:",
             "inventory-notifications-total-number-label":
                 "Itens com pouca quantidade:",
@@ -528,6 +543,14 @@ const Dictionary = {
             "payment-split-value-label": "Number: ",
             "payment-split-finalize-label": "Go",
             "payment-split-pay-button": "Pay",
+            "item-beverage-nr-label": "Number",
+            "item-beverage-name-label": "Name",
+            "item-quantity-label": "Quantity",
+            "item-hidden-status-label": "Visibility in Menu",
+            "item-hide-visible-button-dynamic": {
+                true: "Visible",
+                false: "Hidden",
+            },
             "vip-account-balance-button": "VIP Accounts",
             "vip-account-balances-title": "VIP Account Balances",
             "vip-account-balances-description":
