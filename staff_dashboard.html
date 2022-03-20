@@ -80,6 +80,11 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         </button>
                     </div>
                     <div>
+                        <button id="vip-account-balance-button" class="vip-accounts-button hover-shine">
+                            <span data-lang="vip-account-balance-button"></span>
+                        </button>
+                    </div>
+                    <div>
                         <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
                             <img
                                 src="assets/images/icon_logout.png"
@@ -315,46 +320,82 @@ Modified By: David Kopp (mail@davidkopp.de>)
                         </form>
                     </div>
                 </div>
-            </div>
 
-            <!-- Overlay for Payment  -->
-            <div id="overlay-payment" class="overlay hidden">
-                <div class="overlay-content">
-                    <div class="clickable overlay-close-button">
-                        <img src="assets/images/icon_close.svg" />
-                    </div>
-                    <div id="payment" data-order-id="">
-                        <input type="radio" name="billing-type" id="bill-type-single" value="Single" checked />
-                        <label for="bill-type-single" data-lang="payment-split-label-single"></label>
-                        <input type="radio" name="billing-type" id="bill-type-split" value="Split" />
-                        <label for="bill-type-single" data-lang="payment-split-label-split"></label>
-                        <div id="single-payment">
+                <!-- Overlay for VIP account balances -->
+                <div id="overlay-vip-account-balances" class="overlay hidden">
+                    <div class="overlay-content">
+                        <div class="clickable overlay-close-button">
+                            <img src="assets/images/icon_close.svg" />
+                        </div>
+                        <div class="overlay-details-heading" data-lang="vip-account-balances-title"></div>
+                        <div class="overlay-details-info-text" data-lang="vip-account-balances-description"></div>
+                        <div>
+                            <label
+                                for="vip-account-name"
+                                data-lang="user-account-search-label"
+                                class="overlay-details-label"
+                            ></label>
+                            <input type="text" name="vip-account-name" id="vip-account-name" />
                             <button
-                                id="single-payment-button"
-                                class="overview-buttons"
-                                data-lang="payment-pay-button"
+                                id="search-vip-account-name"
+                                data-lang="search-vip-account-name-button"
+                                class="overlay-button hover-shine"
                             ></button>
                         </div>
-                        <div id="split-payment" class="hidden">
-                            <label
-                                for="payment-split-value"
-                                id="payment-split-value-label"
-                                data-lang="payment-split-value-label"
-                            ></label>
-                            <input
-                                id="payment-split-value"
-                                name="payment-split-value"
-                                type="number"
-                                max="20"
-                                min="1"
-                                maxlength="2"
-                            />
-                            <button
-                                id="finalize-split-number"
-                                class="overview-buttons"
-                                data-lang="payment-split-finalize-label"
-                            ></button>
-                            <div id="payments"></div>
+                        <div id="found-vip-accounts-list">
+                            <table id="found-vip-accounts-table">
+                                <tr>
+                                    <th data-lang="found-users-header-username-label"></th>
+                                    <th data-lang="found-users-header-firstname-label"></th>
+                                    <th data-lang="found-users-header-lastname-label"></th>
+                                    <th data-lang="found-users-header-email-label"></th>
+                                    <th data-lang="found-users-header-credit-current-label"></th>
+                                    <th colspan="2" data-lang="found-users-header-credit-add-label"></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlay for Payment  -->
+                <div id="overlay-payment" class="overlay hidden">
+                    <div class="overlay-content">
+                        <div class="clickable overlay-close-button">
+                            <img src="assets/images/icon_close.svg" />
+                        </div>
+                        <div id="payment" data-order-id="">
+                            <input type="radio" name="billing-type" id="bill-type-single" value="Single" checked />
+                            <label for="bill-type-single" data-lang="payment-split-label-single"></label>
+                            <input type="radio" name="billing-type" id="bill-type-split" value="Split" />
+                            <label for="bill-type-single" data-lang="payment-split-label-split"></label>
+                            <div id="single-payment">
+                                <button
+                                    id="single-payment-button"
+                                    class="overview-buttons"
+                                    data-lang="payment-pay-button"
+                                ></button>
+                            </div>
+                            <div id="split-payment" class="hidden">
+                                <label
+                                    for="payment-split-value"
+                                    id="payment-split-value-label"
+                                    data-lang="payment-split-value-label"
+                                ></label>
+                                <input
+                                    id="payment-split-value"
+                                    name="payment-split-value"
+                                    type="number"
+                                    max="20"
+                                    min="1"
+                                    maxlength="2"
+                                />
+                                <button
+                                    id="finalize-split-number"
+                                    class="overview-buttons"
+                                    data-lang="payment-split-finalize-label"
+                                ></button>
+                                <div id="payments"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

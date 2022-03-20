@@ -187,6 +187,19 @@ const Dictionary = {
                 true: "Hidden",
                 false: "Visible",
             },
+            "vip-account-balance-button": "VIP Accounts",
+            "vip-account-balances-title": "VIP Account Balances",
+            "vip-account-balances-description":
+                "Here you can see and change the account balances of our VIP members.",
+            "user-account-search-label": "Search:",
+            "search-vip-account-name-button": "Search",
+            "change-vip-account-balance-amount-button": "Confirm",
+            "found-users-header-username-label": "Username",
+            "found-users-header-firstname-label": "First name",
+            "found-users-header-lastname-label": "Last name",
+            "found-users-header-email-label": "Email",
+            "found-users-header-credit-current-label": "Current Credit",
+            "found-users-header-credit-add-label": "Add amount",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -353,6 +366,19 @@ const Dictionary = {
                 true: "Versteckt",
                 false: "Sichtbar",
             },
+            "vip-account-balance-button": "VIP Konten",
+            "vip-account-balances-title": "VIP Kontostände",
+            "vip-account-balances-description":
+                "Hier kannst du die Kontostände unserer VIP Mitglieder sehen und anpassen.",
+            "user-account-search-label": "Suche:",
+            "search-vip-account-name-button": "Suchen",
+            "change-vip-account-balance-amount-button": "Bestätigen",
+            "found-users-header-username-label": "Benutzername",
+            "found-users-header-firstname-label": "Vorname",
+            "found-users-header-lastname-label": "Nachname",
+            "found-users-header-email-label": "E-Mail-Adresse",
+            "found-users-header-credit-current-label": "Aktueller Kontostand",
+            "found-users-header-credit-add-label": "Betrag hinzufügen",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -526,6 +552,19 @@ const Dictionary = {
                 true: "Hidden",
                 false: "Visible",
             },
+            "vip-account-balance-button": "VIP Accounts",
+            "vip-account-balances-title": "VIP Account Balances",
+            "vip-account-balances-description":
+                "Here you can see and change the account balances of our VIP members.",
+            "user-account-search-label": "Search:",
+            "search-vip-account-name-button": "Search",
+            "change-vip-account-balance-amount-button": "Confirm",
+            "found-users-header-username-label": "Username",
+            "found-users-header-firstname-label": "First name",
+            "found-users-header-lastname-label": "Last name",
+            "found-users-header-email-label": "Email",
+            "found-users-header-credit-current-label": "Current Credit",
+            "found-users-header-credit-add-label": "Add amount",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {

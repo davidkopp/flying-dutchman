@@ -118,6 +118,20 @@
             deactivateOverlayEventHandlers();
         });
 
+        $("#vip-account-balance-button").click(function () {
+            $("#overlay-vip-account-balances").show();
+        });
+
+        $("#vip-account-name").keypress(function (e) {
+            if (e.which == 13) {
+                handleSearchForUserAndDisplayInfo();
+            }
+        });
+
+        $("#search-vip-account-name").click(function () {
+            handleSearchForUserAndDisplayInfo();
+        });
+
         // Event handlers for the single and split bill buttons
         $("#bill-type-single").click(function () {
             $("#single-payment").show();
@@ -134,6 +148,94 @@
     /** Deactivate specific event handlers that were set while the overlay was opened... */
     function deactivateOverlayEventHandlers() {
         $(document).unbind("keypress");
+    }
+
+    /**
+     * Searches for a vip account, displays user info and provide the
+     * functionality to change the account balance.
+     */
+    function handleSearchForUserAndDisplayInfo() {
+        const search = $("#vip-account-name").val().trim();
+        if (!search) {
+            return;
+        }
+
+        let foundUsers = DatabaseAPI.Users.searchForUsers(search);
+        console.log("foundusers:" + JSON.stringify(foundUsers));
+        if (foundUsers.length == 0) {
+            console.log(`No user found for search '${search}'.`);
+            $(".added-row-for-search").remove();
+            return;
+        }
+
+        let htmlTableRows = "";
+        let countVIPUsers = 0;
+        for (let i = 0; i < foundUsers.length; i++) {
+            const user = foundUsers[i];
+            if (user.credentials != Constants.ACCESS_LEVEL_VIP) {
+                continue;
+            }
+            countVIPUsers++;
+            const creditSEK = DatabaseAPI.Users.getBalanceByUserId(
+                user.user_id
+            );
+
+            htmlTableRows += `
+                            <tr class="added-row-for-search">
+                            <td>${user.username}</td>
+                            <td>${user.first_name}</td>
+                            <td>${user.last_name}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <span id="balance-amount-user-${user.user_id}">${creditSEK}</span>
+                                <span>SEK</span>
+                            </td>
+                            <td>
+                    <input type="number" class="change-balance-amount" id="change-balance-amount-user-${user.user_id}" />
+
+                </td>
+                <td><button class="change-vip-account-balance-amount-button" data-lang="change-vip-account-balance-amount-button" data-user-id=${user.user_id} data-username=${user.username}>
+                </button></td>
+                            </tr>`;
+        }
+
+        if (countVIPUsers == 0) {
+            console.log(`No vip user account found for search '${search}'.`);
+        } else {
+            $("#found-vip-accounts-table").append(htmlTableRows);
+
+            // Add event handler to the added change buttons
+            $(".change-vip-account-balance-amount-button").click(
+                handleChangeAccountBalanceOfUser
+            );
+
+            // Refresh all text strings
+            LanguageController.refreshTextStrings();
+        }
+    }
+
+    /** Event handler for changing the acount balance of a vip user. */
+    function handleChangeAccountBalanceOfUser() {
+        const userId = $(this).data("user-id");
+        const username = $(this).data("username");
+
+        const inputAddAmount = $(`#change-balance-amount-user-${userId}`).val();
+        const addAmount = parseInt(inputAddAmount.trim());
+        if (isNaN(addAmount)) {
+            // TODO: Display error to user.
+            console.log(
+                `Provided value '${inputAddAmount}' is not a valid number!`
+            );
+            return;
+        }
+
+        const currentAmount = DatabaseAPI.Users.getBalanceByUserId(userId);
+        const newAmount = currentAmount + addAmount;
+        DatabaseAPI.Users.changeBalance(username, newAmount);
+
+        // Update view
+        const creditSEK = DatabaseAPI.Users.getBalanceByUserId(userId);
+        $(`#balance-amount-user-${userId}`).text(creditSEK);
     }
 
     /** Initializes the order list in the view. */
