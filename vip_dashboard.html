@@ -1,25 +1,16 @@
-<!--
-File: vip_dashboard.html
-
-VIP Dashboard of the Flying Dutchman.
-
-Author: Paarth Sanhotra
------
-Last Modified: Saturday, 19th March 2022
-Modified By: David Kopp (mail@davidkopp.de>)
--->
-
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
+
+<head>
+    <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title data-lang="head-page-title">Flying Dutchman</title>
 
         <!-- Prevent browser from requesting a favicon -->
         <link rel="icon" href="data:;base64,=" />
+        <!--Stylesheet-->
         <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         <!--Font Awesome-->
         <link
             rel="stylesheet"
@@ -28,6 +19,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         />
+
         <script type="text/javascript" src="libs/jquery-3.6.0.min.js"></script>
 
         <script type="text/javascript" src="database/BeveragesDB.js"></script>
@@ -42,132 +34,304 @@ Modified By: David Kopp (mail@davidkopp.de>)
         <script type="text/javascript" src="controllers/InventoryController.js"></script>
         <script type="text/javascript" src="controllers/OrderController.js"></script>
         <script type="text/javascript" src="controllers/EffectsController.js"></script>
-    </head>
 
-    <body>
-        <header>
-            <div class="lang-container">
-                <div class="lang-flag clickable" data-country-code="en" data-lang="[title]lang-flag-title-english">
-                    <img src="assets/images/icon_england_flag.png" alt="" />
-                </div>
-                <div class="lang-flag clickable" data-country-code="de" data-lang="[title]lang-flag-title-german">
-                    <img src="assets/images/icon_german_flag.png" alt="" />
-                </div>
-                <div class="lang-flag clickable" data-country-code="pt" data-lang="[title]lang-flag-title-portuguese">
-                    <img src="assets/images/icon_brazilian_flag.png" alt="" />
-                </div>
+
+</head>
+
+<body >
+    <header>
+        <div class="lang-container">
+            <div class="lang-flag clickable" data-country-code="en" data-lang="[title]lang-flag-title-english">
+                <img src="assets/images/icon_england_flag.png" alt="" />
             </div>
-            <div class="header-bar">
-                <div class="logo header-bar-column" data-lang="[title]logo-title">
-                    <a href="/">
-                        <img src="assets/images/img_flyingdutchman_text.png" alt="" />
-                    </a>
-                </div>
-                <div class="available-options header-bar-column">
-                    <div>
-                        <a href="index.html">
-                            <button id="home-button" class="clickable" data-lang="[title]home-button-title">
-                                <img
-                                    src="assets/images/icon_home.png"
-                                    data-src="assets/images/icon_home.png"
-                                    data-hover="assets/images/icon_home_active.png"
-                                    alt=""
-                                />
-                            </button>
-                        </a>
-                    </div>
-                    <!-- <div>
-                        <button>
-                            <i class="fas fa-search bg-blue"></i>
-                        </button>
-                    </div> -->
-                    <div id="vip-account-balance-box">
-                        <div>
-                            <span id="vip-account-balance"></span>
-                        </div>
-                    </div>
-                    <div id="table-number-box">
-                        <div>
-                            <span data-lang="table-number-label"></span>
-                            <span id="table-number"></span>
-                        </div>
-                    </div>
-                    <div>
-                        <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+            <div class="lang-flag clickable" data-country-code="de" data-lang="[title]lang-flag-title-german">
+                <img src="assets/images/icon_german_flag.png" alt="" />
+            </div>
+            <div class="lang-flag clickable" data-country-code="pt" data-lang="[title]lang-flag-title-portuguese">
+                <img src="assets/images/icon_brazilian_flag.png" alt="" />
+            </div>
+        </div>
+        <div class="header-bar">
+            <div class="logo header-bar-column" data-lang="[title]logo-title">
+                <a href="/">
+                    <img src="assets/images/img_flyingdutchman_text.png" alt="" />
+                </a>
+            </div>
+            <div class="available-options header-bar-column">
+                <div>
+                    <a href="index.html">
+                        <button id="home-button" class="clickable" data-lang="[title]home-button-title">
                             <img
-                                src="assets/images/icon_logout.png"
-                                data-src="assets/images/icon_logout.png"
-                                data-hover="assets/images/icon_logout_active.png"
+                                src="assets/images/icon_home.png"
+                                data-src="assets/images/icon_home.png"
+                                data-hover="assets/images/icon_home_active.png"
                                 alt=""
                             />
                         </button>
-                    </div>
+                    </a>
                 </div>
-            </div>
-            <!-- TODO: Integrate sub header in normal header
-            <div class="sub_header">
-                <h1 data-lang="heading"></h1>
-                <h3>
-                    <span data-lang="vip-welcome-text"></span>
-                    <span id="vip-name"></span>
-                </h3>
-                <h3>
-                    <span data-lang="vip-account-balance-text"></span>
-                    <span id="vip-account-balance"></span>
-                </h3>
-                <h3>
-                    <span data-lang="table-number-heading"></span>
-                    <span id="table-number"></span>
-                </h3>
+                <!-- TODO: Use or remove search button, account balance info and dollar sign -->
+                <!-- <div>
+                    <a class="clickable">
+                        <i class="fas fa-search bg-blue"></i>
+                    </a>
+                </div> -->
+                <!-- <div>
+                    <button>
+                        <span id="vip-account-balance"></span>
+                    </button>
+                </div> -->
+                <!-- <div>
+                    <a class="clickable">
+                        <i class="fas fa-dollar-sign bg-blue"></i>
+                    </a>
+                </div> -->
                 <div>
-                    <button class="btn btn-waiter" data-lang="waiter-call-button"></button>
-                    <button class="btn btn-bill" data-lang="pay-bill-button"></button>
+                    <button id="logout-button" class="hidden clickable" data-lang="[title]logout-button-title">
+                        <img
+                            src="assets/images/icon_logout.png"
+                            data-src="assets/images/icon_logout.png"
+                            data-hover="assets/images/icon_logout_active.png"
+                            alt=""
+                        />
+                    </button>
                 </div>
             </div>
-            -->
-        </header>
+        </div>
+    </header>
 
-        <article>
-            <div id="page-title" class="page-title" data-lang="page-title"></div>
-            <div id="inventory-buttons">
+    <article>
+        <div id="page-title" class="page-title" data-lang="page-title"></div>        
+        <div class="filter-button">
+            <div class="text-right">
+                <button class="allergies"><span data-lang="button-label-allergies"></span>
+                    <div class="price_range allergies-list">
+                        <form action="">
+                            <div class="range">
+                                <input type="checkbox" id="" name="allergies" value="Egg">
+                                  <label for="css">Egg</label>
+                            </div>
+                            <div class="range">
+                                <input type="checkbox" id="" name="allergies" value="Nuts">
+                                  <label for="css">Nuts</label>
+                            </div>
+                            <div class="range">
+                                <input type="checkbox" id="" name="allergies" value="Gluten">
+                                  <label for="css">Gluten</label>
+                            </div>
+                            <div class="range">
+                                <input type="checkbox" id="" name="allergies" value="Sulphite">
+                                  <label for="css">Sulphite</label>
+                            </div>
+
+                        </form>
+                    </div>
+                </button>
+                <button class="price"><span data-lang="button-label-price"></span>
+                    <div class="price_range price-list">
+                        <form action="">
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">0-20$</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">21-40$</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">41-60$</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">61-80$</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">81-100$</label>
+                            </div>
+
+                        </form>
+                    </div>
+                </button>
+                <button><span data-lang="button-label-tannin"></span></button>
+                <button class="alcohol"><span data-lang="button-label-alcohol"></span>
+                    <div class="price_range alcohol-list">
+                        <form action="">
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">0-20%</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">21-40%</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">41-60%</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">61-80%</label>
+                            </div>
+                            <div class="range">
+                                <input type="radio" id="" name="price" value="21-40">
+                                  <label for="css">81-100%</label>
+                            </div>
+
+                        </form>
+                    </div>
+                </button>
+            </div>
+            <div class="text-left">
                 <button type="clickable" id="main-tab" data-lang="menu-heading"></button>
-                <button type="clickable" id="vip-tab" data-lang="specials-heading"></button>
-            </div>
-            <div class="drag-drop">
-                <div
-                    id="main-menu"
-                    class="available-items-area"
-                    ondrop="dropItem(event)"
-                    ondragover="allowDropOnItem(event)"
-                ></div>
-                <div
-                    id="vip-menu"
-                    class="available-items-area"
-                    ondrop="dropItem(event)"
-                    ondragover="allowDropOnItem(event)"
-                ></div>
-                <div id="order" class="order-area" ondrop="dropItem(event)" ondragover="allowDropOnItem(event)">
-                    <button id="place-order" data-lang="place-order-button"></button>
-                </div>
-            </div>
-        </article>
-
-        <div id="overlay-message-box" class="overlay hidden">
-            <div class="overlay-content">
-                <div class="clickable overlay-close-button">
-                    <img src="assets/images/icon_close.svg" />
-                </div>
-                <span id="info-box-title" data-lang="info-box-title"></span>
-                <br />
-                <span id="info-box-message"></span>
+                <button type="clickable" id="vip-tab" data-lang="specials-heading"></button>                
             </div>
         </div>
 
-        <footer>
-            <div id="logged-in-user-container" class="hidden">
-                <span id="logged-in-user-label" data-lang="logged-in-user-label"></span>
-                <span id="logged-in-user"></span>
+        <div class="filter-wrapper ">
+            <div class="filter-list">
+                <div
+                    id="filter-icon-beer"
+                    class="filter-icon"
+                    data-lang="[title]filter-icon-title-beer"
+                    onclick="MenuController.filterMenu(Constants.BEER_filter)"
+                >
+                    <img
+                        src="assets/images/icon_beer.png"
+                        data-src="assets/images/icon_beer.png"
+                        data-active="assets/images/icon_beer_active.png"
+                        alt=""
+                    />
+                </div>
+                <div
+                    id="filter-icon-wine"
+                    class="filter-icon"
+                    data-lang="[title]filter-icon-title-wine"
+                    onclick="MenuController.filterMenu(Constants.WINE_filter)"
+                >
+                    <img
+                        src="assets/images/icon_wine.png"
+                        data-src="assets/images/icon_wine.png"
+                        data-active="assets/images/icon_wine_active.png"
+                        alt=""
+                    />
+                </div>
+                <div
+                    id="filter-icon-drink"
+                    class="filter-icon"
+                    data-lang="[title]filter-icon-title-drink"
+                    onclick="MenuController.filterMenu(Constants.DRINK_filter)"
+                >
+                    <img
+                        src="assets/images/icon_coffee.png"
+                        data-src="assets/images/icon_coffee.png"
+                        data-active="assets/images/icon_coffee_active.png"
+                        alt=""
+                    />
+                </div>
+                <div
+                    id="filter-icon-water"
+                    class="filter-icon"
+                    data-lang="[title]filter-icon-title-water"
+                    onclick="MenuController.filterMenu(Constants.WATER_filter)"
+                >
+                    <img
+                        src="assets/images/icon_glass.png"
+                        data-src="assets/images/icon_glass.png"
+                        data-active="assets/images/icon_glass_active.png"
+                        alt=""
+                    />
+                </div>
             </div>
-        </footer>
-    </body>
+
+            <!--
+            
+            <div class="drag-drop">
+                <div id="main-menu" class="available-items-area list-item" ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"></div>
+                <div id="vip-menu" class="available-items-area" ondrop="dropItem(event)"
+                    ondragover="allowDropOnItem(event)"></div>
+                <div id="order" class="order-area list-item" ondrop="dropItem(event)" ondragover="allowDropOnItem(event)">
+                    <button id="place-order" data-lang="place-order-button"></button>
+                </div>
+            </div>
+
+            -->
+
+            <div class="order-drag-drop">
+                <div class="drag_drop_wrapper">
+                    <div class="prod_list">
+                        <div id="main-menu" 
+                            class="available-items-area list-item" 
+                            ondrop="dropItem(event)"
+                            ondragover="allowDropOnItem(event)">
+                        </div>
+                        <div 
+                            id="vip-menu" 
+                            class="list-item" 
+                            ondrop="dropItem(event)"
+                            ondragover="allowDropOnItem(event)">
+                        </div>
+                    </div>
+                    <div class="my_selection_list">
+                        <div 
+                            id="order" class="order-area list-item" 
+                            ondrop="dropItem(event)" ondragover="allowDropOnItem(event)"
+                            >                            
+                        </div>
+                        <div class="orders-btn">                            
+                            <button class="btn-order btn-send-order">Send Order</button>
+                            <button class="btn-order btn-complete-order">Complete Order!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+<!--
+            <div class="order-drag-drop">
+                <div class="drag_drop_wrapper">
+                    <div class="prod_list">
+                        <div id="main-menu" 
+                            class="available-items-area list-item" 
+                            ondrop="dropItem(event)"
+                            ondragover="allowDropOnItem(event)">
+                        </div>
+                        <div 
+                            id="vip-menu" 
+                            class="available-items-area" 
+                            ondrop="dropItem(event)"
+                            ondragover="allowDropOnItem(event)">
+                        </div>
+                    </div>
+                    <div class="my_selection_list">
+                        <div class="list-item"
+                            id="order" class="order-area list-item" 
+                            ondrop="dropItem(event)" 
+                            ondragover="allowDropOnItem(event)">                            
+                        </div>
+                        <div class="orders-btn">
+                            <button class="btn-order btn-send-order">Send Order</button>
+                            <button class="btn-order btn-complete-order">Complete Order!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+
+        </div>
+    </article>
+    <footer>
+        <div id="logged-in-user-container" class="hidden">
+            <span id="logged-in-user-label" data-lang="logged-in-user-label"></span>
+            <span id="logged-in-user"></span>
+        </div>
+    </footer>
+
+
+</body>
+
 </html>
