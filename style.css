@@ -529,6 +529,18 @@ Staff dashboard
     margin-bottom: 20px;
 }
 
+.order-element-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.order-undo-button,
+.order-redo-button {
+    margin: 0 5px;
+    padding: 5px;
+}
+
 .overview-element-row {
     display: flex;
     justify-content: space-between;

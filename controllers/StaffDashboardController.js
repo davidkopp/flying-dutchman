@@ -14,7 +14,8 @@
     let vipInventoryController = new InventoryController(
         Constants.INVENTORIES.VIP
     );
-    let undoManager = new UNDOmanager();
+
+    let undoManagers = {};
 
     $(document).ready(function () {
         initOrdersList();
@@ -246,6 +247,7 @@
 
                 const ordersHtmlList = [];
                 orders.forEach((order) => {
+                    initUndoManagerForOrder(order);
                     let orderItemsHTML = "<ul>";
                     order.items.forEach((item) => {
                         const beverageNr = item.beverageNr;
@@ -261,12 +263,18 @@
                     orderItemsHTML += "</ul>";
 
                     ordersHtmlList.push(`
-                    <div class="order-element">
-                        <div class="order-element-number">
-                            <span class="" data-lang="order-list-order-number"></span>
-                            <span>${order.id}</span>
+                    <div class="order-element" data-order-id="${order.id}">
+                        <div class="order-element-header">
+                            <div class="order-element-number">
+                                <span data-lang="order-list-order-number"></span>
+                                <span>${order.id}</span>
+                            </div>
+                            <div>
+                                <span class="order-undo-button clickable hover-shine" data-lang="[title]undo-order-action-button-title">↩</span>
+                                <span class="order-redo-button clickable hover-shine" data-lang="[title]redo-order-action-button-title">↪</span>
+                            </div>
                         </div>
-                        <div class="overview-element-row" data-order-id="${order.id}">
+                        <div class="overview-element-row">
                             <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-items"></span>
                                 <br/>
@@ -334,9 +342,7 @@
         // Add an event handler for the pay buttons for the orders
         $(".order-list-pay-order-button").click(function () {
             // First save the order id in the payment overlay so other functions will be be able to execute operations for this order.
-            const orderId = $(this)
-                .closest(".overview-element-row")
-                .data("order-id");
+            const orderId = $(this).closest(".order-element").data("order-id");
             $("#payment").data("order-id", orderId);
 
             // Clear form values.
@@ -366,26 +372,55 @@
 
         // Add event handler for the edit buttons for the orders
         $(".order-list-edit-order-button").click(function () {
-            const orderId = $(this)
-                .closest(".overview-element-row")
-                .data("order-id");
+            const orderId = $(this).closest(".order-element").data("order-id");
 
             editOrder(orderId);
         });
 
         // Add event handler for the delete buttons for the orders
         $(".order-list-delete-order-button").click(function () {
-            const orderId = $(this)
-                .closest(".overview-element-row")
-                .data("order-id");
+            const orderId = $(this).closest(".order-element").data("order-id");
 
             deleteOrder(orderId);
+        });
+
+        // Add event handler for undo / redo buttons
+        $(".order-undo-button").click(function () {
+            const orderId = $(this).closest(".order-element").data("order-id");
+            const undoManager = undoManagers[orderId];
+            undoManager.undoit();
+
+            // Refresh view
+            initOrdersList();
+        });
+
+        // Add event handler for undo / redo buttons
+        $(".order-redo-button").click(function () {
+            const orderId = $(this).closest(".order-element").data("order-id");
+            const undoManager = undoManagers[orderId];
+            undoManager.redoit();
+
+            // Refresh view
+            initOrdersList();
         });
 
         // Add number of current orders to the footer of the overview
         $("#orders-list-total-number").html(numberOfOrders);
 
         LanguageController.refreshTextStrings();
+    }
+
+    /**
+     * Initializes the undo manager for a specific order. Purpose is to be able
+     * to undo and redo actions made one this specific order. If an undo manager
+     * already exists for this order, it will be reused.
+     *
+     * @param {object} order The order object.
+     */
+    function initUndoManagerForOrder(order) {
+        if (!Object.hasOwnProperty.call(undoManagers, order.id)) {
+            undoManagers[order.id] = new UNDOmanager();
+        }
     }
 
     /** Handles a single payment and markes an order as done. */
@@ -540,13 +575,14 @@
         // Save the changed value
         const inputElement = event.target;
         const orderId = $(inputElement)
-            .closest(".overview-element-row")
+            .closest(".order-element")
             .data("order-id");
         const newValue = $(inputElement).val().trim();
         const changeNoteOfOrderFunc = OrderController.changeNoteOfOrderUNDOFunc(
             orderId,
             newValue
         );
+        const undoManager = undoManagers[orderId];
         undoManager.doit(changeNoteOfOrderFunc);
     }
 

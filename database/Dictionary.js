@@ -196,6 +196,8 @@ const Dictionary = {
             "edit-order-overlay-title": "Edit Order",
             "create-new-order-description":
                 "Here you can add a new order (Hint: This view is not supposed to be like that).",
+            "undo-order-action-button-title": "Undo editing notes",
+            "redo-order-action-button-title": "Redo editing notes",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
