@@ -395,6 +395,10 @@ const Dictionary = {
             "edit-order-overlay-title": "Bestellung bearbeiten",
             "create-new-order-description":
                 "Hier kannst du eine neue Bestellung anlegen",
+            "undo-order-action-button-title":
+                "Bearbeitung der Notiz rückgängig machen",
+            "redo-order-action-button-title":
+                "Bearbeitung der Notiz wiederholen",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
@@ -593,6 +597,8 @@ const Dictionary = {
             "found-users-header-credit-add-label": "Adicionar Valor",
             "edit-order-overlay-title": "Editar Ordem",
             "create-new-order-description": "Here you can add a new order",
+            "undo-order-action-button-title": "Desfazer a edição de notas",
+            "redo-order-action-button-title": "Refazer a edição de notas",
         },
         // Text strings for the page 'vip dashboard'
         vip_dashboard: {
