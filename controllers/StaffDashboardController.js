@@ -4,9 +4,6 @@
  * The controller for the staff dashboard.
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals LanguageController, OrderController, InventoryController, UNDOmanager */
 
@@ -17,7 +14,8 @@
     let vipInventoryController = new InventoryController(
         Constants.INVENTORIES.VIP
     );
-    let undoManager = new UNDOmanager();
+
+    let undoManagers = {};
 
     $(document).ready(function () {
         initOrdersList();
@@ -63,10 +61,6 @@
                 .appendTo("#create-order-items-inner-container")
                 .find("input")
                 .val("");
-        });
-
-        $("#restock-button").click(function () {
-            $("#overlay-restock").show();
         });
 
         $("#create-order-form").on("submit", handleCreateOrder);
@@ -253,6 +247,7 @@
 
                 const ordersHtmlList = [];
                 orders.forEach((order) => {
+                    initUndoManagerForOrder(order);
                     let orderItemsHTML = "<ul>";
                     order.items.forEach((item) => {
                         const beverageNr = item.beverageNr;
@@ -267,16 +262,20 @@
                     });
                     orderItemsHTML += "</ul>";
 
-                    // TODO: Status value ("tbd." / "done") makes not real sense at the moment...
-
                     ordersHtmlList.push(`
-                    <div class="order-element">
-                        <div class="order-element-number">
-                            <span class="" data-lang="order-list-order-number"></span>
-                            <span>${order.id}</span>
+                    <div class="order-element" data-order-id="${order.id}">
+                        <div class="order-element-header">
+                            <div class="order-element-number">
+                                <span data-lang="order-list-order-number"></span>
+                                <span>${order.id}</span>
+                            </div>
+                            <div>
+                                <span class="order-undo-button clickable hover-shine" data-lang="[title]undo-order-action-button-title">↩</span>
+                                <span class="order-redo-button clickable hover-shine" data-lang="[title]redo-order-action-button-title">↪</span>
+                            </div>
                         </div>
-                        <div class="overview-element-row" data-order-id="${order.id}">
-                            <div class="overview-element-row-items">
+                        <div class="overview-element-row">
+                            <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-items"></span>
                                 <br/>
                                 <span>${orderItemsHTML}</span>
@@ -287,16 +286,20 @@
                                 <textarea class="order-notes-text-field" rows="2" >${order.notes}</textarea>
                             </div>
                             <div>
-                                <span class="overview-list-column-heading" data-lang="order-list-status"></span>
+                                <span class="overview-list-column-heading" data-lang="order-list-inventory"></span>
                                 <br/>
-                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-list-status-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.done}>...</span>
+                                <span ${Constants.DATA_LANG_DYNAMIC_KEY}="order-inventory-dynamic" ${Constants.DATA_LANG_DYNAMIC_VALUE}=${order.inventory}>...</span>
                             </div>
                             <div>
                                 <span class="overview-list-column-heading" data-lang="order-list-actions"></span>
                                 <br/>
                                 <div>
-                                    <span class="clickable order-list-pay-order-button order-action-button hover-shine">💳</span>
-                                    <span class="clickable order-list-edit-order-button order-action-button hover-shine">📝</span>
+                                    <span class="clickable order-list-pay-order-button order-action-button hover-shine"
+                                        data-lang="[title]order-paid-button">💳</span>
+                                    <span class="clickable order-list-edit-order-button order-action-button hover-shine"
+                                        data-lang="[title]edit-order-button">📝</span>
+                                    <span class="clickable order-list-delete-order-button order-action-button hover-shine"
+                                        data-lang="[title]delete-order-button">❌</span>
                                 </div>
                             </div>
                         </div>
@@ -339,9 +342,7 @@
         // Add an event handler for the pay buttons for the orders
         $(".order-list-pay-order-button").click(function () {
             // First save the order id in the payment overlay so other functions will be be able to execute operations for this order.
-            const orderId = $(this)
-                .closest(".overview-element-row")
-                .data("order-id");
+            const orderId = $(this).closest(".order-element").data("order-id");
             $("#payment").data("order-id", orderId);
 
             // Clear form values.
@@ -371,17 +372,55 @@
 
         // Add event handler for the edit buttons for the orders
         $(".order-list-edit-order-button").click(function () {
-            const orderId = $(this)
-                .closest(".overview-element-row")
-                .data("order-id");
+            const orderId = $(this).closest(".order-element").data("order-id");
 
             editOrder(orderId);
+        });
+
+        // Add event handler for the delete buttons for the orders
+        $(".order-list-delete-order-button").click(function () {
+            const orderId = $(this).closest(".order-element").data("order-id");
+
+            deleteOrder(orderId);
+        });
+
+        // Add event handler for undo / redo buttons
+        $(".order-undo-button").click(function () {
+            const orderId = $(this).closest(".order-element").data("order-id");
+            const undoManager = undoManagers[orderId];
+            undoManager.undoit();
+
+            // Refresh view
+            initOrdersList();
+        });
+
+        // Add event handler for undo / redo buttons
+        $(".order-redo-button").click(function () {
+            const orderId = $(this).closest(".order-element").data("order-id");
+            const undoManager = undoManagers[orderId];
+            undoManager.redoit();
+
+            // Refresh view
+            initOrdersList();
         });
 
         // Add number of current orders to the footer of the overview
         $("#orders-list-total-number").html(numberOfOrders);
 
         LanguageController.refreshTextStrings();
+    }
+
+    /**
+     * Initializes the undo manager for a specific order. Purpose is to be able
+     * to undo and redo actions made one this specific order. If an undo manager
+     * already exists for this order, it will be reused.
+     *
+     * @param {object} order The order object.
+     */
+    function initUndoManagerForOrder(order) {
+        if (!Object.hasOwnProperty.call(undoManagers, order.id)) {
+            undoManagers[order.id] = new UNDOmanager();
+        }
     }
 
     /** Handles a single payment and markes an order as done. */
@@ -536,13 +575,14 @@
         // Save the changed value
         const inputElement = event.target;
         const orderId = $(inputElement)
-            .closest(".overview-element-row")
+            .closest(".order-element")
             .data("order-id");
         const newValue = $(inputElement).val().trim();
         const changeNoteOfOrderFunc = OrderController.changeNoteOfOrderUNDOFunc(
             orderId,
             newValue
         );
+        const undoManager = undoManagers[orderId];
         undoManager.doit(changeNoteOfOrderFunc);
     }
 
@@ -689,8 +729,6 @@
         // Add table number
         $("#order-details-table").html(table);
 
-        // TODO: Filter out the VIP orders, because only the orders for the bar are relevant in this view.
-
         // Add order details for each table
         let ordersListHTML = "";
         ordersForTable.forEach((order) => {
@@ -728,10 +766,10 @@
                     <span class="overlay-details-value">${order.notes}</span>
                 </div>
                 <button type="clickable" class="overlay-button details-overlay-edit-order-button hover-shine" data-order-id="${order.id}">
-                    <span data-lang="details-overlay-edit-order-button"></span>
+                    <span data-lang="edit-order-button"></span>
                 </button>
                 <button type="clickable" class="overlay-button details-overlay-delete-order-button hover-shine" data-order-id="${order.id}">
-                    <span data-lang="details-overlay-delete-order-button"></span>
+                    <span data-lang="delete-order-button"></span>
                 </button>
             </div>
             `;
@@ -757,6 +795,9 @@
             event.preventDefault();
             const orderId = parseInt($(this).data("order-id"));
             deleteOrder(orderId);
+
+            // Hide overlay
+            $("#overlay-orders-details").hide();
         });
 
         // Refresh all text strings
@@ -860,9 +901,6 @@
 
         // Update order list
         initOrdersList();
-
-        // Hide overlay
-        $("#overlay-orders-details").hide();
     }
 
     /**
@@ -873,7 +911,7 @@
     function editOrder(orderId) {
         // TODO: Implement editing of an order
 
-        alert("NOT IMPLEMENTED YET");
+        $("#overlay-edit-order").show();
         //OrderController.editOrder(order);
     }
 

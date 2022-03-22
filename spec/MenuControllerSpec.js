@@ -2,9 +2,6 @@
  * File: MenuControllerSpec.js
  *
  * Author: David Kopp
- * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 /* globals MenuController */
 
@@ -25,7 +22,11 @@ describe("MenuController", function () {
     });
 
     it("should be able to initialize the menu without a filter", function () {
-        MenuController.initMenu();
+        const menuConfig = {
+            viewElementId: "menu-container",
+            inventory: Constants.INVENTORIES.BAR,
+        };
+        MenuController.initMenu(menuConfig);
 
         const htmlMenuItems = $(".item");
 

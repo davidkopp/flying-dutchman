@@ -4,9 +4,6 @@ File: staff_dashboard.html
 The dashboard for staff members like bartenders, waiter, waitress, etc.
 
 Author: David Kopp
------
-Last Modified: Sunday, 20th March 2022
-Modified By: David Kopp (mail@davidkopp.de>)
 -->
 
 <!DOCTYPE html>
@@ -215,14 +212,14 @@ Modified By: David Kopp (mail@davidkopp.de>)
                                         class="overlay-button details-overlay-edit-order-button hover-shine"
                                         data-order-id=""
                                     >
-                                        <span data-lang="details-overlay-edit-order-button"></span>
+                                        <span data-lang="edit-order-button"></span>
                                     </button>
                                     <button
                                         type="clickable"
                                         class="overlay-button details-overlay-delete-order-button hover-shine"
                                         data-order-id=""
                                     >
-                                        <span data-lang="details-overlay-delete-order-button"></span>
+                                        <span data-lang="delete-order-button"></span>
                                     </button>
                                 </div>
                             </div>
@@ -237,6 +234,7 @@ Modified By: David Kopp (mail@davidkopp.de>)
                             <img src="assets/images/icon_close.svg" />
                         </div>
                         <span class="overlay-details-heading" data-lang="create-order-title"></span>
+                        <div class="overlay-details-info-text" data-lang="create-new-order-description"></div>
                         <br />
                         <form id="create-order-form">
                             <div class="box">
@@ -284,13 +282,14 @@ Modified By: David Kopp (mail@davidkopp.de>)
                     </div>
                 </div>
 
-                <!-- Overlay for restock -->
-                <div id="overlay-restock" class="overlay hidden">
+                <!-- Overlay for edit order -->
+                <div id="overlay-edit-order" class="overlay hidden">
                     <div class="overlay-content">
                         <div class="clickable overlay-close-button">
                             <img src="assets/images/icon_close.svg" />
                         </div>
-                        <-- TODO: Implement restock dialog -->
+                        <div class="overlay-details-heading" data-lang="edit-order-overlay-title"></div>
+                        <!-- TODO: Implement edit order -->
                         <span>NOT IMPLEMENTED YET</span>
                     </div>
                 </div>

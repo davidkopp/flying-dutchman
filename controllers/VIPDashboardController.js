@@ -3,15 +3,13 @@
  *
  * The VIP's Dashboard Controller.
  *
- * Author: Paarth Sanhotra
- * -----
- * Last Modified: Sunday, 13th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
+ * Author: Paarth Sanhotra, Abdullah Abdullah
  */
-/* globals LoginController, OrderController */
+/* globals LoginController, MenuController, OrderController */
 
 (function ($, exports) {
     let table_number;
+    let currentMenu;
 
     // When the DOM is ready, initialize the view with data and add event handlers.
     $(document).ready(function () {
@@ -20,18 +18,25 @@
         $("#main-tab").click(function () {
             $("#main-menu").show();
             $("#vip-menu").hide();
+
+            // Reinitialize menu
+            initMainMenu();
         });
 
         $("#vip-tab").click(function () {
             $("#vip-menu").show();
             $("#main-menu").hide();
+
+            initVipMenu();
         });
 
         initVipUserInformation();
         initTableNumber();
-        initMenus();
 
-        $("#place-order").click(handlePlaceOrder);
+        // By default the main menu is shown -> initialize it.
+        initMainMenu();
+
+        $("#place-order-button").click(handlePlaceOrder);
 
         $(".overlay-close-button").click(function () {
             $(this).parent().closest(".overlay").hide();
@@ -53,7 +58,6 @@
 
     /** Initializes the table number in the view. */
     function initTableNumber() {
-        // TODO: Remove random value.
         table_number = Math.floor(Math.random() * 10 + 1);
         $("#table-number").html(table_number);
     }
@@ -78,53 +82,55 @@
         }
     }
 
-    /** Initialize the menus with the items from the bar and vip inventory. */
-    function initMenus() {
-        const bar_inventory = DatabaseAPI.Inventory.getInventory(
-            Constants.INVENTORIES.BAR
-        );
-        const vip_inventory = DatabaseAPI.Inventory.getInventory(
-            Constants.INVENTORIES.VIP
-        );
-        $("#main-menu").html(createHTMLForInventoryList(bar_inventory));
-        $("#vip-menu").html(createHTMLForInventoryList(vip_inventory));
+    /** Initializes the main menu with the items from the bar vip inventory. */
+    function initMainMenu() {
+        if (!MenuController) {
+            console.log(
+                "MenuController is not available! Initializing of the menu not possible!"
+            );
+            return;
+        }
+
+        // First ensure that the order cart if empty, because we don't allow to mix bar and specials in one order.
+        $("#order").empty();
+
+        const mainMenuConfig = {
+            viewElementId: "main-menu",
+            inventory: Constants.INVENTORIES.BAR,
+            allowDragItems: true,
+        };
+        MenuController.initMenu(mainMenuConfig);
+        currentMenu = "main";
     }
 
-    /**
-     * Creates a HTML string for displaying the inventory items.
-     *
-     * @param {Array} inventory The inventory.
-     * @returns {string} The HTML
-     */
-    function createHTMLForInventoryList(inventory) {
-        let result = "";
-        inventory.forEach((inventoryItem) => {
-            const beverage = DatabaseAPI.Beverages.findBeverageByNr(
-                inventoryItem.beverageNr
+    /** Initializes the vip menu with the items from the vip inventory. */
+    function initVipMenu() {
+        if (!MenuController) {
+            console.log(
+                "MenuController is not available! Initializing of the menu not possible!"
             );
-            result += `
-            <div data-beverage-id = "${inventoryItem.beverageNr}"
-                 class = "drag-items"
-                 id = "item-${inventoryItem.beverageNr}"
-                 draggable = true
-                 ondragstart = "dragItem(event)">
-                ${beverage.name} ${beverage.alcoholstrength} ${beverage.priceinclvat}
-            </div>
-        `;
-        });
-        return result;
+            return;
+        }
+
+        // First ensure that the order cart if empty, because we don't allow to mix bar and specials in one order.
+        $("#order").empty();
+
+        const vipMenuConfig = {
+            viewElementId: "vip-menu",
+            inventory: Constants.INVENTORIES.VIP,
+            allowDragItems: true,
+        };
+        MenuController.initMenu(vipMenuConfig);
+        currentMenu = "vip";
     }
 
     /** Event handler for the place order button → create the order. */
     function handlePlaceOrder() {
-        const vip_inventory = DatabaseAPI.Inventory.getInventory(
-            Constants.INVENTORIES.VIP
-        );
         let items = [];
         $("#order")
-            .children("div")
+            .find(".item")
             .each(function () {
-                const beverageID = $(this).data("beverage-id");
+                const beverageID = $(this).data("beverage-nr");
                 items.push({
                     beverageNr: beverageID.toString(),
                 });
@@ -136,13 +142,20 @@
             return;
         }
 
-        // TODO: better approach would be to disallow the mix of the both inventories in the first place.
-        let inventoryName = Constants.INVENTORIES.BAR;
-        for (let i = 0; i < vip_inventory.length; i++) {
-            if (items[0].beverageNr == vip_inventory[i].beverageNr) {
+        let inventoryName;
+        switch (currentMenu) {
+            case "main":
+                inventoryName = Constants.INVENTORIES.BAR;
+                break;
+            case "vip":
                 inventoryName = Constants.INVENTORIES.VIP;
                 break;
-            }
+            default:
+                console.log(`Unknown ${currentMenu}! Can't place order.`);
+                break;
+        }
+        if (!inventoryName) {
+            return;
         }
 
         const order = {
@@ -157,15 +170,23 @@
                     JSON.stringify(createdOrder)
             );
 
-            // Reset the menus and reset the order area.
-            initMenus();
-            $("#order").empty();
+            // Reset the current menu and reset the order area.
+            switch (currentMenu) {
+                case "main":
+                    initMainMenu();
+                    break;
+                case "vip":
+                    initVipMenu();
+                    break;
+                default:
+                    break;
+            }
 
             // Show success
-            $("#info-box-message").html("Placement of order was successful!");
             $("#overlay-message-box").show();
         }
     }
+
     /**
      * Event handler for the event 'ondragover' → prevent the defaults.
      *
@@ -191,9 +212,13 @@
      */
     function drop(ev) {
         ev.preventDefault();
-        const data = ev.dataTransfer.getData("text");
-        if (data !== ev.target.id) {
-            ev.target.appendChild(document.getElementById(data));
+        const idOfMenuItem = ev.dataTransfer.getData("text");
+        const $menuItemElement = $(`#${idOfMenuItem}`);
+        const $targetElement = $(ev.target);
+        if ($targetElement.hasClass(".droppable-area")) {
+            $targetElement.append($menuItemElement);
+        } else {
+            $targetElement.closest(".droppable-area").append($menuItemElement);
         }
     }
 

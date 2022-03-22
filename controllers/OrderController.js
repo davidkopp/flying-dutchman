@@ -4,9 +4,6 @@
  * Extends the OrderController by operations with undo / redo functionalities...
  *
  * Author: David Kopp
- * -----
- * Last Modified: Tuesday, 15th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {
@@ -610,7 +607,6 @@
             return null;
         }
         if (typeof order.id != "number") {
-            // TODO: Error Handling
             console.log(
                 "OrderController.editOrder | Order is not valid! ID is missing or invalid. Order:\n" +
                     JSON.stringify(order)

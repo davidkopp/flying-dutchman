@@ -4,9 +4,6 @@
  * Controller that is responsible for some effects (e.g. changing images while hovering).
  *
  * Author: David Kopp
- * -----
- * Last Modified: Saturday, 12th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {

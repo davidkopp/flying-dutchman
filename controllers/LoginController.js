@@ -4,9 +4,6 @@
  * Login handling of the staff and VIP members.
  *
  * Author: Paarth Sanhotra
- * -----
- * Last Modified: Saturday, 12th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
  */
 
 (function ($, exports) {

@@ -2,9 +2,6 @@
     "cSpell.diagnosticLevel": "Hint",
     "psi-header.changes-tracking": {
         "isActive": true,
-        "modAuthor": "Modified By:",
-        "modDate": "Last Modified:",
-        "modDateFormat": "dddd, Do MMMM YYYY",
         "include": [],
         "includeGlob": ["**/*.js", "**/*.html", "**/*.css"],
         "exclude": [],
@@ -24,10 +21,7 @@
                 "",
                 "DESCRIPTION",
                 "",
-                "Author: <<author>>",
-                "-----",
-                "Last Modified: <<dateformat('dddd, Do MMMM YYYY')>>",
-                "Modified By: <<author>> (<<authoremail>>>)"
+                "Author: <<author>>"
             ]
         }
     ]
