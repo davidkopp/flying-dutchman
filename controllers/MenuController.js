@@ -9,12 +9,17 @@
 
 (function ($, exports) {
     /**
-     * The variable `lastUsedTypeFilter` saves the last used type filter to be
-     * able to reset it and changing the icon of the filters. The variables
-     * allergies, price_range, tannin, alcohol_range are used to store the
-     * second set of filters dynamically and change the menu on each filter's click.
+     * The variable 'lastUsedMenuConfig' saves the last used used menu config to
+     * be able to reuse it when a filter is set.
      */
-    let lastUsedTypeFilter;
+    let lastUsedMenuConfig;
+
+    /**
+     * The variables typeFilter, allergies, price_range, tannin, alcohol_range
+     * are used to store the current filters dynamically and change the menu on
+     * each filter's click.
+     */
+    let typeFilter;
     let allergyItem = "";
     let allergies = {
         Milk: false,
@@ -27,7 +32,7 @@
     let alcohol_range = [];
 
     $(document).ready(function () {
-        initDefaultMenu();
+        initMenuWithDefaultConfig();
 
         //Reload the menu with the selected values of the allergies
         $(".allergy-item").click(function () {
@@ -61,7 +66,7 @@
                     );
             }
 
-            initDefaultMenu(lastUsedTypeFilter);
+            refreshMenu();
 
             // If filter is active, make it visible in the view.
             let isFilterActive = false;
@@ -94,7 +99,7 @@
                 price_range[1] = parseFloat(price_range[1]);
             }
 
-            initDefaultMenu(lastUsedTypeFilter);
+            refreshMenu();
 
             // If filter is active, make it visible in the view.
             const $button = $(this).closest("button");
@@ -114,7 +119,7 @@
                 alcohol_range[0] = parseFloat(alcohol_range[0]);
                 alcohol_range[1] = parseFloat(alcohol_range[1]);
             }
-            initDefaultMenu(lastUsedTypeFilter);
+            refreshMenu();
 
             // If filter is active, make it visible in the view.
             const $button = $(this).closest("button");
@@ -130,7 +135,7 @@
             if (tannin == false) tannin = true;
             else if (tannin == true) tannin = false;
 
-            initDefaultMenu(lastUsedTypeFilter);
+            refreshMenu();
 
             // If filter is active, make it visible in the view.
             const $button = $(this).closest("button");
@@ -145,40 +150,45 @@
     /**
      * Filter the beverages according to the type and show them in the menu.
      *
-     * @param {string} typeFilter The name of the type filter.
+     * @param {string} newTypeFilter The name of the new type filter.
      */
-    function filterMenuByType(typeFilter) {
-        if (typeFilter === lastUsedTypeFilter) {
+    function filterMenuByType(newTypeFilter) {
+        if (newTypeFilter === typeFilter) {
             // Reset the type filter
-            initDefaultMenu();
+            typeFilter = null;
         } else {
-            switch (typeFilter) {
+            switch (newTypeFilter) {
                 case Constants.BEER_filter:
                 case Constants.WINE_filter:
                 case Constants.DRINK_filter:
                 case Constants.WATER_filter:
-                    initDefaultMenu(typeFilter);
+                    typeFilter = newTypeFilter;
                     break;
                 default:
                     console.log(
-                        `MenuController | Beverage type '${typeFilter}' is unknown.`
+                        `MenuController | Beverage type '${newTypeFilter}' is unknown.`
                     );
                     break;
             }
         }
+        refreshMenu();
     }
 
-    /**
-     * Initializes the menu with the default config for normal customers.
-     *
-     * @param {string} typeFilter The optional type filter.
-     */
-    function initDefaultMenu(typeFilter) {
+    /** Initializes the menu with the default config for normal customers. */
+    function initMenuWithDefaultConfig() {
         const menuConfig = {
             viewElementId: "menu-container",
             inventory: Constants.INVENTORIES.BAR,
         };
-        initMenu(menuConfig, typeFilter);
+        initMenu(menuConfig);
+    }
+
+    /**
+     * Refreshes the menu in the view by reinitializes it. It uses the same
+     * filters as before.
+     */
+    function refreshMenu() {
+        initMenu(lastUsedMenuConfig);
     }
 
     /**
@@ -188,9 +198,8 @@
      * filter argument it's possible to only show one specific type.
      *
      * @param {object} config The config object for the initialization.
-     * @param {string} typeFilter The optional filter.
      */
-    function initMenu(config, typeFilter) {
+    function initMenu(config) {
         if (!config || !config.viewElementId || !config.inventory) {
             console.log(
                 "MenuController | Invalid config for initializing the menu! Required properties are `viewElementId` and `inventory`."
@@ -216,8 +225,8 @@
         // At first remove the currently shown menu.
         $viewMenuContainer.empty();
 
-        // Save the new type filter to be able to reset it if required later.
-        lastUsedTypeFilter = typeFilter;
+        // Save the config to be able to reuse it, e.g. when a filter is set.
+        lastUsedMenuConfig = config;
 
         const inventoryItems = DatabaseAPI.Inventory.getInventory(
             config.inventory
@@ -342,7 +351,7 @@
             $viewMenuContainer.append(beverageInfoHtml);
         }
 
-        EffectsController.updateFilterIconsInView();
+        EffectsController.updateFilterIconsInView(typeFilter);
 
         // Refresh all text strings
         LanguageController.refreshTextStrings();
@@ -586,14 +595,6 @@
             `;
         }
         return menuItemHTML;
-    }
-
-    /**
-     * Refreshes the menu in the view by reinitializes it. It uses the same
-     * filter as before (could be `undefined`).
-     */
-    function refreshMenu() {
-        initDefaultMenu();
     }
 
     /**
