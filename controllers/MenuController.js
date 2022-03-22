@@ -3,28 +3,24 @@
  *
  * Controller that is responsible for displaying and updating the menu for customers.
  *
- * Author: David Kopp
- * -----
- * Last Modified: Sunday, 22nd March 2022
- * Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
+ * Author: David Kopp, Paarth Sanhotra
  */
 /* globals LanguageController, EffectsController */
 
 (function ($, exports) {
     /**
      * The variable `lastUsedFilter` stores the current used filter to be able
-     * to reset the filter and changing the icon of the filters.
-     * The variables allergies, price_range, tannin, alcohol_range are used to
-     * store the second set of filters dynamically and change the menu on each
-     * filter's click.
+     * to reset the filter and changing the icon of the filters. The variables
+     * allergies, price_range, tannin, alcohol_range are used to store the
+     * second set of filters dynamically and change the menu on each filter's click.
      */
     let lastUsedFilter;
-    let allergyItem = '';
+    let allergyItem = "";
     let allergies = {
-        Milk:false,
-        Nuts:false,
-        Gluten:false,
-        Sulphite:false
+        Milk: false,
+        Nuts: false,
+        Gluten: false,
+        Sulphite: false,
     };
     let price_range = [];
     let tannin = false;
@@ -34,41 +30,33 @@
         initMenu();
 
         //Reload the menu with the selected values of the allergies
-        $(".allergy-item").click(function ()
-        {
-            allergyItem = $(this).attr("value")
+        $(".allergy-item").click(function () {
+            allergyItem = $(this).attr("value");
 
-            switch(allergyItem)
-            {
+            switch (allergyItem) {
                 case "Milk":
-                    if(allergies.Milk == false)
-                        allergies.Milk = true;
-                    else if(allergies.Milk == true)
-                        allergies.Milk = false;
+                    if (allergies.Milk == false) allergies.Milk = true;
+                    else if (allergies.Milk == true) allergies.Milk = false;
                     break;
 
                 case "Nuts":
-                    if(allergies.Nuts == false)
-                        allergies.Nuts = true;
-                    else if(allergies.Nuts == true)
-                        allergies.Nuts = false;
+                    if (allergies.Nuts == false) allergies.Nuts = true;
+                    else if (allergies.Nuts == true) allergies.Nuts = false;
                     break;
 
                 case "Gluten":
-                    if(allergies.Gluten == false)
-                        allergies.Gluten = true;
-                    else if(allergies.Gluten == true)
-                        allergies.Gluten = false;
+                    if (allergies.Gluten == false) allergies.Gluten = true;
+                    else if (allergies.Gluten == true) allergies.Gluten = false;
                     break;
 
                 case "Sulphite":
-                    if(allergies.Sulphite == false)
-                        allergies.Sulphite = true;
-                    else if(allergies.Sulphite == true)
+                    if (allergies.Sulphite == false) allergies.Sulphite = true;
+                    else if (allergies.Sulphite == true)
                         allergies.Sulphite = false;
                     break;
 
-                default: console.log("Allergy not defined.");
+                default:
+                    console.log("Allergy not defined.");
             }
 
             console.log(allergies);
@@ -77,47 +65,39 @@
         });
 
         //Reload the menu with the selected value of the price filters
-        $(".price-range").click(function ()
-        {
+        $(".price-range").click(function () {
             price_range = [];
 
-            if($(this).attr("value") != 'all')
-            {
-                price_range = $(this).attr("value").split('-');
+            if ($(this).attr("value") != "all") {
+                price_range = $(this).attr("value").split("-");
                 price_range[0] = parseFloat(price_range[0]);
                 price_range[1] = parseFloat(price_range[1]);
-                console.log("Price Range selected: "+price_range);
+                console.log("Price Range selected: " + price_range);
             }
             initMenu(lastUsedFilter);
         });
 
         //Reload the menu with the selected value of the alcohol percentage filters
-        $(".alcohol-range").click(function ()
-        {
+        $(".alcohol-range").click(function () {
             alcohol_range = [];
 
-            if($(this).attr("value") != 'all')
-            {
-                alcohol_range = $(this).attr("value").split('-');
+            if ($(this).attr("value") != "all") {
+                alcohol_range = $(this).attr("value").split("-");
                 alcohol_range[0] = parseFloat(alcohol_range[0]);
                 alcohol_range[1] = parseFloat(alcohol_range[1]);
-                console.log("Alcohol Range selected: "+alcohol_range);
+                console.log("Alcohol Range selected: " + alcohol_range);
             }
             initMenu(lastUsedFilter);
         });
 
         //Reload the menu with the tannin filters
-        $(".tannin").click(function (){
-            if(tannin == false)
-                tannin = true;
-            else if(tannin == true)
-                tannin = false;
-            console.log("Tannins filter on: "+tannin);
+        $(".tannin").click(function () {
+            if (tannin == false) tannin = true;
+            else if (tannin == true) tannin = false;
+            console.log("Tannins filter on: " + tannin);
             initMenu(lastUsedFilter);
         });
     });
-
-
 
     /**
      * Filter the beverages according to the type and show them in the menu.
@@ -161,8 +141,6 @@
                     : `without a filter.`)
         );
 
-
-
         // At first remove the currently shown menu.
         $("#menu-container").empty();
 
@@ -202,53 +180,87 @@
             }
 
             // Check if the beverages fit the tannins filter
-            if(tannin == true && jQuery.inArray(beverageNr, DB.tannins) > 0)
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (tannin == true && jQuery.inArray(beverageNr, DB.tannins) > 0) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
             // Check if the beverages fit the price filter
-            if(price_range[0] > parseInt(beverage.priceinclvat) ||
-               parseInt(beverage.priceinclvat) > price_range[1])
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (
+                price_range[0] > parseInt(beverage.priceinclvat) ||
+                parseInt(beverage.priceinclvat) > price_range[1]
+            ) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
             // Check if the beverages fit the alcohol percentage filter
-            if(alcohol_range[0] > parseInt(beverage.alcoholstrength.substring(0, beverage.alcoholstrength.length-1)) ||
-               parseInt(beverage.alcoholstrength.substring(0, beverage.alcoholstrength.length-1)) > alcohol_range[1])
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (
+                alcohol_range[0] >
+                    parseInt(
+                        beverage.alcoholstrength.substring(
+                            0,
+                            beverage.alcoholstrength.length - 1
+                        )
+                    ) ||
+                parseInt(
+                    beverage.alcoholstrength.substring(
+                        0,
+                        beverage.alcoholstrength.length - 1
+                    )
+                ) > alcohol_range[1]
+            ) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
             // Check if the beverages fit the sulphite filter
-            if(allergies.Sulfite == true && jQuery.inArray(beverageNr, DB.allergies[0].beverages) > -1)
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (
+                allergies.Sulfite == true &&
+                jQuery.inArray(beverageNr, DB.allergies[0].beverages) > -1
+            ) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
             // Check if the beverages fit the gluten filter
-            if(allergies.Gluten == true && jQuery.inArray(beverageNr, DB.allergies[1].beverages) > -1)
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (
+                allergies.Gluten == true &&
+                jQuery.inArray(beverageNr, DB.allergies[1].beverages) > -1
+            ) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
             // Check if the beverages fit the milk filter
-            if(allergies.Milk == true && jQuery.inArray(beverageNr, DB.allergies[2].beverages) > -1)
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (
+                allergies.Milk == true &&
+                jQuery.inArray(beverageNr, DB.allergies[2].beverages) > -1
+            ) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
             // Check if the beverages fit the nuts filter
-            if(allergies.Nuts == true && jQuery.inArray(beverageNr, DB.allergies[3].beverages) > -1)
-            {
-                console.log("Skipping the beverage "+beverageNr+" from the list");
+            if (
+                allergies.Nuts == true &&
+                jQuery.inArray(beverageNr, DB.allergies[3].beverages) > -1
+            ) {
+                console.log(
+                    "Skipping the beverage " + beverageNr + " from the list"
+                );
                 continue;
             }
 
