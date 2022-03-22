@@ -381,6 +381,12 @@ Menu Page
     width: 100%;
     margin-bottom: 50px;
 }
+.filter-button button:hover {
+    background-color: #f0d420;
+}
+.filter-button button.filter-active {
+    background-color: #f0d420;
+}
 .text-right {
     position: absolute;
     right: 0px;
@@ -1011,6 +1017,10 @@ Menu Dropdown
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+}
+
+.price_range .range > label {
+    margin-left: 5px;
 }
 
 /*===================
