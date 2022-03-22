@@ -16,8 +16,6 @@ const Constants = {
     DEFAULT_LANGUAGE: "en",
 
     PAGE_HOME: "index",
-    PAGE_LOGIN: "login",
-    PAGE_MENU: "menu",
 
     BEER_filter: "beer",
     WINE_filter: "wine",
@@ -81,25 +79,6 @@ const Dictionary = {
             "logout-button-title": "Logout",
             "logo-title": "To home page",
             "home-button-title": "To home page",
-            "milk": "Milk",
-            "gluten": "Gluten",
-            "nuts": "Nuts",
-            "sulphite": "Sulphite",
-            "all": "All",
-        },
-        // Text strings for the page 'index'
-        index: {
-            "head-page-title": "Flying Dutchman - Welcome",
-            "page-title": "Welcome!",
-            "link-to-login-page": "Login",
-            "menu-button-label": "Menu",
-            "go-to-menu-button-title": "Go to menu",
-        },
-        // Text strings for the page 'menu'
-        menu: {
-            "head-page-title": "Flying Dutchman - Menu",
-            "page-title": "Menu",
-            "caption": "Menu",
             "filter-icon-title-beer": "Beer",
             "filter-icon-title-wine": "Wine",
             "filter-icon-title-drink": "Drink",
@@ -114,6 +93,17 @@ const Dictionary = {
             "menu-item-label-packaging": "Packaging:",
             "menu-item-label-price": "Price:",
             "menu-item-label-year": "Year:",
+            "milk": "Milk",
+            "gluten": "Gluten",
+            "nuts": "Nuts",
+            "sulphite": "Sulphite",
+            "all": "All",
+        },
+        // Text strings for the page 'index'
+        index: {
+            "head-page-title": "Flying Dutchman - Welcome",
+            "page-title": "Welcome!",
+            "link-to-login-page": "Login",
         },
         // Text strings for the page 'login'
         login: {
@@ -218,20 +208,6 @@ const Dictionary = {
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
             "placement-successful": "Placement of order was successful!",
-            "filter-icon-title-beer": "Beer",
-            "filter-icon-title-wine": "Wine",
-            "filter-icon-title-drink": "Drink",
-            "filter-icon-title-water": "Water",
-            "button-label-allergies": "Allergies",
-            "button-label-price": "Price",
-            "button-label-tannin": "Tannin",
-            "button-label-alcohol": "Alcohol %",
-            "menu-item-label-origin": "Origin:",
-            "menu-item-label-producer": "Producer:",
-            "menu-item-label-alcoholstrength": "Alcohol:",
-            "menu-item-label-packaging": "Packaging:",
-            "menu-item-label-price": "Price:",
-            "menu-item-label-year": "Year:",
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
@@ -280,26 +256,6 @@ const Dictionary = {
             "logged-in-user-label": "Angemeldet als:",
             "logout-button-title": "Ausloggen",
             "logo-title": "Zur Startseite",
-            "menu-button-label": "Menü",
-            "home-button-title": "Zur Startseite",
-            "milk": "Milch",
-            "gluten": "Gluten",
-            "nuts": "Nüsse",
-            "sulphite": "Schwefel",
-            "all": "Alles",
-        },
-        // Text strings for the page 'index'
-        index: {
-            "head-page-title": "Flying Dutchman - Willkommen",
-            "page-title": "Willkommen!",
-            "link-to-login-page": "Anmelden",
-            "go-to-menu-button-title": "Gehe zum Menü",
-        },
-        // Text strings for the page 'menu'
-        menu: {
-            "head-page-title": "Flying Dutchman - Menü",
-            "page-title": "Menü",
-            "caption": "Menü",
             "filter-icon-title-beer": "Bier",
             "filter-icon-title-wine": "Wein",
             "filter-icon-title-drink": "Drink",
@@ -314,6 +270,19 @@ const Dictionary = {
             "menu-item-label-packaging": "Verpackung:",
             "menu-item-label-price": "Preis:",
             "menu-item-label-year": "Jahr:",
+            "menu-button-label": "Menü",
+            "home-button-title": "Zur Startseite",
+            "milk": "Milch",
+            "gluten": "Gluten",
+            "nuts": "Nüsse",
+            "sulphite": "Schwefel",
+            "all": "Alles",
+        },
+        // Text strings for the page 'index'
+        index: {
+            "head-page-title": "Flying Dutchman - Willkommen",
+            "page-title": "Willkommen!",
+            "link-to-login-page": "Anmelden",
         },
         // Text strings for the page 'login'
         login: {
@@ -421,22 +390,6 @@ const Dictionary = {
             "pay-bill-button": "Bezahlen",
             "info-box-title": "Info",
             "placement-successful": "Bestellung war erfolgreich!",
-
-            "filter-icon-title-beer": "Bier",
-            "filter-icon-title-wine": "Wein",
-            "filter-icon-title-drink": "Drink",
-            "filter-icon-title-water": "Wasser",
-            "button-label-allergies": "Allergene",
-            "button-label-price": "Preis",
-            "button-label-tannin": "Tannin",
-            "button-label-alcohol": "Alkohol %",
-            "menu-item-label-origin": "Herkunft:",
-            "menu-item-label-producer": "Hersteller:",
-
-            "menu-item-label-alcoholstrength": "Alkohol:",
-            "menu-item-label-packaging": "Verpackung:",
-            "menu-item-label-price": "Preis:",
-            "menu-item-label-year": "Jahr:",
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
@@ -486,25 +439,6 @@ const Dictionary = {
             "logout-button-title": "Sair",
             "logo-title": "Início",
             "home-button-title": "Inîcio",
-            "milk": "Leite",
-            "gluten": "Glúten",
-            "nuts": "Nozes",
-            "sulphite": "Sulfito",
-            "all": "Todos",
-        },
-        // Text strings for the page 'index'
-        index: {
-            "head-page-title": "Flying Dutchman - Bem-vindo",
-            "page-title": "Bem-vindo!",
-            "link-to-login-page": "Entrar",
-            "menu-button-label": "Cardápio",
-            "go-to-menu-button-title": "Cardâpio",
-        },
-        // Text strings for the page 'menu'
-        menu: {
-            "head-page-title": "Flying Dutchman - Cardápio",
-            "page-title": "Cardápio",
-            "caption": "Cardápio",
             "filter-icon-title-beer": "Cerveja",
             "filter-icon-title-wine": "Vinhos",
             "filter-icon-title-drink": "Bebidas",
@@ -519,6 +453,17 @@ const Dictionary = {
             "menu-item-label-packaging": "Pacote:",
             "menu-item-label-price": "Preço:",
             "menu-item-label-year": "Ano:",
+            "milk": "Leite",
+            "gluten": "Glúten",
+            "nuts": "Nozes",
+            "sulphite": "Sulfito",
+            "all": "Todos",
+        },
+        // Text strings for the page 'index'
+        index: {
+            "head-page-title": "Flying Dutchman - Bem-vindo",
+            "page-title": "Bem-vindo!",
+            "link-to-login-page": "Entrar",
         },
         // Text strings for the page 'login'
         login: {
@@ -626,21 +571,6 @@ const Dictionary = {
             "pay-bill-button": "Pagar a Conta",
             "info-box-title": "Informação",
             "placement-successful": "Colocação de encomenda foi bem sucedida!",
-
-            "filter-icon-title-beer": "Cerveja",
-            "filter-icon-title-wine": "Vinhos",
-            "filter-icon-title-drink": "Bebidas",
-            "filter-icon-title-water": "Garçon",
-            "button-label-allergies": "Alergias",
-            "button-label-price": "Preço",
-            "button-label-tannin": "Tanino",
-            "button-label-alcohol": "Rôtulo",
-            "menu-item-label-origin": "Região de Origem:",
-            "menu-item-label-producer": "Produtor:",
-            "menu-item-label-alcoholstrength": "Teor de Alcool:",
-            "menu-item-label-packaging": "Pacote:",
-            "menu-item-label-price": "Preço:",
-            "menu-item-label-year": "Ano:",
         },
         // Text strings for the page 'manager dashboard'
         manager_dashboard: {
