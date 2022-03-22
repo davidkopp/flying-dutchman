@@ -5,8 +5,8 @@
  *
  * Author: David Kopp
  * -----
- * Last Modified: Sunday, 20th March 2022
- * Modified By: David Kopp (mail@davidkopp.de>)
+ * Last Modified: Sunday, 22nd March 2022
+ * Modified By: Paarth Sanhotra (paarthsanhotra@gmail.com)
  */
 /* eslint-disable no-redeclare */
 /* eslint-disable no-unused-vars */
@@ -112,6 +112,11 @@ const Dictionary = {
             "menu-item-label-packaging": "Packaging:",
             "menu-item-label-price": "Price:",
             "menu-item-label-year": "Year:",
+            "milk": "Milk",
+            "gluten": "Gluten",
+            "nuts": "Nuts",
+            "sulphite": "Sulphite",
+            "all": "All",
         },
         // Text strings for the page 'login'
         login: {
@@ -290,6 +295,12 @@ const Dictionary = {
             "menu-item-label-packaging": "Verpackung:",
             "menu-item-label-price": "Preis:",
             "menu-item-label-year": "Jahr:",
+            // TODO: Translate this to german
+            "milk": "",
+            "gluten": "",
+            "nuts": "",
+            "sulphite": "",
+            "all": "",
         },
         // Text strings for the page 'login'
         login: {
@@ -471,6 +482,12 @@ const Dictionary = {
             "menu-item-label-packaging": "Packaging:",
             "menu-item-label-price": "Price:",
             "menu-item-label-year": "Year:",
+            // TODO: Translate this to portuguese
+            "milk": "",
+            "gluten": "",
+            "nuts": "",
+            "sulphite": "",
+            "all": "",
         },
         // Text strings for the page 'login'
         login: {
