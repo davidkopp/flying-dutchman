@@ -3,58 +3,192 @@
  *
  * Controller that is responsible for displaying and updating the menu for customers.
  *
- * Author: David Kopp, Abdullah Abdullah
+ * Author: David Kopp, Paarth Sanhotra, Abdullah Abdullah
  */
 /* globals LanguageController, EffectsController */
 
 (function ($, exports) {
     /**
-     * The variable `lastUsedFilter` stores the current used filter to be able
-     * to reset the filter and changing the icon of the filters.
+     * The variable 'lastUsedMenuConfig' saves the last used used menu config to
+     * be able to reuse it when a filter is set.
      */
-    let lastUsedFilter;
+    let lastUsedMenuConfig;
+
+    /**
+     * The variables typeFilter, allergies, price_range, tannin, alcohol_range
+     * are used to store the current filters dynamically and change the menu on
+     * each filter's click.
+     */
+    let typeFilter;
+    let allergyItem = "";
+    let allergies = {
+        Milk: false,
+        Nuts: false,
+        Gluten: false,
+        Sulphite: false,
+    };
+    let price_range = [];
+    let tannin = false;
+    let alcohol_range = [];
 
     $(document).ready(function () {
-        initDefaultMenu();
+        initMenuWithDefaultConfig();
+
+        //Reload the menu with the selected values of the allergies
+        $(".allergy-item").click(function () {
+            allergyItem = $(this).attr("value");
+
+            switch (allergyItem) {
+                case "Milk":
+                    if (allergies.Milk == false) allergies.Milk = true;
+                    else if (allergies.Milk == true) allergies.Milk = false;
+                    break;
+
+                case "Nuts":
+                    if (allergies.Nuts == false) allergies.Nuts = true;
+                    else if (allergies.Nuts == true) allergies.Nuts = false;
+                    break;
+
+                case "Gluten":
+                    if (allergies.Gluten == false) allergies.Gluten = true;
+                    else if (allergies.Gluten == true) allergies.Gluten = false;
+                    break;
+
+                case "Sulphite":
+                    if (allergies.Sulphite == false) allergies.Sulphite = true;
+                    else if (allergies.Sulphite == true)
+                        allergies.Sulphite = false;
+                    break;
+
+                default:
+                    console.log(
+                        `MenuController | Allergy '${allergyItem}' not defined!`
+                    );
+            }
+
+            refreshMenu();
+
+            // If filter is active, make it visible in the view.
+            let isFilterActive = false;
+            for (const allergy in allergies) {
+                if (Object.hasOwnProperty.call(allergies, allergy)) {
+                    const value = allergies[allergy];
+                    if (value == true) {
+                        // Filter is active!
+                        isFilterActive = true;
+                    }
+                }
+            }
+
+            // If filter is active, make it visible in the view.
+            const $button = $(this).closest("button");
+            if (isFilterActive) {
+                $button.addClass("filter-active");
+            } else {
+                $button.removeClass("filter-active");
+            }
+        });
+
+        //Reload the menu with the selected value of the price filters
+        $(".price-range").click(function () {
+            price_range = [];
+
+            if ($(this).attr("value") != "all") {
+                price_range = $(this).attr("value").split("-");
+                price_range[0] = parseFloat(price_range[0]);
+                price_range[1] = parseFloat(price_range[1]);
+            }
+
+            refreshMenu();
+
+            // If filter is active, make it visible in the view.
+            const $button = $(this).closest("button");
+            if (price_range.length > 0) {
+                $button.addClass("filter-active");
+            } else {
+                $button.removeClass("filter-active");
+            }
+        });
+
+        //Reload the menu with the selected value of the alcohol percentage filters
+        $(".alcohol-range").click(function () {
+            alcohol_range = [];
+
+            if ($(this).attr("value") != "all") {
+                alcohol_range = $(this).attr("value").split("-");
+                alcohol_range[0] = parseFloat(alcohol_range[0]);
+                alcohol_range[1] = parseFloat(alcohol_range[1]);
+            }
+            refreshMenu();
+
+            // If filter is active, make it visible in the view.
+            const $button = $(this).closest("button");
+            if (alcohol_range.length > 0) {
+                $button.addClass("filter-active");
+            } else {
+                $button.removeClass("filter-active");
+            }
+        });
+
+        //Reload the menu with the tannin filters
+        $(".tannin").click(function () {
+            if (tannin == false) tannin = true;
+            else if (tannin == true) tannin = false;
+
+            refreshMenu();
+
+            // If filter is active, make it visible in the view.
+            const $button = $(this).closest("button");
+            if (tannin == true) {
+                $button.addClass("filter-active");
+            } else {
+                $button.removeClass("filter-active");
+            }
+        });
     });
 
     /**
      * Filter the beverages according to the type and show them in the menu.
      *
-     * @param {string} byType The name of the filter type.
+     * @param {string} newTypeFilter The name of the new type filter.
      */
-    function filterMenu(byType) {
-        if (byType === lastUsedFilter) {
-            // Reset the filter
-            initDefaultMenu();
+    function filterMenuByType(newTypeFilter) {
+        if (newTypeFilter === typeFilter) {
+            // Reset the type filter
+            typeFilter = null;
         } else {
-            switch (byType) {
+            switch (newTypeFilter) {
                 case Constants.BEER_filter:
                 case Constants.WINE_filter:
                 case Constants.DRINK_filter:
                 case Constants.WATER_filter:
-                    initDefaultMenu(byType);
+                    typeFilter = newTypeFilter;
                     break;
                 default:
                     console.log(
-                        `MenuController | Beverage type '${byType}' is unknown.`
+                        `MenuController | Beverage type '${newTypeFilter}' is unknown.`
                     );
                     break;
             }
         }
+        refreshMenu();
     }
 
-    /**
-     * Initializes the menu with the default config for normal customers.
-     *
-     * @param {string} filterByType The optional filter.
-     */
-    function initDefaultMenu(filterByType) {
+    /** Initializes the menu with the default config for normal customers. */
+    function initMenuWithDefaultConfig() {
         const menuConfig = {
             viewElementId: "menu-container",
             inventory: Constants.INVENTORIES.BAR,
         };
-        initMenu(menuConfig, filterByType);
+        initMenu(menuConfig);
+    }
+
+    /**
+     * Refreshes the menu in the view by reinitializes it. It uses the same
+     * filters as before.
+     */
+    function refreshMenu() {
+        initMenu(lastUsedMenuConfig);
     }
 
     /**
@@ -64,9 +198,8 @@
      * filter argument it's possible to only show one specific type.
      *
      * @param {object} config The config object for the initialization.
-     * @param {string} filterByType The optional filter.
      */
-    function initMenu(config, filterByType) {
+    function initMenu(config) {
         if (!config || !config.viewElementId || !config.inventory) {
             console.log(
                 "MenuController | Invalid config for initializing the menu! Required properties are `viewElementId` and `inventory`."
@@ -74,9 +207,9 @@
         }
         console.log(
             `MenuController | Start initializing the menu with items from the '${config.inventory}' ` +
-                (filterByType
-                    ? `with the filter '${filterByType}'.`
-                    : `without a filter.`) +
+                (typeFilter
+                    ? `with the type filter '${typeFilter}'.`
+                    : `without a type filter.`) +
                 " Config: " +
                 JSON.stringify(config)
         );
@@ -92,7 +225,8 @@
         // At first remove the currently shown menu.
         $viewMenuContainer.empty();
 
-        lastUsedFilter = filterByType;
+        // Save the config to be able to reuse it, e.g. when a filter is set.
+        lastUsedMenuConfig = config;
 
         const inventoryItems = DatabaseAPI.Inventory.getInventory(
             config.inventory
@@ -120,7 +254,7 @@
             }
 
             const beverage = DatabaseAPI.Beverages.findBeverageByNr(beverageNr);
-            // Check if the beverage exists in the beverage db.
+            // Make sure that the beverage actually exists in the beverage database.
             if (!beverage) {
                 console.log(
                     `MenuController.initMenu | The inventory '${config.inventory}' includes a beverage with the number '${beverageNr}' that is unknown!`
@@ -128,15 +262,96 @@
                 continue;
             }
 
+            // Check if the beverage fit the tannins filter
+            if (tannin == true) {
+                const beveragesWithTannin =
+                    DatabaseAPI.Beverages.getBeveragesWithTannins();
+                if ($.inArray(beverageNr, beveragesWithTannin) > -1) {
+                    continue;
+                }
+            }
+
+            // Check if the beverage fit the price filter
+            if (
+                price_range &&
+                price_range.length > 0 &&
+                (price_range[0] > parseFloat(beverage.priceinclvat) ||
+                    parseFloat(beverage.priceinclvat) > price_range[1])
+            ) {
+                continue;
+            }
+
+            // Check if the beverage fit the alcohol percentage filter
+            if (
+                (alcohol_range &&
+                    alcohol_range.length > 0 &&
+                    alcohol_range[0] >
+                        parseFloat(
+                            beverage.alcoholstrength.substring(
+                                0,
+                                beverage.alcoholstrength.length - 1
+                            )
+                        )) ||
+                parseFloat(
+                    beverage.alcoholstrength.substring(
+                        0,
+                        beverage.alcoholstrength.length - 1
+                    )
+                ) > alcohol_range[1]
+            ) {
+                continue;
+            }
+
+            const allergiesList = DatabaseAPI.Beverages.getAllergiesList();
+            // Check if the beverages fit the sulphite filter
+            if (allergies.Sulfite == true) {
+                const beveragesWithSulfite = allergiesList.find(
+                    (obj) => obj.name === "sulfite"
+                ).beverages;
+                if ($.inArray(beverageNr, beveragesWithSulfite) > -1) {
+                    continue;
+                }
+            }
+
+            // Check if the beverages fit the gluten filter
+            if (allergies.Gluten == true) {
+                const beveragesWithGluten = allergiesList.find(
+                    (obj) => obj.name === "gluten"
+                ).beverages;
+                if ($.inArray(beverageNr, beveragesWithGluten) > -1) {
+                    continue;
+                }
+            }
+
+            // Check if the beverages fit the milk filter
+            if (allergies.Milk == true) {
+                const beveragesWithMilk = allergiesList.find(
+                    (obj) => obj.name === "milk"
+                ).beverages;
+                if ($.inArray(beverageNr, beveragesWithMilk) > -1) {
+                    continue;
+                }
+            }
+
+            // Check if the beverages fit the nuts filter
+            if (allergies.Nuts == true) {
+                const beveragesWithNuts = allergiesList.find(
+                    (obj) => obj.name === "nuts"
+                ).beverages;
+                if ($.inArray(beverageNr, beveragesWithNuts) > -1) {
+                    continue;
+                }
+            }
+
             const beverageInfoHtml = getHtmlForMenuItem(
                 beverage,
-                filterByType,
+                typeFilter,
                 config.allowDragItems
             );
             $viewMenuContainer.append(beverageInfoHtml);
         }
 
-        EffectsController.updateFilterIconsInView(lastUsedFilter);
+        EffectsController.updateFilterIconsInView(typeFilter);
 
         // Refresh all text strings
         LanguageController.refreshTextStrings();
@@ -146,12 +361,12 @@
      * Creates the html string to display the information about a beverage in the menu.
      *
      * @param {object} beverage The beverage item.
-     * @param {string} filterByType The optional type filter.
+     * @param {string} typeFilter The optional type filter.
      * @param {boolean} allowDragItems The optional boolean value for allowing
      *   dragging of the items.
      * @returns {string} The html to display the menu item.
      */
-    function getHtmlForMenuItem(beverage, filterByType, allowDragItems) {
+    function getHtmlForMenuItem(beverage, typeFilter, allowDragItems) {
         if (!beverage) {
             return;
         }
@@ -163,7 +378,7 @@
         let imageSource = "";
         if (
             containsAnyOf(type, Constants.BEER_CATEGORY) &&
-            (!filterByType || filterByType === Constants.BEER_filter)
+            (!typeFilter || typeFilter === Constants.BEER_filter)
         ) {
             // Beer or cider
             relevantInfoToDisplay = {
@@ -207,7 +422,7 @@
             imageSource = "assets/images/placeholder_beer.png";
         } else if (
             containsAnyOf(type, Constants.WINE_CATEGORY) &&
-            (!filterByType || filterByType === Constants.WINE_filter)
+            (!typeFilter || typeFilter === Constants.WINE_filter)
         ) {
             // Wine
             relevantInfoToDisplay = {
@@ -241,7 +456,7 @@
             imageSource = "assets/images/placeholder_wine.png";
         } else if (
             containsAnyOf(type, Constants.DRINKS_CATEGORY) &&
-            (!filterByType || filterByType === Constants.DRINK_filter)
+            (!typeFilter || typeFilter === Constants.DRINK_filter)
         ) {
             // Cocktails / Drinks / Mixed drinks
             relevantInfoToDisplay = {
@@ -275,7 +490,7 @@
             imageSource = "assets/images/placeholder_drink.png";
         } else if (
             containsAnyOf(type, Constants.WATER_CATEGORY) &&
-            (!filterByType || filterByType === Constants.WATER_filter)
+            (!typeFilter || typeFilter === Constants.WATER_filter)
         ) {
             // Water
             relevantInfoToDisplay = {
@@ -297,7 +512,7 @@
                 },
             };
             imageSource = "assets/images/placeholder_water.png";
-        } else if (!filterByType) {
+        } else if (!typeFilter) {
             // Unknown type and no filter is set → Show some basic information of the beverage
             relevantInfoToDisplay = {
                 name: {
@@ -383,14 +598,6 @@
     }
 
     /**
-     * Refreshes the menu in the view by reinitializes it. It uses the same
-     * filter as before (could be `undefined`).
-     */
-    function refreshMenu() {
-        initDefaultMenu(lastUsedFilter);
-    }
-
-    /**
      * Checks if a text includes substrings given by an array.
      *
      * @param {string} text The text to check
@@ -413,6 +620,6 @@
     }
 
     exports.MenuController = {};
-    exports.MenuController.filterMenu = filterMenu;
+    exports.MenuController.filterMenuByType = filterMenuByType;
     exports.MenuController.initMenu = initMenu;
 })(jQuery, window);

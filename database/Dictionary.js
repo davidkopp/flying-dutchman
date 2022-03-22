@@ -81,6 +81,11 @@ const Dictionary = {
             "logout-button-title": "Logout",
             "logo-title": "To home page",
             "home-button-title": "To home page",
+            "milk": "Milk",
+            "gluten": "Gluten",
+            "nuts": "Nuts",
+            "sulphite": "Sulphite",
+            "all": "All",
         },
         // Text strings for the page 'index'
         index: {
@@ -213,7 +218,6 @@ const Dictionary = {
             "pay-bill-button": "Pay Bill",
             "info-box-title": "Info",
             "placement-successful": "Placement of order was successful!",
-
             "filter-icon-title-beer": "Beer",
             "filter-icon-title-wine": "Wine",
             "filter-icon-title-drink": "Drink",
@@ -224,7 +228,6 @@ const Dictionary = {
             "button-label-alcohol": "Alcohol %",
             "menu-item-label-origin": "Origin:",
             "menu-item-label-producer": "Producer:",
-
             "menu-item-label-alcoholstrength": "Alcohol:",
             "menu-item-label-packaging": "Packaging:",
             "menu-item-label-price": "Price:",
@@ -279,6 +282,11 @@ const Dictionary = {
             "logo-title": "Zur Startseite",
             "menu-button-label": "Menü",
             "home-button-title": "Zur Startseite",
+            "milk": "Milch",
+            "gluten": "Gluten",
+            "nuts": "Nüsse",
+            "sulphite": "Schwefel",
+            "all": "Alles",
         },
         // Text strings for the page 'index'
         index: {
@@ -302,7 +310,6 @@ const Dictionary = {
             "button-label-alcohol": "Alkohol %",
             "menu-item-label-origin": "Herkunft:",
             "menu-item-label-producer": "Hersteller:",
-
             "menu-item-label-alcoholstrength": "Alkohol:",
             "menu-item-label-packaging": "Verpackung:",
             "menu-item-label-price": "Preis:",
@@ -479,6 +486,11 @@ const Dictionary = {
             "logout-button-title": "Sair",
             "logo-title": "Início",
             "home-button-title": "Inîcio",
+            "milk": "Leite",
+            "gluten": "Glúten",
+            "nuts": "Nozes",
+            "sulphite": "Sulfito",
+            "all": "Todos",
         },
         // Text strings for the page 'index'
         index: {

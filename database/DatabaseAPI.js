@@ -572,6 +572,25 @@ DatabaseAPI = (function () {
         saveObject(Constants.STORAGE_DB_BEVERAGES_KEY, beverages);
     }
 
+    /**
+     * Returns the list of beverages numbers that include tannins.
+     *
+     * @returns {Array} List of beverage numbers.
+     */
+    function getBeveragesWithTannins() {
+        return getObject(Constants.STORAGE_DB_TANNINS_KEY);
+    }
+
+    /**
+     * Returns the list of allergies objects including information about the
+     * allergy name and beverage numbers.
+     *
+     * @returns {Array} List of allergies objects.
+     */
+    function getAllergiesList() {
+        return getObject(Constants.STORAGE_DB_ALLERGIES_KEY);
+    }
+
     //=========================================================================
     // ORDERS
     //=========================================================================
@@ -993,6 +1012,8 @@ DatabaseAPI = (function () {
             getBeverageTypesSortedByPopularity: beverageTypesSortedByPopularity,
             setPriceOfBeverage: setPriceOfBeverage,
             searchForBeverage: searchForBeverage,
+            getBeveragesWithTannins: getBeveragesWithTannins,
+            getAllergiesList: getAllergiesList,
         },
         Orders: {
             getOrders: getOrders,

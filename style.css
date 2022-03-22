@@ -381,6 +381,12 @@ Menu Page
     width: 100%;
     margin-bottom: 50px;
 }
+.filter-button button:hover {
+    background-color: #f0d420;
+}
+.filter-button button.filter-active {
+    background-color: #f0d420;
+}
 .text-right {
     position: absolute;
     right: 0px;
@@ -979,7 +985,8 @@ Menu Dropdown
 =========================*/
 .price,
 .alcohol,
-.allergies {
+.allergies,
+.tannin {
     position: relative;
 }
 .price-list,
@@ -998,7 +1005,7 @@ Menu Dropdown
 }
 .price_range {
     position: absolute;
-    min-width: 100px;
+    min-width: 140px;
     background-color: #fff;
     padding: 15px;
     text-align: left;
@@ -1010,6 +1017,10 @@ Menu Dropdown
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+}
+
+.price_range .range > label {
+    margin-left: 5px;
 }
 
 /*===================
