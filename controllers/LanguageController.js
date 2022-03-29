@@ -45,6 +45,10 @@
      */
     function getCurrentPath() {
         let currentPath = window.location.pathname;
+        currentPath = currentPath.slice(
+            currentPath.lastIndexOf("/"),
+            currentPath.length
+        );
         if (currentPath.charAt(0) === "/") {
             currentPath = currentPath.slice(1);
         }
