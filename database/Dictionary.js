@@ -43,6 +43,7 @@ const Constants = {
 
     LOW_STOCK_NUMBER: 5,
 
+    STORAGE_TYPE: "session", // use either "local" or "session".
     STORAGE_LANGUAGE_KEY: "language",
     STORAGE_LOGGED_IN_USER_KEY: "logged_in_user",
     STORAGE_DB_USERS_KEY: "db_users",

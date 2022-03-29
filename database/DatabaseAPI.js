@@ -1,8 +1,7 @@
 /*
  * File: DatabaseAPI.js
  *
- * Provides API functions for all databases: BeveragesDB and DB (includes users, orders, bills, inventory, etc.)
- * The functions with the suffix "" will be exported to the public.
+ * Provides API functions for all databases: BeveragesDB and DB (includes users, orders, bills, inventory, etc.).
  * Returned values of the "public" functions never have a direct reference to the database, so others aren't able to manipulate the database.
  *
  * Author: David Kopp
@@ -10,9 +9,13 @@
 /* global DB, BeveragesDB */
 
 DatabaseAPI = (function () {
-    //=========================================================================
-    // Load everything into the local storage
-    //=========================================================================
+    /**
+     * Either the browsers `localStorage` or `sessionStorage` is used to store
+     * the databases. If the constant `STORAGE_TYPE` is defined and equals
+     * 'session', `sessionStorage` is used, otherwise `localStorage` (default).
+     */
+    const storage =
+        Constants.STORAGE_TYPE == "session" ? sessionStorage : localStorage;
 
     /**
      * Returns the object for the key from the storage. The 'short-circuit
@@ -23,7 +26,7 @@ DatabaseAPI = (function () {
      * @returns {object} The object.
      */
     function getObject(key) {
-        var value = localStorage.getItem(key);
+        var value = storage.getItem(key);
         return value && JSON.parse(value);
     }
 
@@ -34,7 +37,7 @@ DatabaseAPI = (function () {
      * @param {object} value The object.
      */
     function saveObject(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
+        storage.setItem(key, JSON.stringify(value));
     }
 
     /**
@@ -43,10 +46,10 @@ DatabaseAPI = (function () {
      * @param {string} key The key.
      */
     function removeObject(key) {
-        localStorage.removeItem(key);
+        storage.removeItem(key);
     }
 
-    /** Load all databases into local storage when they don't exist yet. */
+    /** Load all databases into the storage when they don't exist yet. */
     function loadDatabases() {
         if (!getObject(Constants.STORAGE_DB_USERS_KEY)) {
             saveObject(Constants.STORAGE_DB_USERS_KEY, DB.users);
