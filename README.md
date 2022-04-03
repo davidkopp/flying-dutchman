@@ -2,14 +2,14 @@
 
 ## General information
 
-This is the repository for the development of the project "Flying Dutchman" of group 12 at Uppsala University in the masters course User Interface Programming I.
+This is the repository for the development of the project "Flying Dutchman" of group 12 at Uppsala University in the masters course [User Interface Programming I](https://www.uu.se/en/admissions/exchange/courses/list/course-description/?kKod=1MD002&typ=1).
 
 **Team members:**
 
-- [David Kopp](https://github.com/davidkopp)
-- [Paarth Sanhotra](https://github.com/PaarthSan)
-- [Rosemary Lima](https://github.com/Murka2022)
-- [Abdullah Abdullah](https://github.com/Abdullah30jul)
+-   [David Kopp](https://github.com/davidkopp)
+-   [Paarth Sanhotra](https://github.com/PaarthSan)
+-   [Rosemary Lima](https://github.com/Murka2022)
+-   [Abdullah Abdullah](https://github.com/Abdullah30jul)
 
 ## Coordination
 
@@ -52,7 +52,7 @@ To set the author information you can add the following to your user settings (c
     "blankLinesAfter": 1,
     "author": "David Kopp",
     "initials": "DK",
-    "authorEmail": "mail@davidkopp.de",
+    "authorEmail": "mail@example.com",
     "creationDateZero": "blank"
 }
 ```
